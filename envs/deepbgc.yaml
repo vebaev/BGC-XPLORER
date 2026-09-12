@@ -1,0 +1,6 @@
+name: deepbgc
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - deepbgc

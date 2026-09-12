@@ -1,0 +1,5 @@
+services:
+  bgc-xplorer:
+    build:
+      context: .
+    image: bgc-xplorer:dev

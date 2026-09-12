@@ -1,0 +1,22 @@
+services:
+  bgc-xplorer:
+    image: "ghcr.io/${BGC_IMAGE:-vebaev/bgc-xplorer}:${BGC_VERSION:-latest}"
+    entrypoint: ["/bin/bash", "/app/scripts/entrypoint.sh"]
+    ports:
+      - "${BGC_PORT:-8778}:8778"
+    volumes:
+      - ./db:/db
+      - ./data:/work/data
+      - ./results:/work/results
+      - ./config:/work/config
+    environment:
+      NVIDIA_API_KEY: ${NVIDIA_API_KEY:?Set NVIDIA_API_KEY in .env or the shell}
+      NVIDIA_MODEL: ${NVIDIA_MODEL:-deepseek-ai/deepseek-v4-pro}
+      AUTO_PREPARE_DATABASES: ${AUTO_PREPARE_DATABASES:-true}
+    healthcheck:
+      test: ["CMD", "/opt/conda/bin/python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8778', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped

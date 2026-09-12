@@ -1,0 +1,61 @@
+antismash:
+  required: true
+  host_path: "db/antismash"
+  status: "missing"
+  notes: "Populate with antiSMASH databases downloaded for the standalone or local installation."
+  source: "https://docs.antismash.secondarymetabolites.org/install/"
+  required_files:
+    - "pfam/35.0/Pfam-A.hmm"
+    - "clusterblast/clusters.txt"
+
+deepbgc:
+  required: true
+  host_path: "db/deepbgc"
+  status: "missing"
+  notes: "Populate with DeepBGC downloaded models and Pfam resources."
+  source: "https://github.com/Merck/deepbgc"
+  required_files:
+    - "0.1.0/detector/deepbgc.pkl"
+    - "0.1.0/classifier/product_class.pkl"
+    - "common/Pfam-A.31.0.hmm"
+    - "common/Pfam-A.31.0.hmm.h3i"
+
+arts:
+  required: true
+  host_path: "db/arts/actinobacteria"
+  status: "missing"
+  notes: "Populate with ARTS precomputed reference files for the selected taxon."
+  source: "https://github.com/ZiemertLab/ARTS"
+  required_files:
+    - "coremodels.hmm"
+    - "model_metadata.json"
+    - "genematrix.txt"
+
+gecco:
+  required: false
+  host_path: ""
+  status: "n/a"
+  notes: "No separate database directory assumed by this workflow."
+  source: "https://github.com/zellerlab/GECCO"
+
+eggnog:
+  required: true
+  host_path: "db/eggnog"
+  status: "linked"
+  notes: "Symlinked to /home/vebaev/codex/data/databases/eggnog. emapper reports Installed eggNOG DB version 5.0.2 via --data_dir db/eggnog. Binary in external mamba env /home/vebaev/codex/mamba_envs/eggnog (emapper-1.0-8-gea57f19)."
+  source: "https://github.com/eggnogdb/eggnog-mapper"
+  required_files:
+    - "eggnog.db"
+    - "eggnog_proteins.dmnd"
+    - "eggnog.taxa.db"
+
+dbcan:
+  required: false
+  host_path: "db/dbcan"
+  status: "linked"
+  notes: "Symlinked to /home/vebaev/codex/data/databases/dbcan_v5 (dbCAN v5 DB, 7.4G). Binary in external mamba env /home/vebaev/codex/mamba_envs/dbcan_v5 (run_dbcan v5.2.9). No workflow rule consumes this yet."
+  source: "https://github.com/linnabrown/run_dbcan"
+  required_files:
+    - "dbCAN.hmm"
+    - "dbCAN-sub.hmm"
+    - "CAZy.dmnd"

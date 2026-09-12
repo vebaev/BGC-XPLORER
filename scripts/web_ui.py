@@ -1,0 +1,1307 @@
+#!/usr/bin/env python3
+"""BGC-XPLORER NiceGUI web interface.
+
+Upload Bakta annotation output → run Snakemake workflow → view results.
+Served on port 8778 alongside the AI cluster server on 8787.
+"""
+
+import argparse
+import asyncio
+import csv
+import hashlib
+import logging
+import os
+import shutil
+import subprocess
+import threading
+import urllib.error
+import urllib.request
+import uuid
+from pathlib import Path
+
+import yaml
+from nicegui import ui, app
+from fastapi import Request, Response
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
+app_logger = logging.getLogger("bgc_xplorer")
+
+WORK_DIR = Path("/work")
+APP_DIR = Path("/app")
+ALLOWED_EXTENSIONS = [".gbff", ".fna", ".faa", ".gff3", ".json", ".tsv"]
+REQUIRED_EXTENSIONS = ALLOWED_EXTENSIONS
+
+workflow_state: dict = {}
+AI_SERVICE_URL = os.environ.get("AI_SERVICE_URL", "http://127.0.0.1:8484")
+AI_JOBS: dict = {}
+AI_JOBS_LOCK = threading.Lock()
+
+THEME_CSS = """
+<style>
+  :root {
+    --bg: #f5f7ff;
+    --bg-soft: #fbfcff;
+    --panel: rgba(255, 255, 255, 0.94);
+    --panel-2: #ffffff;
+    --panel-3: #eef2ff;
+    --line: rgba(94, 108, 152, 0.12);
+    --line-strong: rgba(94, 108, 152, 0.2);
+    --text: #273149;
+    --text-strong: #161f33;
+    --muted: #5e6c8f;
+    --accent: #6c63f6;
+    --accent-soft: rgba(108, 99, 246, 0.12);
+    --accent-deep: #5b52eb;
+    --violet: #6c63f6;
+    --emerald: #73c95b;
+    --amber: #f59b38;
+    --teal: #41bcc7;
+    --blue: #4f8dfd;
+    --orange: #ff7b1d;
+    --sky: #4a7fff;
+    --lime: #7cc85d;
+    --cyan: #35bfd3;
+    --indigo: #7c6bff;
+    --radius: 20px;
+    --radius-sm: 14px;
+    --shadow-card: 0 12px 35px rgba(89, 104, 146, 0.08);
+    --shadow-soft: 0 8px 24px rgba(89, 104, 146, 0.06);
+    --sans: "Sora", "Avenir Next", "Segoe UI", sans-serif;
+  }
+  body, .nicegui-content {
+    font-family: var(--sans);
+    color: var(--text);
+    background:
+      radial-gradient(900px 440px at 8% 0%, rgba(95, 87, 255, 0.09), transparent 62%),
+      radial-gradient(920px 480px at 100% 16%, rgba(53, 191, 211, 0.09), transparent 58%),
+      linear-gradient(180deg, #fcfdff 0%, #f3f6ff 100%),
+      var(--bg);
+  }
+  .nicegui-content,
+  .q-page,
+  .q-page-container,
+  .q-layout__section--main {
+    width: 100%;
+  }
+  .app-shell {
+    width: min(1680px, calc(100vw - 56px));
+    max-width: none;
+    margin: 0 auto;
+    padding: 32px 28px 48px;
+    box-sizing: border-box;
+    align-self: center;
+  }
+  .hero-card {
+    display: flex;
+    justify-content: space-between;
+    gap: 22px;
+    align-items: flex-start;
+    width: 100%;
+    margin-bottom: 28px;
+  }
+  .hero-brand {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    min-width: 0;
+    flex: 1;
+  }
+  .brand-mark {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    border: 1px solid rgba(95, 87, 255, 0.28);
+    background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(241,244,255,0.96));
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-size: 26px;
+    box-shadow: var(--shadow-soft);
+    flex: 0 0 auto;
+  }
+  .hero-copy {
+    min-width: 0;
+  }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .hero-title {
+    font-size: clamp(34px, 4vw, 52px);
+    line-height: 1.02;
+    margin: 0;
+    color: var(--text-strong);
+  }
+  .hero-text {
+    margin-top: 16px;
+    max-width: 920px;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+  .meta-badge {
+    min-width: 210px;
+    padding: 18px 20px;
+    border-radius: 18px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow: var(--shadow-soft);
+    color: var(--muted);
+  }
+  .meta-badge-label {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .meta-badge-value {
+    font-weight: 700;
+    color: var(--text-strong);
+    line-height: 1.4;
+  }
+  .panel {
+    width: 100%;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    box-shadow: var(--shadow-card);
+    padding: 24px;
+    backdrop-filter: blur(12px);
+  }
+  .section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+  .section-head h2 {
+    margin: 0;
+    font-size: 30px;
+    color: var(--text-strong);
+  }
+  .section-accent {
+    width: 28px;
+    height: 4px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), rgba(95, 87, 255, 0.15));
+  }
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    width: 100%;
+  }
+  .metrics-grid-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .metric-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    min-height: 150px;
+    padding: 18px 18px 16px;
+    border-radius: 18px;
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(244,247,255,0.96));
+  }
+  .metric-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+    flex: 0 0 auto;
+    border: 1px solid transparent;
+  }
+  .metric-copy {
+    min-width: 0;
+  }
+  .metric-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    color: var(--text-strong);
+    margin-bottom: 8px;
+  }
+  .metric-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-strong);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .metric-copy p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+  .metric-violet .metric-icon { color: var(--violet); background: rgba(106,92,255,0.1); border-color: rgba(106,92,255,0.18); }
+  .metric-green .metric-icon { color: var(--emerald); background: rgba(115,201,91,0.12); border-color: rgba(115,201,91,0.18); }
+  .metric-blue .metric-icon { color: var(--blue); background: rgba(79,141,253,0.1); border-color: rgba(79,141,253,0.18); }
+  .metric-orange .metric-icon { color: var(--orange); background: rgba(255,123,29,0.1); border-color: rgba(255,123,29,0.18); }
+  .metric-teal .metric-icon { color: var(--teal); background: rgba(65,188,199,0.1); border-color: rgba(65,188,199,0.18); }
+  .metric-indigo .metric-icon { color: var(--indigo); background: rgba(124,107,255,0.1); border-color: rgba(124,107,255,0.18); }
+  .metric-lime .metric-icon { color: var(--lime); background: rgba(124,200,93,0.12); border-color: rgba(124,200,93,0.18); }
+  .metric-sky .metric-icon { color: var(--sky); background: rgba(74,127,255,0.1); border-color: rgba(74,127,255,0.18); }
+  .metric-amber .metric-icon { color: var(--amber); background: rgba(245,155,56,0.12); border-color: rgba(245,155,56,0.18); }
+  .metric-cyan .metric-icon { color: var(--cyan); background: rgba(53,191,211,0.1); border-color: rgba(53,191,211,0.18); }
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 18px;
+    width: 100%;
+  }
+  .info-card {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .info-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, rgba(95,87,255,0.16), rgba(95,87,255,0.06));
+    color: var(--accent);
+    font-size: 24px;
+    flex: 0 0 auto;
+  }
+  .info-copy h3 {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+    color: var(--text-strong);
+  }
+  .info-copy p, .muted {
+    color: var(--muted);
+    line-height: 1.65;
+  }
+  .upload-drop {
+    border-radius: 18px;
+    border: 1.5px dashed rgba(108, 99, 246, 0.12);
+    background: linear-gradient(180deg, rgba(108,99,246,0.02), rgba(255,255,255,0.84));
+  }
+  .status-chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.78);
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .status-chip.ready {
+    color: #227857;
+    background: rgba(115,201,91,0.12);
+    border-color: rgba(115,201,91,0.25);
+  }
+  .cta-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .previous-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    width: 100%;
+  }
+  .result-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    min-height: auto;
+    padding: 18px 18px 16px;
+    border-radius: 18px;
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(244,247,255,0.96));
+  }
+  .result-card-copy {
+    min-width: 0;
+    flex: 1;
+  }
+  .result-card .metric-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 21px;
+  }
+  .result-card-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    color: var(--text-strong);
+    margin-bottom: 8px;
+  }
+  .result-card-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-strong);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .result-card-meta {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+  .result-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,0.82);
+    text-decoration: none;
+    color: var(--accent-deep);
+    font-weight: 600;
+  }
+  .result-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 2px;
+  }
+  .result-link:hover {
+    border-color: rgba(95,87,255,0.28);
+    transform: translateY(-1px);
+  }
+  .progress-shell {
+    display: grid;
+    gap: 18px;
+    width: 100%;
+  }
+  .log-shell {
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(31, 41, 55, 0.14);
+    background: #0f172a;
+  }
+  .iframe-shell {
+    width: 100%;
+    border-radius: 22px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-card);
+    background: #fff;
+  }
+  .summary-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .summary-links a {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    color: var(--accent-deep);
+    background: rgba(255,255,255,0.84);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .q-btn {
+    border-radius: 14px;
+    text-transform: none;
+    letter-spacing: 0;
+    box-shadow: none;
+  }
+  .q-btn.bg-primary {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%) !important;
+  }
+  .q-uploader {
+    background: transparent !important;
+  }
+  .q-uploader__header {
+    background: linear-gradient(135deg, rgba(108,99,246,0.62) 0%, rgba(91,82,235,0.7) 100%) !important;
+  }
+  .q-uploader__header-content,
+  .q-uploader__title,
+  .q-uploader__subtitle {
+    color: #ffffff !important;
+  }
+  .q-uploader__list {
+    background: transparent !important;
+  }
+  .soft-primary-btn {
+    background: linear-gradient(135deg, rgba(108,99,246,0.62) 0%, rgba(91,82,235,0.7) 100%) !important;
+    color: #ffffff !important;
+  }
+  .q-linear-progress {
+    border-radius: 999px;
+    overflow: hidden;
+    height: 12px;
+    background: rgba(95,87,255,0.08);
+  }
+  @media (max-width: 900px) {
+    .app-shell {
+      width: 100%;
+      padding: 22px 18px 32px;
+    }
+    .hero-card {
+      flex-direction: column;
+    }
+    .meta-badge {
+      width: 100%;
+      min-width: 0;
+    }
+  }
+  @media (max-width: 1280px) {
+    .metrics-grid-4 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 720px) {
+    .metrics-grid-4 {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+"""
+
+STAT_TONES = {
+    "Upload set": "violet",
+    "Required files": "green",
+    "Ready samples": "blue",
+    "Workflow": "orange",
+    "Consensus": "indigo",
+    "Multi-tool": "lime",
+    "High-confidence": "sky",
+    "High-interest": "amber",
+    "antiSMASH": "violet",
+    "GECCO": "green",
+    "DeepBGC": "blue",
+    "ARTS": "orange",
+    "dbCAN CGC": "teal",
+    "MIBiG hits": "cyan",
+}
+
+STAT_GLYPHS = {
+    "Upload set": "⌂",
+    "Required files": "✓",
+    "Ready samples": "◌",
+    "Workflow": "↺",
+    "Consensus": "◔",
+    "Multi-tool": "◎",
+    "High-confidence": "✦",
+    "High-interest": "✧",
+    "antiSMASH": "○",
+    "GECCO": "◇",
+    "DeepBGC": "□",
+    "ARTS": "⛨",
+    "dbCAN CGC": "⌘",
+    "MIBiG hits": "◌",
+}
+
+
+def inject_theme():
+    ui.add_head_html(THEME_CSS)
+
+
+def stat_card(label: str, value: str, note: str) -> str:
+    tone = STAT_TONES.get(label, "violet")
+    glyph = STAT_GLYPHS.get(label, "•")
+    return (
+        "<article class='metric-card metric-{tone}'>"
+        "<div class='metric-icon' aria-hidden='true'>{glyph}</div>"
+        "<div class='metric-copy'>"
+        "<div class='metric-label'>{label}</div>"
+        "<div class='metric-value'>{value}</div>"
+        "<p>{note}</p>"
+        "</div>"
+        "</article>"
+    ).format(tone=tone, glyph=glyph, label=label, value=value, note=note)
+
+
+def hero_section(title: str, body: str, generated: str | None = None) -> str:
+    meta = ""
+    if generated:
+        meta = (
+            "<div class='meta-badge'>"
+            "<div class='meta-badge-value'>{generated}</div>"
+            "</div>"
+        ).format(generated=generated)
+    return (
+        "<section class='hero-card'>"
+        "<div class='hero-brand'>"
+        "<div class='brand-mark' aria-hidden='true'>⌬</div>"
+        "<div class='hero-copy'>"
+        "<div class='eyebrow'>BGC-XPLORER</div>"
+        "<h1 class='hero-title'>{title}</h1>"
+        "<p class='hero-text'>{body}</p>"
+        "</div>"
+        "</div>"
+        "{meta}"
+        "</section>"
+    ).format(title=title, body=body, meta=meta)
+
+
+def info_card(title: str, body: str, icon: str = "i") -> str:
+    return (
+        "<article class='info-card'>"
+        "<div class='info-icon' aria-hidden='true'>{icon}</div>"
+        "<div class='info-copy'>"
+        "<h3>{title}</h3>"
+        "<p>{body}</p>"
+        "</div>"
+        "</article>"
+    ).format(title=title, body=body, icon=icon)
+
+
+def ai_proxy_headers():
+    return {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, X-AI-Async",
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    }
+
+
+@app.options("/analyze_cluster")
+async def proxy_analyze_cluster_options():
+    return Response(status_code=204, headers=ai_proxy_headers())
+
+
+@app.get("/analyze_cluster")
+async def proxy_analyze_cluster_info():
+    return Response(
+        content='{"ok": true, "message": "AI analysis endpoint is ready. Use POST with sample and consensus_id."}',
+        status_code=200,
+        media_type="application/json",
+        headers=ai_proxy_headers(),
+    )
+
+
+def forward_ai_request(body, content_type, timeout):
+    upstream = urllib.request.Request(
+        f"{AI_SERVICE_URL.rstrip('/')}/analyze_cluster",
+        data=body,
+        headers={"Content-Type": content_type},
+        method="POST",
+    )
+    with urllib.request.urlopen(upstream, timeout=timeout) as response:
+        return response.status, response.headers.get("Content-Type", "application/json"), response.read()
+
+
+def ai_job_id(body):
+    return hashlib.sha256(body).hexdigest()[:24]
+
+
+def run_ai_job(job_id, body, content_type):
+    with AI_JOBS_LOCK:
+        AI_JOBS[job_id]["status"] = "running"
+    try:
+        status_code, media_type, content = forward_ai_request(body, content_type, 270)
+        with AI_JOBS_LOCK:
+            AI_JOBS[job_id].update(
+                {
+                    "status": "done",
+                    "status_code": status_code,
+                    "media_type": media_type,
+                    "content": content,
+                }
+            )
+    except urllib.error.HTTPError as error:
+        with AI_JOBS_LOCK:
+            AI_JOBS[job_id].update(
+                {
+                    "status": "error",
+                    "status_code": error.code,
+                    "media_type": error.headers.get("Content-Type", "application/json"),
+                    "content": error.read(),
+                }
+            )
+    except Exception as error:
+        with AI_JOBS_LOCK:
+            AI_JOBS[job_id].update(
+                {
+                    "status": "error",
+                    "status_code": 503,
+                    "media_type": "application/json",
+                    "content": ('{"error": "AI service proxy failed: %s"}' % str(error).replace('"', "'")).encode(),
+                }
+            )
+
+
+def start_ai_job(body, content_type):
+    job_id = ai_job_id(body)
+    with AI_JOBS_LOCK:
+        existing = AI_JOBS.get(job_id)
+        if existing and existing.get("status") in {"queued", "running", "done"}:
+            return job_id, existing.get("status", "queued")
+        AI_JOBS[job_id] = {
+            "status": "queued",
+            "status_code": 202,
+            "media_type": "application/json",
+            "content": b"",
+        }
+    thread = threading.Thread(target=run_ai_job, args=(job_id, body, content_type), daemon=True)
+    thread.start()
+    return job_id, "queued"
+
+
+@app.post("/analyze_cluster")
+async def proxy_analyze_cluster(request: Request):
+    body = await request.body()
+    content_type = request.headers.get("content-type", "application/json")
+    if request.headers.get("x-ai-async") == "1":
+        job_id, status = start_ai_job(body, content_type)
+        return Response(
+            content='{"status": "%s", "job_id": "%s"}' % (status, job_id),
+            status_code=202,
+            media_type="application/json",
+            headers=ai_proxy_headers(),
+        )
+    try:
+        status_code, media_type, content = await asyncio.to_thread(
+            forward_ai_request,
+            body,
+            content_type,
+            180,
+        )
+        return Response(
+            content=content,
+            status_code=status_code,
+            media_type=media_type,
+            headers=ai_proxy_headers(),
+        )
+    except urllib.error.HTTPError as error:
+        return Response(
+            content=error.read(),
+            status_code=error.code,
+            media_type=error.headers.get("Content-Type", "application/json"),
+            headers=ai_proxy_headers(),
+        )
+    except Exception as error:
+        return Response(
+            content='{"error": "AI service proxy failed: %s"}' % str(error).replace('"', "'"),
+            status_code=503,
+            media_type="application/json",
+            headers=ai_proxy_headers(),
+        )
+
+
+@app.get("/analyze_cluster_status/{job_id}")
+async def proxy_analyze_cluster_status(job_id: str):
+    with AI_JOBS_LOCK:
+        job = AI_JOBS.get(job_id)
+        if not job:
+            return Response(
+                content='{"error": "AI analysis job was not found."}',
+                status_code=404,
+                media_type="application/json",
+                headers=ai_proxy_headers(),
+            )
+        status = job.get("status", "queued")
+        if status in {"queued", "running"}:
+            return Response(
+                content='{"status": "%s", "job_id": "%s"}' % (status, job_id),
+                status_code=202,
+                media_type="application/json",
+                headers=ai_proxy_headers(),
+            )
+        return Response(
+            content=job.get("content", b""),
+            status_code=job.get("status_code", 200),
+            media_type=job.get("media_type", "application/json"),
+            headers=ai_proxy_headers(),
+        )
+
+
+@app.get("/analyze_cluster_ping")
+async def proxy_analyze_cluster_ping():
+    return Response(
+        content='{"ok": true, "proxy": "ready", "upstream": "%s"}' % AI_SERVICE_URL.rstrip("/"),
+        status_code=200,
+        media_type="application/json",
+        headers=ai_proxy_headers(),
+    )
+
+
+@app.get("/ai_health")
+async def proxy_ai_health():
+    try:
+        with urllib.request.urlopen(f"{AI_SERVICE_URL.rstrip('/')}/health", timeout=5) as response:
+            return Response(
+                content=response.read(),
+                status_code=response.status,
+                media_type=response.headers.get("Content-Type", "application/json"),
+                headers=ai_proxy_headers(),
+            )
+    except Exception as error:
+        return Response(
+            content='{"error": "AI service health check failed: %s"}' % str(error).replace('"', "'"),
+            status_code=503,
+            media_type="application/json",
+            headers=ai_proxy_headers(),
+        )
+
+
+def collect_uploaded_files(upload_root: Path):
+    uploaded = {}
+    if not upload_root.exists():
+        return uploaded
+    files = sorted(
+        [path for path in upload_root.glob("*/*") if path.is_file()],
+        key=lambda path: path.stat().st_mtime,
+    )
+    for path in files:
+        ext = path.suffix.lower()
+        if ext:
+            uploaded[ext] = path
+        parts = path.name.split(".", 1)
+        if len(parts) > 1:
+            uploaded["." + parts[1]] = path
+    return uploaded
+
+
+def collect_sample_files(sample_dir: Path, sample: str):
+    uploaded = {}
+    for ext in REQUIRED_EXTENSIONS:
+        path = sample_dir / f"{sample}{ext}"
+        if path.exists():
+            uploaded[ext] = path
+    return uploaded
+
+
+def read_tsv_rows(path: Path):
+    if not path.exists():
+        return []
+    with open(path, "r", newline="") as handle:
+        reader = csv.DictReader(handle, delimiter="\t")
+        return list(reader)
+
+
+def summarize_sample(sample: str):
+    summary_dir = WORK_DIR / "results" / sample / "summary"
+    prioritized = read_tsv_rows(summary_dir / "prioritized_regions.tsv")
+    arts = read_tsv_rows(summary_dir / "arts.hits.tsv")
+    dbcan = read_tsv_rows(summary_dir / "dbcan.cgc.tsv")
+    mibig = read_tsv_rows(summary_dir / "mibig_dereplication.tsv")
+    antismash = read_tsv_rows(summary_dir / "antismash.bgc.tsv")
+    gecco = read_tsv_rows(summary_dir / "gecco.bgc.tsv")
+    deepbgc = read_tsv_rows(summary_dir / "deepbgc.bgc.tsv")
+
+    def nonempty(value):
+        text = str(value or "").strip()
+        return bool(text) and text.lower() not in {"nan", "n/a", "none"}
+
+    return {
+        "consensus": len(prioritized),
+        "multitool": sum(1 for row in prioritized if int(float(row.get("support_count") or 0)) >= 2),
+        "high_confidence": sum(1 for row in prioritized if row.get("confidence_category", "").strip().lower() == "high-confidence bgc"),
+        "high_interest": sum(1 for row in prioritized if row.get("interest_category", "").strip().lower() == "high-interest / potentially novel"),
+        "mibig_hits": sum(1 for row in mibig if nonempty(row.get("best_mibig_id"))),
+        "antismash": len(antismash),
+        "gecco": len(gecco),
+        "deepbgc": len(deepbgc),
+        "arts": len(arts),
+        "dbcan": len(dbcan),
+    }
+
+
+# ─── Upload Page ──────────────────────────────────────────────────────────────
+
+@ui.page("/")
+async def upload_page():
+    ui.page_title("BGC-XPLORER")
+    inject_theme()
+
+    state = {"uploaded": {}}
+    upload_token = str(uuid.uuid4())
+    upload_dir = WORK_DIR / "data" / "uploads" / upload_token
+    upload_dir.mkdir(parents=True, exist_ok=True)
+
+    results_dir = WORK_DIR / "results"
+    existing = []
+    if results_dir.exists():
+        existing = [
+            d.name for d in sorted(results_dir.iterdir())
+            if d.is_dir()
+            and (d / "report" / f"{d.name}.html").exists()
+            and d.name != "example_sample"
+        ]
+
+    with ui.column().classes("app-shell"):
+        ui.html(
+            hero_section(
+                "Upload page",
+                "Start from Bakta annotation outputs and run the BGC workflow with the same report, tables, maps and AI-ready cluster review pipeline.",
+            )
+        )
+
+        ui.html(
+            "<section class='panel'>"
+            "<div class='section-head'><h2>At a Glance</h2><span class='section-accent'></span></div>"
+            "<div class='metrics-grid metrics-grid-4'>{cards}</div>"
+            "</section>".format(
+                cards="".join(
+                    [
+                        stat_card("Upload set", "6", "The interface expects the six Bakta files used by the workflow."),
+                        stat_card("Required files", ".gbff .fna .faa .gff3 .json .tsv", "Names should match the sample name so the workflow can assemble the input set."),
+                        stat_card("Workflow", "3 BGC tools + analysis", "Runs the discovery, merging, prioritization and report generation flow."),
+                        stat_card("Ready samples", str(len(existing)), "Previously generated reports remain browsable from this screen."),
+                    ]
+                )
+            )
+        )
+
+        with ui.row().classes("w-full info-grid mb-6"):
+            ui.html(
+                info_card(
+                    "What to upload",
+                    "Provide the Bakta outputs for one sample. The app checks the required extensions and copies them into the workflow input area using the sample name you choose.",
+                    "⇡",
+                )
+            )
+            ui.html(
+                info_card(
+                    "What you get back",
+                    "A finished BGC-XPLORER report with prioritized clusters, consensus tables, gene maps and the on-demand AI analysis entrypoint.",
+                    "✦",
+                )
+            )
+
+        with ui.card().classes("panel w-full"):
+            with ui.column().classes("w-full gap-4"):
+                sample_input = ui.input(
+                    "Sample name", placeholder="e.g. Soil_1"
+                ).classes("w-full")
+                sample_input.props("outlined standout")
+
+                ui.separator()
+                ui.label("Upload Bakta output files").classes("text-2xl font-semibold")
+                ui.label(
+                    "Required: .gbff .fna .faa .gff3 .json .tsv — "
+                    "file names must match the sample name (e.g. Soil_1.gbff, Soil_1.fna, ...)"
+                ).classes("muted text-sm")
+
+                with ui.row().classes("w-full flex-wrap gap-2"):
+                    status_labels = {}
+                    for ext in REQUIRED_EXTENSIONS:
+                        status_labels[ext] = ui.label(f"\u2399 {ext}").classes(
+                            "status-chip"
+                        )
+
+                async def handle_upload(e):
+                    file = e.file
+                    filename = file.name
+                    ext = Path(filename).suffix.lower()
+                    if ext not in ALLOWED_EXTENSIONS:
+                        ui.notify(f"Skipped {filename}: only {', '.join(ALLOWED_EXTENSIONS)} are accepted.", type="warning")
+                        return
+                    content = await file.read()
+                    stored_path = upload_dir / filename
+                    stored_path.write_bytes(content)
+                    state["uploaded"][ext] = filename
+
+                    parts = filename.split(".", 1)
+                    if len(parts) > 1:
+                        full_ext = "." + parts[1]
+                        state["uploaded"][full_ext] = filename
+
+                    if ext in status_labels:
+                        status_labels[ext].set_text(f"\u2705 {ext}")
+                        status_labels[ext].classes(
+                            replace="status-chip ready"
+                        )
+                    ui.notify(f"Uploaded: {filename}", type="positive")
+
+                ui.upload(
+                    on_upload=handle_upload,
+                    multiple=True,
+                    auto_upload=True,
+                    max_files=20,
+                    max_file_size=100_000_000,
+                    max_total_size=500_000_000,
+                ).classes("w-full upload-drop").props(
+                    'accept="*/*"'
+                )
+
+                async def start_analysis():
+                    sample = sample_input.value.strip()
+                    if not sample:
+                        ui.notify("Please enter a sample name", type="warning")
+                        return
+                    sample_dir = WORK_DIR / "data" / "bakta" / sample
+                    uploaded_files = collect_uploaded_files(WORK_DIR / "data" / "uploads")
+                    existing_sample_files = collect_sample_files(sample_dir, sample)
+                    available_files = dict(existing_sample_files)
+                    available_files.update(uploaded_files)
+                    app_logger.info(
+                        "start_analysis: sample=%s uploaded=%s existing=%s available=%s missing=%s",
+                        sample,
+                        list(uploaded_files.keys()),
+                        list(existing_sample_files.keys()),
+                        list(available_files.keys()),
+                        [e for e in REQUIRED_EXTENSIONS if e not in available_files],
+                    )
+                    missing = [
+                        ext for ext in REQUIRED_EXTENSIONS
+                        if ext not in available_files
+                    ]
+                    if missing:
+                        ui.notify(
+                            f"Missing: {', '.join(missing)}", type="warning"
+                        )
+                        return
+
+                    sample_dir.mkdir(parents=True, exist_ok=True)
+                    copied = set()
+                    for ext, source in uploaded_files.items():
+                        if source in copied:
+                            continue
+                        copied.add(source)
+                        orig_name = source.name
+                        parts = source.name.split(".", 1)
+                        file_ext = parts[1] if len(parts) > 1 else ext.lstrip(".")
+                        dest = sample_dir / f"{sample}.{file_ext}"
+                        shutil.copyfile(str(source), str(dest))
+
+                    update_samples_tsv(sample, default_taxon())
+                    ui.notify(f"Starting workflow for '{sample}'...", type="positive")
+                    state["uploaded"] = {}
+                    shutil.rmtree(str(upload_dir), ignore_errors=True)
+                    ui.navigate.to(f"/progress/{sample}")
+
+                with ui.row().classes("cta-row mt-4"):
+                    ui.button("Start Analysis", on_click=start_analysis).props(
+                        "size=lg unelevated"
+                    ).classes("soft-primary-btn").style(
+                        "background: linear-gradient(135deg, rgba(108,99,246,0.62) 0%, rgba(91,82,235,0.7) 100%) !important; "
+                        "background-color: #7b73f6 !important; color: #ffffff !important; border: none !important;"
+                    )
+
+        if existing:
+            with ui.card().classes("panel w-full"):
+                with ui.column().classes("w-full gap-4"):
+                    ui.html(
+                        "<div class='section-head'><h2>Previous results</h2><span class='section-accent'></span></div>"
+                    )
+                    with ui.row().classes("previous-results"):
+                        for s in existing:
+                            ui.html(
+                                "<article class='result-card metric-indigo'>"
+                                "<div class='metric-icon' aria-hidden='true'>◔</div>"
+                                "<div class='result-card-copy'>"
+                                "<div class='result-card-title'>Ready report</div>"
+                                f"<div class='result-card-value'>{s}</div>"
+                                "<div class='result-card-meta'>Generated report, tables and exported HTML assets are ready to open.</div>"
+                                "</div>"
+                                "<div class='result-actions'>"
+                                f"<a class='result-link' href='/static_results/{s}/report/{s}.html' target='_blank'>Open report</a>"
+                                "</div>"
+                                "</article>"
+                            )
+
+
+# ─── Progress Page ────────────────────────────────────────────────────────────
+
+def start_workflow_process(sample: str):
+    cmd = [
+        "/opt/conda/bin/snakemake",
+        "-s", str(APP_DIR / "Snakefile"),
+        "--configfile", str(WORK_DIR / "config" / "config.yaml"),
+        "--cores", "4",
+        "--directory", str(WORK_DIR),
+        "--printshellcmds",
+        "--rerun-incomplete",
+    ]
+    process = subprocess.Popen(
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        cwd=str(WORK_DIR),
+        text=True,
+    )
+    state = {
+        "process": process,
+        "log": [],
+        "status": "running",
+        "last_shown": 0,
+    }
+    workflow_state[sample] = state
+
+    def reader():
+        for line in process.stdout:
+            workflow_state[sample]["log"].append(line.rstrip())
+        process.wait()
+        workflow_state[sample]["status"] = (
+            "done" if process.returncode == 0 else "error"
+        )
+
+    t = threading.Thread(target=reader, daemon=True)
+    t.start()
+    state["thread"] = t
+
+
+@ui.page("/progress/{sample}")
+async def progress_page(sample: str):
+    ui.page_title(f"BGC-XPLORER — {sample}")
+    inject_theme()
+
+    if sample not in workflow_state:
+        start_workflow_process(sample)
+
+    state = workflow_state[sample]
+
+    with ui.column().classes("app-shell"):
+        ui.html(
+            hero_section(
+                "Analyzing sample {0}".format(sample),
+                "The workflow is running the detection, merging and report-generation steps. You can stay here and watch the live log update.",
+                "Running now",
+            )
+        )
+
+        with ui.row().classes("w-full info-grid mb-6"):
+            ui.html(
+                info_card(
+                    "Live progress",
+                    "This page follows the workflow state in real time and turns into a launch point for the finished report as soon as the job completes.",
+                    "↺",
+                )
+            )
+            ui.html(
+                info_card(
+                    "What to watch",
+                    "If something fails, the log below is the first place to inspect. Otherwise you can simply wait for the result button to appear.",
+                    "⌘",
+                )
+            )
+
+        with ui.card().classes("panel w-full progress-shell"):
+            with ui.row().classes("items-center justify-between w-full"):
+                ui.html("<div class='section-head' style='margin:0'><h2>Workflow progress</h2><span class='section-accent'></span></div>")
+                ui.button("New Upload", on_click=lambda: ui.navigate.to("/")).props(
+                    "outline color=primary"
+                )
+
+            status_label = ui.label("Running...").classes("text-lg font-semibold")
+            progress_bar = ui.linear_progress(value=0).classes("w-full")
+            result_btn = ui.button("View Results", on_click=lambda: ui.navigate.to(
+                f"/results/{sample}"
+            )).props("color=primary size=lg unelevated")
+            result_btn.set_visibility(False)
+
+        with ui.card().classes("panel w-full"):
+            ui.label("Workflow log").classes("text-2xl font-semibold")
+            ui.label("Live combined stdout and stderr from the Snakemake run.").classes("muted text-sm")
+            log_widget = ui.log(max_lines=5000).classes(
+                "w-full h-96 bg-gray-900 text-green-400 font-mono text-xs log-shell"
+            )
+
+        async def poll():
+            while state["last_shown"] < len(state["log"]):
+                log_widget.push(state["log"][state["last_shown"]])
+                state["last_shown"] += 1
+
+            if state["status"] == "done":
+                status_label.set_text("Analysis complete!")
+                status_label.classes(replace="text-green-400 text-lg")
+                progress_bar.set_value(1.0)
+                result_btn.set_visibility(True)
+            elif state["status"] == "error":
+                status_label.set_text("Analysis failed. Check log above.")
+                status_label.classes(replace="text-red-400 text-lg")
+                progress_bar.set_value(1.0)
+
+            if state["status"] == "running":
+                total = 15
+                done = sum(1 for l in state["log"] if "Finished job" in l)
+                progress_bar.set_value(min(done / total, 0.95))
+
+        ui.timer(0.5, poll)
+
+
+# ─── Results Page ─────────────────────────────────────────────────────────────
+
+@ui.page("/results/{sample}")
+async def results_page(sample: str):
+    ui.page_title(f"BGC-XPLORER — {sample}")
+    inject_theme()
+
+    report_path = WORK_DIR / "results" / sample / "report" / f"{sample}.html"
+    summary_dir = WORK_DIR / "results" / sample / "summary"
+    metrics = summarize_sample(sample)
+
+    with ui.column().classes("app-shell"):
+        ui.html(
+            hero_section(
+                "Results for {0}".format(sample),
+                "Open the full BGC-XPLORER report here, review the generated tables, and jump to the standalone HTML report when you need a shareable view.",
+                "Report view",
+                )
+            )
+
+        ui.html(
+            "<section class='panel'>"
+            "<div class='section-head'><h2>At a Glance</h2><span class='section-accent'></span></div>"
+            "<div class='metrics-grid'>{cards}</div>"
+            "</section>".format(
+                cards="".join(
+                    [
+                        stat_card("Consensus", str(metrics["consensus"]), "Merged loci across the available callers for this sample."),
+                        stat_card("Multi-tool", str(metrics["multitool"]), "Consensus regions supported by at least two prediction tools."),
+                        stat_card("High-confidence", str(metrics["high_confidence"]), "Regions tagged as stronger consensus BGC candidates."),
+                        stat_card("High-interest", str(metrics["high_interest"]), "Potentially novel or especially interesting candidates."),
+                    ]
+                )
+            )
+        )
+
+        ui.html(
+            "<section class='panel'>"
+            "<div class='section-head'><h2>Tool Signals</h2><span class='section-accent'></span></div>"
+            "<div class='metrics-grid'>{cards}</div>"
+            "</section>".format(
+                cards="".join(
+                    [
+                        stat_card("antiSMASH", str(metrics["antismash"]), "Rule-based BGC region calls and class assignments."),
+                        stat_card("GECCO", str(metrics["gecco"]), "Machine-learning BGC candidates from the same Bakta sample."),
+                        stat_card("DeepBGC", str(metrics["deepbgc"]), "Domain-driven BGC predictions and activity hints."),
+                        stat_card("ARTS", str(metrics["arts"]), "Resistance-linked genomic evidence overlapping candidate loci."),
+                        stat_card("dbCAN CGC", str(metrics["dbcan"]), "Carbohydrate gene cluster substrate prediction rows."),
+                        stat_card("MIBiG hits", str(metrics["mibig_hits"]), "Consensus regions with explicit dereplication evidence."),
+                    ]
+                )
+            )
+        )
+
+        with ui.row().classes("w-full info-grid mb-6"):
+            ui.html(
+                info_card(
+                    "Embedded report",
+                    "The HTML report is shown directly below so you can browse it without leaving the app.",
+                    "▣",
+                )
+            )
+            ui.html(
+                info_card(
+                    "Standalone links",
+                    "Use the extra links for direct HTML access or to download the summary tables that feed the report.",
+                    "⇢",
+                )
+            )
+
+        if report_path.exists():
+            report_url = f"/static_results/{sample}/report/{sample}.html"
+            with ui.card().classes("panel w-full"):
+                with ui.row().classes("items-center justify-between w-full"):
+                    ui.html("<div class='section-head' style='margin:0'><h2>Report viewer</h2><span class='section-accent'></span></div>")
+                    with ui.row().classes("cta-row"):
+                        ui.button("New Upload", on_click=lambda: ui.navigate.to("/")).props(
+                            "outline color=primary"
+                        )
+                        ui.link("Open report in full page", report_url).props("target=_blank").classes("result-link")
+
+                ui.html(
+                    f'<div class="iframe-shell"><iframe src="{report_url}" '
+                    f'style="width:100%;height:calc(100vh - 120px);border:none;background:#fff;"></iframe></div>'
+                )
+        else:
+            with ui.card().classes("panel w-full"):
+                ui.label("Report not found. Run analysis first.").classes(
+                    "text-red-400 text-lg font-semibold"
+                )
+
+        if summary_dir.exists():
+            with ui.card().classes("panel w-full"):
+                ui.html(
+                    "<div class='section-head'><h2>Summary files</h2><span class='section-accent'></span></div>"
+                )
+                with ui.row().classes("summary-links"):
+                    for f in sorted(summary_dir.iterdir()):
+                        if f.is_file():
+                            url = f"/static_results/{sample}/summary/{f.name}"
+                            ui.link(f.name, url).props("download")
+
+
+# ─── Helpers ──────────────────────────────────────────────────────────────────
+
+def update_samples_tsv(sample: str, taxon: str):
+    tsv_path = WORK_DIR / "config" / "samples.tsv"
+    fieldnames = ["sample", "taxon"]
+    rows = []
+    if tsv_path.exists():
+        with open(tsv_path, "r") as fh:
+            reader = csv.DictReader(fh, delimiter="\t")
+            for row in reader:
+                if row["sample"] != sample:
+                    rows.append(row)
+    rows.append({"sample": sample, "taxon": taxon})
+    with open(tsv_path, "w", newline="") as fh:
+        writer = csv.DictWriter(fh, fieldnames=fieldnames, delimiter="\t")
+        writer.writeheader()
+        for row in rows:
+            writer.writerow(row)
+
+
+def default_taxon() -> str:
+    for config_path in (WORK_DIR / "config" / "config.yaml", APP_DIR / "config" / "config.yaml"):
+        if not config_path.exists():
+            continue
+        try:
+            with open(config_path, "r") as fh:
+                config = yaml.safe_load(fh) or {}
+            taxon = config.get("tools", {}).get("arts", {}).get("reference_set", "")
+            if taxon:
+                return str(taxon)
+        except Exception:
+            continue
+    return "actinobacteria"
+
+
+# ─── Main ─────────────────────────────────────────────────────────────────────
+
+def main():
+    parser = argparse.ArgumentParser(description="BGC-XPLORER NiceGUI web interface")
+    parser.add_argument("--host", default="0.0.0.0")
+    parser.add_argument("--port", type=int, default=8778)
+    parser.add_argument("--work-dir", default="/work")
+    parser.add_argument("--app-dir", default="/app")
+    args = parser.parse_args()
+
+    global WORK_DIR, APP_DIR
+    WORK_DIR = Path(args.work_dir)
+    APP_DIR = Path(args.app_dir)
+
+    (WORK_DIR / "data" / "bakta").mkdir(parents=True, exist_ok=True)
+    (WORK_DIR / "results").mkdir(parents=True, exist_ok=True)
+    (WORK_DIR / "config").mkdir(parents=True, exist_ok=True)
+
+    config_src = APP_DIR / "config"
+    config_dst = WORK_DIR / "config"
+    if not (config_dst / "config.yaml").exists() and (config_src / "config.yaml").exists():
+        shutil.copytree(str(config_src), str(config_dst), dirs_exist_ok=True)
+
+    app.add_static_files("/static_results", str(WORK_DIR / "results"))
+
+    ui.run(
+        host=args.host,
+        port=args.port,
+        dark=False,
+        title="BGC-XPLORER",
+        reload=False,
+        show=False,
+        storage_secret=os.environ.get("NICEGUI_STORAGE_SECRET", "bgc-xplorer-storage-secret"),
+    )
+
+
+if __name__ == "__main__":
+    main()
