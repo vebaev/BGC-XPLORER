@@ -1,4 +1,3 @@
-/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 # BGC Discovery Workflow
 
 Snakemake workflow that starts from precomputed Bakta outputs and runs:

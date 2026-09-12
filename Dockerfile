@@ -1,4 +1,3 @@
-/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 FROM mambaorg/micromamba:2.0.5
 
 USER root

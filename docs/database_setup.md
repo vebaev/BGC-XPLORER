@@ -1,4 +1,3 @@
-/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 # Database Setup
 
 This project expects external resources for `antiSMASH`, `DeepBGC`, `ARTS`, and `eggNOG-mapper`.

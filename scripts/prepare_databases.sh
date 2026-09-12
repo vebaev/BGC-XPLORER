@@ -1,4 +1,3 @@
-/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 #!/usr/bin/env bash
 set -euo pipefail
 
