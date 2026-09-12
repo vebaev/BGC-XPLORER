@@ -22,3 +22,8 @@ def arts_ref_dir(wildcards):
 def arts_root_dir(wildcards):
     subdir = config["tools"]["arts"].get("ref_subdir", "arts")
     return os.path.join(abs_path(config["execution"]["host_db_root"]), subdir)
+
+
+def database_manifest_path(wildcards):
+    container_path = "/app/db/manifest.yaml"
+    return container_path if os.path.exists(container_path) else "db/manifest.yaml"

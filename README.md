@@ -202,6 +202,20 @@ db/
   eggnog/
 ```
 
+## Reproducibility records
+
+Every completed sample produces `results/{sample}/provenance.json`. It records
+the BGC-XPLORER version and commit, image reference, tool versions, selected AI
+model, ARTS reference, effective configuration, SHA-256 checksums for inputs and
+result tables, and SHA-256 checksums for required database files. Database hashes
+are cached under the external database directory and reused while file size and
+modification time remain unchanged. API keys and other secret configuration
+fields are redacted. The HTML report links to the corresponding provenance file.
+
+Successfully validated databases remain fixed. Startup does not query for or
+install newer database releases; removing an individual database directory is
+the explicit way to request a fresh installation.
+
 ## Notes
 
 - The parser layer is intentionally defensive because these tools emit different schemas across versions.

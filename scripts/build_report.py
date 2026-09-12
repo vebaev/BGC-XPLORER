@@ -603,6 +603,7 @@ cluster_genes_path = str(snakemake.input.cluster_genes) if hasattr(snakemake.inp
 consensus = pd.read_csv(snakemake.input.consensus, sep="\t") if os.path.exists(snakemake.input.consensus) else pd.DataFrame()
 prioritized = pd.read_csv(snakemake.input.prioritized, sep="\t") if os.path.exists(snakemake.input.prioritized) else pd.DataFrame()
 overlap = pd.read_csv(snakemake.input.overlap, sep="\t") if os.path.exists(snakemake.input.overlap) else pd.DataFrame()
+provenance = read_json(snakemake.input.provenance) if hasattr(snakemake.input, "provenance") else {}
 
 prioritized_table = prioritized.copy()
 if not prioritized_table.empty:
@@ -907,6 +908,20 @@ sections = [
     "<script type='application/json' id='gene-map-table-data'>{0}</script>".format(gene_table_json),
     table_tabs(table_items),
 ]
+if provenance:
+    application = provenance.get("application", {})
+    sections.append(
+        "<section class='panel'><div class='section-head'><h2>Reproducibility</h2>"
+        "<span class='section-accent'></span></div>"
+        "<p>Version: <strong>{version}</strong> · Commit: <code>{commit}</code> · "
+        "ARTS reference: <strong>{arts}</strong> · AI model: <code>{model}</code></p>"
+        "<p><a href='../provenance.json' download>Download provenance.json</a></p></section>".format(
+            version=escape(str(application.get("version", "unknown"))),
+            commit=escape(str(application.get("git_commit", "unknown"))),
+            arts=escape(str(provenance.get("arts_reference", "unknown"))),
+            model=escape(str(provenance.get("ai", {}).get("model", "not-configured"))),
+        )
+    )
 sections.append(footer_strip(sample, generated_at))
 
 html = html_page("BGC-XPLORER : sample {0}".format(sample), sections)

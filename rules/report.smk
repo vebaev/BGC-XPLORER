@@ -11,7 +11,8 @@ rule build_report:
         cluster_genes="results/{sample}/summary/cluster_genes.tsv",
         consensus="results/{sample}/summary/consensus_bgcs.tsv",
         prioritized="results/{sample}/summary/prioritized_bgcs.tsv",
-        overlap="results/{sample}/summary/tool_overlap.tsv"
+        overlap="results/{sample}/summary/tool_overlap.tsv",
+        provenance="results/{sample}/provenance.json"
     output:
         "results/{sample}/report/{sample}.html"
     conda:

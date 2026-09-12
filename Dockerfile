@@ -96,6 +96,14 @@ COPY db/manifest.yaml /app/db/manifest.yaml
 COPY scripts/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
+ARG BGC_XPLORER_VERSION=development
+ARG VCS_REF=unknown
+LABEL org.opencontainers.image.version="${BGC_XPLORER_VERSION}" \
+      org.opencontainers.image.revision="${VCS_REF}"
+ENV BGC_XPLORER_VERSION="${BGC_XPLORER_VERSION}" \
+    BGC_XPLORER_COMMIT="${VCS_REF}" \
+    BGC_TOOL_VERSIONS_JSON="{\"snakemake\":\"9.23.1\",\"antismash\":\"8.0.4\",\"gecco\":\"0.10.3\",\"deepbgc\":\"0.1.31\",\"eggnog-mapper\":\"2.1.13\",\"dbcan\":\"5.2.9\",\"arts_commit\":\"8922f296b2a532ba51f4d5daa6a807838c21be24\"}"
+
 WORKDIR /work
 EXPOSE 8778 8484
 

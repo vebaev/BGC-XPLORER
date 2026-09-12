@@ -28,6 +28,7 @@ include: "rules/dereplication.smk"
 include: "rules/prioritize.smk"
 include: "rules/catalog.smk"
 include: "rules/cluster_maps.smk"
+include: "rules/provenance.smk"
 include: "rules/report.smk"
 
 
@@ -43,4 +44,5 @@ rule all:
         expand("results/{sample}/summary/cluster_genes.tsv", sample=SAMPLES),
         expand("results/{sample}/summary/cluster_gene_maps.tsv", sample=SAMPLES),
         expand("results/{sample}/summary/cluster_catalog.tsv", sample=SAMPLES),
-        expand("results/{sample}/qc/bakta_input_check.json", sample=SAMPLES)
+        expand("results/{sample}/qc/bakta_input_check.json", sample=SAMPLES),
+        expand("results/{sample}/provenance.json", sample=SAMPLES)
