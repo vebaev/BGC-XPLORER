@@ -1,3 +1,4 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 services:
   bgc-xplorer:
     image: "ghcr.io/${BGC_IMAGE:-vebaev/bgc-xplorer}:${BGC_VERSION:-latest}"
@@ -13,6 +14,7 @@ services:
       NVIDIA_API_KEY: ${NVIDIA_API_KEY:?Set NVIDIA_API_KEY in .env or the shell}
       NVIDIA_MODEL: ${NVIDIA_MODEL:-deepseek-ai/deepseek-v4-pro}
       AUTO_PREPARE_DATABASES: ${AUTO_PREPARE_DATABASES:-true}
+      ARTS_REFERENCE: ${ARTS_REFERENCE:-actinobacteria}
     healthcheck:
       test: ["CMD", "/opt/conda/bin/python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8778', timeout=5)"]
       interval: 30s

@@ -1,3 +1,4 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 #!/usr/bin/env bash
 set -euo pipefail
 
@@ -11,8 +12,11 @@ mkdir -p "${BIN_DIR}"
 mkdir -p "${MPL_DIR}"
 
 echo "Preparing antiSMASH database download helper"
+HELPER_TMP="${BIN_DIR}/download_antismash_databases.tmp.$$"
+trap 'rm -f "${HELPER_TMP}"' EXIT INT TERM
 curl -fsSL "https://dl.secondarymetabolites.org/releases/latest/download_antismash_databases_docker" \
-  -o "${BIN_DIR}/download_antismash_databases"
+  -o "${HELPER_TMP}"
+mv "${HELPER_TMP}" "${BIN_DIR}/download_antismash_databases"
 chmod +x "${BIN_DIR}/download_antismash_databases"
 
 echo "Downloading antiSMASH databases into ${DB_DIR}"

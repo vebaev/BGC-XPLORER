@@ -1,3 +1,4 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 import tempfile
 import unittest
 from pathlib import Path
@@ -46,6 +47,28 @@ class InspectDatabasesTests(unittest.TestCase):
             self.assertFalse(status["required_db"]["ready"])
             self.assertTrue(status["optional_db"]["ready"])
             self.assertEqual(missing_required_names(status), ["required_db"])
+
+    def test_hidden_completion_marker_can_be_required(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            database = root / "arts"
+            (database / "actinobacteria").mkdir(parents=True)
+            (database / "actinobacteria" / "coremodels.hmm").write_text("ready")
+            (database / ".bgc-xplorer-actinobacteria.ready").write_text("ready")
+            manifest = {
+                "arts": {
+                    "required": True,
+                    "host_path": "db/arts",
+                    "required_files": [
+                        "actinobacteria/coremodels.hmm",
+                        ".bgc-xplorer-actinobacteria.ready",
+                    ],
+                }
+            }
+
+            status = inspect_databases(manifest, root)
+
+            self.assertTrue(status["arts"]["ready"])
 
 
 if __name__ == "__main__":

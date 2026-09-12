@@ -1,3 +1,4 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 # Database Setup
 
 This project expects external resources for `antiSMASH`, `DeepBGC`, `ARTS`, and `eggNOG-mapper`.
@@ -62,13 +63,17 @@ db/arts/actinobacteria/
 
 Source: [ARTS README](https://github.com/ZiemertLab/ARTS)
 
-This repository does not auto-download ARTS references because they are taxon-specific and need to be placed deliberately.
-
-To fetch the official ARTS repository and unpack the bundled Actinobacteria reference zips:
+The default reference is `actinobacteria`. The Docker image contains the reference
+archives from the pinned ARTS source revision, and startup extracts them into the
+external database directory automatically. For a local source checkout, run:
 
 ```bash
 bash scripts/fetch_arts.sh
 ```
+
+Set `ARTS_REFERENCE=actinobacteria` explicitly to override the environment. This
+release rejects other values because their reference archives are not bundled or
+individually versioned yet.
 
 ## eggNOG-mapper
 
@@ -96,11 +101,16 @@ That script uses either a local `download_eggnog_data.py` installation or the lo
 
 ## Combined bootstrap
 
-If you want a best-effort combined setup:
+To prepare all required databases:
 
 ```bash
 bash scripts/fetch_databases.sh
 ```
+
+The combined bootstrap holds a filesystem lock, validates resources before each
+download, and skips valid databases. Failed or interrupted downloads remain
+incomplete and are retried at the next invocation. antiSMASH intentionally uses
+the official `latest` database helper.
 
 ## Validation
 

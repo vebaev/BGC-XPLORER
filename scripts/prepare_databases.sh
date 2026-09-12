@@ -1,20 +1,22 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 #!/usr/bin/env bash
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-DB_DIR="${ROOT_DIR}/db"
+DB_DIR="${BGC_DB_ROOT:-${ROOT_DIR}/db}"
+ARTS_REFERENCE="${ARTS_REFERENCE:-actinobacteria}"
 
 mkdir -p "${DB_DIR}/antismash"
 mkdir -p "${DB_DIR}/deepbgc"
-mkdir -p "${DB_DIR}/arts/actinobacteria"
+mkdir -p "${DB_DIR}/arts/${ARTS_REFERENCE}"
 mkdir -p "${DB_DIR}/eggnog"
 
-cat <<'EOF'
+cat <<EOF
 Database scaffold prepared under:
-  db/antismash
-  db/deepbgc
-  db/arts/actinobacteria
-  db/eggnog
+  ${DB_DIR}/antismash
+  ${DB_DIR}/deepbgc
+  ${DB_DIR}/arts/${ARTS_REFERENCE}
+  ${DB_DIR}/eggnog
 
 Next steps:
 1. antiSMASH
@@ -26,8 +28,8 @@ Next steps:
    Typical flow uses: deepbgc download
 
 3. ARTS
-   Copy or unpack the selected ARTS reference set into:
-   db/arts/actinobacteria
+   The default Actinobacteria reference is installed automatically by:
+   bash scripts/fetch_databases.sh
 
 4. eggNOG-mapper
    Download eggNOG annotation and DIAMOND databases into db/eggnog.

@@ -1,3 +1,4 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 FROM mambaorg/micromamba:2.0.5
 
 USER root
@@ -16,7 +17,7 @@ LABEL org.opencontainers.image.title="BGC-XPLORER" \
       org.opencontainers.image.source="https://github.com/vebaev/bgc-xplorer"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        build-essential default-jdk-headless tar gzip wget curl \
+        build-essential default-jdk-headless tar gzip wget curl util-linux \
         hmmer ncbi-blast+ diamond-aligner \
     && rm -rf /var/lib/apt/lists/*
 

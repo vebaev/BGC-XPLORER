@@ -1,3 +1,4 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 #!/bin/bash
 set -e
 
@@ -20,7 +21,8 @@ if "${DB_CHECK[@]}"; then
     echo "Required databases are already available; database preparation skipped."
 elif [ "${AUTO_PREPARE_DATABASES:-true}" = "true" ]; then
     echo "Required databases are incomplete; downloading supported resources..."
-    BGC_DB_ROOT=/db BGC_PYTHON="$PYTHON" bash "$APP_DIR/scripts/fetch_databases.sh"
+    BGC_DB_ROOT=/db BGC_PYTHON="$PYTHON" ARTS_REFERENCE="${ARTS_REFERENCE:-actinobacteria}" \
+        bash "$APP_DIR/scripts/fetch_databases.sh"
     "${DB_CHECK[@]}"
 else
     echo "Required databases are incomplete and AUTO_PREPARE_DATABASES is disabled." >&2

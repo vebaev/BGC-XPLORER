@@ -1,3 +1,4 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 # BGC Discovery Workflow
 
 Snakemake workflow that starts from precomputed Bakta outputs and runs:
@@ -41,6 +42,7 @@ NVIDIA_API_KEY=replace-with-your-nvidia-api-key
 NVIDIA_MODEL=nvidia/nemotron-3.5-lightning-30b-a3b
 BGC_PORT=9000
 AUTO_PREPARE_DATABASES=true
+ARTS_REFERENCE=actinobacteria
 BGC_IMAGE=vebaev/bgc-xplorer
 BGC_VERSION=latest
 ```
@@ -105,7 +107,7 @@ For real functional runs, these external assets are needed:
 
 - `antiSMASH`: database directory under `db/antismash`
 - `DeepBGC`: downloaded models and Pfam resources under `db/deepbgc`
-- `ARTS`: precomputed reference set under `db/arts/{taxon}`
+- `ARTS`: the Actinobacteria reference under `db/arts/actinobacteria`, prepared automatically
 - `eggNOG-mapper`: annotation and DIAMOND databases under `db/eggnog`
 - `GECCO`: no separate database directory is assumed by this workflow
 
@@ -157,6 +159,12 @@ Attempt automated downloads where supported:
 ```bash
 bash scripts/fetch_databases.sh
 ```
+
+The default `ARTS_REFERENCE=actinobacteria` is installed from the pinned ARTS
+source bundled in the application image. A filesystem lock prevents concurrent
+containers from preparing the same database tree. Completed resources are
+validated on every start and skipped; an interrupted download is retried on the
+next start.
 
 Build local runtime images for GECCO and DeepBGC:
 

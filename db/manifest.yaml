@@ -1,8 +1,9 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 antismash:
   required: true
   host_path: "db/antismash"
-  status: "missing"
-  notes: "Populate with antiSMASH databases downloaded for the standalone or local installation."
+  status: "managed"
+  notes: "Downloaded automatically with the official antiSMASH latest database helper when missing."
   source: "https://docs.antismash.secondarymetabolites.org/install/"
   required_files:
     - "pfam/35.0/Pfam-A.hmm"
@@ -11,8 +12,8 @@ antismash:
 deepbgc:
   required: true
   host_path: "db/deepbgc"
-  status: "missing"
-  notes: "Populate with DeepBGC downloaded models and Pfam resources."
+  status: "managed"
+  notes: "Downloaded automatically with the DeepBGC 0.1.31 downloader when missing."
   source: "https://github.com/Merck/deepbgc"
   required_files:
     - "0.1.0/detector/deepbgc.pkl"
@@ -22,14 +23,17 @@ deepbgc:
 
 arts:
   required: true
-  host_path: "db/arts/actinobacteria"
-  status: "missing"
-  notes: "Populate with ARTS precomputed reference files for the selected taxon."
+  host_path: "db/arts"
+  status: "managed"
+  notes: "Actinobacteria is installed automatically from the ARTS source revision bundled in the image."
   source: "https://github.com/ZiemertLab/ARTS"
   required_files:
-    - "coremodels.hmm"
-    - "model_metadata.json"
-    - "genematrix.txt"
+    - "actinobacteria/coremodels.hmm"
+    - "actinobacteria/model_metadata.json"
+    - "actinobacteria/genematrix.txt"
+    - "knownresistance.hmm"
+    - "dufmodels.hmm"
+    - ".bgc-xplorer-actinobacteria.ready"
 
 gecco:
   required: false
@@ -41,8 +45,8 @@ gecco:
 eggnog:
   required: true
   host_path: "db/eggnog"
-  status: "linked"
-  notes: "Symlinked to /home/vebaev/codex/data/databases/eggnog. emapper reports Installed eggNOG DB version 5.0.2 via --data_dir db/eggnog. Binary in external mamba env /home/vebaev/codex/mamba_envs/eggnog (emapper-1.0-8-gea57f19)."
+  status: "managed"
+  notes: "Downloaded automatically with the eggNOG-mapper 2.1.13 downloader when missing."
   source: "https://github.com/eggnogdb/eggnog-mapper"
   required_files:
     - "eggnog.db"
@@ -52,8 +56,8 @@ eggnog:
 dbcan:
   required: false
   host_path: "db/dbcan"
-  status: "linked"
-  notes: "Symlinked to /home/vebaev/codex/data/databases/dbcan_v5 (dbCAN v5 DB, 7.4G). Binary in external mamba env /home/vebaev/codex/mamba_envs/dbcan_v5 (run_dbcan v5.2.9). No workflow rule consumes this yet."
+  status: "optional"
+  notes: "Optional dbCAN v5 resource; the current workflow can start without it."
   source: "https://github.com/linnabrown/run_dbcan"
   required_files:
     - "dbCAN.hmm"
