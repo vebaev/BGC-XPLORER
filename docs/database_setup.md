@@ -1,18 +1,36 @@
 # Database Setup
 
-This project expects external resources for `antiSMASH`, `DeepBGC`, `ARTS`, and `eggNOG-mapper`.
+This project expects external resources for Bakta, `antiSMASH`, `DeepBGC`, `ARTS`, and `eggNOG-mapper`.
 
 ## Current layout
 
 ```text
 db/
   manifest.yaml
+  bakta/
+    db-light/  # when BAKTA_DB_TYPE=light
+    db/        # when BAKTA_DB_TYPE=full
   antismash/
   deepbgc/
   arts/
     actinobacteria/
   eggnog/
 ```
+
+## Bakta
+
+Set `BAKTA_DB_TYPE=light` or `BAKTA_DB_TYPE=full` in `.env` before starting
+Docker Compose. Startup validates the selected directory and runs Bakta's
+official downloader only if it is absent or incomplete:
+
+```bash
+BAKTA_DB_TYPE=light BGC_DB_ROOT="$PWD/db" bash scripts/fetch_bakta_db.sh
+```
+
+The official downloader selects the newest database compatible with the pinned
+Bakta runtime, verifies the archive, extracts it, and initializes AMRFinderPlus.
+Once validation succeeds, later starts do not contact the release service or
+check for updates. Light and full databases may coexist in the external volume.
 
 ## antiSMASH
 

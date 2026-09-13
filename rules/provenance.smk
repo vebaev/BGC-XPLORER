@@ -1,6 +1,6 @@
 rule build_provenance:
     input:
-        raw=lambda wc: [bakta_file(wc, key) for key in ("gbff", "fna", "faa", "gff3", "json", "tsv")],
+        raw=lambda wc: [os.path.join(config.get("fasta_dir", "data/fasta"), wc.sample + ".fasta")] + [bakta_file(wc, key) for key in ("gbff", "fna", "faa", "gff3", "json", "tsv")],
         artifacts=[
             "results/{sample}/qc/bakta_input_check.json",
             "results/{sample}/bakta/{sample}.metadata.json",

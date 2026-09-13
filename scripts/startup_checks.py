@@ -13,6 +13,8 @@ DEFAULT_EXECUTABLES = [
     "/opt/conda/envs/deepbgc/bin/deepbgc",
     "/opt/conda/envs/eggnog/bin/emapper.py",
     "/opt/conda/envs/arts/bin/python",
+    "/opt/conda/envs/bakta/bin/bakta",
+    "/opt/conda/envs/bakta/bin/bakta_db",
 ]
 
 

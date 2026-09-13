@@ -13,6 +13,7 @@ services:
       NVIDIA_API_KEY: ${NVIDIA_API_KEY:?Set NVIDIA_API_KEY in .env or the shell}
       NVIDIA_MODEL: ${NVIDIA_MODEL:-deepseek-ai/deepseek-v4-pro}
       AUTO_PREPARE_DATABASES: ${AUTO_PREPARE_DATABASES:-true}
+      BAKTA_DB_TYPE: ${BAKTA_DB_TYPE:-light}
       ARTS_REFERENCE: ${ARTS_REFERENCE:-actinobacteria}
       BGC_IMAGE_REFERENCE: "ghcr.io/${BGC_IMAGE:-vebaev/bgc-xplorer}:${BGC_VERSION:-latest}"
     healthcheck:

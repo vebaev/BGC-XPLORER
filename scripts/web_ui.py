@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """BGC-XPLORER NiceGUI web interface.
 
-Upload Bakta annotation output → run Snakemake workflow → view results.
+Upload a bacterial genome FASTA → annotate with Bakta → run the workflow.
 Served on port 8778 alongside the AI cluster server on 8787.
 """
 
@@ -23,13 +23,13 @@ import yaml
 from nicegui import ui, app
 from fastapi import Request, Response
 
+from fasta_input import FASTA_EXTENSIONS, fasta_suffix, normalize_sample_name
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
 app_logger = logging.getLogger("bgc_xplorer")
 
 WORK_DIR = Path("/work")
 APP_DIR = Path("/app")
-ALLOWED_EXTENSIONS = [".gbff", ".fna", ".faa", ".gff3", ".json", ".tsv"]
-REQUIRED_EXTENSIONS = ALLOWED_EXTENSIONS
 
 workflow_state: dict = {}
 AI_SERVICE_URL = os.environ.get("AI_SERVICE_URL", "http://127.0.0.1:8484")
@@ -752,33 +752,6 @@ async def proxy_ai_health():
         )
 
 
-def collect_uploaded_files(upload_root: Path):
-    uploaded = {}
-    if not upload_root.exists():
-        return uploaded
-    files = sorted(
-        [path for path in upload_root.glob("*/*") if path.is_file()],
-        key=lambda path: path.stat().st_mtime,
-    )
-    for path in files:
-        ext = path.suffix.lower()
-        if ext:
-            uploaded[ext] = path
-        parts = path.name.split(".", 1)
-        if len(parts) > 1:
-            uploaded["." + parts[1]] = path
-    return uploaded
-
-
-def collect_sample_files(sample_dir: Path, sample: str):
-    uploaded = {}
-    for ext in REQUIRED_EXTENSIONS:
-        path = sample_dir / f"{sample}{ext}"
-        if path.exists():
-            uploaded[ext] = path
-    return uploaded
-
-
 def read_tsv_rows(path: Path):
     if not path.exists():
         return []
@@ -822,7 +795,7 @@ async def upload_page():
     ui.page_title("BGC-XPLORER")
     inject_theme()
 
-    state = {"uploaded": {}}
+    state = {"uploaded_path": None}
     upload_token = str(uuid.uuid4())
     upload_dir = WORK_DIR / "data" / "uploads" / upload_token
     upload_dir.mkdir(parents=True, exist_ok=True)
@@ -841,7 +814,7 @@ async def upload_page():
         ui.html(
             hero_section(
                 "Upload page",
-                "Start from Bakta annotation outputs and run the BGC workflow with the same report, tables, maps and AI-ready cluster review pipeline.",
+                "Upload one bacterial genome FASTA. BGC-XPLORER runs Bakta annotation first, then the complete discovery and reporting workflow.",
             )
         )
 
@@ -852,9 +825,9 @@ async def upload_page():
             "</section>".format(
                 cards="".join(
                     [
-                        stat_card("Upload set", "6", "The interface expects the six Bakta files used by the workflow."),
-                        stat_card("Required files", ".gbff .fna .faa .gff3 .json .tsv", "Names should match the sample name so the workflow can assemble the input set."),
-                        stat_card("Workflow", "3 BGC tools + analysis", "Runs the discovery, merging, prioritization and report generation flow."),
+                        stat_card("Upload", "1 FASTA", "Accepted extensions: .fa, .fasta and .fna."),
+                        stat_card("Annotation", "Bakta", "The container creates every annotation file required downstream."),
+                        stat_card("Workflow", "3 BGC tools + analysis", "Runs discovery, merging, prioritization and report generation."),
                         stat_card("Ready samples", str(len(existing)), "Previously generated reports remain browsable from this screen."),
                     ]
                 )
@@ -865,7 +838,7 @@ async def upload_page():
             ui.html(
                 info_card(
                     "What to upload",
-                    "Provide the Bakta outputs for one sample. The app checks the required extensions and copies them into the workflow input area using the sample name you choose.",
+                    "Provide one nucleotide FASTA for an assembled bacterial genome, MAG or plasmid. Choose a short sample name for result files and reports.",
                     "⇡",
                 )
             )
@@ -885,97 +858,60 @@ async def upload_page():
                 sample_input.props("outlined standout")
 
                 ui.separator()
-                ui.label("Upload Bakta output files").classes("text-2xl font-semibold")
+                ui.label("Upload genome FASTA").classes("text-2xl font-semibold")
                 ui.label(
-                    "Required: .gbff .fna .faa .gff3 .json .tsv — "
-                    "file names must match the sample name (e.g. Soil_1.gbff, Soil_1.fna, ...)"
+                    "One uncompressed .fa, .fasta or .fna file. Bakta database type is selected at Docker startup with BAKTA_DB_TYPE."
                 ).classes("muted text-sm")
 
-                with ui.row().classes("w-full flex-wrap gap-2"):
-                    status_labels = {}
-                    for ext in REQUIRED_EXTENSIONS:
-                        status_labels[ext] = ui.label(f"\u2399 {ext}").classes(
-                            "status-chip"
-                        )
+                status_label = ui.label("\u2399 Waiting for FASTA").classes("status-chip")
 
                 async def handle_upload(e):
                     file = e.file
                     filename = file.name
-                    ext = Path(filename).suffix.lower()
-                    if ext not in ALLOWED_EXTENSIONS:
-                        ui.notify(f"Skipped {filename}: only {', '.join(ALLOWED_EXTENSIONS)} are accepted.", type="warning")
+                    ext = fasta_suffix(filename)
+                    if not ext:
+                        ui.notify(f"Skipped {filename}: use {', '.join(FASTA_EXTENSIONS)}.", type="warning")
                         return
                     content = await file.read()
                     stored_path = upload_dir / filename
                     stored_path.write_bytes(content)
-                    state["uploaded"][ext] = filename
-
-                    parts = filename.split(".", 1)
-                    if len(parts) > 1:
-                        full_ext = "." + parts[1]
-                        state["uploaded"][full_ext] = filename
-
-                    if ext in status_labels:
-                        status_labels[ext].set_text(f"\u2705 {ext}")
-                        status_labels[ext].classes(
-                            replace="status-chip ready"
-                        )
+                    previous = state.get("uploaded_path")
+                    if previous and Path(previous) != stored_path:
+                        Path(previous).unlink(missing_ok=True)
+                    state["uploaded_path"] = str(stored_path)
+                    status_label.set_text(f"\u2705 {filename}")
+                    status_label.classes(replace="status-chip ready")
                     ui.notify(f"Uploaded: {filename}", type="positive")
 
                 ui.upload(
                     on_upload=handle_upload,
-                    multiple=True,
+                    multiple=False,
                     auto_upload=True,
-                    max_files=20,
-                    max_file_size=100_000_000,
-                    max_total_size=500_000_000,
+                    max_files=1,
+                    max_file_size=2_000_000_000,
+                    max_total_size=2_000_000_000,
                 ).classes("w-full upload-drop").props(
-                    'accept="*/*"'
+                    'accept=".fa,.fasta,.fna"'
                 )
 
                 async def start_analysis():
-                    sample = sample_input.value.strip()
-                    if not sample:
+                    try:
+                        sample = normalize_sample_name(sample_input.value)
+                    except ValueError:
                         ui.notify("Please enter a sample name", type="warning")
                         return
-                    sample_dir = WORK_DIR / "data" / "bakta" / sample
-                    uploaded_files = collect_uploaded_files(WORK_DIR / "data" / "uploads")
-                    existing_sample_files = collect_sample_files(sample_dir, sample)
-                    available_files = dict(existing_sample_files)
-                    available_files.update(uploaded_files)
-                    app_logger.info(
-                        "start_analysis: sample=%s uploaded=%s existing=%s available=%s missing=%s",
-                        sample,
-                        list(uploaded_files.keys()),
-                        list(existing_sample_files.keys()),
-                        list(available_files.keys()),
-                        [e for e in REQUIRED_EXTENSIONS if e not in available_files],
-                    )
-                    missing = [
-                        ext for ext in REQUIRED_EXTENSIONS
-                        if ext not in available_files
-                    ]
-                    if missing:
-                        ui.notify(
-                            f"Missing: {', '.join(missing)}", type="warning"
-                        )
+                    uploaded_path = state.get("uploaded_path")
+                    if not uploaded_path or not Path(uploaded_path).is_file():
+                        ui.notify("Please upload one FASTA file", type="warning")
                         return
 
-                    sample_dir.mkdir(parents=True, exist_ok=True)
-                    copied = set()
-                    for ext, source in uploaded_files.items():
-                        if source in copied:
-                            continue
-                        copied.add(source)
-                        orig_name = source.name
-                        parts = source.name.split(".", 1)
-                        file_ext = parts[1] if len(parts) > 1 else ext.lstrip(".")
-                        dest = sample_dir / f"{sample}.{file_ext}"
-                        shutil.copyfile(str(source), str(dest))
+                    fasta_dir = WORK_DIR / "data" / "fasta"
+                    fasta_dir.mkdir(parents=True, exist_ok=True)
+                    shutil.copyfile(uploaded_path, fasta_dir / f"{sample}.fasta")
 
                     update_samples_tsv(sample, default_taxon())
                     ui.notify(f"Starting workflow for '{sample}'...", type="positive")
-                    state["uploaded"] = {}
+                    state["uploaded_path"] = None
                     shutil.rmtree(str(upload_dir), ignore_errors=True)
                     ui.navigate.to(f"/progress/{sample}")
 
@@ -1021,6 +957,7 @@ def start_workflow_process(sample: str):
         "--directory", str(WORK_DIR),
         "--printshellcmds",
         "--rerun-incomplete",
+        f"results/{sample}/report/{sample}.html",
     ]
     process = subprocess.Popen(
         cmd,
@@ -1282,6 +1219,7 @@ def main():
     APP_DIR = Path(args.app_dir)
 
     (WORK_DIR / "data" / "bakta").mkdir(parents=True, exist_ok=True)
+    (WORK_DIR / "data" / "fasta").mkdir(parents=True, exist_ok=True)
     (WORK_DIR / "results").mkdir(parents=True, exist_ok=True)
     (WORK_DIR / "config").mkdir(parents=True, exist_ok=True)
 

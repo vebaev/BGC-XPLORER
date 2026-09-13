@@ -1,6 +1,7 @@
 # BGC Discovery Workflow
 
-Snakemake workflow that starts from precomputed Bakta outputs and runs:
+Snakemake workflow that starts from a bacterial genome FASTA, annotates it with
+Bakta, and runs:
 
 - antiSMASH
 - GECCO
@@ -12,14 +13,15 @@ The workflow then normalizes the tool outputs, builds a simple consensus table, 
 
 ## Expected input layout
 
-Each sample must exist under `data/bakta/{sample}/` and include:
+The web interface accepts one uncompressed `.fa`, `.fasta`, or `.fna` file. It
+stores the normalized input as:
 
-- `{sample}.gbff`
-- `{sample}.fna`
-- `{sample}.faa`
-- `{sample}.gff3`
-- `{sample}.json`
-- `{sample}.tsv`
+```text
+data/fasta/{sample}.fasta
+```
+
+Bakta runs as the first workflow step and writes its derived annotation files
+under `data/bakta/{sample}/`.
 
 ## Docker quick start
 
@@ -41,6 +43,7 @@ NVIDIA_API_KEY=replace-with-your-nvidia-api-key
 NVIDIA_MODEL=nvidia/nemotron-3.5-lightning-30b-a3b
 BGC_PORT=9000
 AUTO_PREPARE_DATABASES=true
+BAKTA_DB_TYPE=light
 ARTS_REFERENCE=actinobacteria
 BGC_IMAGE=vebaev/bgc-xplorer
 BGC_VERSION=latest
@@ -58,15 +61,22 @@ mounted `db/` directory. Existing valid resources are reused. When required
 resources are missing and `AUTO_PREPARE_DATABASES=true`, supported database
 downloaders run and validation is repeated before the service starts.
 
+`BAKTA_DB_TYPE` accepts `light` or `full`. The default `light` database needs
+substantially less disk space. The selected database is stored under the
+external `./db/bakta` volume and is downloaded only when no valid local copy is
+present. Changing the setting to `full` downloads and then uses the full set;
+existing databases are not updated automatically.
+
 ARTS uses a taxon-specific reference set. If the required ARTS files are not
 present under `db/arts/actinobacteria`, startup stops with the missing file
 list; populate that reference set and run `docker compose up -d` again.
 
 ## Snakemake quick start
 
-1. Edit `config/samples.tsv`
-2. Edit `config/config.yaml` if you need custom arguments
-3. Run:
+1. Put each input at `data/fasta/{sample}.fasta`
+2. Edit `config/samples.tsv`
+3. Set `BAKTA_DB_TYPE=light` or `BAKTA_DB_TYPE=full`
+4. Run:
 
 ```bash
 snakemake --use-conda --cores 4
@@ -81,7 +91,8 @@ execution:
   mode: "mock"
 ```
 
-That mode creates lightweight placeholder outputs for antiSMASH, GECCO, DeepBGC, and ARTS so the workflow can be tested end-to-end from the provided demo Bakta sample.
+That mode creates lightweight placeholder outputs for the downstream BGC tools.
+Bakta still requires its selected external database and a FASTA input.
 
 Switch to real tool execution with:
 
@@ -104,6 +115,7 @@ execution:
 
 For real functional runs, these external assets are needed:
 
+- `Bakta`: `db/bakta/db-light` or `db/bakta/db`, selected with `BAKTA_DB_TYPE`
 - `antiSMASH`: database directory under `db/antismash`
 - `DeepBGC`: downloaded models and Pfam resources under `db/deepbgc`
 - `ARTS`: the Actinobacteria reference under `db/arts/actinobacteria`, prepared automatically

@@ -3,7 +3,9 @@ rule run_antismash:
         gbff=lambda wc: bakta_file(wc, "gbff"),
         qc="results/{sample}/qc/bakta_input_check.json"
     output:
-        done=touch("results/{sample}/antismash/.done")
+        done=touch("results/{sample}/antismash/.done"),
+        index="results/{sample}/antismash/index.html",
+        regions="results/{sample}/antismash/regions.js"
     params:
         outdir="results/{sample}/antismash",
         extra=lambda wc: config["tools"]["antismash"]["extra_args"],
@@ -19,6 +21,8 @@ rule run_antismash:
         mkdir -p {params.outdir}
         if [ "{params.mode}" = "mock" ]; then
           printf 'contig\tstart\tend\tproduct\tregion_number\ncontig_1\t1000\t15000\tNRPS\t1\ncontig_1\t22000\t34000\tRiPP\t2\n' > {params.outdir}/{wildcards.sample}.regions.tsv
+          printf '<!doctype html><title>mock antiSMASH</title>\n' > {output.index}
+          printf 'var recordData = [];\n' > {output.regions}
         elif [ "{params.mode}" = "docker" ]; then
           docker run --rm \
             --user "$(id -u):$(id -g)" \

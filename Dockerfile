@@ -10,6 +10,7 @@ ARG GECCO_VERSION=0.10.3
 ARG DEEPBGC_VERSION=0.1.31
 ARG EGGNOG_MAPPER_VERSION=2.1.13
 ARG DBCAN_VERSION=5.2.9
+ARG BAKTA_VERSION=1.12.0
 ARG ARTS_COMMIT=8922f296b2a532ba51f4d5daa6a807838c21be24
 LABEL org.opencontainers.image.title="BGC-XPLORER" \
       org.opencontainers.image.description="Reproducible biosynthetic gene-cluster discovery workflow" \
@@ -69,6 +70,10 @@ RUN micromamba create -y -n dbcan -c conda-forge -c bioconda \
         python=3.10 dbcan=${DBCAN_VERSION} hmmer \
     && micromamba clean -a -y
 
+RUN micromamba create -y -n bakta -c conda-forge -c bioconda \
+        bakta=${BAKTA_VERSION} \
+    && micromamba clean -a -y
+
 RUN mkdir -p /opt/arts \
     && wget -qO /tmp/arts.tar.gz "https://github.com/ZiemertLab/ARTS/archive/${ARTS_COMMIT}.tar.gz" \
     && tar xzf /tmp/arts.tar.gz --strip-components=1 -C /opt/arts \
@@ -102,7 +107,7 @@ LABEL org.opencontainers.image.version="${BGC_XPLORER_VERSION}" \
       org.opencontainers.image.revision="${VCS_REF}"
 ENV BGC_XPLORER_VERSION="${BGC_XPLORER_VERSION}" \
     BGC_XPLORER_COMMIT="${VCS_REF}" \
-    BGC_TOOL_VERSIONS_JSON="{\"snakemake\":\"9.23.1\",\"antismash\":\"8.0.4\",\"gecco\":\"0.10.3\",\"deepbgc\":\"0.1.31\",\"eggnog-mapper\":\"2.1.13\",\"dbcan\":\"5.2.9\",\"arts_commit\":\"8922f296b2a532ba51f4d5daa6a807838c21be24\"}"
+    BGC_TOOL_VERSIONS_JSON="{\"snakemake\":\"9.23.1\",\"bakta\":\"1.12.0\",\"antismash\":\"8.0.4\",\"gecco\":\"0.10.3\",\"deepbgc\":\"0.1.31\",\"eggnog-mapper\":\"2.1.13\",\"dbcan\":\"5.2.9\",\"arts_commit\":\"8922f296b2a532ba51f4d5daa6a807838c21be24\"}"
 
 WORKDIR /work
 EXPOSE 8778 8484

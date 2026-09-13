@@ -1,3 +1,25 @@
+bakta_light:
+  required: false
+  host_path: "db/bakta/db-light"
+  status: "selected-by-environment"
+  notes: "Used when BAKTA_DB_TYPE=light; downloaded once and never auto-updated."
+  source: "https://github.com/oschwengers/bakta"
+  required_files:
+    - "version.json"
+    - "bakta.db"
+    - "pscc.dmnd"
+
+bakta_full:
+  required: false
+  host_path: "db/bakta/db"
+  status: "selected-by-environment"
+  notes: "Used when BAKTA_DB_TYPE=full; downloaded once and never auto-updated."
+  source: "https://github.com/oschwengers/bakta"
+  required_files:
+    - "version.json"
+    - "bakta.db"
+    - "psc.dmnd"
+
 antismash:
   required: true
   host_path: "db/antismash"

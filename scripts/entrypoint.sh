@@ -6,7 +6,7 @@ APP_DIR="/app"
 PYTHON="/opt/conda/bin/python"
 LOCAL_AI_ENV="$WORK_DIR/config/local_ai.env"
 
-mkdir -p "$WORK_DIR/data/bakta" "$WORK_DIR/results"
+mkdir -p "$WORK_DIR/data/fasta" "$WORK_DIR/data/bakta" "$WORK_DIR/results"
 
 if [ ! -f "$WORK_DIR/config/config.yaml" ]; then
     cp -r "$APP_DIR/config/." "$WORK_DIR/config/"
@@ -14,6 +14,24 @@ fi
 
 echo "Checking bundled tool runtimes..."
 $PYTHON "$APP_DIR/scripts/startup_checks.py"
+
+BAKTA_DB_TYPE="${BAKTA_DB_TYPE:-light}"
+BAKTA_CHECK=("$PYTHON" "$APP_DIR/scripts/check_bakta_database.py" --db-root /db --type "$BAKTA_DB_TYPE")
+if ! "${BAKTA_CHECK[@]}"; then
+    if [ "${AUTO_PREPARE_DATABASES:-true}" = "true" ]; then
+        BGC_DB_ROOT=/db BGC_PYTHON="$PYTHON" BAKTA_DB_TYPE="$BAKTA_DB_TYPE" \
+            bash "$APP_DIR/scripts/fetch_bakta_db.sh"
+    else
+        echo "The selected Bakta database is incomplete and AUTO_PREPARE_DATABASES is disabled." >&2
+        exit 1
+    fi
+fi
+export BAKTA_DB_TYPE
+if [ "$BAKTA_DB_TYPE" = "light" ]; then
+    export BAKTA_DB="/db/bakta/db-light"
+else
+    export BAKTA_DB="/db/bakta/db"
+fi
 
 DB_CHECK=("$PYTHON" "$APP_DIR/scripts/check_databases.py" --manifest "$APP_DIR/db/manifest.yaml" --db-root /db)
 if "${DB_CHECK[@]}"; then
