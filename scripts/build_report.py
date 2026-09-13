@@ -1,4 +1,4 @@
-import base64
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 import json
 import os
 from datetime import datetime
@@ -8,30 +8,20 @@ from urllib.parse import quote
 import pandas as pd
 
 from common import df_to_html_table, format_consensus_label, html_page, load_table_if_exists, read_json
+from report_branding import image_data_uri, report_home_link
 
 
-def _load_logo_base64():
-    """Load the project logo as a base64 PNG data URI for embedding in the report.
-
-    Prefer the higher-resolution logo.png in the report assets directory
-    (next to cluster_maps) and fall back to logo@56.png when only the smaller
-    raster is available. Returns an empty string when the logo is not available
-    so the report keeps rendering without it.
-    """
+def _load_logo_data_uri():
     report_dir = os.path.dirname(os.path.abspath(str(snakemake.output[0])))
-    candidates = [
+    return image_data_uri([
         os.path.join(report_dir, "assets", "logo.png"),
         os.path.join(report_dir, "assets", "logo@56.png"),
-    ]
-    for path in candidates:
-        if os.path.exists(path):
-            with open(path, "rb") as handle:
-                data = base64.b64encode(handle.read()).decode("ascii")
-            return "data:image/png;base64,{0}".format(data)
-    return ""
+        "/app/logo.jpg",
+        os.path.abspath("logo.jpg"),
+    ])
 
 
-LOGO_DATA_URI = _load_logo_base64()
+LOGO_DATA_URI = _load_logo_data_uri()
 
 
 def as_text(value, fallback="n/a"):
@@ -822,6 +812,7 @@ if not dbcan_table.empty:
     })
 
 sections = [
+    report_home_link(),
     (
         "<section class='hero-card'>"
         "<div class='hero-brand'>"

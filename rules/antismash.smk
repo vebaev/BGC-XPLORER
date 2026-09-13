@@ -1,3 +1,4 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 rule run_antismash:
     input:
         gbff=lambda wc: bakta_file(wc, "gbff"),
@@ -6,6 +7,7 @@ rule run_antismash:
         done=touch("results/{sample}/antismash/.done"),
         index="results/{sample}/antismash/index.html",
         regions="results/{sample}/antismash/regions.js"
+    threads: BGC_THREADS
     params:
         outdir="results/{sample}/antismash",
         extra=lambda wc: config["tools"]["antismash"]["extra_args"],
@@ -33,6 +35,7 @@ rule run_antismash:
             {params.work_root}/{input.gbff} \
             --output-dir {params.work_root}/{params.outdir} \
             --databases {params.db_root}/antismash \
+            --cpus {threads} \
             {params.extra}
         else
           TOOL_BIN="{params.executable}"
@@ -42,7 +45,7 @@ rule run_antismash:
           if [ "{params.reuse_existing}" = "true" ] && [ -f "{params.outdir}/index.html" ] && [ -f "{params.outdir}/regions.js" ]; then
             printf 'Reusing existing antiSMASH output in %s\n' "{params.outdir}"
           elif [ -n "$TOOL_BIN" ] && [ -x "$TOOL_BIN" ]; then
-            "$TOOL_BIN" {input.gbff} --output-dir {params.outdir} {params.extra}
+            "$TOOL_BIN" {input.gbff} --output-dir {params.outdir} --cpus {threads} {params.extra}
           else
             printf 'antiSMASH executable was not found and no reusable output exists in %s\n' "{params.outdir}" >&2
             exit 1

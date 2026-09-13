@@ -1,3 +1,4 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 rule run_dbcan:
     input:
         faa=lambda wc: bakta_file(wc, "faa"),
@@ -5,7 +6,7 @@ rule run_dbcan:
         qc="results/{sample}/qc/bakta_input_check.json"
     output:
         done=touch("results/{sample}/dbcan/.done")
-    threads: 8
+    threads: BGC_THREADS
     params:
         outdir="results/{sample}/dbcan",
         extra=lambda wc: config["tools"]["dbcan"]["extra_args"],

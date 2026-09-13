@@ -1,3 +1,4 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 FROM mambaorg/micromamba:2.0.5
 
 USER root
@@ -91,6 +92,7 @@ RUN cd /opt/arts \
                 /opt/arts/artspipeline1.py
 
 COPY Snakefile /app/Snakefile
+COPY logo.jpg /app/logo.jpg
 COPY rules/ /app/rules/
 COPY scripts/ /app/scripts/
 RUN /opt/conda/bin/python /app/scripts/startup_checks.py

@@ -1,3 +1,4 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 import json
 import tempfile
 import unittest
@@ -9,6 +10,12 @@ from scripts.build_provenance import build_provenance, sha256_file
 
 
 class BuildProvenanceTests(unittest.TestCase):
+    def test_script_can_be_embedded_by_snakemake(self):
+        script_path = Path(__file__).parents[1] / "scripts/build_provenance.py"
+        source = "snakemake = None\n" + script_path.read_text()
+
+        compile(source, str(script_path), "exec")
+
     def test_records_reproducibility_inputs_without_secrets(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -48,6 +55,7 @@ class BuildProvenanceTests(unittest.TestCase):
                     "NVIDIA_MODEL": "nvidia/test-model",
                     "NVIDIA_API_KEY": "must-not-appear",
                     "ARTS_REFERENCE": "actinobacteria",
+                    "BGC_THREADS": "8",
                     "BGC_TOOL_VERSIONS_JSON": '{"antismash":"8.0.4"}',
                 },
             )
@@ -60,6 +68,7 @@ class BuildProvenanceTests(unittest.TestCase):
             self.assertEqual(provenance["application"]["git_commit"], "abc123")
             self.assertEqual(provenance["ai"]["model"], "nvidia/test-model")
             self.assertEqual(provenance["arts_reference"], "actinobacteria")
+            self.assertEqual(provenance["execution"]["threads"], 8)
             self.assertEqual(provenance["inputs"][0]["sha256"], sha256_file(str(input_path)))
             self.assertEqual(provenance["databases"]["arts"]["files"][0]["sha256"], sha256_file(str(database_file)))
             self.assertEqual(provenance["tools"]["antismash"], "8.0.4")

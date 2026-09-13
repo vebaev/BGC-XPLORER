@@ -1,3 +1,4 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 samples: "config/samples.tsv"
 
 bakta_dir: "data/bakta"
@@ -23,7 +24,6 @@ tools:
   bakta:
     executable: "/opt/conda/envs/bakta/bin/bakta"
     db_root: "/db/bakta"
-    threads: 4
     extra_args: ""
   antismash:
     extra_args: "--databases /db/antismash"

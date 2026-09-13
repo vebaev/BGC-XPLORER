@@ -1,3 +1,4 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 #!/bin/bash
 set -e
 
@@ -5,6 +6,8 @@ WORK_DIR="/work"
 APP_DIR="/app"
 PYTHON="/opt/conda/bin/python"
 LOCAL_AI_ENV="$WORK_DIR/config/local_ai.env"
+BAKTA_ENV_BIN="${BAKTA_ENV_BIN:-/opt/conda/envs/bakta/bin}"
+export PATH="${BAKTA_ENV_BIN}:${PATH}"
 
 mkdir -p "$WORK_DIR/data/fasta" "$WORK_DIR/data/bakta" "$WORK_DIR/results"
 

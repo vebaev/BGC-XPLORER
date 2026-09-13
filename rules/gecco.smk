@@ -1,9 +1,11 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 rule run_gecco:
     input:
         fna=lambda wc: bakta_file(wc, "fna"),
         qc="results/{sample}/qc/bakta_input_check.json"
     output:
         done=touch("results/{sample}/gecco/.done")
+    threads: BGC_THREADS
     params:
         outdir="results/{sample}/gecco",
         extra=lambda wc: config["tools"]["gecco"]["extra_args"],
@@ -25,6 +27,7 @@ rule run_gecco:
             gecco -v run \
             --genome {params.work_root}/{input.fna} \
             --output-dir {params.work_root}/{params.outdir} \
+            --jobs {threads} \
             {params.extra}
         else
           TOOL_BIN="{params.executable}"
@@ -34,7 +37,7 @@ rule run_gecco:
           if [ "{params.reuse_existing}" = "true" ] && ls "{params.outdir}"/*.clusters.tsv >/dev/null 2>&1; then
             printf 'Reusing existing GECCO output in %s\n' "{params.outdir}"
           elif [ -n "$TOOL_BIN" ] && [ -x "$TOOL_BIN" ]; then
-            "$TOOL_BIN" -v run --genome {input.fna} --output-dir {params.outdir} {params.extra}
+            "$TOOL_BIN" -v run --genome {input.fna} --output-dir {params.outdir} --jobs {threads} {params.extra}
           else
             printf 'GECCO executable was not found and no reusable output exists in %s\n' "{params.outdir}" >&2
             exit 1

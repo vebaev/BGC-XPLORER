@@ -1,7 +1,8 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 #!/usr/bin/env python3
 """BGC-XPLORER NiceGUI web interface.
 
-Upload a bacterial genome FASTA → annotate with Bakta → run the workflow.
+Upload a bacterial genome FASTA, run the integrated BGC workflow, and review the report.
 Served on port 8778 alongside the AI cluster server on 8787.
 """
 
@@ -24,12 +25,17 @@ from nicegui import ui, app
 from fastapi import Request, Response
 
 from fasta_input import FASTA_EXTENSIONS, fasta_suffix, normalize_sample_name
+from homepage_content import HERO_BODY, HERO_TITLE, RESULT_FEATURES, WORKFLOW_STEPS
+from report_branding import image_data_uri
+from workflow_progress import progress_value, unread_lines
+from thread_config import configured_threads
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
 app_logger = logging.getLogger("bgc_xplorer")
 
 WORK_DIR = Path("/work")
 APP_DIR = Path("/app")
+APP_LOGO_DATA_URI = image_data_uri((APP_DIR / "logo.jpg", Path.cwd() / "logo.jpg"))
 
 workflow_state: dict = {}
 AI_SERVICE_URL = os.environ.get("AI_SERVICE_URL", "http://127.0.0.1:8484")
@@ -118,6 +124,13 @@ THEME_CSS = """
     color: var(--accent);
     font-size: 26px;
     box-shadow: var(--shadow-soft);
+    flex: 0 0 auto;
+  }
+  .app-brand-logo {
+    width: clamp(180px, 18vw, 250px);
+    height: auto;
+    border-radius: 14px;
+    object-fit: contain;
     flex: 0 0 auto;
   }
   .hero-copy {
@@ -290,6 +303,56 @@ THEME_CSS = """
     border-radius: 18px;
     border: 1.5px dashed rgba(108, 99, 246, 0.12);
     background: linear-gradient(180deg, rgba(108,99,246,0.02), rgba(255,255,255,0.84));
+  }
+  .analysis-launch-panel {
+    margin-bottom: 28px;
+    border-color: rgba(108, 99, 246, 0.2);
+  }
+  .workflow-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .workflow-step,
+  .feature-card {
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(244,247,255,0.96));
+    padding: 18px;
+  }
+  .workflow-step-number {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+  .workflow-step h3,
+  .feature-card h3 {
+    margin: 0 0 9px;
+    color: var(--text-strong);
+    font-size: 17px;
+  }
+  .workflow-step p,
+  .feature-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .feature-icon {
+    color: var(--accent);
+    font-size: 23px;
+    margin-bottom: 12px;
   }
   .status-chip {
     display: inline-flex;
@@ -466,9 +529,16 @@ THEME_CSS = """
     .metrics-grid-4 {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+    .workflow-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
   @media (max-width: 720px) {
     .metrics-grid-4 {
+      grid-template-columns: 1fr;
+    }
+    .workflow-grid,
+    .feature-grid {
       grid-template-columns: 1fr;
     }
   }
@@ -537,10 +607,15 @@ def hero_section(title: str, body: str, generated: str | None = None) -> str:
             "<div class='meta-badge-value'>{generated}</div>"
             "</div>"
         ).format(generated=generated)
+    brand = (
+        "<img class='app-brand-logo' src='{0}' alt='BGC-XPLORER' />".format(APP_LOGO_DATA_URI)
+        if APP_LOGO_DATA_URI
+        else "<div class='brand-mark' aria-hidden='true'>⌬</div>"
+    )
     return (
         "<section class='hero-card'>"
         "<div class='hero-brand'>"
-        "<div class='brand-mark' aria-hidden='true'>⌬</div>"
+        "{brand}"
         "<div class='hero-copy'>"
         "<div class='eyebrow'>BGC-XPLORER</div>"
         "<h1 class='hero-title'>{title}</h1>"
@@ -549,7 +624,7 @@ def hero_section(title: str, body: str, generated: str | None = None) -> str:
         "</div>"
         "{meta}"
         "</section>"
-    ).format(title=title, body=body, meta=meta)
+    ).format(title=title, body=body, meta=meta, brand=brand)
 
 
 def info_card(title: str, body: str, icon: str = "i") -> str:
@@ -560,6 +635,24 @@ def info_card(title: str, body: str, icon: str = "i") -> str:
         "<h3>{title}</h3>"
         "<p>{body}</p>"
         "</div>"
+        "</article>"
+    ).format(title=title, body=body, icon=icon)
+
+
+def workflow_step_card(title: str, body: str, number: str) -> str:
+    return (
+        "<article class='workflow-step'>"
+        "<div class='workflow-step-number'>{number}</div>"
+        "<h3>{title}</h3><p>{body}</p>"
+        "</article>"
+    ).format(title=title, body=body, number=number)
+
+
+def result_feature_card(title: str, body: str, icon: str) -> str:
+    return (
+        "<article class='feature-card'>"
+        "<div class='feature-icon' aria-hidden='true'>{icon}</div>"
+        "<h3>{title}</h3><p>{body}</p>"
         "</article>"
     ).format(title=title, body=body, icon=icon)
 
@@ -813,54 +906,28 @@ async def upload_page():
     with ui.column().classes("app-shell"):
         ui.html(
             hero_section(
-                "Upload page",
-                "Upload one bacterial genome FASTA. BGC-XPLORER runs Bakta annotation first, then the complete discovery and reporting workflow.",
+                HERO_TITLE,
+                HERO_BODY,
             )
         )
 
-        ui.html(
-            "<section class='panel'>"
-            "<div class='section-head'><h2>At a Glance</h2><span class='section-accent'></span></div>"
-            "<div class='metrics-grid metrics-grid-4'>{cards}</div>"
-            "</section>".format(
-                cards="".join(
-                    [
-                        stat_card("Upload", "1 FASTA", "Accepted extensions: .fa, .fasta and .fna."),
-                        stat_card("Annotation", "Bakta", "The container creates every annotation file required downstream."),
-                        stat_card("Workflow", "3 BGC tools + analysis", "Runs discovery, merging, prioritization and report generation."),
-                        stat_card("Ready samples", str(len(existing)), "Previously generated reports remain browsable from this screen."),
-                    ]
-                )
-            )
-        )
-
-        with ui.row().classes("w-full info-grid mb-6"):
-            ui.html(
-                info_card(
-                    "What to upload",
-                    "Provide one nucleotide FASTA for an assembled bacterial genome, MAG or plasmid. Choose a short sample name for result files and reports.",
-                    "⇡",
-                )
-            )
-            ui.html(
-                info_card(
-                    "What you get back",
-                    "A finished BGC-XPLORER report with prioritized clusters, consensus tables, gene maps and the on-demand AI analysis entrypoint.",
-                    "✦",
-                )
-            )
-
-        with ui.card().classes("panel w-full"):
+        with ui.card().classes("panel analysis-launch-panel w-full"):
             with ui.column().classes("w-full gap-4"):
+                ui.html(
+                    "<div class='section-head'><div><h2>Start a new analysis</h2>"
+                    "<p class='muted'>Provide one assembled bacterial genome, MAG, or plasmid. "
+                    "BGC-XPLORER will run the complete discovery, biological-context, prioritization, and reporting workflow.</p>"
+                    "</div><span class='section-accent'></span></div>"
+                )
                 sample_input = ui.input(
                     "Sample name", placeholder="e.g. Soil_1"
                 ).classes("w-full")
                 sample_input.props("outlined standout")
 
                 ui.separator()
-                ui.label("Upload genome FASTA").classes("text-2xl font-semibold")
+                ui.label("Genome FASTA").classes("text-2xl font-semibold")
                 ui.label(
-                    "One uncompressed .fa, .fasta or .fna file. Bakta database type is selected at Docker startup with BAKTA_DB_TYPE."
+                    "One uncompressed nucleotide file with extension .fa, .fasta, or .fna (maximum 2 GB)."
                 ).classes("muted text-sm")
 
                 status_label = ui.label("\u2399 Waiting for FASTA").classes("status-chip")
@@ -923,6 +990,28 @@ async def upload_page():
                         "background-color: #7b73f6 !important; color: #ffffff !important; border: none !important;"
                     )
 
+        ui.html(
+            "<section class='panel'>"
+            "<div class='section-head'><div><h2>From sequence to prioritized clusters</h2>"
+            "<p class='muted'>Each stage contributes independent evidence to the final integrated result.</p>"
+            "</div><span class='section-accent'></span></div>"
+            "<div class='workflow-grid'>{steps}</div>"
+            "</section>".format(
+                steps="".join(workflow_step_card(*step) for step in WORKFLOW_STEPS)
+            )
+        )
+
+        ui.html(
+            "<section class='panel'>"
+            "<div class='section-head'><div><h2>What you get</h2>"
+            "<p class='muted'>A report designed for candidate review, comparison, and reproducible scientific use.</p>"
+            "</div><span class='section-accent'></span></div>"
+            "<div class='feature-grid'>{features}</div>"
+            "</section>".format(
+                features="".join(result_feature_card(*feature) for feature in RESULT_FEATURES)
+            )
+        )
+
         if existing:
             with ui.card().classes("panel w-full"):
                 with ui.column().classes("w-full gap-4"):
@@ -949,11 +1038,12 @@ async def upload_page():
 # ─── Progress Page ────────────────────────────────────────────────────────────
 
 def start_workflow_process(sample: str):
+    thread_count = configured_threads()
     cmd = [
         "/opt/conda/bin/snakemake",
         "-s", str(APP_DIR / "Snakefile"),
         "--configfile", str(WORK_DIR / "config" / "config.yaml"),
-        "--cores", "4",
+        "--cores", str(thread_count),
         "--directory", str(WORK_DIR),
         "--printshellcmds",
         "--rerun-incomplete",
@@ -970,7 +1060,6 @@ def start_workflow_process(sample: str):
         "process": process,
         "log": [],
         "status": "running",
-        "last_shown": 0,
     }
     workflow_state[sample] = state
 
@@ -1030,7 +1119,9 @@ async def progress_page(sample: str):
                 )
 
             status_label = ui.label("Running...").classes("text-lg font-semibold")
-            progress_bar = ui.linear_progress(value=0).classes("w-full")
+            with ui.row().classes("items-center w-full gap-3"):
+                progress_bar = ui.linear_progress(value=0).classes("grow")
+                progress_label = ui.label("0%").classes("text-lg font-semibold min-w-12 text-right")
             result_btn = ui.button("View Results", on_click=lambda: ui.navigate.to(
                 f"/results/{sample}"
             )).props("color=primary size=lg unelevated")
@@ -1043,15 +1134,19 @@ async def progress_page(sample: str):
                 "w-full h-96 bg-gray-900 text-green-400 font-mono text-xs log-shell"
             )
 
+        log_cursor = 0
+
         async def poll():
-            while state["last_shown"] < len(state["log"]):
-                log_widget.push(state["log"][state["last_shown"]])
-                state["last_shown"] += 1
+            nonlocal log_cursor
+            new_lines, log_cursor = unread_lines(state["log"], log_cursor)
+            for line in new_lines:
+                log_widget.push(line)
 
             if state["status"] == "done":
                 status_label.set_text("Analysis complete!")
                 status_label.classes(replace="text-green-400 text-lg")
                 progress_bar.set_value(1.0)
+                progress_label.set_text("100%")
                 result_btn.set_visibility(True)
             elif state["status"] == "error":
                 status_label.set_text("Analysis failed. Check log above.")
@@ -1059,9 +1154,9 @@ async def progress_page(sample: str):
                 progress_bar.set_value(1.0)
 
             if state["status"] == "running":
-                total = 15
-                done = sum(1 for l in state["log"] if "Finished job" in l)
-                progress_bar.set_value(min(done / total, 0.95))
+                value, label = progress_value(state["log"], total=15)
+                progress_bar.set_value(value)
+                progress_label.set_text(label)
 
         ui.timer(0.5, poll)
 

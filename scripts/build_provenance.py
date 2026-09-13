@@ -1,5 +1,4 @@
-from __future__ import print_function
-
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 import hashlib
 import json
 import os
@@ -150,6 +149,9 @@ def build_provenance(sample, input_paths, artifact_paths, config_path,
         "ai": {
             "provider": "NVIDIA",
             "model": environment.get("NVIDIA_MODEL", "not-configured"),
+        },
+        "execution": {
+            "threads": int(environment.get("BGC_THREADS", "4")),
         },
         "arts_reference": arts_reference,
         "tools": tool_versions,

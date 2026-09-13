@@ -1,7 +1,13 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 configfile: "config/config.yaml"
 
 import os
 import csv
+
+from scripts.thread_config import configured_threads
+
+
+BGC_THREADS = configured_threads()
 
 
 with open(config["samples"], "r", newline="") as samples_handle:

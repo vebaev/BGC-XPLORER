@@ -1,10 +1,11 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 rule run_eggnog:
     input:
         faa=lambda wc: bakta_file(wc, "faa"),
         qc="results/{sample}/qc/bakta_input_check.json"
     output:
         done=touch("results/{sample}/eggnog/.done")
-    threads: 4
+    threads: BGC_THREADS
     params:
         outdir="results/{sample}/eggnog",
         extra=lambda wc: config["tools"]["eggnog"]["extra_args"],
@@ -35,6 +36,7 @@ rule run_eggnog:
             --output_dir {params.work_root}/{params.outdir} \
             -o {wildcards.sample} \
             --cpu {threads} \
+            --override \
             {params.extra}
         else
           TOOL_BIN="{params.executable}"
@@ -52,6 +54,7 @@ rule run_eggnog:
               --output_dir {params.outdir} \
               -o {wildcards.sample} \
               --cpu {threads} \
+              --override \
               {params.extra}
           else
             printf 'eggNOG-mapper executable was not found and no reusable output exists in %s\n' "{params.outdir}" >&2

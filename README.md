@@ -1,3 +1,4 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 # BGC Discovery Workflow
 
 Snakemake workflow that starts from a bacterial genome FASTA, annotates it with
@@ -42,6 +43,7 @@ publish the app on another host port. For example:
 NVIDIA_API_KEY=replace-with-your-nvidia-api-key
 NVIDIA_MODEL=nvidia/nemotron-3.5-lightning-30b-a3b
 BGC_PORT=9000
+BGC_THREADS=8
 AUTO_PREPARE_DATABASES=true
 BAKTA_DB_TYPE=light
 ARTS_REFERENCE=actinobacteria
@@ -67,6 +69,11 @@ external `./db/bakta` volume and is downloaded only when no valid local copy is
 present. Changing the setting to `full` downloads and then uses the full set;
 existing databases are not updated automatically.
 
+`BGC_THREADS` is a positive integer shared by Snakemake and tools that expose
+parallel execution controls. It sets `snakemake --cores` and the worker/CPU
+count for Bakta, antiSMASH, GECCO, eggNOG-mapper, and dbCAN. Tools without a
+thread option still run under the same Snakemake core budget. The default is 4.
+
 ARTS uses a taxon-specific reference set. If the required ARTS files are not
 present under `db/arts/actinobacteria`, startup stops with the missing file
 list; populate that reference set and run `docker compose up -d` again.
@@ -75,11 +82,11 @@ list; populate that reference set and run `docker compose up -d` again.
 
 1. Put each input at `data/fasta/{sample}.fasta`
 2. Edit `config/samples.tsv`
-3. Set `BAKTA_DB_TYPE=light` or `BAKTA_DB_TYPE=full`
+3. Set `BAKTA_DB_TYPE=light` or `BAKTA_DB_TYPE=full` and optionally `BGC_THREADS`
 4. Run:
 
 ```bash
-snakemake --use-conda --cores 4
+BGC_THREADS=8 snakemake --use-conda --cores 8
 ```
 
 ## Execution modes

@@ -1,3 +1,4 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 import os
 
 
@@ -28,7 +29,7 @@ rule run_bakta:
         executable=lambda wc: config["tools"]["bakta"]["executable"],
         database=lambda wc: bakta_database_path(),
         extra=lambda wc: config["tools"]["bakta"].get("extra_args", "")
-    threads: lambda wc: int(config["tools"]["bakta"].get("threads", 4))
+    threads: BGC_THREADS
     shell:
         """
         mkdir -p {params.outdir}

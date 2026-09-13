@@ -1,3 +1,4 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 import json
 import os
 from html import escape
@@ -226,6 +227,28 @@ def html_page(title, sections):
       align-items: stretch;
       background: transparent;
       margin-bottom: 28px;
+    }}
+    .report-nav {{
+      display: flex;
+      justify-content: flex-start;
+      margin-bottom: 18px;
+    }}
+    .report-home-link {{
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--accent-deep);
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: var(--shadow-soft);
+    }}
+    .report-home-link:hover {{
+      border-color: rgba(95, 87, 255, 0.32);
+      transform: translateY(-1px);
     }}
     .hero-brand {{
       display: flex;

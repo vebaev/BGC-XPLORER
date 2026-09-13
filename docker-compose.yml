@@ -1,3 +1,4 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 services:
   bgc-xplorer:
     image: "ghcr.io/${BGC_IMAGE:-vebaev/bgc-xplorer}:${BGC_VERSION:-latest}"
@@ -14,6 +15,7 @@ services:
       NVIDIA_MODEL: ${NVIDIA_MODEL:-deepseek-ai/deepseek-v4-pro}
       AUTO_PREPARE_DATABASES: ${AUTO_PREPARE_DATABASES:-true}
       BAKTA_DB_TYPE: ${BAKTA_DB_TYPE:-light}
+      BGC_THREADS: ${BGC_THREADS:-4}
       ARTS_REFERENCE: ${ARTS_REFERENCE:-actinobacteria}
       BGC_IMAGE_REFERENCE: "ghcr.io/${BGC_IMAGE:-vebaev/bgc-xplorer}:${BGC_VERSION:-latest}"
     healthcheck:

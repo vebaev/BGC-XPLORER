@@ -1,3 +1,4 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 #!/usr/bin/env bash
 set -euo pipefail
 
@@ -5,7 +6,9 @@ DB_ROOT="${BGC_DB_ROOT:-/db}"
 DB_TYPE="${BAKTA_DB_TYPE:-light}"
 PYTHON_BIN="${BGC_PYTHON:-/opt/conda/bin/python}"
 BAKTA_DB_BIN="${BAKTA_DB_BIN:-/opt/conda/envs/bakta/bin/bakta_db}"
+BAKTA_ENV_BIN="${BAKTA_ENV_BIN:-/opt/conda/envs/bakta/bin}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+export PATH="${BAKTA_ENV_BIN}:${PATH}"
 
 if [[ "${DB_TYPE}" != "light" && "${DB_TYPE}" != "full" ]]; then
   echo "BAKTA_DB_TYPE must be 'light' or 'full', got '${DB_TYPE}'." >&2
@@ -24,4 +27,3 @@ fi
 echo "Downloading the latest Bakta-compatible ${DB_TYPE} database into ${DB_ROOT}/bakta..."
 "${BAKTA_DB_BIN}" download --output "${DB_ROOT}/bakta" --type "${DB_TYPE}"
 "${CHECK[@]}"
-
