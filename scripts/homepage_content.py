@@ -1,4 +1,6 @@
-/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
+from html import escape
+
+
 HERO_TITLE = "Discover and prioritize biosynthetic gene clusters"
 HERO_BODY = (
     "BGC-XPLORER turns an assembled bacterial genome into an integrated, "
@@ -23,3 +25,13 @@ RESULT_FEATURES = (
     ("Reproducible outputs", "Download tables and provenance with tool, database, model, and execution metadata.", "✓"),
     ("AI-supported interpretation", "Request focused AI analysis for selected clusters directly from the report.", "◇"),
 )
+
+
+def section_header(title, description=""):
+    markup = (
+        "<div class='section-head'><h2>{title}</h2>"
+        "<span class='section-accent'></span></div>"
+    ).format(title=escape(title))
+    if description:
+        markup += "<p class='section-description muted'>{0}</p>".format(escape(description))
+    return markup

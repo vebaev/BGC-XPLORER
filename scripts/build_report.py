@@ -1,4 +1,3 @@
-/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 import json
 import os
 from datetime import datetime
@@ -9,6 +8,7 @@ import pandas as pd
 
 from common import df_to_html_table, format_consensus_label, html_page, load_table_if_exists, read_json
 from report_branding import image_data_uri, report_home_link
+from report_design import PRIMARY_GLANCE_LABELS, reproducibility_panel
 
 
 def _load_logo_data_uri():
@@ -109,7 +109,7 @@ STAT_GLYPHS = {
     "MIBiG hits": "◌",
 }
 
-DONUT_COLORS = ["#635bff", "#73c95b", "#4f8dfd", "#f59b38", "#41bcc7", "#f176c5", "#7d6bff", "#86d992"]
+DONUT_COLORS = ["#635bff", "#7771c9", "#8e8ab8", "#a6a3c7", "#596f93", "#7890af"]
 
 
 def stat_card(label, value, note, tone=None, glyph=None):
@@ -651,15 +651,6 @@ gene_table_json = json.dumps(gene_table_data).replace("</", "<\\/")
 ai_config = snakemake.config.get("report", {}).get("ai", {})
 ai_endpoint = ai_config.get("endpoint", "/analyze_cluster")
 
-tool_counts = [
-    ("antiSMASH", len(antismash), "rule-based cluster calls and product classes"),
-    ("GECCO", len(gecco), "machine learning BGC candidates"),
-    ("DeepBGC", len(deepbgc), "domain-driven BGC calls and activity hints"),
-    ("ARTS", len(arts), "resistance-linked genomic evidence"),
-    ("dbCAN CGC", len(dbcan), "carbohydrate gene clusters with substrate calls"),
-    ("Consensus", len(consensus), "merged loci across predictors"),
-]
-
 supported = consensus[consensus.get("support_count", pd.Series(dtype=int)).fillna(0).astype(int) > 1] if not consensus.empty else pd.DataFrame()
 triple_supported = consensus[consensus.get("support_count", pd.Series(dtype=int)).fillna(0).astype(int) >= 3] if not consensus.empty else pd.DataFrame()
 
@@ -693,14 +684,16 @@ hero_summary = (
 )
 
 generated_at = datetime.now().strftime("%b %d, %Y %H:%M")
+glance_metrics = {
+    "Consensus": (len(consensus), "merged loci across BGC predictors"),
+    "Multi-tool": (len(supported), "regions supported by at least two callers"),
+    "High-confidence": (len(high_confidence), "strongly supported consensus BGCs"),
+    "High-interest": (len(high_interest), "potentially novel or ARTS-rich candidates"),
+}
 glance_cards = "".join(
-    stat_card(label, value, note) for label, value, note in tool_counts
-) + "".join([
-    stat_card("Multi-tool", len(supported), "regions supported by at least two callers"),
-    stat_card("High-confidence", len(high_confidence), "strongly supported consensus BGCs"),
-    stat_card("High-interest", len(high_interest), "potentially novel or ARTS-rich candidates"),
-    stat_card("MIBiG hits", len(mibig_backed), "regions with explicit dereplication evidence"),
-])
+    stat_card(label, glance_metrics[label][0], glance_metrics[label][1], tone="violet")
+    for label in PRIMARY_GLANCE_LABELS
+)
 
 dbcan_table = pd.DataFrame()
 if not dbcan.empty:
@@ -833,7 +826,7 @@ sections = [
         summary=escape(hero_summary),
         generated=escape(generated_at),
     ),
-    "<section class='glance-shell'><div class='section-head'><h2>At a Glance<span class='think-dots' aria-hidden='true'><span class='dot'></span><span class='dot'></span><span class='dot'></span></span></h2><span class='section-accent'></span></div><div class='metrics-grid'>{cards}</div></section>".format(
+    "<section class='glance-shell'><div class='section-head'><h2>At a Glance</h2><span class='section-accent'></span></div><div class='metrics-grid'>{cards}</div></section>".format(
         cards=glance_cards
     ),
     (
@@ -900,19 +893,7 @@ sections = [
     table_tabs(table_items),
 ]
 if provenance:
-    application = provenance.get("application", {})
-    sections.append(
-        "<section class='panel'><div class='section-head'><h2>Reproducibility</h2>"
-        "<span class='section-accent'></span></div>"
-        "<p>Version: <strong>{version}</strong> · Commit: <code>{commit}</code> · "
-        "ARTS reference: <strong>{arts}</strong> · AI model: <code>{model}</code></p>"
-        "<p><a href='../provenance.json' download>Download provenance.json</a></p></section>".format(
-            version=escape(str(application.get("version", "unknown"))),
-            commit=escape(str(application.get("git_commit", "unknown"))),
-            arts=escape(str(provenance.get("arts_reference", "unknown"))),
-            model=escape(str(provenance.get("ai", {}).get("model", "not-configured"))),
-        )
-    )
+    sections.append(reproducibility_panel(provenance))
 sections.append(footer_strip(sample, generated_at))
 
 html = html_page("BGC-XPLORER : sample {0}".format(sample), sections)

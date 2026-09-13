@@ -1,4 +1,3 @@
-/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 services:
   bgc-xplorer:
     image: "ghcr.io/${BGC_IMAGE:-vebaev/bgc-xplorer}:${BGC_VERSION:-latest}"

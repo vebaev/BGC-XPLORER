@@ -1,4 +1,3 @@
-/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 import json
 import os
 from html import escape
@@ -164,6 +163,7 @@ def html_page(title, sections):
       --sans: "Sora", "Avenir Next", "Segoe UI", sans-serif;
       --mono: "SF Mono", "JetBrains Mono", "Fira Code", ui-monospace, Menlo, monospace;
       --shadow-card: 0 12px 35px rgba(89, 104, 146, 0.08);
+      --shadow-soft: 0 8px 24px rgba(89, 104, 146, 0.06);
       --shadow-modal: 0 30px 80px rgba(55, 69, 112, 0.22);
     }}
     * {{
@@ -197,7 +197,6 @@ def html_page(title, sections):
       color: var(--text);
       background:
         radial-gradient(900px 440px at 8% 0%, rgba(95, 87, 255, 0.09), transparent 62%),
-        radial-gradient(920px 480px at 100% 16%, rgba(53, 191, 211, 0.09), transparent 58%),
         linear-gradient(180deg, #fcfdff 0%, #f3f6ff 100%),
         var(--bg);
       -webkit-font-smoothing: antialiased;
@@ -358,53 +357,24 @@ def html_page(title, sections):
     }}
     .section-head {{
       display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
       margin-bottom: 18px;
     }}
     .section-head h2 {{
-      font-size: 31px;
+      font-size: 30px;
       font-weight: 600;
-      letter-spacing: -0.03em;
-      background: linear-gradient(90deg, var(--text-strong) 0%, var(--accent) 50%, var(--text-strong) 100%);
-      background-size: 200% 100%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: text-shimmer 4s ease-in-out infinite;
-    }}
-    .think-dots {{
-      display: inline-block;
-      margin-left: 4px;
-      vertical-align: baseline;
-    }}
-    .think-dots .dot {{
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      margin-left: 4px;
-      opacity: 0;
-      animation: dot-blink 1.8s ease-in-out infinite;
-    }}
-    .think-dots .dot:nth-child(1) {{ animation-delay: 0s; }}
-    .think-dots .dot:nth-child(2) {{ animation-delay: 0.3s; }}
-    .think-dots .dot:nth-child(3) {{ animation-delay: 0.6s; }}
-    @keyframes dot-blink {{
-      0%, 80%, 100% {{ opacity: 0; }}
-      40% {{ opacity: 1; }}
-    }}
-    @keyframes text-shimmer {{
-      0%, 100% {{ background-position: 0% 50%; }}
-      50% {{ background-position: 100% 50%; }}
+      letter-spacing: -0.02em;
+      color: var(--text-strong);
     }}
     .section-accent {{
-      width: 36px;
+      width: 28px;
       height: 4px;
       border-radius: 999px;
-      background: linear-gradient(90deg, var(--accent), #8c84ff);
+      background: linear-gradient(90deg, var(--accent), rgba(95, 87, 255, 0.15));
+      flex: 0 0 auto;
     }}
     .metrics-grid {{
       display: grid;
@@ -412,19 +382,14 @@ def html_page(title, sections):
       gap: 14px;
     }}
     .metric-card {{
-      min-height: 142px;
+      min-height: 136px;
       padding: 18px 18px 16px;
       border-radius: 16px;
       border: 1px solid var(--line);
       display: flex;
       gap: 14px;
       align-items: flex-start;
-      background: rgba(255, 255, 255, 0.88);
-      transition: transform var(--transition), border-color var(--transition);
-    }}
-    .metric-card:hover {{
-      transform: translateY(-2px);
-      border-color: var(--line-strong);
+      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(244,247,255,0.96));
     }}
     .metric-icon {{
       width: 48px;
@@ -466,6 +431,14 @@ def html_page(title, sections):
     .metric-sky .metric-icon {{ color: var(--sky); background: rgba(74, 127, 255, 0.12); }}
     .metric-amber .metric-icon {{ color: var(--amber); background: rgba(245, 155, 56, 0.12); }}
     .metric-cyan .metric-icon {{ color: var(--cyan); background: rgba(53, 191, 211, 0.12); }}
+    .glance-shell .metric-icon {{
+      color: var(--accent) !important;
+      background: var(--accent-soft) !important;
+      border: 1px solid rgba(95, 87, 255, 0.16);
+    }}
+    .model-status {{
+      margin-top: 10px;
+    }}
     .info-grid,
     .chart-panels {{
       display: grid;
@@ -1058,6 +1031,8 @@ def html_page(title, sections):
       var aiSpinner = document.getElementById('gene-map-ai-spinner');
       var aiStatus = document.getElementById('gene-map-ai-status');
       var aiResult = document.getElementById('gene-map-ai-result');
+      var activeAiModel = document.getElementById('active-ai-model');
+      var aiModelLabel = document.getElementById('ai-model-label');
       var svgDataNode = document.getElementById('gene-map-svg-data');
       var svgData = {{}};
       var activeButton = null;
@@ -1143,6 +1118,9 @@ def html_page(title, sections):
         }}).join('') + '</ul>';
       }}
       function renderAnalysis(data) {{
+        if (data.model) {{
+          showActiveAiModel(data.model);
+        }}
         var analysis = data.analysis || data;
         var sections = [
           ['Summary', analysis.summary],
@@ -1234,6 +1212,42 @@ def html_page(title, sections):
           return endpoint;
         }}
       }}
+      function showActiveAiModel(model) {{
+        if (!activeAiModel || !model) {{
+          return;
+        }}
+        activeAiModel.textContent = model;
+        if (aiModelLabel) {{
+          aiModelLabel.textContent = 'Active AI model:';
+        }}
+      }}
+      function loadActiveAiModel() {{
+        if (!activeAiModel) {{
+          return;
+        }}
+        var generationModel = activeAiModel.getAttribute('data-generation-model') || 'not-configured';
+        var healthUrl = new URL('/ai_health', window.location.href).toString();
+        fetch(healthUrl, {{headers: {{'Accept': 'application/json'}}}})
+          .then(function (response) {{
+            if (!response.ok) {{
+              throw new Error('AI health unavailable');
+            }}
+            return response.json();
+          }})
+          .then(function (data) {{
+            if (!data.model) {{
+              throw new Error('AI model missing');
+            }}
+            showActiveAiModel(data.model);
+          }})
+          .catch(function () {{
+            activeAiModel.textContent = generationModel;
+            if (aiModelLabel) {{
+              aiModelLabel.textContent = 'AI model at report generation:';
+            }}
+          }});
+      }}
+      loadActiveAiModel();
       function resetAiAnalysis() {{
         aiButton.disabled = false;
         aiButton.removeAttribute('data-sample');

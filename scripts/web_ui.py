@@ -1,4 +1,3 @@
-/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 #!/usr/bin/env python3
 """BGC-XPLORER NiceGUI web interface.
 
@@ -25,7 +24,7 @@ from nicegui import ui, app
 from fastapi import Request, Response
 
 from fasta_input import FASTA_EXTENSIONS, fasta_suffix, normalize_sample_name
-from homepage_content import HERO_BODY, HERO_TITLE, RESULT_FEATURES, WORKFLOW_STEPS
+from homepage_content import HERO_BODY, HERO_TITLE, RESULT_FEATURES, WORKFLOW_STEPS, section_header
 from report_branding import image_data_uri
 from workflow_progress import progress_value, unread_lines
 from thread_config import configured_threads
@@ -202,6 +201,9 @@ THEME_CSS = """
     height: 4px;
     border-radius: 999px;
     background: linear-gradient(90deg, var(--accent), rgba(95, 87, 255, 0.15));
+  }
+  .section-description {
+    margin: -8px 0 18px;
   }
   .metrics-grid {
     display: grid;
@@ -914,10 +916,12 @@ async def upload_page():
         with ui.card().classes("panel analysis-launch-panel w-full"):
             with ui.column().classes("w-full gap-4"):
                 ui.html(
-                    "<div class='section-head'><div><h2>Start a new analysis</h2>"
-                    "<p class='muted'>Provide one assembled bacterial genome, MAG, or plasmid. "
-                    "BGC-XPLORER will run the complete discovery, biological-context, prioritization, and reporting workflow.</p>"
-                    "</div><span class='section-accent'></span></div>"
+                    section_header(
+                        "Start a new analysis",
+                        "Provide one assembled bacterial genome, MAG, or plasmid. "
+                        "BGC-XPLORER will run the complete discovery, biological-context, "
+                        "prioritization, and reporting workflow.",
+                    )
                 )
                 sample_input = ui.input(
                     "Sample name", placeholder="e.g. Soil_1"
@@ -992,22 +996,26 @@ async def upload_page():
 
         ui.html(
             "<section class='panel'>"
-            "<div class='section-head'><div><h2>From sequence to prioritized clusters</h2>"
-            "<p class='muted'>Each stage contributes independent evidence to the final integrated result.</p>"
-            "</div><span class='section-accent'></span></div>"
+            "{heading}"
             "<div class='workflow-grid'>{steps}</div>"
             "</section>".format(
+                heading=section_header(
+                    "From sequence to prioritized clusters",
+                    "Each stage contributes independent evidence to the final integrated result.",
+                ),
                 steps="".join(workflow_step_card(*step) for step in WORKFLOW_STEPS)
             )
         )
 
         ui.html(
             "<section class='panel'>"
-            "<div class='section-head'><div><h2>What you get</h2>"
-            "<p class='muted'>A report designed for candidate review, comparison, and reproducible scientific use.</p>"
-            "</div><span class='section-accent'></span></div>"
+            "{heading}"
             "<div class='feature-grid'>{features}</div>"
             "</section>".format(
+                heading=section_header(
+                    "What you get",
+                    "A report designed for candidate review, comparison, and reproducible scientific use.",
+                ),
                 features="".join(result_feature_card(*feature) for feature in RESULT_FEATURES)
             )
         )

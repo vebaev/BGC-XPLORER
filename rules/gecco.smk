@@ -1,4 +1,3 @@
-/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 rule run_gecco:
     input:
         fna=lambda wc: bakta_file(wc, "fna"),

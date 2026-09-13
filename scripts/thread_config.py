@@ -1,4 +1,3 @@
-/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 """Validate the shared Docker thread limit used by the workflow and tools."""
 
 import os

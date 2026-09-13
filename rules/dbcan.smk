@@ -1,4 +1,3 @@
-/bin/bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)
 rule run_dbcan:
     input:
         faa=lambda wc: bakta_file(wc, "faa"),
