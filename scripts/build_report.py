@@ -8,7 +8,7 @@ import pandas as pd
 
 from common import df_to_html_table, format_consensus_label, html_page, load_table_if_exists, read_json
 from report_branding import image_data_uri, report_home_link
-from report_design import PRIMARY_GLANCE_LABELS, reproducibility_panel
+from report_design import DONUT_COLORS, PRIMARY_GLANCE_LABELS, reproducibility_panel
 
 
 def _load_logo_data_uri():
@@ -108,9 +108,6 @@ STAT_GLYPHS = {
     "High-interest": "✧",
     "MIBiG hits": "◌",
 }
-
-DONUT_COLORS = ["#635bff", "#7771c9", "#8e8ab8", "#a6a3c7", "#596f93", "#7890af"]
-
 
 def stat_card(label, value, note, tone=None, glyph=None):
     tone = tone or STAT_TONES.get(label, "violet")

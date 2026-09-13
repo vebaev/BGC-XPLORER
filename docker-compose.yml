@@ -11,7 +11,7 @@ services:
       - ./config:/work/config
     environment:
       NVIDIA_API_KEY: ${NVIDIA_API_KEY:?Set NVIDIA_API_KEY in .env or the shell}
-      NVIDIA_MODEL: ${NVIDIA_MODEL:-deepseek-ai/deepseek-v4-pro}
+      NVIDIA_MODEL: ${NVIDIA_MODEL:-nvidia/nemotron-3.5-lightning-30b-a3b}
       AUTO_PREPARE_DATABASES: ${AUTO_PREPARE_DATABASES:-true}
       BAKTA_DB_TYPE: ${BAKTA_DB_TYPE:-light}
       BGC_THREADS: ${BGC_THREADS:-4}

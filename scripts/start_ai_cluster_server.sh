@@ -63,7 +63,7 @@ require_key() {
     printf "\n"
     export NVIDIA_API_KEY
   fi
-  export NVIDIA_MODEL="${CLI_MODEL:-${NVIDIA_MODEL:-deepseek-ai/deepseek-v4-pro}}"
+  export NVIDIA_MODEL="${CLI_MODEL:-${NVIDIA_MODEL:-nvidia/nemotron-3.5-lightning-30b-a3b}}"
 }
 
 start_server() {

@@ -3,7 +3,7 @@ import unittest
 from pathlib import Path
 
 from scripts.report_branding import image_data_uri, report_home_link
-from scripts.report_design import PRIMARY_GLANCE_LABELS, reproducibility_panel
+from scripts.report_design import DONUT_COLORS, PRIMARY_GLANCE_LABELS, reproducibility_panel
 
 
 class ReportBrandingTests(unittest.TestCase):
@@ -24,6 +24,15 @@ class ReportBrandingTests(unittest.TestCase):
         self.assertIn("data-generation-model='nvidia/model-at-generation'", panel)
         self.assertIn("Checking active model", panel)
         self.assertNotIn("Download provenance", panel)
+        self.assertEqual(panel.count("<p"), 1)
+        self.assertIn("ARTS reference: <strong>actinobacteria</strong> · ", panel)
+        self.assertIn("<span id='ai-model-label'>Active AI model:</span>", panel)
+
+    def test_donut_palette_is_pastel(self):
+        self.assertEqual(
+            DONUT_COLORS,
+            ("#b8a9e8", "#a8d8c7", "#a9cce8", "#f3c6a8", "#e8b4c4", "#9fd6d2"),
+        )
 
     def test_embeds_first_existing_image_with_correct_media_type(self):
         with tempfile.TemporaryDirectory() as directory:

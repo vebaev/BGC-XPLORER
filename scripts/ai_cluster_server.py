@@ -16,7 +16,20 @@ import pandas as pd
 
 
 DEFAULT_BASE_URL = "https://integrate.api.nvidia.com/v1"
-DEFAULT_MODEL = "deepseek-ai/deepseek-v4-pro"
+DEFAULT_MODEL = "nvidia/nemotron-3.5-lightning-30b-a3b"
+PLACEHOLDER_API_KEYS = frozenset({
+    "validation-only",
+    "replace-with-your-nvidia-api-key",
+})
+
+
+def api_key_state(value):
+    key = str(value or "").strip()
+    if not key:
+        return "missing"
+    if key in PLACEHOLDER_API_KEYS:
+        return "placeholder"
+    return "configured"
 MIN_REQUEST_INTERVAL_SECONDS = 60.0 / 40.0
 
 ANALYSIS_JSON_SCHEMA = {
@@ -560,7 +573,8 @@ class AIClusterServer(BaseHTTPRequestHandler):
             self._json({
                 "ok": True,
                 "model": self.server.model,
-                "api_key_loaded": bool(self.server.api_key),
+                "api_key_loaded": api_key_state(self.server.api_key) == "configured",
+                "api_key_state": api_key_state(self.server.api_key),
                 "timeout_seconds": self.server.timeout,
                 "max_tokens": self.server.max_tokens,
                 "reasoning_effort": self.server.reasoning_effort,
@@ -642,9 +656,14 @@ class AIClusterServer(BaseHTTPRequestHandler):
                 })
                 return
 
-            if not self.server.api_key:
+            key_state = api_key_state(self.server.api_key)
+            if key_state != "configured":
                 self._json({
-                    "error": "NVIDIA_API_KEY is not set. Start the server with your NVIDIA API key in the environment.",
+                    "error": (
+                        "NVIDIA_API_KEY is not set. Start the server with your NVIDIA API key in the environment."
+                        if key_state == "missing"
+                        else "NVIDIA_API_KEY is a placeholder. Restart the service with a valid NVIDIA API key."
+                    ),
                     "sample": sample,
                     "consensus_id": consensus_id,
                 }, status=503)
@@ -806,7 +825,7 @@ def main():
 
     print("AI cluster server listening on http://{0}:{1}".format(args.host, args.port))
     print("Model: {0}".format(server.model))
-    print("NVIDIA_API_KEY loaded: {0}".format("yes" if server.api_key else "no"))
+    print("NVIDIA_API_KEY state: {0}".format(api_key_state(server.api_key)))
     print("Parameters: temperature={t}, top_p={p}, max_tokens={m}, reasoning_effort={r}, seed={s}, guided_json={g}".format(
         t=server.temperature, p=server.top_p, m=server.max_tokens,
         r=server.reasoning_effort, s=server.seed, g=server.use_guided_json))
