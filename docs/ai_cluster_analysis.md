@@ -112,3 +112,20 @@ For the selected `consensus_id`, the service sends structured evidence:
 The prompt asks the model to return strict JSON with summary, likely function,
 biosynthetic logic, key genes, novelty/confidence, caveats and recommended
 follow-up. The human-readable analysis should stay concise: 100-120 words total.
+
+### Scientific interpretation prompt v2.0
+
+The model returns six sections: summary, likely product/function, biosynthetic
+logic, key genes, resistance/transport/regulation, and recommended follow-up.
+Uncertainty belongs next to the relevant claim, rather than in separate
+confidence, caveats, or novelty sections. Interpretations must reference supplied
+locus tags or tool evidence; unsupported compounds, activities and citations are
+prohibited. No literature search is performed by this endpoint.
+
+Gene coordinates, strand, EC, KEGG KO, and complete supplied annotations are
+retained. Empty evidence tables are not treated as verified negative findings:
+tool completion is explicitly unknown in this payload. Workflow interpretations
+are labeled as preliminary hypotheses. The cache fingerprint includes the input,
+prompt/version, model, endpoint and generation parameters. Responses record the
+prompt version and fingerprint. A model response remains a computational
+interpretation requiring expert review, not experimental validation.

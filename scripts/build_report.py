@@ -589,7 +589,10 @@ cluster_maps = load_table_if_exists(snakemake.input.cluster_maps, [
 cluster_genes_path = str(snakemake.input.cluster_genes) if hasattr(snakemake.input, "cluster_genes") else ""
 consensus = pd.read_csv(snakemake.input.consensus, sep="\t") if os.path.exists(snakemake.input.consensus) else pd.DataFrame()
 prioritized = pd.read_csv(snakemake.input.prioritized, sep="\t") if os.path.exists(snakemake.input.prioritized) else pd.DataFrame()
-overlap = pd.read_csv(snakemake.input.overlap, sep="\t") if os.path.exists(snakemake.input.overlap) else pd.DataFrame()
+overlap = load_table_if_exists(snakemake.input.overlap, [
+    "sample", "group_id", "tool_a", "bgc_id_a", "tool_b", "bgc_id_b",
+    "contig", "overlap_bp", "overlap_relationship",
+])
 provenance = read_json(snakemake.input.provenance) if hasattr(snakemake.input, "provenance") else {}
 
 prioritized_table = prioritized.copy()

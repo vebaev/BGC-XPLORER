@@ -135,6 +135,28 @@ THEME_CSS = """
   .hero-copy {
     min-width: 0;
   }
+  .upload-hero { padding: 12px 0 8px; }
+  .upload-hero .hero-brand {
+    display: grid;
+    grid-template-columns: clamp(240px, 26vw, 360px) minmax(0, 1fr);
+    align-items: center;
+    gap: 28px;
+    width: 100%;
+  }
+  .upload-hero .app-brand-logo {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+  .upload-hero .hero-copy { width: 100%; }
+  .upload-hero .hero-title { text-wrap: balance; }
+  .upload-hero .hero-text { margin: 16px 0 0; }
+  @media (max-width: 720px) {
+    .upload-hero .hero-brand { grid-template-columns: 1fr; gap: 20px; }
+    .upload-hero .app-brand-logo { max-width: 280px; }
+  }
   .eyebrow {
     text-transform: uppercase;
     letter-spacing: 0;
@@ -601,7 +623,7 @@ def stat_card(label: str, value: str, note: str) -> str:
     ).format(tone=tone, glyph=glyph, label=label, value=value, note=note)
 
 
-def hero_section(title: str, body: str, generated: str | None = None) -> str:
+def hero_section(title: str, body: str, generated: str | None = None, upload: bool = False) -> str:
     meta = ""
     if generated:
         meta = (
@@ -615,7 +637,7 @@ def hero_section(title: str, body: str, generated: str | None = None) -> str:
         else "<div class='brand-mark' aria-hidden='true'>⌬</div>"
     )
     return (
-        "<section class='hero-card'>"
+        "<section class='hero-card{variant}'>"
         "<div class='hero-brand'>"
         "{brand}"
         "<div class='hero-copy'>"
@@ -626,7 +648,7 @@ def hero_section(title: str, body: str, generated: str | None = None) -> str:
         "</div>"
         "{meta}"
         "</section>"
-    ).format(title=title, body=body, meta=meta, brand=brand)
+    ).format(title=title, body=body, meta=meta, brand=brand, variant=" upload-hero" if upload else "")
 
 
 def info_card(title: str, body: str, icon: str = "i") -> str:
@@ -910,6 +932,7 @@ async def upload_page():
             hero_section(
                 HERO_TITLE,
                 HERO_BODY,
+                upload=True,
             )
         )
 
@@ -1130,13 +1153,13 @@ async def progress_page(sample: str):
             with ui.row().classes("items-center w-full gap-3"):
                 progress_bar = ui.linear_progress(value=0).classes("grow")
                 progress_label = ui.label("0%").classes("text-lg font-semibold min-w-12 text-right")
+            report_url = f"/static_results/{sample}/report/{sample}.html"
             result_btn = ui.button("View Results", on_click=lambda: ui.navigate.to(
-                f"/results/{sample}"
+                report_url
             )).props("color=primary size=lg unelevated")
             result_btn.set_visibility(False)
 
-        with ui.card().classes("panel w-full"):
-            ui.label("Workflow log").classes("text-2xl font-semibold")
+        with ui.expansion("Workflow log", icon="terminal", value=False).classes("panel w-full"):
             ui.label("Live combined stdout and stderr from the Snakemake run.").classes("muted text-sm")
             log_widget = ui.log(max_lines=5000).classes(
                 "w-full h-96 bg-gray-900 text-green-400 font-mono text-xs log-shell"
@@ -1157,7 +1180,7 @@ async def progress_page(sample: str):
                 progress_label.set_text("100%")
                 result_btn.set_visibility(True)
             elif state["status"] == "error":
-                status_label.set_text("Analysis failed. Check log above.")
+                status_label.set_text("Analysis failed. Check log below.")
                 status_label.classes(replace="text-red-400 text-lg")
                 progress_bar.set_value(1.0)
 

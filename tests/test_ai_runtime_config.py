@@ -24,7 +24,7 @@ class AIRuntimeConfigTests(unittest.TestCase):
         self.assertEqual(api_key_state(""), "missing")
         self.assertEqual(api_key_state("validation-only"), "placeholder")
         self.assertEqual(api_key_state("replace-with-your-nvidia-api-key"), "placeholder")
-        self.assertEqual(api_key_state("nvapi-real-looking-value"), "configured")
+        self.assertEqual(api_key_state("configured-test-key"), "configured")
 
 
 if __name__ == "__main__":

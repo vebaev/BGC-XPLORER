@@ -1,8 +1,12 @@
 import json
 import os
 from html import escape
+from pathlib import Path
 
 import pandas as pd
+
+
+AI_FETCH_RETRY_JS = Path(__file__).with_name("ai_fetch_retry.js").read_text(encoding="utf-8")
 
 
 BGC_COLUMNS = [
@@ -48,7 +52,10 @@ def empty_arts_frame():
 
 def load_table_if_exists(path, columns):
     if os.path.exists(path):
-        df = pd.read_csv(path, sep="\t")
+        try:
+            df = pd.read_csv(path, sep="\t")
+        except pd.errors.EmptyDataError:
+            return pd.DataFrame(columns=columns)
         missing = [col for col in columns if col not in df.columns]
         for col in missing:
             df[col] = ""
@@ -1018,6 +1025,7 @@ def html_page(title, sections):
     {blocks}
   </div>
   <script>
+    {ai_fetch_retry_js}
     (function () {{
       var viewer = document.getElementById('gene-map-viewer');
       var image = document.getElementById('gene-map-image');
@@ -1125,9 +1133,8 @@ def html_page(title, sections):
         var sections = [
           ['Summary', analysis.summary],
           ['Likely product / function', analysis.likely_product_or_function],
-          ['Confidence', analysis.confidence],
-          ['Novelty assessment', analysis.novelty_assessment],
-          ['Caveats', analysis.caveats]
+          ['Biosynthetic logic', analysis.biosynthetic_logic],
+          ['Resistance, transport and regulation', analysis.resistance_transport_regulation]
         ];
         var html = sections.map(function (section) {{
           if (!section[1]) {{
@@ -1159,10 +1166,10 @@ def html_page(title, sections):
       }}
       function waitForAiJob(endpoint, jobId, attempt) {{
         aiStatus.textContent = 'Analyzing...';
-        return fetch(statusEndpoint(endpoint, jobId), {{
+        return fetchWithNetworkRetry(statusEndpoint(endpoint, jobId), {{
           method: 'GET',
           headers: {{'Accept': 'application/json'}}
-        }})
+        }}, 3, 750)
           .then(function (response) {{
             return response.json().then(function (data) {{
               if (response.status === 202 || data.status === 'queued' || data.status === 'running') {{
@@ -1185,11 +1192,12 @@ def html_page(title, sections):
       function aiRequestErrorMessage(endpoint, error) {{
         var detail = error && error.message ? error.message : 'request failed';
         if (detail === 'Load failed' || detail === 'Failed to fetch') {{
+          if (window.location.protocol === 'file:') {{
+            return 'Open this report from the BGC-XPLORER Docker application so its AI controls can reach the built-in service.';
+          }}
           return (
-            'AI service is not reachable at ' + endpoint + '. ' +
-            'Start the local service with NVIDIA_API_KEY, then try again. ' +
-            'If the service is already running, open the report through a local HTTP server instead of directly as a file. ' +
-            'Browser detail: ' + detail
+            'The connection to the BGC-XPLORER Docker service was interrupted after three attempts. ' +
+            'Keep the report open, wait a moment, and try the AI analysis again. Browser detail: ' + detail
           );
         }}
         if (detail.toLowerCase().indexOf('timed out') !== -1) {{
@@ -1362,11 +1370,11 @@ def html_page(title, sections):
           aiClick.setAttribute('aria-expanded', 'true');
           setAiLoading(true);
           aiResult.innerHTML = '<div class="ai-status">Sending gene data for ' + escapeHtml(aiCluster) + ' to the remote NVIDIA AI model. Clusters with more than 30 genes may require more time.</div>';
-          fetch(endpoint, {{
+          fetchWithNetworkRetry(endpoint, {{
             method: 'POST',
             headers: {{'Content-Type': 'application/json', 'X-AI-Async': '1'}},
             body: JSON.stringify({{sample: aiSample, consensus_id: aiCluster}})
-          }})
+          }}, 3, 750)
             .then(function (response) {{
               return response.json().then(function (data) {{
                 if ((response.status === 202 || data.status === 'queued' || data.status === 'running') && data.job_id) {{
@@ -1404,4 +1412,4 @@ def html_page(title, sections):
   </script>
 </body>
 </html>
-""".format(title=escape(title), blocks=blocks)
+""".format(title=escape(title), blocks=blocks, ai_fetch_retry_js=AI_FETCH_RETRY_JS)
