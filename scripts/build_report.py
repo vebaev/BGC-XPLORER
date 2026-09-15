@@ -177,19 +177,25 @@ def render_donut_panel(title, pairs, total):
         )
         for idx, (label, count) in enumerate(pairs)
     )
+    shown_signals = sum(count for _, count in pairs)
     return (
         "<section class='panel chart-panel'>"
         "<div class='section-head'><h2>{title}</h2><span class='section-accent'></span></div>"
         "<div class='chart-grid'>"
         "<div class='donut-shell'>"
         "<div class='donut-chart' style='{style}'>"
-        "<div class='donut-hole'><strong>{total}</strong><span>Total</span></div>"
+        "<div class='donut-hole'><strong>{signals}</strong><span>Top signals</span></div>"
         "</div>"
         "</div>"
         "<ul class='legend-list'>{legend}</ul>"
         "</div>"
+        "<p class='muted chart-note'>Six most frequent signals across {regions} consensus regions. "
+        "A region may have multiple signals or none.</p>"
         "</section>"
-    ).format(title=escape(title), style=donut_style(pairs), total=escape(str(total)), legend=legend)
+    ).format(
+        title=escape(title), style=donut_style(pairs), signals=shown_signals,
+        regions=escape(str(total)), legend=legend,
+    )
 
 
 def table_tabs(items):
