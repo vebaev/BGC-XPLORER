@@ -23,7 +23,7 @@ import yaml
 from nicegui import ui, app
 from fastapi import Request, Response
 
-from fasta_input import FASTA_EXTENSIONS, fasta_suffix, normalize_sample_name
+from fasta_input import FASTA_EXTENSIONS, MAX_FASTA_BYTES, fasta_suffix, normalize_sample_name
 from homepage_content import HERO_BODY, HERO_TITLE, RESULT_FEATURES, WORKFLOW_STEPS, section_header
 from report_branding import image_data_uri
 from workflow_progress import progress_value, unread_lines
@@ -963,7 +963,7 @@ async def upload_page():
                 ui.separator()
                 ui.label("Genome FASTA").classes("text-2xl font-semibold")
                 ui.label(
-                    "One uncompressed nucleotide file with extension .fa, .fasta, or .fna (maximum 2 GB)."
+                    "One uncompressed nucleotide file with extension .fa, .fasta, or .fna (maximum 30 MB)."
                 ).classes("muted text-sm")
 
                 status_label = ui.label("\u2399 Waiting for FASTA").classes("status-chip")
@@ -976,6 +976,9 @@ async def upload_page():
                         ui.notify(f"Skipped {filename}: use {', '.join(FASTA_EXTENSIONS)}.", type="warning")
                         return
                     content = await file.read()
+                    if len(content) > MAX_FASTA_BYTES:
+                        ui.notify(f"{filename} is larger than 30 MB. Choose a smaller FASTA file.", type="warning")
+                        return
                     stored_path = upload_dir / filename
                     stored_path.write_bytes(content)
                     previous = state.get("uploaded_path")
@@ -991,8 +994,8 @@ async def upload_page():
                     multiple=False,
                     auto_upload=True,
                     max_files=1,
-                    max_file_size=2_000_000_000,
-                    max_total_size=2_000_000_000,
+                    max_file_size=MAX_FASTA_BYTES,
+                    max_total_size=MAX_FASTA_BYTES,
                 ).classes("w-full upload-drop").props(
                     'accept=".fa,.fasta,.fna"'
                 )
@@ -1006,6 +1009,9 @@ async def upload_page():
                     uploaded_path = state.get("uploaded_path")
                     if not uploaded_path or not Path(uploaded_path).is_file():
                         ui.notify("Please upload one FASTA file", type="warning")
+                        return
+                    if Path(uploaded_path).stat().st_size > MAX_FASTA_BYTES:
+                        ui.notify("FASTA file is larger than 30 MB. Choose a smaller file.", type="warning")
                         return
 
                     fasta_dir = WORK_DIR / "data" / "fasta"

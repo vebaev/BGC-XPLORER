@@ -5,6 +5,7 @@ from pathlib import Path
 
 
 FASTA_EXTENSIONS = (".fa", ".fasta", ".fna")
+MAX_FASTA_BYTES = 30_000_000
 
 
 def fasta_suffix(filename):
@@ -18,4 +19,3 @@ def normalize_sample_name(value):
     if not name:
         raise ValueError("Sample name must contain a letter or number")
     return name
-

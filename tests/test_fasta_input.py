@@ -1,9 +1,12 @@
 import unittest
 
-from scripts.fasta_input import fasta_suffix, normalize_sample_name
+from scripts.fasta_input import MAX_FASTA_BYTES, fasta_suffix, normalize_sample_name
 
 
 class FastaInputTests(unittest.TestCase):
+    def test_upload_limit_is_30_decimal_megabytes(self):
+        self.assertEqual(MAX_FASTA_BYTES, 30_000_000)
+
     def test_accepts_supported_fasta_names(self):
         for name in ("genome.fa", "genome.fasta", "genome.fna", "GENOME.FASTA"):
             with self.subTest(name=name):
