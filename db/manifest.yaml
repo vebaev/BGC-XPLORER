@@ -29,6 +29,9 @@ antismash:
   required_files:
     - "pfam/35.0/Pfam-A.hmm"
     - "clusterblast/clusters.txt"
+    - "knownclusterblast/4.0/clusters.txt"
+    - "knownclusterblast/4.0/proteins.dmnd"
+    - "clustercompare/mibig/4.0/data.json"
 
 deepbgc:
   required: true

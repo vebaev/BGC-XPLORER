@@ -240,7 +240,8 @@ def compact_payload_for_model(payload):
         "overlap_relationship", "core_gene_support", "boundary_confidence",
         "confidence_category", "interest_category", "arts_hits", "why_prioritized",
         "why_not_prioritized", "recommended_followup", "best_mibig_id",
-        "best_mibig_product", "mibig_similarity", "dereplication_status", "novelty_score",
+        "best_mibig_product", "mibig_similarity", "match_score", "score_metric",
+        "matched_genes", "core_gene_hits", "dereplication_status", "novelty_score",
     ]
     return {
         "sample": payload.get("sample"),
@@ -258,7 +259,8 @@ def compact_payload_for_model(payload):
         "dbcan_cgc": payload.get("dbcan_cgc", []),
         "mibig_dereplication": compact_record(payload.get("mibig_dereplication", {}), [
             "best_mibig_id", "best_mibig_product", "best_mibig_class",
-            "mibig_similarity", "dereplication_status", "novelty_score", "evidence_source",
+            "mibig_similarity", "match_score", "score_metric", "matched_genes",
+            "core_gene_hits", "dereplication_status", "novelty_score", "evidence_source",
         ]),
     }
 
@@ -405,7 +407,8 @@ def build_cluster_payload(results_dir, sample, consensus_id):
             "boundary_confidence", "priority_score", "priority_class",
             "confidence_category", "interest_category", "arts_hits", "why_prioritized",
             "why_not_prioritized", "recommended_followup", "best_mibig_id",
-            "best_mibig_product", "mibig_similarity", "dereplication_status", "novelty_score",
+            "best_mibig_product", "mibig_similarity", "match_score", "score_metric",
+            "matched_genes", "core_gene_hits", "dereplication_status", "novelty_score",
         ]),
         "tool_predictions": {
             "antismash": [compact_record(row, tool_keys) for row in matching_regions(antismash, contig, start, end)],

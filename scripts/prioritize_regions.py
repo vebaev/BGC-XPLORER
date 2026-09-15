@@ -1,5 +1,7 @@
 import pandas as pd
 
+from mibig_hits import novelty_score_for_priority
+
 from common import add_consensus_label, load_table_if_exists, write_tsv
 
 
@@ -161,6 +163,10 @@ else:
     prioritized["best_mibig_product"] = ""
     prioritized["best_mibig_class"] = ""
     prioritized["mibig_similarity"] = ""
+    prioritized["match_score"] = ""
+    prioritized["score_metric"] = ""
+    prioritized["matched_genes"] = ""
+    prioritized["core_gene_hits"] = ""
     prioritized["dereplication_status"] = ""
     prioritized["novelty_score"] = ""
     prioritized["evidence_source"] = ""
@@ -181,10 +187,16 @@ else:
             prioritized.at[idx, "best_mibig_product"] = derep_row.get("best_mibig_product", "")
             prioritized.at[idx, "best_mibig_class"] = derep_row.get("best_mibig_class", "")
             prioritized.at[idx, "mibig_similarity"] = derep_row.get("mibig_similarity", "")
+            prioritized.at[idx, "match_score"] = derep_row.get("match_score", "")
+            prioritized.at[idx, "score_metric"] = derep_row.get("score_metric", "")
+            prioritized.at[idx, "matched_genes"] = derep_row.get("matched_genes", "")
+            prioritized.at[idx, "core_gene_hits"] = derep_row.get("core_gene_hits", "")
             prioritized.at[idx, "dereplication_status"] = derep_row.get("dereplication_status", "")
             prioritized.at[idx, "evidence_source"] = derep_row.get("evidence_source", "")
-            novelty_value = float(derep_row.get("novelty_score", 0.0))
-            prioritized.at[idx, "novelty_score"] = novelty_value
+            novelty_value = novelty_score_for_priority(derep_row.get("novelty_score", ""))
+            prioritized.at[idx, "novelty_score"] = (
+                novelty_value if derep_row.get("evidence_source", "") == "comparippson_html" else ""
+            )
             prioritized.at[idx, "priority_score"] += float(weights.get("novelty_score", 3.0)) * novelty_value
 
         if arts.empty or not row["contig"]:

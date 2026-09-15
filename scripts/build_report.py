@@ -67,6 +67,7 @@ def derep_source_label(value):
         "comparippson_html": "CompariPPson",
         "knownclusterblast": "KnownClusterBlast",
         "clustercompare": "ClusterCompare",
+        "clustercompare_mibig": "ClusterCompare MIBiG",
     }
     return mapping.get(text, text or "n/a")
 
@@ -640,6 +641,10 @@ hidden_columns = [
     "best_mibig_product",
     "best_mibig_class",
     "mibig_similarity",
+    "match_score",
+    "score_metric",
+    "matched_genes",
+    "core_gene_hits",
     "dereplication_status",
     "novelty_score",
     "evidence_source",
@@ -768,14 +773,21 @@ if not high_interest.empty:
     })
 if not mibig_backed.empty:
     mibig_hidden = [c for c in hidden_columns if c not in {
-        "best_mibig_product", "dereplication_status",
+        "best_mibig_id", "best_mibig_product", "best_mibig_class",
+        "dereplication_status", "match_score", "score_metric",
+        "matched_genes", "core_gene_hits",
     }]
     mibig_display = mibig_backed.copy()
+    mibig_display["Evidence method"] = mibig_display["evidence_source"].apply(derep_source_label)
     rename_map = {
         "best_mibig_id": "MIBiG ID",
         "best_mibig_product": "MIBiG product",
         "best_mibig_class": "MIBiG class",
-        "mibig_similarity": "Similarity (%)",
+        "mibig_similarity": "Peptide similarity (%)",
+        "match_score": "Match score",
+        "score_metric": "Score metric",
+        "matched_genes": "Matched genes",
+        "core_gene_hits": "Core-gene hits",
         "dereplication_status": "Dereplication status",
         "novelty_score": "Novelty score",
         "evidence_source": "Evidence source",
@@ -788,7 +800,8 @@ if not mibig_backed.empty:
         "label": "MIBiG hits",
         "icon": "⬡",
         "content": (
-            "<p class='muted table-note'>Consensus regions with explicit MIBiG dereplication evidence.</p>"
+            "<p class='muted table-note'>Representative computational MIBiG comparison per consensus region. "
+            "Scores use method-specific metrics and do not establish product identity.</p>"
             + df_to_mibig_table(mibig_display, mibig_hidden, map_index)
         ),
     })
@@ -844,7 +857,7 @@ sections = [
             "Summary",
             "We currently separate regions into strong consensus BGCs and high-interest candidates. "
             "{0} regions are tagged as high-confidence, {1} as high-interest / potentially novel, "
-            "and {2} have explicit antiSMASH-to-MIBiG dereplication evidence.".format(
+            "and {2} have a representative antiSMASH-to-MIBiG comparison.".format(
                 len(high_confidence), len(high_interest), len(mibig_backed)
             ),
             icon="▣",

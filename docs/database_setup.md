@@ -44,6 +44,8 @@ bash scripts/fetch_antismash_db.sh
 
 That script downloads the official Docker database helper and populates `db/antismash`. It is safe to re-run when a long download was interrupted.
 
+The workflow enables `--cb-knownclusters` and `--cc-mibig` explicitly. Startup checks that the MIBiG 4.0 KnownClusterBlast and ClusterCompare resources are present before analysis. The report shows method-specific scores; a database comparison is computational evidence, not compound identification.
+
 ## DeepBGC
 
 The project README says to download trained models and the Pfam database before use:

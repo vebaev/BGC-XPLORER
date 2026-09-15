@@ -25,7 +25,7 @@ tools:
     db_root: "/db/bakta"
     extra_args: ""
   antismash:
-    extra_args: "--databases /db/antismash"
+    extra_args: "--databases /db/antismash --cb-knownclusters --cc-mibig"
     container: "antismash/standalone-lite:8.0.4"
     db_subdir: "antismash"
     executable: "/opt/conda/envs/antismash/bin/antismash"

@@ -5,6 +5,7 @@ from pathlib import Path
 import pandas as pd
 
 from common import format_consensus_label, load_table_if_exists, write_tsv
+from mibig_hits import extract_structured_mibig_hits, mibig_method_priority
 
 
 HEADER_RE = re.compile(r"<h4>MIBiG 4\.0 matches for ([^<]+)</h4>")
@@ -14,9 +15,6 @@ LINK_RE = re.compile(
 )
 DESC_RE = re.compile(r'<span class="comparippson-description">([^<]+)</span>')
 ALLORF_RE = re.compile(r"allorf_(\d+)_(\d+)")
-MIBIG_ID_RE = re.compile(r"(BGC\d{7}\.\d+)")
-PERCENT_RE = re.compile(r"([0-9]+(?:\.[0-9]+)?)%")
-REGION_RE = re.compile(r"region0*([0-9]+)", re.IGNORECASE)
 
 
 def extract_regions_from_regions_js(path):
@@ -133,52 +131,9 @@ def parse_mibig_hits_from_html(path):
     return matches
 
 
-def infer_region_id_from_path(path):
-    match = REGION_RE.search(str(path))
-    if match:
-        return str(int(match.group(1)))
-    return ""
-
-
-def parse_auxiliary_dereplication_files(base_dir):
-    hits = []
-    if not base_dir.exists():
-        return hits
-    patterns = [
-        "*knownclusterblast*",
-        "*KnownClusterBlast*",
-        "*clustercompare*",
-        "*ClusterCompare*",
-    ]
-    seen_files = set()
-    for pattern in patterns:
-        for path in base_dir.rglob(pattern):
-            if path.is_dir():
-                continue
-            seen_files.add(path)
-    for path in sorted(seen_files):
-        text = path.read_text(encoding="utf-8", errors="ignore")
-        region_id = infer_region_id_from_path(path)
-        source_name = "knownclusterblast" if "knownclusterblast" in str(path).lower() else "clustercompare"
-        mibig_ids = MIBIG_ID_RE.findall(text)
-        if not mibig_ids:
-            continue
-        percents = [float(value) for value in PERCENT_RE.findall(text)]
-        best_percent = max(percents) if percents else 0.0
-        best_id = mibig_ids[0]
-        hits.append({
-            "query_label": "region_{0}".format(region_id) if region_id else path.stem,
-            "region_id": region_id,
-            "mibig_similarity": best_percent,
-            "best_mibig_id": best_id,
-            "best_mibig_label": best_id,
-            "best_mibig_product": "",
-            "evidence_source": source_name,
-        })
-    return hits
-
-
-def map_query_to_region(query_label, regions):
+def map_query_to_region(query_label, regions, contig_id=""):
+    if contig_id:
+        regions = [region for region in regions if str(region["contig_id"]) == str(contig_id)]
     if str(query_label).startswith("region_"):
         region_id = str(query_label).split("_", 1)[1]
         for region in regions:
@@ -239,11 +194,13 @@ regions = combine_region_sources(
     extract_regions_from_antismash_json(antismash_json),
 )
 hits = parse_mibig_hits_from_html(index_html)
-hits.extend(parse_auxiliary_dereplication_files(index_html.parent))
+if antismash_json.exists():
+    with open(str(antismash_json), "r", encoding="utf-8") as handle:
+        hits.extend(extract_structured_mibig_hits(json.load(handle)))
 
 rows = []
 for hit in hits:
-    region = map_query_to_region(hit["query_label"], regions)
+    region = map_query_to_region(hit["query_label"], regions, hit.get("contig_id", ""))
     if not region:
         continue
     region_id = region["region_id"]
@@ -260,7 +217,10 @@ for hit in hits:
     ]
     if consensus_rows.empty:
         continue
-    dereplication_status, novelty_score = classify_dereplication(hit["mibig_similarity"])
+    if hit.get("evidence_source") == "comparippson_html":
+        dereplication_status, novelty_score = classify_dereplication(hit["mibig_similarity"])
+    else:
+        dereplication_status, novelty_score = "candidate_reference", ""
     mibig_class = infer_mibig_class(hit, region, anti_row)
     for _, consensus_row in consensus_rows.iterrows():
         rows.append({
@@ -271,6 +231,10 @@ for hit in hits:
             "best_mibig_product": hit["best_mibig_product"],
             "best_mibig_class": mibig_class,
             "mibig_similarity": hit["mibig_similarity"],
+            "match_score": hit.get("match_score", ""),
+            "score_metric": hit.get("score_metric", "Peptide similarity (%)"),
+            "matched_genes": hit.get("matched_genes", ""),
+            "core_gene_hits": hit.get("core_gene_hits", ""),
             "dereplication_status": dereplication_status,
             "novelty_score": novelty_score,
             "evidence_source": hit.get("evidence_source", ""),
@@ -278,10 +242,21 @@ for hit in hits:
         })
 
 if rows:
-    out = pd.DataFrame(rows).sort_values(
-        ["consensus_id", "mibig_similarity", "evidence_source", "best_mibig_id"],
-        ascending=[True, False, True, True],
+    out = pd.DataFrame(rows)
+    strong_peptide_threshold = float(snakemake.config["consensus"].get(
+        "dereplication_thresholds", {}).get("known_like", 80.0))
+    out["method_priority"] = out.apply(
+        lambda row: mibig_method_priority(
+            row["evidence_source"], row["mibig_similarity"], strong_peptide_threshold),
+        axis=1,
     )
+    out["core_hits_order"] = pd.to_numeric(out["core_gene_hits"], errors="coerce").fillna(-1)
+    out["matched_genes_order"] = pd.to_numeric(out["matched_genes"], errors="coerce").fillna(-1)
+    out["match_score_order"] = pd.to_numeric(out["match_score"], errors="coerce").fillna(-1)
+    out = out.sort_values(
+        ["consensus_id", "method_priority", "core_hits_order", "matched_genes_order", "match_score_order"],
+        ascending=[True, True, False, False, False],
+    ).drop(columns=["method_priority", "core_hits_order", "matched_genes_order", "match_score_order"])
     out = out.drop_duplicates(subset=["consensus_id"], keep="first")
 else:
     out = pd.DataFrame(columns=[
@@ -292,6 +267,10 @@ else:
         "best_mibig_product",
         "best_mibig_class",
         "mibig_similarity",
+        "match_score",
+        "score_metric",
+        "matched_genes",
+        "core_gene_hits",
         "dereplication_status",
         "novelty_score",
         "evidence_source",

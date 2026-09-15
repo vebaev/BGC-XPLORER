@@ -21,6 +21,7 @@ BGC-XPLORER accepts a bacterial genome in FASTA format and runs an integrated na
 - Detects BGC candidates with **antiSMASH**, **GECCO** and **DeepBGC**.
 - Adds **ARTS**, **eggNOG-mapper** and **dbCAN** evidence.
 - Merges compatible predictions into consensus regions and ranks the candidates.
+- Compares antiSMASH regions with MIBiG using KnownClusterBlast and ClusterCompare; reports the score metric for each representative match.
 - Generates interactive gene maps, summary tables and reproducibility metadata.
 - Uses a configurable NVIDIA AI model for evidence-grounded cluster interpretation.
 
@@ -101,6 +102,8 @@ results/<sample>/report/<sample>.html
 Every completed sample also includes `provenance.json`, which records the application version, commit, tool versions, selected model and ARTS reference, effective configuration, and checksums for inputs, result tables and databases. API keys are excluded.
 
 The workflow produces computational hypotheses. BGC classes, biological activities and AI interpretations require expert review and experimental validation.
+
+MIBiG comparisons are candidate references, not proof that a region produces the same compound. KnownClusterBlast's empirical score, ClusterCompare's 0–1 score, and CompaRiPPson peptide similarity are different metrics and are labeled separately in reports.
 
 ## Local development
 
