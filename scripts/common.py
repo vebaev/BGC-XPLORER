@@ -452,6 +452,9 @@ def html_page(title, sections):
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 18px;
     }}
+    .info-grid.summary-only {{
+      grid-template-columns: 1fr;
+    }}
     .info-card {{
       display: flex;
       gap: 18px;

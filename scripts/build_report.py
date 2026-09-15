@@ -836,23 +836,18 @@ sections = [
         cards=glance_cards
     ),
     (
-        "<section class='info-grid'>"
-        "{summary_card}{howto_card}"
+        "<section class='info-grid summary-only'>"
+        "{summary_card}"
         "</section>"
     ).format(
         summary_card=info_card(
-            "Executive Summary",
+            "Summary",
             "We currently separate regions into strong consensus BGCs and high-interest candidates. "
             "{0} regions are tagged as high-confidence, {1} as high-interest / potentially novel, "
             "and {2} have explicit antiSMASH-to-MIBiG dereplication evidence.".format(
                 len(high_confidence), len(high_interest), len(mibig_backed)
             ),
             icon="▣",
-        ),
-        howto_card=info_card(
-            "How to Read This",
-            "Consensus regions are merged genomic intervals from antiSMASH, GECCO, and DeepBGC. They represent loci, not individual tool rows.",
-            icon="?",
         ),
     ),
     "<section class='chart-panels'>{left}{right}</section>".format(
