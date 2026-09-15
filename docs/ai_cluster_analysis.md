@@ -103,15 +103,16 @@ http://127.0.0.1:8000/SOIL_CONTIGS.html
 
 For the selected `consensus_id`, the service sends structured evidence:
 
-- region coordinates, priority, confidence, novelty and dereplication fields;
+- region coordinates, caller count, class/product signals, ARTS hit counts and representative MIBiG comparison metrics;
 - antiSMASH, GECCO and DeepBGC overlapping predictions;
 - ARTS overlapping evidence;
 - dbCAN CGC overlap when available;
 - all genes in the cluster with Bakta, eggNOG, dbCAN and ARTS annotations.
 
 The prompt asks the model to return strict JSON with summary, likely function,
-biosynthetic logic, key genes, novelty/confidence, caveats and recommended
-follow-up. The human-readable analysis should stay concise: 100-120 words total.
+biosynthetic logic, key genes, resistance/transport/regulation and recommended
+follow-up. The analysis is an interpretation of supplied evidence, not a calibrated
+confidence or novelty estimate.
 
 ### Scientific interpretation prompt v2.0
 

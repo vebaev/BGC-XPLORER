@@ -84,13 +84,13 @@ def parse_fasta_lengths(path):
     return lengths
 
 
-def classify_overlap_relationship(left_row, right_row):
+def classify_overlap_relationship(left_row, right_row, overlap_fraction=0.30):
     left_rec, right_rec, overlap_bp = reciprocal_overlap(
         left_row["start_num"], left_row["end_num"], right_row["start_num"], right_row["end_num"]
     )
     if overlap_bp <= 0:
         return ""
-    if left_rec >= 0.30 and right_rec >= 0.30:
+    if left_rec >= overlap_fraction and right_rec >= overlap_fraction:
         return "reciprocal_overlap"
     if (
         (left_row["start_num"] <= right_row["start_num"] and left_row["end_num"] >= right_row["end_num"])
@@ -127,7 +127,7 @@ def overlapping_gene_set(row, genes_df):
     return set(local["locus_tag"].fillna("").astype(str).tolist())
 
 
-def should_merge(left_row, right_row):
+def should_merge(left_row, right_row, overlap_fraction=0.30):
     if left_row["tool"] == right_row["tool"]:
         return False, ""
     if left_row["contig"] != right_row["contig"]:
@@ -138,7 +138,7 @@ def should_merge(left_row, right_row):
     right_core = set(right_row.get("core_genes", set()) or set())
     if left_core and right_core and (left_core & right_core):
         return True, "shared_core_gene"
-    relationship = classify_overlap_relationship(left_row, right_row)
+    relationship = classify_overlap_relationship(left_row, right_row, overlap_fraction)
     return bool(relationship), relationship
 
 
@@ -175,125 +175,6 @@ def summarize_shared_core_genes(subset):
     return "; ".join(per_tool)
 
 
-def score_boundary_confidence(num_supporting_tools, overlap_relationships, edge_truncated):
-    relationships = set(overlap_relationships)
-    if num_supporting_tools >= 3 and "reciprocal_overlap" in relationships and not edge_truncated:
-        return "high"
-    if num_supporting_tools >= 2 and not edge_truncated:
-        return "medium"
-    if edge_truncated and num_supporting_tools >= 2:
-        return "medium_edge"
-    return "low"
-
-
-def summarize_arts_hits(hit_rows):
-    if hit_rows.empty:
-        return ""
-    evidence_labels = {
-        "known_hit": "known resistance hit",
-        "duf_hit": "DUF-associated hit",
-        "core_gene": "core-gene signal",
-        "duplication_signal": "duplication signal",
-    }
-    evidence_counts = []
-    for evidence, group in hit_rows.groupby("evidence", dropna=False):
-        label = evidence_labels.get(str(evidence).strip(), str(evidence).strip() or "ARTS signal")
-        features = unique_preserve_order(group["feature"].tolist())[:3]
-        feature_text = ", ".join(features) if features else "unspecified features"
-        evidence_counts.append(
-            "{count} {label} ({features})".format(
-                count=len(group),
-                label=label,
-                features=feature_text,
-            )
-        )
-    return "ARTS overlap: " + "; ".join(evidence_counts)
-
-
-def build_why_prioritized(row):
-    reasons = []
-    support_count = int(row.get("num_supporting_tools", 0) or 0)
-    arts_hits = int(row.get("arts_hits", 0) or 0)
-    support_tools = unique_preserve_order(str(row.get("supporting_tools", "")).split(","))
-    dereplication_status = str(row.get("dereplication_status", "")).strip()
-    novelty_score = row.get("novelty_score", "")
-    edge_truncated = bool(row.get("edge_truncated", False))
-    products_text = str(row.get("products", "")).lower()
-
-    if support_count >= 3:
-        reasons.append("{0} tools agree".format(support_count))
-    elif support_count == 2:
-        reasons.append("2 tools agree")
-    else:
-        reasons.append("single-tool only")
-
-    if arts_hits > 0:
-        reasons.append("ARTS support ({0} hits)".format(arts_hits))
-    else:
-        reasons.append("no ARTS support")
-
-    if "shared_core_gene" in str(row.get("overlap_relationship", "")):
-        reasons.append("shared core-gene support")
-
-    if dereplication_status == "novel_candidate":
-        reasons.append("no close MIBiG match")
-    elif dereplication_status == "divergent":
-        reasons.append("divergent from known MIBiG cluster")
-    elif dereplication_status == "related":
-        reasons.append("related to known MIBiG cluster")
-    elif dereplication_status == "known-like":
-        reasons.append("known-like MIBiG match")
-    elif novelty_score != "" and not pd.isna(novelty_score):
-        reasons.append("MIBiG status unknown")
-
-    if "antibacterial" in products_text:
-        reasons.append("antibacterial signal")
-    if "cytotoxic" in products_text:
-        reasons.append("cytotoxic signal")
-    if edge_truncated:
-        reasons.append("contig-edge region")
-    if support_tools:
-        reasons.append("callers: {0}".format(", ".join(support_tools)))
-
-    return " + ".join(reasons)
-
-
-def build_why_not_prioritized(row):
-    reasons = []
-    support_count = int(row.get("num_supporting_tools", 0) or 0)
-    arts_hits = int(row.get("arts_hits", 0) or 0)
-    edge_truncated = bool(row.get("edge_truncated", False))
-    dereplication_status = str(row.get("dereplication_status", "")).strip()
-    boundary_confidence = str(row.get("boundary_confidence", "")).strip()
-    priority_class = str(row.get("priority_class", "")).strip()
-
-    if support_count <= 1:
-        reasons.append("single-tool only")
-    elif support_count == 2:
-        reasons.append("only 2 tools support this locus")
-
-    if arts_hits == 0:
-        reasons.append("no ARTS support")
-    elif support_count <= 1 and arts_hits > 0:
-        reasons.append("ARTS support without cross-tool confirmation")
-
-    if boundary_confidence in ["low", "medium_edge"]:
-        reasons.append("uncertain region boundaries")
-
-    if edge_truncated:
-        reasons.append("near contig edge; possible partial BGC")
-
-    if dereplication_status == "known-like":
-        reasons.append("strong similarity to known MIBiG cluster")
-    elif dereplication_status == "related":
-        reasons.append("close to a known MIBiG family")
-
-    if priority_class == "low" and not reasons:
-        reasons.append("limited supporting evidence")
-
-    return "; ".join(unique_preserve_order(reasons))
-
-
 def biological_interpretation(values):
     text = ",".join(str(value) for value in values if str(value).strip()).lower()
     findings = []
@@ -325,24 +206,14 @@ def biological_interpretation(values):
 
 
 def add_contig_edge_fields(row, contig_lengths):
-    edge_threshold_bp = int(snakemake.config["consensus"].get("edge_threshold_bp", 5000))
     contig_length = int(contig_lengths.get(row["contig_id"], 0) or 0)
     start = int(row["start"]) if row["start"] != "" and not pd.isna(row["start"]) else 0
     end = int(row["end"]) if row["end"] != "" and not pd.isna(row["end"]) else 0
     left_distance = max(start - 1, 0) if start else ""
     right_distance = max(contig_length - end, 0) if contig_length and end else ""
-    edge_truncated = bool(
-        contig_length
-        and (
-            (start and start <= edge_threshold_bp)
-            or (end and (contig_length - end) <= edge_threshold_bp)
-        )
-    )
     row["contig_length"] = contig_length
     row["distance_to_left_edge"] = left_distance
     row["distance_to_right_edge"] = right_distance
-    row["edge_truncated"] = edge_truncated
-    row["possible_partial_BGC"] = edge_truncated
     return row
 
 
@@ -357,6 +228,7 @@ arts = load_table_if_exists(snakemake.input.arts, [
 bakta = pd.read_csv(snakemake.input.bakta, sep="\t") if snakemake.input.bakta else pd.DataFrame()
 
 contig_lengths = parse_fasta_lengths(snakemake.input.fna)
+merge_threshold = float(snakemake.config["consensus"].get("overlap_fraction", 0.30))
 
 if not bakta.empty:
     for column in ["contig", "type", "start", "end", "strand", "locus_tag", "gene", "product", "dbxrefs"]:
@@ -407,7 +279,7 @@ for idx, row in bgcs.iterrows():
             local_relationships = []
             for member_idx in members:
                 member = bgcs.loc[member_idx]
-                merged, relationship = should_merge(member, other)
+                merged, relationship = should_merge(member, other, merge_threshold)
                 if merged:
                     merge_this = True
                     local_relationships.append((member, other, relationship))
@@ -460,11 +332,6 @@ for idx, row in bgcs.iterrows():
         "core_gene_support": summarize_shared_core_genes(subset) or build_tool_core_support(subset),
     }
     region = add_contig_edge_fields(region, contig_lengths)
-    region["boundary_confidence"] = score_boundary_confidence(
-        region["num_supporting_tools"],
-        unique_preserve_order(relationships if relationships else ["single_tool"]),
-        region["edge_truncated"],
-    )
     consensus_rows.append(region)
 
 consensus = pd.DataFrame(consensus_rows)

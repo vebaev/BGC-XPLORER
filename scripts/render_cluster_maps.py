@@ -562,7 +562,7 @@ def category_summary(genes):
 
 def main(snakemake_obj):
     sample = snakemake_obj.wildcards.sample
-    clusters = load_optional_table(snakemake_obj.input.prioritized)
+    clusters = load_optional_table(snakemake_obj.input.evidence)
     dbcan_summary = load_optional_table(snakemake_obj.input.dbcan_summary)
     bakta = load_optional_table(snakemake_obj.input.bakta)
     eggnog = load_optional_table(snakemake_obj.input.eggnog)

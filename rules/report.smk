@@ -10,7 +10,7 @@ rule build_report:
         cluster_maps="results/{sample}/summary/cluster_gene_maps.tsv",
         cluster_genes="results/{sample}/summary/cluster_genes.tsv",
         consensus="results/{sample}/summary/consensus_bgcs.tsv",
-        prioritized="results/{sample}/summary/prioritized_bgcs.tsv",
+        evidence="results/{sample}/summary/region_evidence.tsv",
         overlap="results/{sample}/summary/tool_overlap.tsv",
         provenance="results/{sample}/provenance.json"
     output:

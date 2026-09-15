@@ -10,7 +10,7 @@ rule build_provenance:
             "results/{sample}/summary/arts.hits.tsv",
             "results/{sample}/summary/dbcan.cgc.tsv",
             "results/{sample}/summary/consensus_bgcs.tsv",
-            "results/{sample}/summary/prioritized_bgcs.tsv",
+            "results/{sample}/summary/region_evidence.tsv",
             "results/{sample}/summary/tool_overlap.tsv",
         ],
         config="config/config.yaml",

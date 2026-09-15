@@ -583,10 +583,11 @@ STAT_TONES = {
     "Required files": "green",
     "Ready samples": "blue",
     "Workflow": "orange",
-    "Consensus": "indigo",
-    "Multi-tool": "lime",
-    "High-confidence": "sky",
-    "High-interest": "amber",
+    "Grouped loci": "indigo",
+    "Multi-caller loci": "lime",
+    "MIBiG comparisons": "cyan",
+    "ARTS known hits": "orange",
+    "ARTS DUF hits": "teal",
     "antiSMASH": "violet",
     "GECCO": "green",
     "DeepBGC": "blue",
@@ -600,10 +601,11 @@ STAT_GLYPHS = {
     "Required files": "✓",
     "Ready samples": "◌",
     "Workflow": "↺",
-    "Consensus": "◔",
-    "Multi-tool": "◎",
-    "High-confidence": "✦",
-    "High-interest": "✧",
+    "Grouped loci": "◔",
+    "Multi-caller loci": "◎",
+    "MIBiG comparisons": "⬡",
+    "ARTS known hits": "⛨",
+    "ARTS DUF hits": "◇",
     "antiSMASH": "○",
     "GECCO": "◇",
     "DeepBGC": "□",
@@ -888,7 +890,7 @@ def read_tsv_rows(path: Path):
 
 def summarize_sample(sample: str):
     summary_dir = WORK_DIR / "results" / sample / "summary"
-    prioritized = read_tsv_rows(summary_dir / "prioritized_regions.tsv")
+    evidence = read_tsv_rows(summary_dir / "region_evidence.tsv")
     arts = read_tsv_rows(summary_dir / "arts.hits.tsv")
     dbcan = read_tsv_rows(summary_dir / "dbcan.cgc.tsv")
     mibig = read_tsv_rows(summary_dir / "mibig_dereplication.tsv")
@@ -901,10 +903,10 @@ def summarize_sample(sample: str):
         return bool(text) and text.lower() not in {"nan", "n/a", "none"}
 
     return {
-        "consensus": len(prioritized),
-        "multitool": sum(1 for row in prioritized if int(float(row.get("support_count") or 0)) >= 2),
-        "high_confidence": sum(1 for row in prioritized if row.get("confidence_category", "").strip().lower() == "high-confidence bgc"),
-        "high_interest": sum(1 for row in prioritized if row.get("interest_category", "").strip().lower() == "high-interest / potentially novel"),
+        "consensus": len(evidence),
+        "multitool": sum(1 for row in evidence if int(float(row.get("support_count") or 0)) >= 2),
+        "arts_known_loci": sum(1 for row in evidence if int(float(row.get("arts_known_hits") or 0)) > 0),
+        "arts_duf_loci": sum(1 for row in evidence if int(float(row.get("arts_duf_hits") or 0)) > 0),
         "mibig_hits": sum(1 for row in mibig if nonempty(row.get("best_mibig_id"))),
         "antismash": len(antismash),
         "gecco": len(gecco),
@@ -952,7 +954,7 @@ async def upload_page():
                         "Start a new analysis",
                         "Provide one assembled bacterial genome, MAG, or plasmid. "
                         "BGC-XPLORER will run the complete discovery, biological-context, "
-                        "prioritization, and reporting workflow.",
+                        "evidence aggregation, and reporting workflow.",
                     )
                 )
                 sample_input = ui.input(
@@ -1038,7 +1040,7 @@ async def upload_page():
             "<div class='workflow-grid'>{steps}</div>"
             "</section>".format(
                 heading=section_header(
-                    "From sequence to prioritized clusters",
+                    "From sequence to an integrated evidence report",
                     "Each stage contributes independent evidence to the final integrated result.",
                 ),
                 steps="".join(workflow_step_card(*step) for step in WORKFLOW_STEPS)
@@ -1235,10 +1237,10 @@ async def results_page(sample: str):
             "</section>".format(
                 cards="".join(
                     [
-                        stat_card("Consensus", str(metrics["consensus"]), "Merged loci across the available callers for this sample."),
-                        stat_card("Multi-tool", str(metrics["multitool"]), "Consensus regions supported by at least two prediction tools."),
-                        stat_card("High-confidence", str(metrics["high_confidence"]), "Regions tagged as stronger consensus BGC candidates."),
-                        stat_card("High-interest", str(metrics["high_interest"]), "Potentially novel or especially interesting candidates."),
+                        stat_card("Grouped loci", str(metrics["consensus"]), "Approximate candidate loci grouped across callers."),
+                        stat_card("Multi-caller loci", str(metrics["multitool"]), "Loci containing predictions from at least two callers."),
+                        stat_card("MIBiG comparisons", str(metrics["mibig_hits"]), "Loci with a representative computational MIBiG comparison."),
+                        stat_card("ARTS known hits", str(metrics["arts_known_loci"]), "Loci overlapping known-hit ARTS records."),
                     ]
                 )
             )
@@ -1256,7 +1258,7 @@ async def results_page(sample: str):
                         stat_card("DeepBGC", str(metrics["deepbgc"]), "Domain-driven BGC predictions and activity hints."),
                         stat_card("ARTS", str(metrics["arts"]), "Resistance-linked genomic evidence overlapping candidate loci."),
                         stat_card("dbCAN CGC", str(metrics["dbcan"]), "Carbohydrate gene cluster substrate prediction rows."),
-                        stat_card("MIBiG hits", str(metrics["mibig_hits"]), "Consensus regions with explicit dereplication evidence."),
+                        stat_card("ARTS DUF hits", str(metrics["arts_duf_loci"]), "Loci overlapping ARTS domains of unknown function."),
                     ]
                 )
             )

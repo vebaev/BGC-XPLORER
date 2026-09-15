@@ -1,6 +1,6 @@
 rule render_cluster_maps:
     input:
-        prioritized="results/{sample}/summary/prioritized_regions.tsv",
+        evidence="results/{sample}/summary/region_evidence.tsv",
         dbcan_summary="results/{sample}/summary/dbcan.cgc.tsv",
         bakta="results/{sample}/bakta/{sample}.features.tsv",
         eggnog="results/{sample}/summary/eggnog.annotations.tsv",

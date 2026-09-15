@@ -2,10 +2,10 @@ from html import escape
 
 
 PRIMARY_GLANCE_LABELS = (
-    "Consensus",
-    "Multi-tool",
-    "High-confidence",
-    "High-interest",
+    "Grouped loci",
+    "Multi-caller loci",
+    "MIBiG comparisons",
+    "ARTS known hits",
 )
 
 DONUT_COLORS = (

@@ -153,20 +153,6 @@ def map_query_to_region(query_label, regions, contig_id=""):
     return None
 
 
-def classify_dereplication(similarity):
-    thresholds = snakemake.config["consensus"].get("dereplication_thresholds", {})
-    known_like = float(thresholds.get("known_like", 80.0))
-    related = float(thresholds.get("related", 50.0))
-    divergent = float(thresholds.get("divergent", 20.0))
-    if similarity >= known_like:
-        return "known-like", 0.1
-    if similarity >= related:
-        return "related", 0.45
-    if similarity >= divergent:
-        return "divergent", 0.75
-    return "novel_candidate", 1.0
-
-
 def infer_mibig_class(hit, region, anti_row):
     product_text = str(hit.get("best_mibig_product", "")).strip()
     if ":" in product_text:
@@ -217,10 +203,6 @@ for hit in hits:
     ]
     if consensus_rows.empty:
         continue
-    if hit.get("evidence_source") == "comparippson_html":
-        dereplication_status, novelty_score = classify_dereplication(hit["mibig_similarity"])
-    else:
-        dereplication_status, novelty_score = "candidate_reference", ""
     mibig_class = infer_mibig_class(hit, region, anti_row)
     for _, consensus_row in consensus_rows.iterrows():
         rows.append({
@@ -235,8 +217,6 @@ for hit in hits:
             "score_metric": hit.get("score_metric", "Peptide similarity (%)"),
             "matched_genes": hit.get("matched_genes", ""),
             "core_gene_hits": hit.get("core_gene_hits", ""),
-            "dereplication_status": dereplication_status,
-            "novelty_score": novelty_score,
             "evidence_source": hit.get("evidence_source", ""),
             "query_label": hit["query_label"],
         })
@@ -244,7 +224,7 @@ for hit in hits:
 if rows:
     out = pd.DataFrame(rows)
     strong_peptide_threshold = float(snakemake.config["consensus"].get(
-        "dereplication_thresholds", {}).get("known_like", 80.0))
+        "comparippson_preference_similarity_percent", 80.0))
     out["method_priority"] = out.apply(
         lambda row: mibig_method_priority(
             row["evidence_source"], row["mibig_similarity"], strong_peptide_threshold),
@@ -271,8 +251,6 @@ else:
         "score_metric",
         "matched_genes",
         "core_gene_hits",
-        "dereplication_status",
-        "novelty_score",
         "evidence_source",
         "query_label",
     ])

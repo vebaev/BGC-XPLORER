@@ -1,18 +1,9 @@
 """Read method-specific antiSMASH 8 MIBiG hits from its structured JSON."""
 
-import math
 import re
 
 
 MIBIG_ID_RE = re.compile(r"^(BGC\d{7}\.\d+)")
-
-
-def novelty_score_for_priority(value):
-    try:
-        score = float(value)
-    except (TypeError, ValueError):
-        return 0.0
-    return score if math.isfinite(score) else 0.0
 
 
 def mibig_method_priority(source, peptide_similarity, strong_peptide_threshold=80.0):

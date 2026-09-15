@@ -237,11 +237,10 @@ def compact_payload_for_model(payload):
     compact_region_keys = [
         "contig", "start", "end", "length_bp", "support_tools", "support_count",
         "bgc_types", "products", "biological_interpretation",
-        "overlap_relationship", "core_gene_support", "boundary_confidence",
-        "confidence_category", "interest_category", "arts_hits", "why_prioritized",
-        "why_not_prioritized", "recommended_followup", "best_mibig_id",
+        "overlap_relationship", "core_gene_support", "arts_hits",
+        "arts_known_hits", "arts_duf_hits", "nearest_contig_edge_bp", "best_mibig_id",
         "best_mibig_product", "mibig_similarity", "match_score", "score_metric",
-        "matched_genes", "core_gene_hits", "dereplication_status", "novelty_score",
+        "matched_genes", "core_gene_hits",
     ]
     return {
         "sample": payload.get("sample"),
@@ -260,7 +259,7 @@ def compact_payload_for_model(payload):
         "mibig_dereplication": compact_record(payload.get("mibig_dereplication", {}), [
             "best_mibig_id", "best_mibig_product", "best_mibig_class",
             "mibig_similarity", "match_score", "score_metric", "matched_genes",
-            "core_gene_hits", "dereplication_status", "novelty_score", "evidence_source",
+            "core_gene_hits", "evidence_source",
         ]),
     }
 
@@ -283,7 +282,6 @@ def build_fast_preview(payload):
     summary_bits = []
     bgc_types = clean(region.get("bgc_types"))
     products = clean(region.get("products"))
-    interest = clean(region.get("interest_category"))
     contig = clean(region.get("contig"))
     start = clean(region.get("start"))
     end = clean(region.get("end"))
@@ -300,8 +298,6 @@ def build_fast_preview(payload):
         else:
             loc = "{0} ({1}-{2})".format(contig, start, end)
         summary_bits.append("Location: {0}.".format(loc))
-    if interest:
-        summary_bits.append("Interest category: {0}.".format(interest))
     if top_categories:
         cat_str = ", ".join("{0}={1}".format(k, v) for k, v in top_categories)
         summary_bits.append("Gene categories ({0}): {1}.".format(len(genes), cat_str))
@@ -332,9 +328,6 @@ def build_fast_preview(payload):
             key_genes.append(label)
 
     caveats_bits = []
-    relevance = clean(region.get("why_prioritized"))
-    if relevance:
-        caveats_bits.append("Why prioritized: {0}".format(relevance[:160]))
     if not tools:
         caveats_bits.append("No tool predictions inside the region; treat with caution.")
 
@@ -357,7 +350,7 @@ def build_fast_preview(payload):
 
 def build_cluster_payload(results_dir, sample, consensus_id):
     summary_dir = results_dir / sample / "summary"
-    prioritized = read_tsv(summary_dir / "prioritized_regions.tsv")
+    evidence = read_tsv(summary_dir / "region_evidence.tsv")
     consensus = read_tsv(summary_dir / "consensus_bgcs.tsv")
     cluster_genes = read_tsv(summary_dir / "cluster_genes.tsv")
     antismash = read_tsv(summary_dir / "antismash.bgc.tsv")
@@ -367,9 +360,9 @@ def build_cluster_payload(results_dir, sample, consensus_id):
     dbcan_cgc = read_tsv(summary_dir / "dbcan.cgc.tsv")
     mibig = read_tsv(summary_dir / "mibig_dereplication.tsv")
 
-    priority_row = row_by_cluster(prioritized, consensus_id)
+    evidence_row = row_by_cluster(evidence, consensus_id)
     consensus_row = row_by_cluster(consensus, consensus_id)
-    cluster_row = priority_row or consensus_row
+    cluster_row = evidence_row or consensus_row
     if not cluster_row:
         raise ValueError("Unknown consensus_id: {0}".format(consensus_id))
 
@@ -404,11 +397,10 @@ def build_cluster_payload(results_dir, sample, consensus_id):
             "contig", "contig_id", "start", "end", "length_bp", "support_tools",
             "supporting_tools", "support_count", "bgc_types", "products",
             "biological_interpretation", "overlap_relationship", "core_gene_support",
-            "boundary_confidence", "priority_score", "priority_class",
-            "confidence_category", "interest_category", "arts_hits", "why_prioritized",
-            "why_not_prioritized", "recommended_followup", "best_mibig_id",
+            "arts_hits", "arts_known_hits", "arts_duf_hits",
+            "nearest_contig_edge_bp", "best_mibig_id",
             "best_mibig_product", "mibig_similarity", "match_score", "score_metric",
-            "matched_genes", "core_gene_hits", "dereplication_status", "novelty_score",
+            "matched_genes", "core_gene_hits",
         ]),
         "tool_predictions": {
             "antismash": [compact_record(row, tool_keys) for row in matching_regions(antismash, contig, start, end)],

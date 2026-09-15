@@ -1,6 +1,6 @@
 import unittest
 
-from scripts.mibig_hits import extract_structured_mibig_hits, novelty_score_for_priority, mibig_method_priority
+from scripts.mibig_hits import extract_structured_mibig_hits, mibig_method_priority
 
 
 class StructuredMibigHitTests(unittest.TestCase):
@@ -45,12 +45,6 @@ class StructuredMibigHitTests(unittest.TestCase):
         self.assertEqual(hits[0]["match_score"], 0.81)
         self.assertEqual(hits[0]["score_metric"], "ClusterCompare score (0-1)")
         self.assertIsNone(hits[0]["mibig_similarity"])
-
-    def test_missing_novelty_score_does_not_change_priority(self):
-        self.assertEqual(novelty_score_for_priority(""), 0.0)
-        self.assertEqual(novelty_score_for_priority(None), 0.0)
-        self.assertEqual(novelty_score_for_priority(float("nan")), 0.0)
-        self.assertEqual(novelty_score_for_priority(0.75), 0.75)
 
     def test_strong_peptide_match_is_retained_over_generic_cluster_comparison(self):
         self.assertLess(

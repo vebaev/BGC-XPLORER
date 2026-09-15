@@ -61,35 +61,12 @@ def tool_support_summary(tool_df, contig, start, end):
 
 
 sample = snakemake.wildcards.sample
-consensus = pd.read_csv(snakemake.input.consensus, sep="\t")
-prioritized = pd.read_csv(snakemake.input.prioritized, sep="\t")
+merged = pd.read_csv(snakemake.input.evidence, sep="\t")
 antismash = load_table_if_exists(snakemake.input.antismash, [
     "sample", "tool", "contig", "start", "end", "strand", "bgc_id", "bgc_type", "product", "score", "confidence", "source_file"
 ])
 gecco = load_table_if_exists(snakemake.input.gecco, antismash.columns.tolist())
 deepbgc = load_table_if_exists(snakemake.input.deepbgc, antismash.columns.tolist())
-
-merged = consensus.merge(
-    prioritized[[
-        "consensus_id",
-        "consensus_label",
-        "priority_score",
-        "priority_class",
-        "confidence_category",
-        "interest_category",
-        "arts_hits",
-        "notes",
-        "best_mibig_id",
-        "best_mibig_product",
-        "best_mibig_class",
-        "mibig_similarity",
-        "dereplication_status",
-        "novelty_score",
-        "evidence_source",
-    ]],
-    on="consensus_id",
-    how="left",
-)
 
 rows = []
 for _, row in merged.iterrows():
@@ -119,24 +96,25 @@ for _, row in merged.iterrows():
         "merged_bgc_types": row.get("bgc_types", ""),
         "merged_products": row.get("products", ""),
         "biological_interpretation": row.get("biological_interpretation", ""),
-        "priority_score": row.get("priority_score", ""),
-        "priority_class": row.get("priority_class", ""),
-        "confidence_category": row.get("confidence_category", ""),
-        "interest_category": row.get("interest_category", ""),
         "arts_hits": row.get("arts_hits", ""),
+        "arts_known_hits": row.get("arts_known_hits", ""),
+        "arts_duf_hits": row.get("arts_duf_hits", ""),
+        "arts_other_hits": row.get("arts_other_hits", ""),
+        "nearest_contig_edge_bp": row.get("nearest_contig_edge_bp", ""),
         "best_mibig_id": row.get("best_mibig_id", ""),
         "best_mibig_product": row.get("best_mibig_product", ""),
         "best_mibig_class": row.get("best_mibig_class", ""),
         "mibig_similarity": row.get("mibig_similarity", ""),
-        "dereplication_status": row.get("dereplication_status", ""),
-        "novelty_score": row.get("novelty_score", ""),
+        "match_score": row.get("match_score", ""),
+        "score_metric": row.get("score_metric", ""),
+        "matched_genes": row.get("matched_genes", ""),
+        "core_gene_hits": row.get("core_gene_hits", ""),
         "evidence_source": row.get("evidence_source", ""),
-        "notes": row.get("notes", ""),
     })
 
 catalog = pd.DataFrame(rows).sort_values(
-    ["support_count", "priority_score", "contig", "start"],
-    ascending=[False, False, True, True],
+    ["contig", "start", "end"],
+    ascending=[True, True, True],
 )
 
 write_tsv(catalog, snakemake.output.tsv)
@@ -147,13 +125,13 @@ sections = [
         "<section class='hero'>"
         "<div class='eyebrow'>Cluster Catalog</div>"
         "<h1>{sample}</h1>"
-        "<p>One row per consensus locus. Each tool-specific block preserves what that caller said about the same genomic region, so we can compare support and biological meaning side by side.</p>"
+        "<p>One row per grouped candidate locus. Each tool-specific block preserves its original prediction; grouped boundaries are approximate.</p>"
         "</section>"
     ).format(sample=escape(sample)),
     "<section class='section'><h2>Catalog Summary</h2><div class='stats'>{cards}</div></section>".format(
         cards="".join([
-            stat_card("Consensus clusters", len(catalog), "all merged loci in the sample"),
-            stat_card("Multi-tool clusters", len(multi_tool), "supported by at least two predictors"),
+            stat_card("Grouped loci", len(catalog), "approximate candidate loci in the sample"),
+            stat_card("Multi-caller loci", len(multi_tool), "contain predictions from at least two callers"),
             stat_card("antiSMASH-backed", int((catalog["antismash_ids"].fillna("").str.len() > 0).sum()), "catalog rows with antiSMASH evidence"),
             stat_card("GECCO-backed", int((catalog["gecco_ids"].fillna("").str.len() > 0).sum()), "catalog rows with GECCO evidence"),
             stat_card("DeepBGC-backed", int((catalog["deepbgc_ids"].fillna("").str.len() > 0).sum()), "catalog rows with DeepBGC evidence"),

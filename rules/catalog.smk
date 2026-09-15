@@ -1,7 +1,6 @@
 rule build_cluster_catalog:
     input:
-        consensus="results/{sample}/summary/consensus_bgcs.tsv",
-        prioritized="results/{sample}/summary/prioritized_bgcs.tsv",
+        evidence="results/{sample}/summary/region_evidence.tsv",
         antismash="results/{sample}/summary/antismash.bgc.tsv",
         gecco="results/{sample}/summary/gecco.bgc.tsv",
         deepbgc="results/{sample}/summary/deepbgc.bgc.tsv"

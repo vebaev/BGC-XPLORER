@@ -10,7 +10,7 @@ class ReportBrandingTests(unittest.TestCase):
     def test_at_a_glance_uses_four_primary_metrics(self):
         self.assertEqual(
             PRIMARY_GLANCE_LABELS,
-            ("Consensus", "Multi-tool", "High-confidence", "High-interest"),
+            ("Grouped loci", "Multi-caller loci", "MIBiG comparisons", "ARTS known hits"),
         )
 
     def test_reproducibility_panel_uses_live_model_placeholder_without_download_link(self):

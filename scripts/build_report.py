@@ -6,9 +6,10 @@ from urllib.parse import quote
 
 import pandas as pd
 
-from common import df_to_html_table, format_consensus_label, html_page, load_table_if_exists, read_json
+from common import html_page, load_table_if_exists, read_json
 from report_branding import image_data_uri, report_home_link
 from report_design import DONUT_COLORS, PRIMARY_GLANCE_LABELS, reproducibility_panel
+from report_evidence_table import render_evidence_table
 
 
 def _load_logo_data_uri():
@@ -61,15 +62,6 @@ def render_html_table(df, html_columns=None):
     )
 
 
-def derep_source_label(value):
-    text = as_text(value, "").strip().lower()
-    mapping = {
-        "comparippson_html": "CompariPPson",
-        "knownclusterblast": "KnownClusterBlast",
-        "clustercompare": "ClusterCompare",
-        "clustercompare_mibig": "ClusterCompare MIBiG",
-    }
-    return mapping.get(text, text or "n/a")
 
 
 def top_terms(series, limit=6):
@@ -90,11 +82,10 @@ STAT_TONES = {
     "DeepBGC": "blue",
     "ARTS": "orange",
     "dbCAN CGC": "teal",
-    "Consensus": "indigo",
-    "Multi-tool": "lime",
-    "High-confidence": "sky",
-    "High-interest": "amber",
-    "MIBiG hits": "cyan",
+    "Grouped loci": "indigo",
+    "Multi-caller loci": "lime",
+    "MIBiG comparisons": "cyan",
+    "ARTS known hits": "orange",
 }
 
 STAT_GLYPHS = {
@@ -103,11 +94,10 @@ STAT_GLYPHS = {
     "DeepBGC": "□",
     "ARTS": "⛨",
     "dbCAN CGC": "⌘",
-    "Consensus": "◔",
-    "Multi-tool": "◎",
-    "High-confidence": "✦",
-    "High-interest": "✧",
-    "MIBiG hits": "◌",
+    "Grouped loci": "◔",
+    "Multi-caller loci": "◎",
+    "MIBiG comparisons": "⬡",
+    "ARTS known hits": "⛨",
 }
 
 def stat_card(label, value, note, tone=None, glyph=None):
@@ -190,7 +180,7 @@ def render_donut_panel(title, pairs, total):
         "</div>"
         "<ul class='legend-list'>{legend}</ul>"
         "</div>"
-        "<p class='muted chart-note'>Six most frequent signals across {regions} consensus regions. "
+        "<p class='muted chart-note'>Six most frequent signals across {regions} grouped candidate loci. "
         "A region may have multiple signals or none.</p>"
         "</section>"
     ).format(
@@ -199,35 +189,6 @@ def render_donut_panel(title, pairs, total):
     )
 
 
-def table_tabs(items):
-    nav = []
-    panes = []
-    for index, item in enumerate(items):
-        slug = "tab-{0}".format(index)
-        nav.append(
-            "<button class='tab-btn{active}' type='button' data-tab-target='{slug}' aria-selected='{selected}'>"
-            "<span class='tab-icon'>{icon}</span><span>{label}</span></button>".format(
-                active=" is-active" if index == 0 else "",
-                slug=slug,
-                selected="true" if index == 0 else "false",
-                icon=escape(item.get("icon", "•")),
-                label=escape(item["label"]),
-            )
-        )
-        panes.append(
-            "<div class='tab-pane{active}' id='{slug}'{hidden}>{content}</div>".format(
-                active=" is-active" if index == 0 else "",
-                slug=slug,
-                hidden="" if index == 0 else " hidden",
-                content=item["content"],
-            )
-        )
-    return (
-        "<section class='panel table-panel'>"
-        "<div class='tabs-nav' role='tablist'>{nav}</div>"
-        "<div class='tabs-body'>{panes}</div>"
-        "</section>"
-    ).format(nav="".join(nav), panes="".join(panes))
 
 
 def footer_strip(sample, generated_at):
@@ -241,93 +202,10 @@ def footer_strip(sample, generated_at):
     ).format(sample=escape(sample), generated_at=escape(generated_at))
 
 
-def chip(text, kind="accent"):
-    return "<span class='chip chip-{kind}'>{text}</span>".format(
-        kind=escape(kind), text=escape(str(text))
-    )
 
 
-def build_why_prioritized(row):
-    existing = str(row.get("why_prioritized", "")).strip()
-    if existing and existing.lower() != "nan":
-        return existing
-    support_count = as_int(row.get("support_count"))
-    arts_hits = as_int(row.get("arts_hits"))
-    support_tools = [part.strip() for part in as_text(row.get("support_tools"), "").split(",") if part.strip()]
-    notes = str(row.get("notes", "")).strip()
-    reasons = []
-    if support_count >= 3:
-        reasons.append("{0} tools agree".format(support_count))
-    elif support_count == 2:
-        reasons.append("2 tools agree")
-    else:
-        reasons.append("single-tool only")
-
-    if arts_hits > 0:
-        reasons.append("ARTS support ({0} hits)".format(arts_hits))
-    else:
-        reasons.append("no ARTS support")
-
-    if support_tools:
-        reasons.append("callers: {0}".format(", ".join(support_tools)))
-
-    if support_count <= 1:
-        reasons.append("lower confidence")
-    elif support_count >= 3 and arts_hits > 0:
-        reasons.append("strong follow-up candidate")
-    elif support_count >= 3:
-        reasons.append("high cross-tool confidence")
-    else:
-        reasons.append("moderate cross-tool confidence")
-
-    if notes and notes.lower() != "nan":
-        compact_notes = notes.replace("ARTS overlap: ", "")
-        reasons.append(compact_notes)
-
-    return " + ".join(reasons)
 
 
-def cluster_card(row):
-    location = "{contig}:{start:,}-{end:,}".format(
-        contig=as_text(row.get("contig")),
-        start=as_int(row.get("start")),
-        end=as_int(row.get("end")),
-    )
-    support_tools = [part.strip() for part in as_text(row.get("support_tools"), "").split(",") if part.strip()]
-    support_label = ", ".join(support_tools) if support_tools else "single-tool"
-    products = as_text(row.get("products"), "not annotated")
-    bgc_types = as_text(row.get("bgc_types"), "not classified")
-    interpretation = as_text(row.get("biological_interpretation"), "No interpretation text available.")
-    notes = str(row.get("notes", "")).strip()
-    note_block = ""
-    if notes and notes.lower() != "nan":
-        note_block = "<div class='callout'><p>{notes}</p></div>".format(notes=escape(notes))
-    return (
-        "<article class='cluster-card'>"
-        "<h3>{cluster_id}</h3>"
-        "<p>{location}</p>"
-        "<div class='chip-row'>"
-        "{support_chip}{tools_chip}{arts_chip}{score_chip}"
-        "</div>"
-        "<div class='kv'>"
-        "<div class='k'>Products</div><div class='v'>{products}</div>"
-        "<div class='k'>BGC types</div><div class='v'>{bgc_types}</div>"
-        "<div class='k'>Meaning</div><div class='v'>{interpretation}</div>"
-        "</div>"
-        "{note_block}"
-        "</article>"
-    ).format(
-        cluster_id=escape(as_text(row.get("consensus_id"))),
-        location=escape(location),
-        support_chip=chip("{0} tools".format(as_int(row.get("support_count"))), "accent"),
-        tools_chip=chip(support_label, "blue"),
-        arts_chip=chip("ARTS hits: {0}".format(as_int(row.get("arts_hits"))), "green"),
-        score_chip=chip("Priority: {0}".format(as_text(row.get("priority_score"), "0")), "accent"),
-        products=escape(products),
-        bgc_types=escape(bgc_types),
-        interpretation=escape(interpretation),
-        note_block=note_block,
-    )
 
 
 def gene_map_button(row, map_index):
@@ -459,115 +337,8 @@ def dbcan_cluster_interpretation(row):
     )
 
 
-def df_to_cluster_table(df, hidden, map_index, limit=None):
-    if df.empty:
-        return "<p>No records found.</p>"
-    source = df.head(limit).copy() if limit else df.copy()
-    if "consensus_id" in source.columns:
-        if "consensus_label" in source.columns:
-            source["CONSENSUS"] = source["consensus_label"].astype(str)
-        else:
-            source["CONSENSUS"] = source["consensus_id"].astype(str).map(format_consensus_label)
-        source["GENES"] = source["consensus_id"].astype(str).map(
-            lambda value: as_int(map_index.get(value, {}).get("gene_count"), "")
-        )
-        ordered = []
-        for column in source.columns:
-            if column in {"CONSENSUS", "GENES", "consensus_label"}:
-                continue
-            ordered.append(column)
-            if column == "contig":
-                ordered.append("CONSENSUS")
-            if column == "length_bp":
-                ordered.append("GENES")
-        source = source[[column for column in ordered if column in source.columns]]
-    buttons = [
-        gene_map_button(row, map_index)
-        for _, row in source.iterrows()
-    ]
-    display = source.drop(columns=[col for col in hidden if col in source.columns], errors="ignore")
-    display.insert(0, "Gene map", buttons)
-    header = "".join(
-        "<th>{label}</th>".format(label=escape(str(column)))
-        for column in display.columns
-    )
-    body_rows = []
-    for _, row in display.iterrows():
-        cells = []
-        for column in display.columns:
-            value = row[column]
-            if column == "Gene map":
-                cells.append("<td>{0}</td>".format(value))
-            else:
-                cells.append("<td>{0}</td>".format(escape(as_text(value, ""))))
-        body_rows.append("<tr>{0}</tr>".format("".join(cells)))
-    return (
-        "<div class='table-wrap'><table class='table'>"
-        "<thead><tr>{header}</tr></thead><tbody>{rows}</tbody>"
-        "</table></div>"
-    ).format(header=header, rows="".join(body_rows))
 
 
-def df_to_mibig_table(df, hidden, map_index, limit=None):
-    """MIBiG-specific cluster table: inserts MIBiG product + Dereplication
-    status columns right after GENES, and hides the other MIBiG detail fields.
-    """
-    if df.empty:
-        return "<p>No records found.</p>"
-    source = df.head(limit).copy() if limit else df.copy()
-    if "consensus_id" in source.columns:
-        if "consensus_label" in source.columns:
-            source["CONSENSUS"] = source["consensus_label"].astype(str)
-        else:
-            source["CONSENSUS"] = source["consensus_id"].astype(str).map(format_consensus_label)
-        source["GENES"] = source["consensus_id"].astype(str).map(
-            lambda value: as_int(map_index.get(value, {}).get("gene_count"), "")
-        )
-        ordered = []
-        for column in source.columns:
-            if column in {"CONSENSUS", "GENES", "consensus_label"}:
-                continue
-            ordered.append(column)
-            if column == "contig":
-                ordered.append("CONSENSUS")
-            if column == "length_bp":
-                ordered.append("GENES")
-        source = source[[column for column in ordered if column in source.columns]]
-    buttons = [
-        gene_map_button(row, map_index)
-        for _, row in source.iterrows()
-    ]
-    display = source.drop(columns=[col for col in hidden if col in source.columns], errors="ignore")
-    display.insert(0, "Gene map", buttons)
-
-    # Reorder: move MIBiG product and Dereplication status right after GENES
-    movable = ["MIBiG product", "Dereplication status"]
-    cols = [c for c in display.columns if c not in movable]
-    insert_at = cols.index("GENES") + 1 if "GENES" in cols else len(cols)
-    for offset, column in enumerate(movable):
-        if column in display.columns:
-            cols.insert(insert_at + offset, column)
-    display = display[cols]
-
-    header = "".join(
-        "<th>{label}</th>".format(label=escape(str(column)))
-        for column in display.columns
-    )
-    body_rows = []
-    for _, row in display.iterrows():
-        cells = []
-        for column in display.columns:
-            value = row[column]
-            if column == "Gene map":
-                cells.append("<td>{0}</td>".format(value))
-            else:
-                cells.append("<td>{0}</td>".format(escape(as_text(value, ""))))
-        body_rows.append("<tr>{0}</tr>".format("".join(cells)))
-    return (
-        "<div class='table-wrap'><table class='table'>"
-        "<thead><tr>{header}</tr></thead><tbody>{rows}</tbody>"
-        "</table></div>"
-    ).format(header=header, rows="".join(body_rows))
 
 
 sample = snakemake.wildcards.sample
@@ -595,61 +366,13 @@ cluster_maps = load_table_if_exists(snakemake.input.cluster_maps, [
 ])
 cluster_genes_path = str(snakemake.input.cluster_genes) if hasattr(snakemake.input, "cluster_genes") else ""
 consensus = pd.read_csv(snakemake.input.consensus, sep="\t") if os.path.exists(snakemake.input.consensus) else pd.DataFrame()
-prioritized = pd.read_csv(snakemake.input.prioritized, sep="\t") if os.path.exists(snakemake.input.prioritized) else pd.DataFrame()
+evidence = pd.read_csv(snakemake.input.evidence, sep="\t") if os.path.exists(snakemake.input.evidence) else pd.DataFrame()
 overlap = load_table_if_exists(snakemake.input.overlap, [
     "sample", "group_id", "tool_a", "bgc_id_a", "tool_b", "bgc_id_b",
     "contig", "overlap_bp", "overlap_relationship",
 ])
 provenance = read_json(snakemake.input.provenance) if hasattr(snakemake.input, "provenance") else {}
 
-prioritized_table = prioritized.copy()
-if not prioritized_table.empty:
-    prioritized_table["why_prioritized"] = prioritized_table.apply(build_why_prioritized, axis=1)
-    if "evidence_source" in prioritized_table.columns:
-        prioritized_table["dereplication_source"] = prioritized_table["evidence_source"].apply(derep_source_label)
-    else:
-        prioritized_table["dereplication_source"] = ""
-
-hidden_columns = [
-    "consensus_id",
-    "contig_id",
-    "supporting_tools",
-    "support_count",
-    "num_supporting_tools",
-    "candidate_ids",
-    "bgc_types",
-    "product_annotations",
-    "biological_interpretation",
-    "overlap_relationship",
-    "core_gene_support",
-    "contig_length",
-    "distance_to_left_edge",
-    "distance_to_right_edge",
-    "edge_truncated",
-    "possible_partial_BGC",
-    "boundary_confidence",
-    "priority_score",
-    "priority_class",
-    "confidence_category",
-    "interest_category",
-    "arts_hits",
-    "notes",
-    "why_prioritized",
-    "why_not_prioritized",
-    "recommended_followup",
-    "best_mibig_id",
-    "best_mibig_product",
-    "best_mibig_class",
-    "mibig_similarity",
-    "match_score",
-    "score_metric",
-    "matched_genes",
-    "core_gene_hits",
-    "dereplication_status",
-    "novelty_score",
-    "evidence_source",
-    "dereplication_source",
-]
 map_index = {
     str(as_text(row.get("cluster_key"), "") or as_text(row.get("consensus_id"), "")): row.to_dict()
     for _, row in cluster_maps.iterrows()
@@ -663,32 +386,14 @@ ai_config = snakemake.config.get("report", {}).get("ai", {})
 ai_endpoint = ai_config.get("endpoint", "/analyze_cluster")
 
 supported = consensus[consensus.get("support_count", pd.Series(dtype=int)).fillna(0).astype(int) > 1] if not consensus.empty else pd.DataFrame()
-triple_supported = consensus[consensus.get("support_count", pd.Series(dtype=int)).fillna(0).astype(int) >= 3] if not consensus.empty else pd.DataFrame()
 
 top_product_terms = top_terms(consensus["products"]) if "products" in consensus.columns else []
 top_type_terms = top_terms(consensus["bgc_types"]) if "bgc_types" in consensus.columns else []
-high_confidence = prioritized[prioritized.get("confidence_category", pd.Series(dtype=str)).astype(str) == "high-confidence BGC"] if not prioritized.empty else pd.DataFrame()
-high_interest = prioritized[prioritized.get("interest_category", pd.Series(dtype=str)).astype(str) == "high-interest / potentially novel"] if not prioritized.empty else pd.DataFrame()
-partial_regions = prioritized[prioritized.get("possible_partial_BGC", pd.Series(dtype=bool)).fillna(False).astype(bool)] if not prioritized.empty else pd.DataFrame()
-mibig_backed = prioritized[prioritized.get("best_mibig_id", pd.Series(dtype=str)).fillna("").astype(str).str.strip() != ""] if not prioritized.empty else pd.DataFrame()
-arts_supported = prioritized[pd.to_numeric(prioritized.get("arts_hits", pd.Series(dtype=float)), errors="coerce").fillna(0) > 0] if not prioritized.empty else pd.DataFrame()
-featured_ids = set()
-if not high_confidence.empty:
-    featured_ids.update(high_confidence["consensus_id"].astype(str).tolist())
-if not high_interest.empty:
-    featured_ids.update(high_interest["consensus_id"].astype(str).tolist())
-if not mibig_backed.empty:
-    featured_ids.update(mibig_backed["consensus_id"].astype(str).tolist())
-remaining_prioritized = prioritized_table[
-    ~prioritized_table["consensus_id"].astype(str).isin(featured_ids)
-] if not prioritized_table.empty else prioritized_table
-
-top_cards = ""
-if not prioritized.empty:
-    top_cards = "".join(cluster_card(row) for _, row in prioritized.head(8).iterrows())
+mibig_backed = evidence[evidence.get("best_mibig_id", pd.Series(dtype=str)).fillna("").astype(str).str.strip() != ""] if not evidence.empty else pd.DataFrame()
+arts_known = evidence[pd.to_numeric(evidence.get("arts_known_hits", pd.Series(dtype=float)), errors="coerce").fillna(0) > 0] if not evidence.empty else pd.DataFrame()
 
 hero_summary = (
-    "Sample {sample} produced {consensus_count} consensus BGC regions."
+    "Sample {sample} produced {consensus_count} grouped candidate loci."
 ).format(
     sample=sample,
     consensus_count=len(consensus),
@@ -696,10 +401,10 @@ hero_summary = (
 
 generated_at = datetime.now().strftime("%b %d, %Y %H:%M")
 glance_metrics = {
-    "Consensus": (len(consensus), "merged loci across BGC predictors"),
-    "Multi-tool": (len(supported), "regions supported by at least two callers"),
-    "High-confidence": (len(high_confidence), "strongly supported consensus BGCs"),
-    "High-interest": (len(high_interest), "potentially novel or ARTS-rich candidates"),
+    "Grouped loci": (len(consensus), "candidate loci grouped across BGC predictors"),
+    "Multi-caller loci": (len(supported), "loci containing predictions from at least two callers"),
+    "MIBiG comparisons": (len(mibig_backed), "loci with a representative MIBiG comparison"),
+    "ARTS known hits": (len(arts_known), "loci overlapping known-hit ARTS records"),
 }
 glance_cards = "".join(
     stat_card(label, glance_metrics[label][0], glance_metrics[label][1], tone="violet")
@@ -758,70 +463,20 @@ if not dbcan.empty:
         ordered = ["Gene map"] + [column for column in dbcan_table.columns if column != "Gene map" and column != "cluster_key"]
         dbcan_table = dbcan_table[ordered]
 
-table_items = []
-if not high_confidence.empty:
-    table_items.append({
-        "label": "High-confidence BGCs",
-        "icon": "✦",
-        "content": df_to_cluster_table(high_confidence, hidden_columns, map_index, limit=15),
-    })
-if not high_interest.empty:
-    table_items.append({
-        "label": "High-interest / Potentially Novel BGCs",
-        "icon": "✧",
-        "content": df_to_cluster_table(high_interest, hidden_columns, map_index, limit=15),
-    })
-if not mibig_backed.empty:
-    mibig_hidden = [c for c in hidden_columns if c not in {
-        "best_mibig_id", "best_mibig_product", "best_mibig_class",
-        "dereplication_status", "match_score", "score_metric",
-        "matched_genes", "core_gene_hits",
-    }]
-    mibig_display = mibig_backed.copy()
-    mibig_display["Evidence method"] = mibig_display["evidence_source"].apply(derep_source_label)
-    rename_map = {
-        "best_mibig_id": "MIBiG ID",
-        "best_mibig_product": "MIBiG product",
-        "best_mibig_class": "MIBiG class",
-        "mibig_similarity": "Peptide similarity (%)",
-        "match_score": "Match score",
-        "score_metric": "Score metric",
-        "matched_genes": "Matched genes",
-        "core_gene_hits": "Core-gene hits",
-        "dereplication_status": "Dereplication status",
-        "novelty_score": "Novelty score",
-        "evidence_source": "Evidence source",
-    }
-    for old, new in rename_map.items():
-        if old in mibig_display.columns:
-            mibig_display = mibig_display.rename(columns={old: new})
-    mibig_hidden = [rename_map.get(c, c) for c in mibig_hidden]
-    table_items.append({
-        "label": "MIBiG hits",
-        "icon": "⬡",
-        "content": (
-            "<p class='muted table-note'>Representative computational MIBiG comparison per consensus region. "
-            "Scores use method-specific metrics and do not establish product identity.</p>"
-            + df_to_mibig_table(mibig_display, mibig_hidden, map_index)
-        ),
-    })
-table_items.append({
-    "label": "Other BGCs",
-    "icon": "≣",
-    "content": (
-        "<p class='muted table-note'>This table shows the remaining ranked loci after removing entries already shown above.</p>"
-        + df_to_cluster_table(remaining_prioritized, hidden_columns, map_index)
-    ),
-})
+evidence_panel = render_evidence_table(
+    evidence,
+    map_index,
+    gene_map_button,
+    overlap_fraction=float(snakemake.config.get("consensus", {}).get("overlap_fraction", 0.30)),
+)
+cgc_panel = ""
 if not dbcan_table.empty:
-    table_items.append({
-        "label": "CGC substrate clusters",
-        "icon": "⌘",
-        "content": (
-            "<p class='muted table-note'>dbCAN CGC substrate calls with resolved substrate predictions.</p>"
-            + render_html_table(dbcan_table.head(50), html_columns={"Gene map"})
-        ),
-    })
+    cgc_panel = (
+        "<section class='panel'><div class='section-head'><h2>CGC substrate clusters</h2>"
+        "<span class='section-accent'></span></div>"
+        "<p class='muted'>dbCAN carbohydrate gene clusters with resolved substrate predictions.</p>"
+        "{table}</section>"
+    ).format(table=render_html_table(dbcan_table, html_columns={"Gene map"}))
 
 sections = [
     report_home_link(),
@@ -855,10 +510,11 @@ sections = [
     ).format(
         summary_card=info_card(
             "Summary",
-            "We currently separate regions into strong consensus BGCs and high-interest candidates. "
-            "{0} regions are tagged as high-confidence, {1} as high-interest / potentially novel, "
-            "and {2} have a representative antiSMASH-to-MIBiG comparison.".format(
-                len(high_confidence), len(high_interest), len(mibig_backed)
+            "The table includes all {0} grouped candidate loci. {1} have predictions "
+            "from at least two tools, {2} have a representative MIBiG comparison, "
+            "and {3} overlap a known-hit ARTS record. Use the filters and column "
+            "headers to explore each signal separately.".format(
+                len(evidence), len(supported), len(mibig_backed), len(arts_known)
             ),
             icon="▣",
         ),
@@ -906,8 +562,10 @@ sections = [
     ).format(endpoint=escape(ai_endpoint, quote=True)),
     "<script type='application/json' id='gene-map-svg-data'>{0}</script>".format(gene_map_svg_json),
     "<script type='application/json' id='gene-map-table-data'>{0}</script>".format(gene_table_json),
-    table_tabs(table_items),
+    evidence_panel,
 ]
+if cgc_panel:
+    sections.append(cgc_panel)
 if provenance:
     sections.append(reproducibility_panel(provenance))
 sections.append(footer_strip(sample, generated_at))

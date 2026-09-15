@@ -8,10 +8,10 @@
   A reproducible web application for discovering, comparing and interpreting biosynthetic gene clusters in bacterial genomes.
 </p>
 
-BGC-XPLORER accepts a bacterial genome in FASTA format and runs an integrated natural-product discovery workflow. It annotates the genome, combines predictions from several BGC callers, adds functional and resistance evidence, prioritizes promising regions and produces an interactive HTML report. Optional NVIDIA-hosted AI analysis explains individual clusters from the evidence collected by the workflow.
+BGC-XPLORER accepts a bacterial genome in FASTA format and runs an integrated natural-product discovery workflow. It annotates the genome, compares predictions from several BGC callers, adds functional and resistance evidence, and produces an interactive HTML report. The report shows every grouped candidate locus in one searchable table with sortable caller, ARTS and MIBiG signals. Optional NVIDIA-hosted AI analysis explains individual clusters from the collected evidence.
 
 <p align="center">
-  <img src="docs/images/bgc-xplorer-report.png" alt="BGC-XPLORER report showing consensus BGC metrics, a summary, and product and class signal charts" width="1000">
+  <img src="docs/images/bgc-xplorer-report.png" alt="BGC-XPLORER report with grouped loci, caller and database evidence, and a searchable cluster table" width="1000">
 </p>
 
 ## What it does
@@ -20,7 +20,8 @@ BGC-XPLORER accepts a bacterial genome in FASTA format and runs an integrated na
 - Annotates the genome with **Bakta**.
 - Detects BGC candidates with **antiSMASH**, **GECCO** and **DeepBGC**.
 - Adds **ARTS**, **eggNOG-mapper** and **dbCAN** evidence.
-- Merges compatible predictions into consensus regions and ranks the candidates.
+- Groups compatible predictions into candidate loci while preserving the caller evidence; the grouped boundaries are approximate. Cross-caller grouping uses reciprocal overlap ≥0.30, nesting or a shared Bakta gene flagged by biosynthetic keywords.
+- Lets users filter and sort the full result table by caller, tool count, ARTS signal, MIBiG comparison, coordinates and predicted class.
 - Compares antiSMASH regions with MIBiG using KnownClusterBlast and ClusterCompare; reports the score metric for each representative match.
 - Generates interactive gene maps, summary tables and reproducibility metadata.
 - Uses a configurable NVIDIA AI model for evidence-grounded cluster interpretation.
@@ -102,6 +103,8 @@ results/<sample>/report/<sample>.html
 Every completed sample also includes `provenance.json`, which records the application version, commit, tool versions, selected model and ARTS reference, effective configuration, and checksums for inputs, result tables and databases. API keys are excluded.
 
 The workflow produces computational hypotheses. BGC classes, biological activities and AI interpretations require expert review and experimental validation.
+
+Cross-caller grouping uses a configurable overlap threshold and a keyword-based Bakta core-gene flag; neither has been calibrated against a reference set. For scientific comparisons, report the selected threshold and assess grouping stability across plausible values.
 
 MIBiG comparisons are candidate references, not proof that a region produces the same compound. KnownClusterBlast's empirical score, ClusterCompare's 0–1 score, and CompaRiPPson peptide similarity are different metrics and are labeled separately in reports.
 

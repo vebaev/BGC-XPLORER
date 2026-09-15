@@ -14,7 +14,7 @@ class HomepageContentTests(unittest.TestCase):
         text = "{0} {1}".format(HERO_TITLE, HERO_BODY).lower()
 
         self.assertIn("biosynthetic gene clusters", text)
-        self.assertIn("priorit", text)
+        self.assertIn("searchable evidence", text)
         self.assertNotIn("upload page", text)
 
     def test_workflow_covers_discovery_context_and_integrated_report(self):
@@ -28,7 +28,7 @@ class HomepageContentTests(unittest.TestCase):
     def test_results_describe_the_primary_scientific_outputs(self):
         rendered = " ".join(" ".join(feature) for feature in RESULT_FEATURES).lower()
 
-        for term in ("consensus", "priorit", "resistance", "gene maps", "provenance", "ai"):
+        for term in ("grouped candidate loci", "filter and sort", "resistance", "gene maps", "provenance", "ai"):
             self.assertIn(term, rendered)
 
 

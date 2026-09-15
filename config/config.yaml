@@ -60,32 +60,8 @@ tools:
     hmmer_bin_dir: "/opt/conda/envs/dbcan/bin"
 
 consensus:
-  overlap_fraction: 0.5
-  score_weights:
-    tool_support: 1.0
-    tool_pair_bonus: 1.5
-    tool_triple_bonus: 3.0
-    single_tool_penalty: 2.5
-    arts_signal: 0.75
-    arts_signal_cap: 4.0
-    shared_core_gene_bonus: 1.5
-    novelty_score: 3.0
-    boundary_high: 1.5
-    boundary_medium: 0.5
-    antibacterial_bonus: 1.5
-    cytotoxic_bonus: 1.0
-    edge_penalty: 1.5
-  high_confidence_thresholds:
-    gecco: 0.7
-    deepbgc: 0.7
-  dereplication_thresholds:
-    known_like: 80.0
-    related: 50.0
-    divergent: 20.0
-  edge_threshold_bp: 5000
-  priority_thresholds:
-    high: 12.0
-    medium: 7.0
+  overlap_fraction: 0.3
+  comparippson_preference_similarity_percent: 80.0
 
 report:
   title: "BGC-XPLORER"

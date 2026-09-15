@@ -30,7 +30,7 @@ include: "rules/dbcan.smk"
 include: "rules/normalize.smk"
 include: "rules/consensus.smk"
 include: "rules/dereplication.smk"
-include: "rules/prioritize.smk"
+include: "rules/evidence.smk"
 include: "rules/catalog.smk"
 include: "rules/cluster_maps.smk"
 include: "rules/provenance.smk"
@@ -40,8 +40,7 @@ include: "rules/report.smk"
 rule all:
     input:
         expand("results/{sample}/report/{sample}.html", sample=SAMPLES),
-        expand("results/{sample}/summary/prioritized_bgcs.tsv", sample=SAMPLES),
-        expand("results/{sample}/summary/prioritized_regions.tsv", sample=SAMPLES),
+        expand("results/{sample}/summary/region_evidence.tsv", sample=SAMPLES),
         expand("results/{sample}/summary/consensus_bgcs.tsv", sample=SAMPLES),
         expand("results/{sample}/summary/mibig_dereplication.tsv", sample=SAMPLES),
         expand("results/{sample}/summary/eggnog.annotations.tsv", sample=SAMPLES),
