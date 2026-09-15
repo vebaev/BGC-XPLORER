@@ -403,15 +403,15 @@ THEME_CSS = """
   }
   .previous-results {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 360px));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 14px;
     width: 100%;
   }
   @media (max-width: 1120px) {
-    .previous-results { grid-template-columns: repeat(2, minmax(0, 360px)); }
+    .previous-results { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 720px) {
-    .previous-results { grid-template-columns: minmax(0, 360px); }
+    .previous-results { grid-template-columns: minmax(0, 1fr); }
   }
   .result-card {
     display: grid;
