@@ -729,6 +729,12 @@ def html_page(title, sections):
       opacity: 0.5;
       cursor: not-allowed;
     }}
+    .ai-analysis-note {{
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.45;
+    }}
     .gene-map-viewer {{
       position: fixed;
       z-index: 1000;

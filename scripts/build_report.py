@@ -882,6 +882,8 @@ sections = [
         "<span id='gene-map-ai-spinner' class='ai-spinner' hidden></span>"
         "<span id='gene-map-ai-status' class='muted'></span>"
         "</div>"
+        "<p class='ai-analysis-note'>AI model outputs are computational interpretations "
+        "that require expert review and experimental validation.</p>"
         "<div id='gene-map-ai-result' class='ai-analysis-result'></div>"
         "</div>"
         "</div>"
