@@ -38,7 +38,7 @@ Open `.env` and replace the placeholder with your [NVIDIA API key](https://build
 
 ```dotenv
 NVIDIA_API_KEY=your-nvidia-api-key
-NVIDIA_MODEL=nvidia/nemotron-3.5-lightning-30b-a3b
+NVIDIA_MODEL=nvidia/nemotron-3-ultra-550b-a55b
 BGC_PORT=8778
 BGC_THREADS=8
 BAKTA_DB_TYPE=light
@@ -67,7 +67,7 @@ The main settings live in `.env`:
 | Variable | Default | Purpose |
 | --- | --- | --- |
 | `NVIDIA_API_KEY` | required | API key used by the optional AI interpretation service. |
-| `NVIDIA_MODEL` | `nvidia/nemotron-3.5-lightning-30b-a3b` | NVIDIA-hosted model used in reports. |
+| `NVIDIA_MODEL` | Set in `.env` | NVIDIA-hosted model used in reports; the example above uses Nemotron 3 Ultra. |
 | `BGC_PORT` | `8778` | Port exposed on the host. |
 | `BGC_THREADS` | `8` in `.env.example` | CPU limit shared by Snakemake and supported tools. |
 | `BAKTA_DB_TYPE` | `light` | Bakta database: `light` for a smaller download or `full` for maximum coverage. |
