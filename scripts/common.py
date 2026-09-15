@@ -1191,6 +1191,9 @@ def html_page(title, sections):
       }}
       function aiRequestErrorMessage(endpoint, error) {{
         var detail = error && error.message ? error.message : 'request failed';
+        if (/NVIDIA API error 503\\b/i.test(detail) && /Service temporarily overloaded/i.test(detail)) {{
+          return 'NVIDIA API: 503 Service temporarily overloaded. The selected AI model is temporarily unavailable; please try this cluster again later.';
+        }}
         if (detail === 'Load failed' || detail === 'Failed to fetch') {{
           if (window.location.protocol === 'file:') {{
             return 'Open this report from the BGC-XPLORER Docker application so its AI controls can reach the built-in service.';
