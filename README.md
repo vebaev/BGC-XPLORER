@@ -82,7 +82,13 @@ To use another port, model or CPU limit, edit `.env` and recreate the service:
 docker compose up -d --force-recreate
 ```
 
-Choose `BAKTA_DB_TYPE=full` before the first start if the full Bakta database is required. Existing valid databases are never replaced automatically; removing a specific database directory explicitly requests a fresh installation.
+## Reference databases
+
+The container keeps reference data in the mounted `./db/` directory, outside the image. With `AUTO_PREPARE_DATABASES=true`, startup checks the selected **Bakta** database and the required **antiSMASH**, **DeepBGC**, **ARTS** (Actinobacteria) and **eggNOG-mapper** resources. Missing or incomplete databases are downloaded and validated before the web app starts. You can follow progress with `docker compose logs -f`.
+
+Choose `BAKTA_DB_TYPE=light` for the smaller Bakta database or `BAKTA_DB_TYPE=full` for the full database. Both can coexist under `./db/bakta/`. The first download may take time and require substantial disk space. Later starts reuse valid databases without checking for new versions; an interrupted download is retried on the next start. Removing a specific database directory explicitly requests a fresh installation.
+
+For the directory layout and manual preparation commands, see [Database setup](docs/database_setup.md).
 
 ## Results and reproducibility
 
