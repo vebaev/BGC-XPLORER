@@ -10,6 +10,10 @@
 
 BGC-XPLORER accepts a bacterial genome in FASTA format and runs an integrated natural-product discovery workflow. It annotates the genome, combines predictions from several BGC callers, adds functional and resistance evidence, prioritizes promising regions and produces an interactive HTML report. Optional NVIDIA-hosted AI analysis explains individual clusters from the evidence collected by the workflow.
 
+<p align="center">
+  <img src="docs/images/bgc-xplorer-report.png" alt="BGC-XPLORER report showing consensus BGC metrics, a summary, and product and class signal charts" width="1000">
+</p>
+
 ## What it does
 
 - Accepts `.fa`, `.fasta` and `.fna` genome files through a web interface.
