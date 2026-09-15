@@ -403,15 +403,24 @@ THEME_CSS = """
   }
   .previous-results {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 360px));
     gap: 14px;
     width: 100%;
   }
+  @media (max-width: 1120px) {
+    .previous-results { grid-template-columns: repeat(2, minmax(0, 360px)); }
+  }
+  @media (max-width: 720px) {
+    .previous-results { grid-template-columns: minmax(0, 360px); }
+  }
   .result-card {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    min-height: auto;
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    align-content: start;
+    column-gap: 14px;
+    row-gap: 12px;
+    width: 100%;
+    min-height: 190px;
     padding: 18px 18px 16px;
     border-radius: 18px;
     border: 1px solid var(--line);
@@ -419,7 +428,6 @@ THEME_CSS = """
   }
   .result-card-copy {
     min-width: 0;
-    flex: 1;
   }
   .result-card .metric-icon {
     width: 48px;
@@ -463,6 +471,7 @@ THEME_CSS = """
     flex-wrap: wrap;
     gap: 10px;
     margin-top: 2px;
+    grid-column: 2;
   }
   .result-link:hover {
     border-color: rgba(95,87,255,0.28);
@@ -1049,9 +1058,8 @@ async def upload_page():
                     ui.html(
                         "<div class='section-head'><h2>Previous results</h2><span class='section-accent'></span></div>"
                     )
-                    with ui.row().classes("previous-results"):
-                        for s in existing:
-                            ui.html(
+                    ui.html(
+                        "<div class='previous-results'>" + "".join(
                                 "<article class='result-card metric-indigo'>"
                                 "<div class='metric-icon' aria-hidden='true'>◔</div>"
                                 "<div class='result-card-copy'>"
@@ -1063,7 +1071,9 @@ async def upload_page():
                                 f"<a class='result-link' href='/static_results/{s}/report/{s}.html' target='_blank'>Open report</a>"
                                 "</div>"
                                 "</article>"
-                            )
+                            for s in existing
+                        ) + "</div>"
+                    )
 
 
 # ─── Progress Page ────────────────────────────────────────────────────────────
