@@ -474,6 +474,18 @@ def html_page(title, sections):
       font-size: 25px;
       font-weight: 700;
     }}
+    .summary-only .info-card {{
+      padding-left: 42px;
+    }}
+    .summary-only .info-icon {{
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      font-size: 24px;
+      font-weight: 600;
+      background: var(--accent-soft);
+      border: 1px solid rgba(95, 87, 255, 0.16);
+    }}
     .info-copy h3 {{
       font-size: 26px;
       letter-spacing: -0.03em;
@@ -1003,6 +1015,9 @@ def html_page(title, sections):
       .panel,
       .table-panel {{
         padding: 18px 16px;
+      }}
+      .summary-only .info-card {{
+        padding-left: 34px;
       }}
       .tabs-nav {{
         padding: 0 10px;
