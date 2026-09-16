@@ -1,15 +1,8 @@
 import pandas as pd
 
-from common import add_consensus_label, load_table_if_exists, write_tsv
+from common import BGC_COLUMNS, add_consensus_label, load_table_if_exists, write_tsv
+from core_gene_evidence import bakta_core_match, parse_records
 
-
-CORE_GENE_PATTERNS = [
-    "nrps", "non-ribosomal", "polyketide", "pks", "terpene", "lanthipeptide",
-    "lassopeptide", "thiopeptide", "ripp", "bacteriocin", "siderophore",
-    "synthetase", "cyclase", "transferase", "methyltransferase", "oxidase",
-    "dehydrogenase", "monooxygenase", "dioxygenase", "halogenase", "thioesterase",
-    "acyl carrier", "peptide synthetase", "prenyl", "glycosyltransferase",
-]
 
 def to_num(series):
     return pd.to_numeric(series, errors="coerce")
@@ -101,30 +94,64 @@ def classify_overlap_relationship(left_row, right_row, overlap_fraction=0.30):
     return ""
 
 
-def is_biosynthetic_core_gene(row):
-    text = " ".join(
-        [
-            str(row.get("gene", "")).strip(),
-            str(row.get("product", "")).strip(),
-            str(row.get("dbxrefs", "")).strip(),
-        ]
-    ).lower()
-    if not text:
-        return False
-    return any(pattern in text for pattern in CORE_GENE_PATTERNS)
-
-
-def overlapping_gene_set(row, genes_df):
+def overlapping_genes(row, genes_df):
     if genes_df.empty:
-        return set()
+        return genes_df.iloc[0:0]
     local = genes_df[
         (genes_df["contig"].astype(str) == str(row["contig"]))
         & (genes_df["start_num"] <= float(row["end_num"]))
         & (genes_df["end_num"] >= float(row["start_num"]))
     ]
     if local.empty:
-        return set()
-    return set(local["locus_tag"].fillna("").astype(str).tolist())
+        return genes_df.iloc[0:0]
+    return local
+
+
+def resolve_core_gene_records(row, bakta):
+    """Resolve predictor evidence to Bakta locus tags, falling back per region."""
+    resolved = {}
+    records = parse_records(row.get("core_gene_records", ""))
+    for record in records:
+        locus = str(record.get("identifier", "")).strip()
+        if locus and locus in set(bakta["locus_tag"].fillna("").astype(str)):
+            resolved[locus] = record
+            continue
+        if record.get("start") is None or record.get("end") is None:
+            continue
+        candidates = bakta[
+            (bakta["contig"].astype(str) == str(row["contig"]))
+            & (bakta["start_num"] <= float(record["end"]))
+            & (bakta["end_num"] >= float(record["start"]))
+        ].copy()
+        if candidates.empty:
+            continue
+        candidates["mapping_overlap"] = candidates.apply(
+            lambda gene: interval_overlap(
+                gene["start_num"], gene["end_num"], record["start"], record["end"]
+            ), axis=1,
+        )
+        best = candidates.sort_values(
+            ["mapping_overlap", "locus_tag"], ascending=[False, True]
+        ).iloc[0]
+        locus = str(best.get("locus_tag", "")).strip()
+        if locus:
+            resolved[locus] = record
+    if resolved:
+        return resolved
+
+    # The predictor supplied no resolvable core role for this region.
+    for _, gene in overlapping_genes(row, bakta).iterrows():
+        evidence = bakta_core_match(gene)
+        locus = str(gene.get("locus_tag", "")).strip()
+        if evidence and locus:
+            resolved[locus] = {
+                "identifier": locus,
+                "start": int(gene["start_num"]),
+                "end": int(gene["end_num"]),
+                "source": "bakta_fallback",
+                "evidence": evidence,
+            }
+    return resolved
 
 
 def should_merge(left_row, right_row, overlap_fraction=0.30):
@@ -134,45 +161,39 @@ def should_merge(left_row, right_row, overlap_fraction=0.30):
         return False, ""
     if not has_valid_interval(left_row) or not has_valid_interval(right_row):
         return False, ""
-    left_core = set(left_row.get("core_genes", set()) or set())
-    right_core = set(right_row.get("core_genes", set()) or set())
+    left_core = set((left_row.get("core_gene_details", {}) or {}).keys())
+    right_core = set((right_row.get("core_gene_details", {}) or {}).keys())
     if left_core and right_core and (left_core & right_core):
         return True, "shared_core_gene"
     relationship = classify_overlap_relationship(left_row, right_row, overlap_fraction)
     return bool(relationship), relationship
 
 
-def build_tool_core_support(subset):
-    support = []
-    for tool_name in ["antismash", "gecco", "deepbgc"]:
-        local = subset[subset["tool"] == tool_name]
-        if local.empty:
-            continue
-        support.append("{tool}:{count}".format(tool=tool_name, count=len(local)))
-    return "; ".join(support)
-
-
 def summarize_shared_core_genes(subset):
-    if "core_genes" not in subset.columns:
+    if "core_gene_details" not in subset.columns:
         return ""
-    tool_sets = []
-    for _, local in subset.groupby("tool"):
-        if local.empty:
-            continue
-        genes = set(local.iloc[0].get("core_genes", set()) or set())
-        if genes:
-            tool_sets.append(genes)
-    if not tool_sets:
-        return ""
-    shared = set.intersection(*tool_sets) if len(tool_sets) > 1 else set(tool_sets[0])
-    if shared:
-        return ",".join(sorted(shared))
     per_tool = []
     for tool_name, local in subset.groupby("tool"):
-        genes = sorted(set(local.iloc[0].get("core_genes", set()) or set()))
+        genes = sorted({
+            locus
+            for details in local["core_gene_details"]
+            for locus in (details or {}).keys()
+        })
         if genes:
             per_tool.append("{tool}:{genes}".format(tool=tool_name, genes=",".join(genes[:6])))
     return "; ".join(per_tool)
+
+
+def summarize_core_evidence(subset):
+    summaries = []
+    for _, row in subset.iterrows():
+        for locus, record in (row.get("core_gene_details", {}) or {}).items():
+            summaries.append("{locus} [{source}: {evidence}]".format(
+                locus=locus,
+                source=record.get("source", row.get("tool", "")),
+                evidence=record.get("evidence", ""),
+            ))
+    return "; ".join(unique_preserve_order(summaries))
 
 
 def biological_interpretation(values):
@@ -217,9 +238,7 @@ def add_contig_edge_fields(row, contig_lengths):
     return row
 
 
-antismash = load_table_if_exists(snakemake.input.antismash, [
-    "sample", "tool", "contig", "start", "end", "strand", "bgc_id", "bgc_type", "product", "score", "confidence", "source_file"
-])
+antismash = load_table_if_exists(snakemake.input.antismash, BGC_COLUMNS)
 gecco = load_table_if_exists(snakemake.input.gecco, antismash.columns.tolist())
 deepbgc = load_table_if_exists(snakemake.input.deepbgc, antismash.columns.tolist())
 arts = load_table_if_exists(snakemake.input.arts, [
@@ -237,10 +256,8 @@ if not bakta.empty:
     bakta["start_num"] = to_num(bakta["start"])
     bakta["end_num"] = to_num(bakta["end"])
     bakta = bakta[bakta["type"].astype(str) == "cds"].copy()
-    bakta["is_core_gene"] = bakta.apply(is_biosynthetic_core_gene, axis=1)
-    core_genes = bakta[bakta["is_core_gene"]].copy()
 else:
-    core_genes = pd.DataFrame(columns=["contig", "start_num", "end_num", "locus_tag"])
+    bakta = pd.DataFrame(columns=["contig", "start_num", "end_num", "locus_tag", "gene", "product", "dbxrefs"])
 
 bgcs = pd.concat([antismash, gecco, deepbgc], ignore_index=True)
 if not bgcs.empty:
@@ -249,12 +266,12 @@ if not bgcs.empty:
     bgcs["length_bp"] = (bgcs["end_num"] - bgcs["start_num"] + 1).fillna(0).astype(int)
     bgcs["contig_id"] = bgcs["contig"].astype(str)
     bgcs["product_annotation"] = bgcs["product"].astype(str)
-    bgcs["core_genes"] = bgcs.apply(lambda row: overlapping_gene_set(row, core_genes), axis=1)
+    bgcs["core_gene_details"] = bgcs.apply(lambda row: resolve_core_gene_records(row, bakta), axis=1)
     bgcs = bgcs.sort_values(["contig", "start_num", "end_num", "tool"], kind="mergesort").reset_index(drop=True)
 else:
     bgcs["start_num"] = pd.Series(dtype=float)
     bgcs["end_num"] = pd.Series(dtype=float)
-    bgcs["core_genes"] = pd.Series(dtype=object)
+    bgcs["core_gene_details"] = pd.Series(dtype=object)
 
 consensus_rows = []
 overlap_rows = []
@@ -292,6 +309,18 @@ for idx, row in bgcs.iterrows():
                     _, _, overlap_bp = reciprocal_overlap(
                         member["start_num"], member["end_num"], other["start_num"], other["end_num"]
                     )
+                    shared_core = sorted(
+                        set((member.get("core_gene_details", {}) or {}).keys())
+                        & set((other.get("core_gene_details", {}) or {}).keys())
+                    )
+                    shared_evidence = []
+                    for locus in shared_core:
+                        for source_row in (member, other):
+                            record = (source_row.get("core_gene_details", {}) or {}).get(locus, {})
+                            shared_evidence.append("{0}:{1}".format(
+                                record.get("source", source_row.get("tool", "")),
+                                record.get("evidence", ""),
+                            ))
                     overlap_rows.append({
                         "sample": member["sample"],
                         "group_id": group_id,
@@ -302,6 +331,8 @@ for idx, row in bgcs.iterrows():
                         "contig": member["contig"],
                         "overlap_bp": overlap_bp,
                         "overlap_relationship": relationship,
+                        "shared_core_genes": ",".join(shared_core),
+                        "shared_core_evidence": "; ".join(unique_preserve_order(shared_evidence)),
                     })
 
     subset = bgcs.loc[members].copy()
@@ -329,13 +360,18 @@ for idx, row in bgcs.iterrows():
             list(subset["bgc_type"].fillna("").astype(str)) + list(subset["product"].fillna("").astype(str))
         ),
         "overlap_relationship": unique_join(relationships if relationships else ["single_tool"]),
-        "core_gene_support": summarize_shared_core_genes(subset) or build_tool_core_support(subset),
+        "core_gene_support": summarize_shared_core_genes(subset),
+        "core_gene_evidence": summarize_core_evidence(subset),
     }
     region = add_contig_edge_fields(region, contig_lengths)
     consensus_rows.append(region)
 
 consensus = pd.DataFrame(consensus_rows)
-overlap = pd.DataFrame(overlap_rows)
+overlap = pd.DataFrame(overlap_rows, columns=[
+    "sample", "group_id", "tool_a", "bgc_id_a", "tool_b", "bgc_id_b",
+    "contig", "overlap_bp", "overlap_relationship", "shared_core_genes",
+    "shared_core_evidence",
+])
 consensus = add_consensus_label(consensus)
 
 write_tsv(consensus, snakemake.output.consensus)

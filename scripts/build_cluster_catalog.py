@@ -96,6 +96,8 @@ for _, row in merged.iterrows():
         "merged_bgc_types": row.get("bgc_types", ""),
         "merged_products": row.get("products", ""),
         "biological_interpretation": row.get("biological_interpretation", ""),
+        "core_gene_support": row.get("core_gene_support", ""),
+        "core_gene_evidence": row.get("core_gene_evidence", ""),
         "arts_hits": row.get("arts_hits", ""),
         "arts_known_hits": row.get("arts_known_hits", ""),
         "arts_duf_hits": row.get("arts_duf_hits", ""),

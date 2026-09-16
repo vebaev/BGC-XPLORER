@@ -69,6 +69,7 @@ class RegionEvidenceTests(unittest.TestCase):
         self.assertIn("GECCO", html)
         self.assertIn("DeepBGC", html)
         self.assertIn("reciprocal overlap of at least 0.45", html)
+        self.assertIn("explicit antiSMASH", html)
         self.assertNotIn("<script>alert(1)</script>", html)
         self.assertNotIn("High-confidence", html)
         self.assertNotIn("Potentially Novel", html)

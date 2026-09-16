@@ -3,6 +3,7 @@ from pathlib import Path
 import pandas as pd
 
 from common import BGC_COLUMNS, coerce_frame_columns, empty_bgc_frame, first_existing_column, first_existing_path, write_tsv
+from core_gene_evidence import domain_core_record, join_records
 
 
 sample = snakemake.wildcards.sample
@@ -11,6 +12,27 @@ source = first_existing_path(outdir, ["*.clusters.tsv", "**/*.clusters.tsv", "*c
 
 if source is not None:
     df = pd.read_csv(str(source), sep="\t")
+    features_path = first_existing_path(outdir, ["*.features.tsv", "**/*.features.tsv"])
+    features = pd.read_csv(str(features_path), sep="\t") if features_path is not None else pd.DataFrame()
+
+    def core_records(cluster):
+        if features.empty:
+            return ""
+        local = features[
+            (features["sequence_id"].astype(str) == str(cluster.get("sequence_id", "")))
+            & (pd.to_numeric(features["start"], errors="coerce") <= float(cluster.get("end", 0)))
+            & (pd.to_numeric(features["end"], errors="coerce") >= float(cluster.get("start", 0)))
+        ]
+        records = []
+        for protein_id, protein in local.groupby("protein_id", sort=False):
+            record = domain_core_record(
+                protein_id, protein["start"].min(), protein["end"].max(),
+                "gecco", protein["domain"].tolist(),
+            )
+            if record:
+                records.append(record)
+        return join_records(records)
+
     renamed = pd.DataFrame({
         "sample": sample,
         "tool": "gecco",
@@ -23,6 +45,7 @@ if source is not None:
         "product": first_existing_column(df, ["type", "biosyn_class"], ""),
         "score": first_existing_column(df, ["average_p", "mean_probability", "score"], ""),
         "confidence": first_existing_column(df, ["max_p", "max_probability", "probability"], ""),
+        "core_gene_records": df.apply(core_records, axis=1),
         "source_file": str(source),
     })
     out = coerce_frame_columns(renamed, BGC_COLUMNS)

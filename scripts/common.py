@@ -21,6 +21,7 @@ BGC_COLUMNS = [
     "product",
     "score",
     "confidence",
+    "core_gene_records",
     "source_file",
 ]
 

@@ -149,6 +149,7 @@ def render_evidence_table(frame, map_index, gene_map_button, overlap_fraction=0.
         ("Start", True), ("End", True), ("Length (bp)", True),
         ("Genes", True), ("Callers", True), ("ARTS known", True),
         ("ARTS DUF", True), ("MIBiG comparison", False),
+        ("Core-gene evidence", False),
         ("BGC class signals", False), ("Product signals", False),
         ("Edge distance (bp)", True),
     )
@@ -180,6 +181,7 @@ def render_evidence_table(frame, map_index, gene_map_button, overlap_fraction=0.
             ("<div class='caller-markers'>{}</div>".format(caller_markers(row)), tools),
             (str(known), known), (str(duf), duf),
             (mibig_cell(row), accession),
+            ("<span class='signal-cell'>{}</span>".format(escape(clean(row.get("core_gene_evidence")))), clean(row.get("core_gene_evidence"))),
             ("<span class='signal-cell'>{}</span>".format(escape(clean(row.get("bgc_types")))), clean(row.get("bgc_types"))),
             ("<span class='signal-cell'>{}</span>".format(escape(clean(row.get("products")))), clean(row.get("products"))),
             (escape(clean(row.get("nearest_contig_edge_bp"))), number(row.get("nearest_contig_edge_bp"))),
@@ -190,7 +192,7 @@ def render_evidence_table(frame, map_index, gene_map_button, overlap_fraction=0.
         )
         searchable = " ".join(clean(row.get(key)) for key in (
             "consensus_label", "consensus_id", "contig", "bgc_types", "products",
-            "best_mibig_id", "best_mibig_product",
+            "best_mibig_id", "best_mibig_product", "core_gene_evidence",
         )).lower()
         rendered_rows.append(
             "<tr data-search='{search}' data-tools='{tools}' data-callers='{callers}' "
@@ -205,11 +207,14 @@ def render_evidence_table(frame, map_index, gene_map_button, overlap_fraction=0.
         "<h2>Cluster evidence</h2><span class='section-accent'></span></div>"
         "<p class='muted evidence-description'>One row per grouped candidate locus. "
         "Cross-caller groups use reciprocal overlap of at least {overlap}, nesting, "
-        "or a shared Bakta gene flagged by biosynthetic keywords. "
+        "or a shared core gene. Core genes come first from explicit antiSMASH "
+        "biosynthetic roles or scaffold-forming Pfam evidence from GECCO/DeepBGC; "
+        "a strict Bakta annotation fallback is used "
+        "only when a predictor has no resolvable core-gene role. "
         "Merged boundaries are approximate. ARTS overlaps and MIBiG comparisons "
         "are separate observations.</p>"
         "<div class='evidence-toolbar'>"
-        "<label>Search<input id='evidence-search' type='search' placeholder='Region, contig, class, product, MIBiG'></label>"
+        "<label>Search<input id='evidence-search' type='search' placeholder='Region, contig, core gene, class, product, MIBiG'></label>"
         "<label>Tool count<select id='evidence-tool-count'><option value=''>All</option>"
         "<option value='1'>1 tool</option><option value='2'>2 tools</option><option value='3'>3 tools</option></select></label>"
         "<label>Caller<select id='evidence-caller'><option value=''>Any</option>"

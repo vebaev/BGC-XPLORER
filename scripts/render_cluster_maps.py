@@ -34,6 +34,7 @@ GENE_COLUMNS = [
     "dbcan_recommendation",
     "dbcan_substrate",
     "arts_evidence",
+    "predictor_core_evidence",
     "gene_category",
     "display_label",
     "tooltip_text",
@@ -225,14 +226,10 @@ def classify_gene(row):
     ]).lower()
     if clean(row.get("arts_evidence")):
         return "resistance"
+    if clean(row.get("predictor_core_evidence")):
+        return "biosynthetic_core"
     if any(clean(row.get(column)) for column in ["dbcan_hmm", "dbcan_subfamily", "dbcan_diamond", "dbcan_substrate"]):
         return "cazyme"
-    if any(term in text for term in [
-        "polyketide", "non-ribosomal", "nonribosomal", "nrps", "pks",
-        "terpene synthase", "lanthipeptide", "bacteriocin", "siderophore",
-        "synthetase", "condensation domain", "ketosynthase",
-    ]):
-        return "biosynthetic_core"
     if any(term in text for term in [
         "transposase", "integrase", "recombinase", "insertion sequence",
         "mobile", "phage", "tniq",
@@ -280,6 +277,8 @@ def tooltip_for(row):
         parts.append("KEGG: {0}".format(clean(row.get("kegg_ko"))))
     if clean(row.get("pfams")):
         parts.append("PFAMs: {0}".format(clean(row.get("pfams"))))
+    if clean(row.get("predictor_core_evidence")):
+        parts.append("Core-gene evidence: {0}".format(clean(row.get("predictor_core_evidence"))))
     dbcan_bits = [
         clean(row.get("dbcan_hmm")),
         clean(row.get("dbcan_subfamily")),
@@ -364,6 +363,11 @@ def build_cluster_genes(sample, clusters, bakta, eggnog, dbcan, dbcan_sub, arts)
             (bakta["start"].astype(int) <= end) &
             (bakta["end"].astype(int) >= start)
         ].copy()
+        core_by_locus = {}
+        for item in clean(cluster.get("core_gene_evidence")).split("; "):
+            if " [" in item:
+                locus, evidence = item.split(" [", 1)
+                core_by_locus[locus.strip()] = evidence.rstrip("]")
         for _, gene in genes.sort_values(["start", "end"]).iterrows():
             arts_evidence = ""
             if not arts.empty:
@@ -402,6 +406,7 @@ def build_cluster_genes(sample, clusters, bakta, eggnog, dbcan, dbcan_sub, arts)
                 "dbcan_recommendation": clean(gene.get("dbcan_recommendation")),
                 "dbcan_substrate": clean(gene.get("dbcan_substrate")),
                 "arts_evidence": arts_evidence,
+                "predictor_core_evidence": core_by_locus.get(clean(gene.get("locus_tag")), ""),
             }
             row["gene_category"] = classify_gene(row)
             row["display_label"] = display_label(row)

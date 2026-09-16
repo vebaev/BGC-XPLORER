@@ -20,7 +20,7 @@ BGC-XPLORER accepts a bacterial genome in FASTA format and runs an integrated na
 - Annotates the genome with **Bakta**.
 - Detects BGC candidates with **antiSMASH**, **GECCO** and **DeepBGC**.
 - Adds **ARTS**, **eggNOG-mapper** and **dbCAN** evidence.
-- Groups compatible predictions into candidate loci while preserving the caller evidence; the grouped boundaries are approximate. Cross-caller grouping uses reciprocal overlap ≥0.30, nesting or a shared Bakta gene flagged by biosynthetic keywords.
+- Groups compatible predictions into candidate loci while preserving caller evidence; the grouped boundaries are approximate. Cross-caller grouping uses reciprocal overlap ≥0.30, nesting or a shared core gene. Core-gene roles come from explicit antiSMASH biosynthetic roles and a conservative scaffold-forming Pfam set applied to GECCO or DeepBGC output, with a strict Bakta annotation fallback only when a predictor provides no resolvable role.
 - Lets users filter and sort the full result table by caller, tool count, ARTS signal, MIBiG comparison, coordinates and predicted class.
 - Compares antiSMASH regions with MIBiG using KnownClusterBlast and ClusterCompare; reports the score metric for each representative match.
 - Generates interactive gene maps, summary tables and reproducibility metadata.
@@ -104,7 +104,7 @@ Every completed sample also includes `provenance.json`, which records the applic
 
 The workflow produces computational hypotheses. BGC classes, biological activities and AI interpretations require expert review and experimental validation.
 
-Cross-caller grouping uses a configurable overlap threshold and a keyword-based Bakta core-gene flag; neither has been calibrated against a reference set. For scientific comparisons, report the selected threshold and assess grouping stability across plausible values.
+Cross-caller grouping uses a configurable overlap threshold and a predictor-first core-gene rule with a strict Bakta annotation fallback; neither has been calibrated against a reference set. For scientific comparisons, report the selected threshold and assess grouping stability across plausible values.
 
 MIBiG comparisons are candidate references, not proof that a region produces the same compound. KnownClusterBlast's empirical score, ClusterCompare's 0–1 score, and CompaRiPPson peptide similarity are different metrics and are labeled separately in reports.
 

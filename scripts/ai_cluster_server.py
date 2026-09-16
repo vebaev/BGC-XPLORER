@@ -237,7 +237,7 @@ def compact_payload_for_model(payload):
     compact_region_keys = [
         "contig", "start", "end", "length_bp", "support_tools", "support_count",
         "bgc_types", "products", "biological_interpretation",
-        "overlap_relationship", "core_gene_support", "arts_hits",
+        "overlap_relationship", "core_gene_support", "core_gene_evidence", "arts_hits",
         "arts_known_hits", "arts_duf_hits", "nearest_contig_edge_bp", "best_mibig_id",
         "best_mibig_product", "mibig_similarity", "match_score", "score_metric",
         "matched_genes", "core_gene_hits",
@@ -396,7 +396,7 @@ def build_cluster_payload(results_dir, sample, consensus_id):
         "region": compact_record(cluster_row, [
             "contig", "contig_id", "start", "end", "length_bp", "support_tools",
             "supporting_tools", "support_count", "bgc_types", "products",
-            "biological_interpretation", "overlap_relationship", "core_gene_support",
+            "biological_interpretation", "overlap_relationship", "core_gene_support", "core_gene_evidence",
             "arts_hits", "arts_known_hits", "arts_duf_hits",
             "nearest_contig_edge_bp", "best_mibig_id",
             "best_mibig_product", "mibig_similarity", "match_score", "score_metric",
