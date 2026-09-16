@@ -9,7 +9,7 @@ import pandas as pd
 from common import html_page, load_table_if_exists, read_json
 from report_branding import image_data_uri, report_home_link
 from report_design import DONUT_COLORS, PRIMARY_GLANCE_LABELS, reproducibility_panel
-from report_evidence_table import render_evidence_table
+from report_evidence_table import location_html, render_evidence_table
 
 
 def _load_logo_data_uri():
@@ -422,13 +422,14 @@ if not dbcan.empty:
     dbcan_found["cluster_key"] = dbcan_found["cgc_id"].astype(str).map(
         lambda value: "{0}_cgc_{1}".format(sample, value)
     )
+    dbcan_found["location"] = [
+        location_html(row["contig"], row["cluster_start"], row["cluster_end"], row.get("length_bp"))
+        for _, row in dbcan_found.iterrows()
+    ]
     dbcan_table = dbcan_found[[
         "cluster_key",
-        "contig",
         "cgc_id",
-        "cluster_start",
-        "cluster_end",
-        "length_bp",
+        "location",
         "genes",
         "cazyme_genes",
         "signature_genes",
@@ -437,11 +438,8 @@ if not dbcan.empty:
         "dbcan_sub_substrate",
     ]].copy()
     dbcan_table = dbcan_table.rename(columns={
-        "contig": "Contig",
         "cgc_id": "CGC",
-        "cluster_start": "Start",
-        "cluster_end": "End",
-        "length_bp": "Length (bp)",
+        "location": "Location",
         "genes": "Genes",
         "cazyme_genes": "CAZymes",
         "signature_genes": "Signatures",
@@ -467,16 +465,84 @@ evidence_panel = render_evidence_table(
     evidence,
     map_index,
     gene_map_button,
-    overlap_fraction=float(snakemake.config.get("consensus", {}).get("overlap_fraction", 0.30)),
+    min_containment=float(snakemake.config.get("consensus", {}).get("min_containment", 0.80)),
+    standalone=False,
 )
+# The report shell already ships a tab strip (.table-panel / .tabs-nav / .tab-btn /
+# .tab-pane) together with its click handler, so these panels reuse it instead of
+# defining a second, competing tab style. Only the spacing inside a pane and the
+# count pill are added here.
+CLUSTER_TABS_CSS = """
+<style>
+.cluster-tabs .tabs-nav { padding: 0 22px; gap: 4px; }
+.cluster-tabs .tab-btn { font-size: 18px; font-weight: 700; letter-spacing: -0.01em;
+  padding: 21px 28px 18px; gap: 12px; border-bottom-width: 4px; }
+.cluster-tabs .tab-icon { font-size: 20px; }
+.cluster-tabs .tab-pane > .evidence-panel,
+.cluster-tabs .tab-pane > .cgc-panel { padding: 24px 24px 8px; }
+.cluster-tabs .tab-count { font-size: 13px; font-weight: 700; line-height: 1;
+  padding: 5px 11px; border-radius: 999px; color: var(--muted);
+  background: rgba(94, 108, 152, 0.12); }
+.cluster-tabs .tab-btn.is-active .tab-count { color: white; background: var(--accent); }
+.cluster-tabs .tab-btn:hover { color: var(--accent-deep); }
+@media (max-width: 720px) {
+  .cluster-tabs .tabs-nav { padding: 0 12px; }
+  .cluster-tabs .tab-btn { font-size: 16px; padding: 17px 18px 14px; gap: 9px; }
+  .cluster-tabs .tab-pane > .evidence-panel,
+  .cluster-tabs .tab-pane > .cgc-panel { padding: 18px 16px 6px; }
+}
+</style>
+"""
+
+
+def cluster_tabs(panels):
+    """Render the BGC and CGC tables as panes of the report's own tab strip."""
+    buttons = []
+    panes = []
+    for index, (key, label, icon, count, body) in enumerate(panels):
+        active = index == 0
+        buttons.append(
+            "<button class='tab-btn{active}' type='button' role='tab' "
+            "aria-selected='{selected}' aria-controls='{key}' data-tab-target='{key}'>"
+            "<span class='tab-icon' aria-hidden='true'>{icon}</span>"
+            "<span>{label}</span><span class='tab-count'>{count}</span></button>".format(
+                active=" is-active" if active else "", selected="true" if active else "false",
+                key=escape(key, quote=True), icon=escape(icon), label=escape(label),
+                count=escape(str(count)),
+            )
+        )
+        panes.append(
+            "<div class='tab-pane{active}' id='{key}' role='tabpanel'{hidden}>{body}</div>".format(
+                active=" is-active" if active else "", key=escape(key, quote=True),
+                hidden="" if active else " hidden", body=body,
+            )
+        )
+    return (
+        CLUSTER_TABS_CSS
+        + "<section class='panel table-panel cluster-tabs'>"
+        + "<div class='tabs-nav' role='tablist' aria-label='Cluster tables'>"
+        + "".join(buttons) + "</div>" + "".join(panes) + "</section>"
+    )
+
+
 cgc_panel = ""
 if not dbcan_table.empty:
     cgc_panel = (
-        "<section class='panel'><div class='section-head'><h2>CGC substrate clusters</h2>"
-        "<span class='section-accent'></span></div>"
-        "<p class='muted'>dbCAN carbohydrate gene clusters with resolved substrate predictions.</p>"
-        "{table}</section>"
-    ).format(table=render_html_table(dbcan_table, html_columns={"Gene map"}))
+        "<div class='cgc-panel'>"
+        "<dl class='column-legend'>"
+        "<div><dt>Gene map</dt><dd>opens the annotated gene diagram</dd></div>"
+        "<div><dt>CGC</dt><dd>dbCAN carbohydrate gene cluster id</dd></div>"
+        "<div><dt>Location</dt><dd>coordinates, contig and length</dd></div>"
+        "<div><dt>Genes</dt><dd>annotated genes inside the cluster</dd></div>"
+        "<div><dt>CAZymes</dt><dd>carbohydrate-active enzyme genes</dd></div>"
+        "<div><dt>Signatures</dt><dd>signature genes: CAZyme, transporter, "
+        "transcription factor, sulfatase or peptidase</dd></div>"
+        "<div><dt>Predicted substrate</dt><dd>the carbohydrate the cluster likely acts on</dd></div>"
+        "<div><dt>Support source</dt><dd>dbCAN-PUL homology, dbCAN-sub majority vote, or both</dd></div>"
+        "<div><dt>dbCAN-sub substrate</dt><dd>the dbCAN-sub call on its own</dd></div>"
+        "</dl>"
+        "{table}</div>"
+    ).format(table=render_html_table(dbcan_table, html_columns={"Gene map", "Location"}))
 
 sections = [
     report_home_link(),
@@ -562,10 +628,11 @@ sections = [
     ).format(endpoint=escape(ai_endpoint, quote=True)),
     "<script type='application/json' id='gene-map-svg-data'>{0}</script>".format(gene_map_svg_json),
     "<script type='application/json' id='gene-map-table-data'>{0}</script>".format(gene_table_json),
-    evidence_panel,
+    cluster_tabs(
+        [("cluster-tab-bgc", "BGC", "\u25ce", len(evidence), evidence_panel)]
+        + ([("cluster-tab-cgc", "CGC", "\u2318", len(dbcan_table), cgc_panel)] if cgc_panel else [])
+    ),
 ]
-if cgc_panel:
-    sections.append(cgc_panel)
 if provenance:
     sections.append(reproducibility_panel(provenance))
 sections.append(footer_strip(sample, generated_at))

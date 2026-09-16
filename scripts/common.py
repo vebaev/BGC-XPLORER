@@ -233,7 +233,7 @@ def html_page(title, sections):
       gap: 22px;
       align-items: stretch;
       background: transparent;
-      margin-bottom: 28px;
+      margin-bottom: 18px;
     }}
     .report-nav {{
       display: flex;
@@ -452,6 +452,13 @@ def html_page(title, sections):
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 18px;
+      margin-bottom: 18px;
+    }}
+    /* Cards inside a grid are spaced by the grid gap; their own bottom margin
+       would double it and make those rows sit further apart than the rest. */
+    .info-grid > *,
+    .chart-panels > * {{
+      margin-bottom: 0;
     }}
     .info-grid.summary-only {{
       grid-template-columns: 1fr;

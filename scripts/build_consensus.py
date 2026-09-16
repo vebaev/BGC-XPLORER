@@ -77,21 +77,20 @@ def parse_fasta_lengths(path):
     return lengths
 
 
-def classify_overlap_relationship(left_row, right_row, overlap_fraction=0.30):
-    left_rec, right_rec, overlap_bp = reciprocal_overlap(
+def containment(left_row, right_row):
+    """Fraction of the shorter region that the longer one covers.
+
+    Callers disagree on boundaries mostly because they disagree on how far to
+    extend past the core genes, so the length ratio - not the biology - drives
+    reciprocal overlap. Containment is stable under that asymmetry: a short
+    prediction sitting inside a long one scores 1.0 either way round.
+    """
+    left_frac, right_frac, overlap_bp = reciprocal_overlap(
         left_row["start_num"], left_row["end_num"], right_row["start_num"], right_row["end_num"]
     )
     if overlap_bp <= 0:
-        return ""
-    if left_rec >= overlap_fraction and right_rec >= overlap_fraction:
-        return "reciprocal_overlap"
-    if (
-        (left_row["start_num"] <= right_row["start_num"] and left_row["end_num"] >= right_row["end_num"])
-        or
-        (right_row["start_num"] <= left_row["start_num"] and right_row["end_num"] >= left_row["end_num"])
-    ):
-        return "nested"
-    return ""
+        return 0.0, 0
+    return max(left_frac, right_frac), overlap_bp
 
 
 def overlapping_genes(row, genes_df):
@@ -154,19 +153,39 @@ def resolve_core_gene_records(row, bakta):
     return resolved
 
 
-def should_merge(left_row, right_row, overlap_fraction=0.30):
-    if left_row["tool"] == right_row["tool"]:
-        return False, ""
-    if left_row["contig"] != right_row["contig"]:
-        return False, ""
-    if not has_valid_interval(left_row) or not has_valid_interval(right_row):
-        return False, ""
-    left_core = set((left_row.get("core_gene_details", {}) or {}).keys())
-    right_core = set((right_row.get("core_gene_details", {}) or {}).keys())
-    if left_core and right_core and (left_core & right_core):
-        return True, "shared_core_gene"
-    relationship = classify_overlap_relationship(left_row, right_row, overlap_fraction)
-    return bool(relationship), relationship
+# Rule-based callers report full regions and explicit core-gene roles, so they
+# make the most reliable anchors; the ML callers follow.
+TOOL_PRIORITY = {"antismash": 0, "gecco": 1, "deepbgc": 2}
+
+
+def anchor_sort_key(row):
+    """Order candidates so the same input always produces the same groups."""
+    start = row["start_num"]
+    return (
+        TOOL_PRIORITY.get(str(row["tool"]).strip().lower(), len(TOOL_PRIORITY)),
+        -int(row.get("length_bp", 0) or 0),
+        str(row["contig"]),
+        float(start) if not pd.isna(start) else 0.0,
+        str(row["bgc_id"]),
+    )
+
+
+def should_merge(anchor_row, other_row, min_containment=0.80):
+    """Decide whether a candidate describes the same locus as the group anchor.
+
+    Every member is judged against the anchor alone. Shared core genes are
+    reported as evidence but never merge on their own: they used to join
+    regions that do not overlap at all.
+    """
+    if anchor_row["contig"] != other_row["contig"]:
+        return False, "", 0.0, 0
+    if not has_valid_interval(anchor_row) or not has_valid_interval(other_row):
+        return False, "", 0.0, 0
+    fraction, overlap_bp = containment(anchor_row, other_row)
+    if fraction < min_containment:
+        return False, "", fraction, overlap_bp
+    relationship = "nested" if fraction >= 0.999 else "containment"
+    return True, relationship, fraction, overlap_bp
 
 
 def summarize_shared_core_genes(subset):
@@ -247,7 +266,7 @@ arts = load_table_if_exists(snakemake.input.arts, [
 bakta = pd.read_csv(snakemake.input.bakta, sep="\t") if snakemake.input.bakta else pd.DataFrame()
 
 contig_lengths = parse_fasta_lengths(snakemake.input.fna)
-merge_threshold = float(snakemake.config["consensus"].get("overlap_fraction", 0.30))
+merge_threshold = float(snakemake.config["consensus"].get("min_containment", 0.80))
 
 if not bakta.empty:
     for column in ["contig", "type", "start", "end", "strand", "locus_tag", "gene", "product", "dbxrefs"]:
@@ -273,76 +292,92 @@ else:
     bgcs["end_num"] = pd.Series(dtype=float)
     bgcs["core_gene_details"] = pd.Series(dtype=object)
 
+groups = []
+claimed = set()
+contig_index = (
+    {str(contig): list(frame.index) for contig, frame in bgcs.groupby("contig_id", sort=False)}
+    if not bgcs.empty else {}
+)
+anchor_order = sorted(bgcs.index, key=lambda index: anchor_sort_key(bgcs.loc[index])) if not bgcs.empty else []
+
+# Anchor linkage: the strongest unclaimed prediction defines the locus and every
+# other member is judged against it. Single linkage used to chain A-B-C together
+# through a bridging region, stretching boundaries past anything a caller called.
+for anchor_idx in anchor_order:
+    if anchor_idx in claimed:
+        continue
+    anchor = bgcs.loc[anchor_idx]
+    claimed.add(anchor_idx)
+    members = [anchor_idx]
+    edges = []
+    for other_idx in contig_index.get(str(anchor["contig_id"]), []):
+        if other_idx in claimed:
+            continue
+        merged, relationship, fraction, overlap_bp = should_merge(
+            anchor, bgcs.loc[other_idx], merge_threshold
+        )
+        if not merged:
+            continue
+        claimed.add(other_idx)
+        members.append(other_idx)
+        edges.append((other_idx, relationship, fraction, overlap_bp))
+    groups.append((anchor_idx, members, edges))
+
+
+def group_position(group):
+    members = bgcs.loc[group[1]]
+    starts = members["start_num"].dropna()
+    return (
+        str(members.iloc[0]["contig_id"]),
+        float(starts.min()) if not starts.empty else 0.0,
+    )
+
+
+groups.sort(key=group_position)
+
 consensus_rows = []
 overlap_rows = []
-group_id = 0
-visited = set()
 
-for idx, row in bgcs.iterrows():
-    if idx in visited:
-        continue
-    group_id += 1
-    members = [idx]
-    visited.add(idx)
-    relationships = []
+for group_id, (anchor_idx, members, edges) in enumerate(groups, start=1):
+    anchor = bgcs.loc[anchor_idx]
+    for other_idx, relationship, fraction, overlap_bp in edges:
+        other = bgcs.loc[other_idx]
+        shared_core = sorted(
+            set((anchor.get("core_gene_details", {}) or {}).keys())
+            & set((other.get("core_gene_details", {}) or {}).keys())
+        )
+        shared_evidence = []
+        for locus in shared_core:
+            for source_row in (anchor, other):
+                record = (source_row.get("core_gene_details", {}) or {}).get(locus, {})
+                shared_evidence.append("{0}:{1}".format(
+                    record.get("source", source_row.get("tool", "")),
+                    record.get("evidence", ""),
+                ))
+        overlap_rows.append({
+            "sample": anchor["sample"],
+            "group_id": group_id,
+            "tool_a": anchor["tool"],
+            "bgc_id_a": anchor["bgc_id"],
+            "tool_b": other["tool"],
+            "bgc_id_b": other["bgc_id"],
+            "contig": anchor["contig"],
+            "overlap_bp": overlap_bp,
+            "containment": round(fraction, 4),
+            "overlap_relationship": relationship,
+            "shared_core_genes": ",".join(shared_core),
+            "shared_core_evidence": "; ".join(unique_preserve_order(shared_evidence)),
+        })
 
-    expanded = True
-    while expanded:
-        expanded = False
-        for jdx, other in bgcs.iterrows():
-            if jdx in visited:
-                continue
-            merge_this = False
-            local_relationships = []
-            for member_idx in members:
-                member = bgcs.loc[member_idx]
-                merged, relationship = should_merge(member, other, merge_threshold)
-                if merged:
-                    merge_this = True
-                    local_relationships.append((member, other, relationship))
-            if merge_this:
-                members.append(jdx)
-                visited.add(jdx)
-                expanded = True
-                for member, other, relationship in local_relationships:
-                    relationships.append(relationship)
-                    _, _, overlap_bp = reciprocal_overlap(
-                        member["start_num"], member["end_num"], other["start_num"], other["end_num"]
-                    )
-                    shared_core = sorted(
-                        set((member.get("core_gene_details", {}) or {}).keys())
-                        & set((other.get("core_gene_details", {}) or {}).keys())
-                    )
-                    shared_evidence = []
-                    for locus in shared_core:
-                        for source_row in (member, other):
-                            record = (source_row.get("core_gene_details", {}) or {}).get(locus, {})
-                            shared_evidence.append("{0}:{1}".format(
-                                record.get("source", source_row.get("tool", "")),
-                                record.get("evidence", ""),
-                            ))
-                    overlap_rows.append({
-                        "sample": member["sample"],
-                        "group_id": group_id,
-                        "tool_a": member["tool"],
-                        "bgc_id_a": member["bgc_id"],
-                        "tool_b": other["tool"],
-                        "bgc_id_b": other["bgc_id"],
-                        "contig": member["contig"],
-                        "overlap_bp": overlap_bp,
-                        "overlap_relationship": relationship,
-                        "shared_core_genes": ",".join(shared_core),
-                        "shared_core_evidence": "; ".join(unique_preserve_order(shared_evidence)),
-                    })
-
+    relationships = [relationship for _, relationship, _, _ in edges]
     subset = bgcs.loc[members].copy()
     tools = sorted(set(subset["tool"]))
     contig = choose_first_nonempty(subset["contig"])
     start_val = int(subset["start_num"].dropna().min()) if not subset["start_num"].dropna().empty else ""
     end_val = int(subset["end_num"].dropna().max()) if not subset["end_num"].dropna().empty else ""
     region = {
-        "sample": row["sample"],
-        "consensus_id": "{sample}_consensus_{group_id}".format(sample=row["sample"], group_id=group_id),
+        "sample": anchor["sample"],
+        "consensus_id": "{sample}_consensus_{group_id}".format(sample=anchor["sample"], group_id=group_id),
         "contig": contig,
         "contig_id": contig,
         "start": start_val,
@@ -353,6 +388,8 @@ for idx, row in bgcs.iterrows():
         "support_count": len(tools),
         "num_supporting_tools": len(tools),
         "candidate_ids": ",".join(subset["bgc_id"].astype(str)),
+        "anchor_tool": anchor["tool"],
+        "anchor_bgc_id": anchor["bgc_id"],
         "bgc_types": unique_join(subset["bgc_type"].tolist()),
         "products": unique_join(subset["product"].tolist()),
         "product_annotations": unique_join(subset["product"].tolist()),
@@ -369,8 +406,8 @@ for idx, row in bgcs.iterrows():
 consensus = pd.DataFrame(consensus_rows)
 overlap = pd.DataFrame(overlap_rows, columns=[
     "sample", "group_id", "tool_a", "bgc_id_a", "tool_b", "bgc_id_b",
-    "contig", "overlap_bp", "overlap_relationship", "shared_core_genes",
-    "shared_core_evidence",
+    "contig", "overlap_bp", "containment", "overlap_relationship",
+    "shared_core_genes", "shared_core_evidence",
 ])
 consensus = add_consensus_label(consensus)
 

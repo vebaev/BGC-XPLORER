@@ -34,7 +34,7 @@ tools:
     container: "aktino/gecco:latest"
     executable: "/opt/conda/envs/gecco/bin/gecco"
   deepbgc:
-    extra_args: "--prodigal-meta-mode"
+    extra_args: "--prodigal-meta-mode --score 0.5 --merge-max-protein-gap 20 --merge-max-nucl-gap 10000 --min-nucl 5000 --min-proteins 5 --min-domains 5 --min-bio-domains 1"
     container: "aktino/deepbgc:latest"
     db_subdir: "deepbgc"
     executable: "/opt/conda/envs/deepbgc/bin/deepbgc"
@@ -60,7 +60,10 @@ tools:
     hmmer_bin_dir: "/opt/conda/envs/dbcan/bin"
 
 consensus:
-  overlap_fraction: 0.3
+  # A prediction joins a group when the shorter of the two regions is covered by
+  # this fraction of its own length. Members are compared against the group
+  # anchor only, so a chain of weak overlaps cannot stretch the boundaries.
+  min_containment: 0.80
   comparippson_preference_similarity_percent: 80.0
 
 report:
