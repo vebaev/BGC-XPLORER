@@ -472,6 +472,85 @@ evidence_panel = render_evidence_table(
 # .tab-pane) together with its click handler, so these panels reuse it instead of
 # defining a second, competing tab style. Only the spacing inside a pane and the
 # count pill are added here.
+DOWNLOADS_CSS = """
+<style>
+.download-list { list-style: none; margin: 0; padding: 0; display: flex;
+  flex-direction: column; gap: 10px; }
+.download-item { display: flex; align-items: center; gap: 14px; padding: 15px 17px;
+  border: 1px solid var(--line-strong); border-radius: 14px; background: var(--panel);
+  color: inherit; text-decoration: none; transition: border-color var(--transition),
+  box-shadow var(--transition); }
+.download-item:hover, .download-item:focus-visible { border-color: var(--accent);
+  box-shadow: var(--shadow-soft); }
+.download-icon { flex: 0 0 auto; width: 38px; height: 38px; border-radius: 11px;
+  display: grid; place-items: center; font-size: 19px; color: var(--accent);
+  background: var(--accent-soft); }
+.download-copy { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.download-name { font-weight: 700; color: var(--text-strong); font-size: 15px; }
+.download-note { color: var(--muted); font-size: 13px; line-height: 1.45; }
+.download-meta { margin-left: auto; text-align: right; color: var(--muted);
+  font-size: 11.5px; font-family: var(--mono); white-space: nowrap; }
+.download-missing { opacity: .55; pointer-events: none; }
+</style>
+"""
+
+
+def human_size(num_bytes):
+    for unit, step in (("MB", 1024 * 1024), ("KB", 1024)):
+        if num_bytes >= step:
+            return "{:.1f} {}".format(num_bytes / float(step), unit)
+    return "{} B".format(num_bytes)
+
+
+def downloads_panel(report_dir, sample):
+    """Relative links to the tables behind the report.
+
+    Bakta and eggNOG annotations are several MB together, so the files are
+    linked rather than embedded; the paths resolve both from the served
+    results tree and from the report opened directly off disk.
+    """
+    entries = [
+        ("../summary/region_evidence.tsv", "BGC table",
+         "One row per grouped candidate locus, as shown in the BGC tab"),
+        ("../summary/dbcan.cgc.tsv", "CGC table",
+         "All dbCAN carbohydrate gene clusters, including those without a resolved substrate"),
+        ("../bakta/{0}.features.tsv".format(sample), "Bakta annotation",
+         "Every annotated feature: locus tags, coordinates, products"),
+        ("../summary/eggnog.annotations.tsv", "eggNOG annotation",
+         "Orthology assignments with EC, KEGG KO and COG categories"),
+    ]
+    items = []
+    available = 0
+    for relative, title, note in entries:
+        path = os.path.normpath(os.path.join(report_dir, relative))
+        exists = os.path.isfile(path)
+        if exists:
+            available += 1
+            meta = "{name} \u00b7 {size}".format(
+                name=os.path.basename(path), size=human_size(os.path.getsize(path))
+            )
+        else:
+            meta = "not produced"
+        items.append(
+            "<li><a class='download-item{missing}' href='{href}' download>"
+            "<span class='download-icon' aria-hidden='true'>\u2913</span>"
+            "<span class='download-copy'><span class='download-name'>{title}</span>"
+            "<span class='download-note'>{note}</span></span>"
+            "<span class='download-meta'>{meta}</span></a></li>".format(
+                missing="" if exists else " download-missing",
+                href=escape(relative, quote=True), title=escape(title),
+                note=escape(note), meta=escape(meta),
+            )
+        )
+    body = (
+        DOWNLOADS_CSS
+        + "<div class='downloads-panel'>"
+        + "<ul class='download-list'>" + "".join(items) + "</ul>"
+        + "</div>"
+    )
+    return body, available
+
+
 CLUSTER_TABS_CSS = """
 <style>
 .cluster-tabs .tabs-nav { padding: 0 22px; gap: 4px; }
@@ -479,7 +558,8 @@ CLUSTER_TABS_CSS = """
   padding: 21px 28px 18px; gap: 12px; border-bottom-width: 4px; }
 .cluster-tabs .tab-icon { font-size: 20px; }
 .cluster-tabs .tab-pane > .evidence-panel,
-.cluster-tabs .tab-pane > .cgc-panel { padding: 24px 24px 8px; }
+.cluster-tabs .tab-pane > .cgc-panel,
+.cluster-tabs .tab-pane > .downloads-panel { padding: 24px 24px 8px; }
 .cluster-tabs .tab-count { font-size: 13px; font-weight: 700; line-height: 1;
   padding: 5px 11px; border-radius: 999px; color: var(--muted);
   background: rgba(94, 108, 152, 0.12); }
@@ -489,7 +569,8 @@ CLUSTER_TABS_CSS = """
   .cluster-tabs .tabs-nav { padding: 0 12px; }
   .cluster-tabs .tab-btn { font-size: 16px; padding: 17px 18px 14px; gap: 9px; }
   .cluster-tabs .tab-pane > .evidence-panel,
-  .cluster-tabs .tab-pane > .cgc-panel { padding: 18px 16px 6px; }
+  .cluster-tabs .tab-pane > .cgc-panel,
+  .cluster-tabs .tab-pane > .downloads-panel { padding: 18px 16px 6px; }
 }
 </style>
 """
@@ -543,6 +624,10 @@ if not dbcan_table.empty:
         "</dl>"
         "{table}</div>"
     ).format(table=render_html_table(dbcan_table, html_columns={"Gene map", "Location"}))
+
+download_panel, download_count = downloads_panel(
+    os.path.dirname(os.path.abspath(str(snakemake.output[0]))), sample
+)
 
 sections = [
     report_home_link(),
@@ -631,6 +716,7 @@ sections = [
     cluster_tabs(
         [("cluster-tab-bgc", "BGC", "\u25ce", len(evidence), evidence_panel)]
         + ([("cluster-tab-cgc", "CGC", "\u2318", len(dbcan_table), cgc_panel)] if cgc_panel else [])
+        + [("cluster-tab-downloads", "DOWNLOADS", "\u2913", download_count, download_panel)]
     ),
 ]
 if provenance:

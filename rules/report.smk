@@ -12,6 +12,8 @@ rule build_report:
         consensus="results/{sample}/summary/consensus_bgcs.tsv",
         evidence="results/{sample}/summary/region_evidence.tsv",
         overlap="results/{sample}/summary/tool_overlap.tsv",
+        eggnog="results/{sample}/summary/eggnog.annotations.tsv",
+        bakta_features="results/{sample}/bakta/{sample}.features.tsv",
         provenance="results/{sample}/provenance.json"
     output:
         "results/{sample}/report/{sample}.html"

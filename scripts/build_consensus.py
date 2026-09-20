@@ -170,6 +170,22 @@ def anchor_sort_key(row):
     )
 
 
+def boundary_sort_key(row):
+    """Pick the member that defines the reported boundaries: the longest one.
+
+    The anchor is chosen for caller reliability, not for extent, so a short
+    antiSMASH or GECCO region can anchor a group that also holds a much longer
+    prediction. Taking the anchor's coordinates would discard that extent; taking
+    the longest member keeps boundaries a caller actually reported without the
+    invented span that min/max across the group produces.
+    """
+    return (
+        -int(row.get("length_bp", 0) or 0),
+        TOOL_PRIORITY.get(str(row["tool"]).strip().lower(), len(TOOL_PRIORITY)),
+        str(row["bgc_id"]),
+    )
+
+
 def should_merge(anchor_row, other_row, min_containment=0.80):
     """Decide whether a candidate describes the same locus as the group anchor.
 
@@ -373,8 +389,16 @@ for group_id, (anchor_idx, members, edges) in enumerate(groups, start=1):
     subset = bgcs.loc[members].copy()
     tools = sorted(set(subset["tool"]))
     contig = choose_first_nonempty(subset["contig"])
-    start_val = int(subset["start_num"].dropna().min()) if not subset["start_num"].dropna().empty else ""
-    end_val = int(subset["end_num"].dropna().max()) if not subset["end_num"].dropna().empty else ""
+    valid = subset.dropna(subset=["start_num", "end_num"])
+    union_start = int(valid["start_num"].min()) if not valid.empty else ""
+    union_end = int(valid["end_num"].max()) if not valid.empty else ""
+    if valid.empty:
+        start_val, end_val, boundary_id = "", "", ""
+    else:
+        boundary = valid.loc[sorted(valid.index, key=lambda index: boundary_sort_key(valid.loc[index]))[0]]
+        start_val = int(boundary["start_num"])
+        end_val = int(boundary["end_num"])
+        boundary_id = str(boundary["bgc_id"])
     region = {
         "sample": anchor["sample"],
         "consensus_id": "{sample}_consensus_{group_id}".format(sample=anchor["sample"], group_id=group_id),
@@ -390,6 +414,9 @@ for group_id, (anchor_idx, members, edges) in enumerate(groups, start=1):
         "candidate_ids": ",".join(subset["bgc_id"].astype(str)),
         "anchor_tool": anchor["tool"],
         "anchor_bgc_id": anchor["bgc_id"],
+        "boundary_bgc_id": boundary_id,
+        "union_start": union_start,
+        "union_end": union_end,
         "bgc_types": unique_join(subset["bgc_type"].tolist()),
         "products": unique_join(subset["product"].tolist()),
         "product_annotations": unique_join(subset["product"].tolist()),
