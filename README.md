@@ -20,10 +20,12 @@ BGC-XPLORER accepts a bacterial genome in FASTA format and runs an integrated na
 - Annotates the genome with **Bakta**.
 - Detects BGC candidates with **antiSMASH**, **GECCO** and **DeepBGC**.
 - Adds **ARTS**, **eggNOG-mapper** and **dbCAN** evidence.
-- Groups compatible predictions into candidate loci while preserving caller evidence; the grouped boundaries are approximate. Cross-caller grouping uses reciprocal overlap ≥0.30, nesting or a shared core gene. Core-gene roles come from explicit antiSMASH biosynthetic roles and a conservative scaffold-forming Pfam set applied to GECCO or DeepBGC output, with a strict Bakta annotation fallback only when a predictor provides no resolvable role.
-- Lets users filter and sort the full result table by caller, tool count, ARTS signal, MIBiG comparison, coordinates and predicted class.
+- Groups compatible predictions into candidate loci while preserving caller evidence. Each group is anchored on its strongest prediction (antiSMASH before GECCO before DeepBGC, then the longest region) and a candidate joins only when the anchor covers at least 80% of the shorter region, so a chain of weak overlaps cannot stretch the boundaries. The reported coordinates come from the longest member, never from a span no caller predicted.
+- Reports core-gene roles as evidence rather than as a grouping criterion. Roles come from explicit antiSMASH biosynthetic roles and a conservative scaffold-forming Pfam set applied to GECCO or DeepBGC output, with a strict Bakta annotation fallback only when a predictor provides no resolvable role.
+- Lets users filter and sort the full result table by caller, tool count, ARTS signal, MIBiG comparison, coordinates and predicted class, in a BGC tab beside a CGC substrate tab.
 - Compares antiSMASH regions with MIBiG using KnownClusterBlast and ClusterCompare; reports the score metric for each representative match.
-- Generates interactive gene maps, summary tables and reproducibility metadata.
+- Generates interactive gene maps, summary tables and reproducibility metadata; every completed sample also gets a `provenance.json` with tool versions, configuration and input checksums.
+- Offers the BGC and CGC tables and the Bakta and eggNOG annotations for download straight from the report.
 - Uses a configurable NVIDIA AI model for evidence-grounded cluster interpretation.
 
 ## Quick start with Docker
@@ -91,40 +93,6 @@ The container keeps reference data in the mounted `./db/` directory, outside the
 Choose `BAKTA_DB_TYPE=light` for the smaller Bakta database or `BAKTA_DB_TYPE=full` for the full database. Both can coexist under `./db/bakta/`. The first download may take time and require substantial disk space. Later starts reuse valid databases without checking for new versions; an interrupted download is retried on the next start. Removing a specific database directory explicitly requests a fresh installation.
 
 For the directory layout and manual preparation commands, see [Database setup](docs/database_setup.md).
-
-## Results and reproducibility
-
-Each analysis is stored under `results/<sample>/`. The main report is:
-
-```text
-results/<sample>/report/<sample>.html
-```
-
-Every completed sample also includes `provenance.json`, which records the application version, commit, tool versions, selected model and ARTS reference, effective configuration, and checksums for inputs, result tables and databases. API keys are excluded.
-
-The workflow produces computational hypotheses. BGC classes, biological activities and AI interpretations require expert review and experimental validation.
-
-Cross-caller grouping uses a configurable overlap threshold and a predictor-first core-gene rule with a strict Bakta annotation fallback; neither has been calibrated against a reference set. For scientific comparisons, report the selected threshold and assess grouping stability across plausible values.
-
-MIBiG comparisons are candidate references, not proof that a region produces the same compound. KnownClusterBlast's empirical score, ClusterCompare's 0–1 score, and CompaRiPPson peptide similarity are different metrics and are labeled separately in reports.
-
-## Local development
-
-Build and run directly from the checked-out source:
-
-```bash
-cp .env.example .env
-# Add NVIDIA_API_KEY to .env first.
-docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
-```
-
-Run the unit tests with:
-
-```bash
-python3 -m unittest discover -s tests
-```
-
-Detailed setup and implementation notes are available in [Database setup](docs/database_setup.md) and [AI cluster analysis](docs/ai_cluster_analysis.md).
 
 ## Citation
 
