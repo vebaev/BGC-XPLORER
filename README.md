@@ -11,7 +11,7 @@
 BGC-XPLORER accepts a bacterial genome in FASTA format and runs an integrated natural-product discovery workflow. It annotates the genome, compares predictions from several BGC callers, adds functional and resistance evidence, and produces an interactive HTML report. The report shows every grouped candidate locus in one searchable table with sortable caller, ARTS and MIBiG signals. Optional NVIDIA-hosted AI analysis explains individual clusters from the collected evidence.
 
 <p align="center">
-  <img src="docs/images/bgc-xplorer-report.png" alt="BGC-XPLORER report with grouped loci, caller and database evidence, and a searchable cluster table" width="1000">
+  <img src="docs/images/bgc-xplorer-report-2026-09.png" alt="BGC-XPLORER report with grouped loci, caller and database evidence, and a searchable cluster table" width="1000">
 </p>
 
 ## What it does
