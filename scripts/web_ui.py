@@ -583,7 +583,7 @@ STAT_TONES = {
     "Required files": "green",
     "Ready samples": "blue",
     "Workflow": "orange",
-    "Grouped loci": "indigo",
+    "Total loci": "indigo",
     "Multi-caller loci": "lime",
     "MIBiG comparisons": "cyan",
     "ARTS known hits": "orange",
@@ -601,7 +601,7 @@ STAT_GLYPHS = {
     "Required files": "✓",
     "Ready samples": "◌",
     "Workflow": "↺",
-    "Grouped loci": "◔",
+    "Total loci": "◔",
     "Multi-caller loci": "◎",
     "MIBiG comparisons": "⬡",
     "ARTS known hits": "⛨",
@@ -1237,7 +1237,7 @@ async def results_page(sample: str):
             "</section>".format(
                 cards="".join(
                     [
-                        stat_card("Grouped loci", str(metrics["consensus"]), "Approximate candidate loci grouped across callers."),
+                        stat_card("Total loci", str(metrics["consensus"]), "Approximate candidate loci grouped across callers."),
                         stat_card("Multi-caller loci", str(metrics["multitool"]), "Loci containing predictions from at least two callers."),
                         stat_card("MIBiG comparisons", str(metrics["mibig_hits"]), "Loci with a representative computational MIBiG comparison."),
                         stat_card("ARTS known hits", str(metrics["arts_known_loci"]), "Loci overlapping known-hit ARTS records."),

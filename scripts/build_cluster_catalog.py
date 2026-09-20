@@ -132,7 +132,7 @@ sections = [
     ).format(sample=escape(sample)),
     "<section class='section'><h2>Catalog Summary</h2><div class='stats'>{cards}</div></section>".format(
         cards="".join([
-            stat_card("Grouped loci", len(catalog), "approximate candidate loci in the sample"),
+            stat_card("Total loci", len(catalog), "approximate candidate loci in the sample"),
             stat_card("Multi-caller loci", len(multi_tool), "contain predictions from at least two callers"),
             stat_card("antiSMASH-backed", int((catalog["antismash_ids"].fillna("").str.len() > 0).sum()), "catalog rows with antiSMASH evidence"),
             stat_card("GECCO-backed", int((catalog["gecco_ids"].fillna("").str.len() > 0).sum()), "catalog rows with GECCO evidence"),

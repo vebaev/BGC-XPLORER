@@ -9,7 +9,7 @@ import pandas as pd
 from common import html_page, load_table_if_exists, read_json
 from report_branding import image_data_uri, report_home_link
 from report_design import DONUT_COLORS, PRIMARY_GLANCE_LABELS, reproducibility_panel
-from report_evidence_table import location_html, render_evidence_table
+from report_evidence_table import grouping_description, location_html, render_evidence_table
 
 
 def _load_logo_data_uri():
@@ -82,7 +82,7 @@ STAT_TONES = {
     "DeepBGC": "blue",
     "ARTS": "orange",
     "dbCAN CGC": "teal",
-    "Grouped loci": "indigo",
+    "Total loci": "indigo",
     "Multi-caller loci": "lime",
     "MIBiG comparisons": "cyan",
     "ARTS known hits": "orange",
@@ -94,7 +94,7 @@ STAT_GLYPHS = {
     "DeepBGC": "□",
     "ARTS": "⛨",
     "dbCAN CGC": "⌘",
-    "Grouped loci": "◔",
+    "Total loci": "◔",
     "Multi-caller loci": "◎",
     "MIBiG comparisons": "⬡",
     "ARTS known hits": "⛨",
@@ -401,7 +401,7 @@ hero_summary = (
 
 generated_at = datetime.now().strftime("%b %d, %Y %H:%M")
 glance_metrics = {
-    "Grouped loci": (len(consensus), "candidate loci grouped across BGC predictors"),
+    "Total loci": (len(consensus), "candidate loci grouped across BGC predictors"),
     "Multi-caller loci": (len(supported), "loci containing predictions from at least two callers"),
     "MIBiG comparisons": (len(mibig_backed), "loci with a representative MIBiG comparison"),
     "ARTS known hits": (len(arts_known), "loci overlapping known-hit ARTS records"),
@@ -467,6 +467,11 @@ evidence_panel = render_evidence_table(
     gene_map_button,
     min_containment=float(snakemake.config.get("consensus", {}).get("min_containment", 0.80)),
     standalone=False,
+    grouping_note=grouping_description(
+        snakemake.config.get("consensus", {}).get("mode", "voting"),
+        float(snakemake.config.get("consensus", {}).get("min_containment", 0.80)),
+        int(snakemake.config.get("consensus", {}).get("min_callers_per_gene", 2)),
+    ),
 )
 # The report shell already ships a tab strip (.table-panel / .tabs-nav / .tab-btn /
 # .tab-pane) together with its click handler, so these panels reuse it instead of

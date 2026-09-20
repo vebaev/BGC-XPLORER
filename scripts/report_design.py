@@ -2,7 +2,7 @@ from html import escape
 
 
 PRIMARY_GLANCE_LABELS = (
-    "Grouped loci",
+    "Total loci",
     "Multi-caller loci",
     "MIBiG comparisons",
     "ARTS known hits",

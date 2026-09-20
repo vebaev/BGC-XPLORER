@@ -246,7 +246,19 @@ def signal_cell(row):
     return "<div class='signal-cell'>{}</div>".format("".join(parts)), ", ".join(classes + extras)
 
 
-def render_evidence_table(frame, map_index, gene_map_button, min_containment=0.80, standalone=True):
+def grouping_description(mode, min_containment, min_callers):
+    """One line saying how the reported interval was decided."""
+    if str(mode).strip().lower() == "containment":
+        return "grouped locus; members cover \u2265{:.0f}% of the shorter region".format(
+            min_containment * 100
+        )
+    return "locus span agreed on by \u2265{} callers; the gene map shows every gene any caller placed here".format(
+        min_callers
+    )
+
+
+def render_evidence_table(frame, map_index, gene_map_button, min_containment=0.80, standalone=True,
+                          grouping_note=None):
     columns = (
         ("Gene map", False), ("Region", False), ("Location", True),
         ("Genes", True), ("Callers", True), ("ARTS", True),
@@ -260,6 +272,9 @@ def render_evidence_table(frame, map_index, gene_map_button, min_containment=0.8
         )
         for index, (label, numeric) in enumerate(columns)
     )
+    if grouping_note is None:
+        grouping_note = grouping_description("containment", min_containment, 2)
+
     rendered_rows = []
     for _, row in frame.iterrows():
         accession = clean(row.get("best_mibig_id"))
@@ -305,7 +320,7 @@ def render_evidence_table(frame, map_index, gene_map_button, min_containment=0.8
         "{open_tag}"
         "<dl class='column-legend'>"
         "<div><dt>Gene map</dt><dd>opens the annotated gene diagram</dd></div>"
-        "<div><dt>Region</dt><dd>grouped locus; members cover \u2265{overlap} of the shorter region</dd></div>"
+        "<div><dt>Region</dt><dd>{grouping_note}</dd></div>"
         "<div><dt>Location</dt><dd>coordinates, contig and length</dd></div>"
         "<div><dt>Genes</dt><dd>annotated genes inside the region</dd></div>"
         "<div><dt>Callers</dt><dd>tools that predicted it</dd></div>"
@@ -331,6 +346,6 @@ def render_evidence_table(frame, map_index, gene_map_button, min_containment=0.8
         close_tag=close_tag,
         header=header,
         rows="".join(rendered_rows),
-        overlap=escape("{:.0f}%".format(min_containment * 100)),
+        grouping_note=escape(grouping_note),
     )
     return EVIDENCE_CSS + panel + EVIDENCE_JS

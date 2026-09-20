@@ -60,9 +60,17 @@ tools:
     hmmer_bin_dir: "/opt/conda/envs/dbcan/bin"
 
 consensus:
-  # A prediction joins a group when the shorter of the two regions is covered by
-  # this fraction of its own length. Members are compared against the group
-  # anchor only, so a chain of weak overlaps cannot stretch the boundaries.
+  # "voting": a locus is the run of genes that at least `min_callers_per_gene`
+  # callers place inside a cluster. Callers disagree about boundaries mostly by
+  # convention, so counting them per gene avoids judging whether two whole
+  # regions are similar enough to merge.
+  mode: "voting"
+  # A majority of the three callers. With a different number of callers this
+  # stops meaning "majority".
+  min_callers_per_gene: 2
+  # Only used when mode is "containment": the previous pairwise rule, where a
+  # prediction joins a group when the group anchor covers this fraction of the
+  # shorter region. Kept so published results stay reproducible.
   min_containment: 0.80
   comparippson_preference_similarity_percent: 80.0
 

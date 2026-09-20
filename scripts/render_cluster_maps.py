@@ -315,6 +315,26 @@ def display_label(row):
     return label
 
 
+def gene_window(cluster, start, end):
+    """Widest interval any contributing caller reported for this cluster.
+
+    Falls back to the reported interval when the union columns are absent or
+    unusable, so tables written before those columns existed still render.
+    """
+    window_start, window_end = start, end
+    for column, keep in (("union_start", min), ("union_end", max)):
+        value = pd.to_numeric(cluster.get(column), errors="coerce")
+        if pd.isna(value):
+            continue
+        if column == "union_start":
+            window_start = keep(window_start, int(value))
+        else:
+            window_end = keep(window_end, int(value))
+    if window_end < window_start:
+        return start, end
+    return window_start, window_end
+
+
 def build_cluster_genes(sample, clusters, bakta, eggnog, dbcan, dbcan_sub, arts):
     if clusters.empty or bakta.empty:
         return pd.DataFrame(columns=GENE_COLUMNS)
@@ -358,10 +378,14 @@ def build_cluster_genes(sample, clusters, bakta, eggnog, dbcan, dbcan_sub, arts)
         contig = clean(cluster.get("contig")) or clean(cluster.get("contig_id"))
         start = int(float(cluster.get("start")))
         end = int(float(cluster.get("end")))
+        # Genes come from the union of every contributing prediction, not from
+        # the reported interval. The reported interval is the span the callers
+        # agree on; a gene one caller placed in the cluster still belongs to it.
+        window_start, window_end = gene_window(cluster, start, end)
         genes = bakta[
             (bakta["contig"].astype(str) == contig) &
-            (bakta["start"].astype(int) <= end) &
-            (bakta["end"].astype(int) >= start)
+            (bakta["start"].astype(int) <= window_end) &
+            (bakta["end"].astype(int) >= window_start)
         ].copy()
         core_by_locus = {}
         for item in clean(cluster.get("core_gene_evidence")).split("; "):
@@ -446,8 +470,12 @@ def render_svg(cluster, genes, output_path):
     legend_height = 86
     height = 286
 
-    cluster_start = int(cluster["start"])
-    cluster_end = int(cluster["end"])
+    agree_start = int(cluster["start"])
+    agree_end = int(cluster["end"])
+    # Draw across every gene the cluster carries, then mark the reported
+    # interval inside it - genes drawn outside an axis that stopped at the
+    # reported interval would land off the canvas.
+    cluster_start, cluster_end = gene_window(cluster, agree_start, agree_end)
     span = max(1, cluster_end - cluster_start + 1)
 
     def scale(pos):
@@ -516,6 +544,22 @@ def render_svg(cluster, genes, output_path):
 
     cluster_label = clean(cluster.get("cluster_label")) or clean(cluster.get("consensus_id"))
 
+    # Shade the reported interval only when genes extend past it; otherwise the
+    # band would cover the whole track and say nothing.
+    agreement_band = ""
+    if (cluster_start, cluster_end) != (agree_start, agree_end):
+        band_x1 = scale(agree_start)
+        band_x2 = scale(agree_end)
+        agreement_band = (
+            "<rect class='agreement' x='{x:.1f}' y='82' width='{w:.1f}' height='{h}' rx='4'>"
+            "<title>Reported interval: {label}</title></rect>"
+        ).format(
+            x=band_x1,
+            w=max(2.0, band_x2 - band_x1),
+            h=gene_height + 12,
+            label=escape("{0:,}-{1:,}".format(agree_start, agree_end)),
+        )
+
     svg = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc">
 <title id="title">{cluster_id} gene map</title>
 <desc id="desc">Horizontal gene map colored by functional category. Hover genes for Bakta, eggNOG, dbCAN and ARTS details.</desc>
@@ -526,11 +570,13 @@ def render_svg(cluster, genes, output_path):
   .axis {{ stroke: #b9c3dc; stroke-width: 2; }}
   .gene polygon {{ stroke: rgba(39, 49, 73, 0.22); stroke-width: 1; }}
   .gene-label {{ font: 9.5px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; fill: #44506b; pointer-events: none; }}
+  .agreement {{ fill: rgba(94, 108, 152, 0.10); }}
   text {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; fill: #5e6c8f; }}
 </style>
 <rect class="bg" x="0" y="0" width="{width}" height="{height}" rx="14"/>
 <text class="title" x="{left}" y="34">{cluster_id}</text>
 <text class="meta" x="{left}" y="58">{location} | {gene_count} genes | {length} bp</text>
+{agreement}
 <line class="axis" x1="{left}" y1="86" x2="{right}" y2="86"/>
 {ticks}
 {genes}
@@ -543,9 +589,10 @@ def render_svg(cluster, genes, output_path):
         cluster_id=escape(cluster_label),
         left=margin_left,
         right=width - margin_right,
-        location=escape("{0}:{1:,}-{2:,}".format(clean(cluster.get("contig")), cluster_start, cluster_end)),
+        location=escape("{0}:{1:,}-{2:,}".format(clean(cluster.get("contig")), agree_start, agree_end)),
         gene_count=len(genes),
-        length="{:,}".format(span),
+        length="{:,}".format(agree_end - agree_start + 1),
+        agreement=agreement_band,
         ticks="\n".join(ticks),
         genes="\n".join(gene_shapes),
         legend_title_y=height - legend_height + 12,

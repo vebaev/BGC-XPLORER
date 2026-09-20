@@ -283,6 +283,10 @@ bakta = pd.read_csv(snakemake.input.bakta, sep="\t") if snakemake.input.bakta el
 
 contig_lengths = parse_fasta_lengths(snakemake.input.fna)
 merge_threshold = float(snakemake.config["consensus"].get("min_containment", 0.80))
+merge_mode = str(snakemake.config["consensus"].get("mode", "voting")).strip().lower()
+# A majority of the three callers. With a different number of callers this
+# stops meaning "majority", so it is stated rather than assumed.
+min_votes = int(snakemake.config["consensus"].get("min_callers_per_gene", 2))
 
 if not bakta.empty:
     for column in ["contig", "type", "start", "end", "strand", "locus_tag", "gene", "product", "dbxrefs"]:
@@ -308,40 +312,120 @@ else:
     bgcs["end_num"] = pd.Series(dtype=float)
     bgcs["core_gene_details"] = pd.Series(dtype=object)
 
-groups = []
-claimed = set()
 contig_index = (
     {str(contig): list(frame.index) for contig, frame in bgcs.groupby("contig_id", sort=False)}
     if not bgcs.empty else {}
 )
-anchor_order = sorted(bgcs.index, key=lambda index: anchor_sort_key(bgcs.loc[index])) if not bgcs.empty else []
 
-# Anchor linkage: the strongest unclaimed prediction defines the locus and every
-# other member is judged against it. Single linkage used to chain A-B-C together
-# through a bridging region, stretching boundaries past anything a caller called.
-for anchor_idx in anchor_order:
-    if anchor_idx in claimed:
-        continue
-    anchor = bgcs.loc[anchor_idx]
-    claimed.add(anchor_idx)
-    members = [anchor_idx]
-    edges = []
-    for other_idx in contig_index.get(str(anchor["contig_id"]), []):
-        if other_idx in claimed:
+
+def anchor_linkage_groups():
+    """The strongest unclaimed prediction defines the locus; others join it.
+
+    Single linkage used to chain A-B-C together through a bridging region,
+    stretching boundaries past anything a caller called.
+    """
+    groups = []
+    claimed = set()
+    order = sorted(bgcs.index, key=lambda index: anchor_sort_key(bgcs.loc[index])) if not bgcs.empty else []
+    for anchor_idx in order:
+        if anchor_idx in claimed:
             continue
-        merged, relationship, fraction, overlap_bp = should_merge(
-            anchor, bgcs.loc[other_idx], merge_threshold
-        )
-        if not merged:
+        anchor = bgcs.loc[anchor_idx]
+        claimed.add(anchor_idx)
+        members = [anchor_idx]
+        for other_idx in contig_index.get(str(anchor["contig_id"]), []):
+            if other_idx in claimed:
+                continue
+            merged, _, _, _ = should_merge(anchor, bgcs.loc[other_idx], merge_threshold)
+            if not merged:
+                continue
+            claimed.add(other_idx)
+            members.append(other_idx)
+        groups.append((members, None, None))
+    return groups
+
+
+def voted_groups(min_votes):
+    """Loci are runs of genes that at least `min_votes` callers agree on.
+
+    Comparing whole regions asks whether two callers drew the same box, which
+    they rarely do - antiSMASH extends past the core genes, GECCO cuts at CDS
+    edges, DeepBGC at domains. Counting callers per gene asks the question that
+    matters instead, and the run of agreed genes gives a boundary no single
+    caller's flanking convention can stretch. Predictions no run covers are
+    kept whole, so nothing is lost for want of a second opinion.
+    """
+    groups = []
+    used = set()
+    for contig, contig_genes in bakta.groupby(bakta["contig"].astype(str)):
+        local = bgcs[bgcs["contig_id"].astype(str) == str(contig)]
+        if local.empty:
             continue
-        claimed.add(other_idx)
-        members.append(other_idx)
-        edges.append((other_idx, relationship, fraction, overlap_bp))
-    groups.append((anchor_idx, members, edges))
+        ordered = contig_genes.sort_values("start_num").reset_index(drop=True)
+        votes = []
+        for _, gene in ordered.iterrows():
+            covering = local[
+                (local["start_num"] <= gene["end_num"]) & (local["end_num"] >= gene["start_num"])
+            ]
+            votes.append({str(tool).strip().lower() for tool in covering["tool"]})
+        run = None
+        runs = []
+        for position, tools in enumerate(votes):
+            if len(tools) >= min_votes:
+                run = [position, position] if run is None else [run[0], position]
+            elif run is not None:
+                runs.append(run)
+                run = None
+        if run is not None:
+            runs.append(run)
+        for first, last in runs:
+            window = ordered.iloc[first:last + 1]
+            locus_genes = set(window["locus_tag"].astype(str))
+            members = [
+                index for index in local.index
+                if region_locus_tags(bgcs.loc[index]) & locus_genes
+            ]
+            if not members:
+                continue
+            used.update(members)
+            groups.append((members, int(window["start_num"].min()), int(window["end_num"].max())))
+    for index in bgcs.index:
+        if index not in used:
+            groups.append(([index], None, None))
+    return groups
+
+
+LOCUS_TAGS_BY_REGION = {}
+
+
+def region_locus_tags(row):
+    """Bakta locus tags the prediction covers, cached per prediction."""
+    key = row.name
+    if key in LOCUS_TAGS_BY_REGION:
+        return LOCUS_TAGS_BY_REGION[key]
+    if bakta.empty or not has_valid_interval(row):
+        tags = set()
+    else:
+        local = bakta[
+            (bakta["contig"].astype(str) == str(row["contig_id"]))
+            & (bakta["start_num"] <= float(row["end_num"]))
+            & (bakta["end_num"] >= float(row["start_num"]))
+        ]
+        tags = set(local["locus_tag"].astype(str))
+    LOCUS_TAGS_BY_REGION[key] = tags
+    return tags
+
+
+if bgcs.empty:
+    groups = []
+elif merge_mode == "containment":
+    groups = anchor_linkage_groups()
+else:
+    groups = voted_groups(min_votes)
 
 
 def group_position(group):
-    members = bgcs.loc[group[1]]
+    members = bgcs.loc[group[0]]
     starts = members["start_num"].dropna()
     return (
         str(members.iloc[0]["contig_id"]),
@@ -354,8 +438,18 @@ groups.sort(key=group_position)
 consensus_rows = []
 overlap_rows = []
 
-for group_id, (anchor_idx, members, edges) in enumerate(groups, start=1):
+for group_id, (members, voted_start, voted_end) in enumerate(groups, start=1):
+    # The anchor no longer decides membership, but it still names the locus
+    # after the caller whose call is most reliable.
+    anchor_idx = sorted(members, key=lambda index: anchor_sort_key(bgcs.loc[index]))[0]
     anchor = bgcs.loc[anchor_idx]
+    edges = []
+    for other_idx in members:
+        if other_idx == anchor_idx:
+            continue
+        fraction, overlap_bp = containment(anchor, bgcs.loc[other_idx])
+        relationship = "nested" if fraction >= 0.999 else ("containment" if fraction > 0 else "shared_genes")
+        edges.append((other_idx, relationship, fraction, overlap_bp))
     for other_idx, relationship, fraction, overlap_bp in edges:
         other = bgcs.loc[other_idx]
         shared_core = sorted(
@@ -392,7 +486,13 @@ for group_id, (anchor_idx, members, edges) in enumerate(groups, start=1):
     valid = subset.dropna(subset=["start_num", "end_num"])
     union_start = int(valid["start_num"].min()) if not valid.empty else ""
     union_end = int(valid["end_num"].max()) if not valid.empty else ""
-    if valid.empty:
+    if voted_start is not None and voted_end is not None:
+        # The reported interval spans the genes the callers agree on; the union
+        # columns still carry the full extent for the gene tables and maps.
+        start_val = int(voted_start)
+        end_val = int(voted_end)
+        boundary_id = "agreement_zone"
+    elif valid.empty:
         start_val, end_val, boundary_id = "", "", ""
     else:
         boundary = valid.loc[sorted(valid.index, key=lambda index: boundary_sort_key(valid.loc[index]))[0]]
@@ -440,3 +540,37 @@ consensus = add_consensus_label(consensus)
 
 write_tsv(consensus, snakemake.output.consensus)
 write_tsv(overlap, snakemake.output.overlap)
+
+
+def caller_support_per_gene(predictions, genes):
+    """How many distinct callers place each gene inside a predicted region.
+
+    Reported cluster intervals say nothing about how well any individual gene
+    is supported: most of a cluster's genes come from a single caller, and
+    today that is invisible in the tables. This counts the callers per gene so
+    the gene map can show it.
+    """
+    rows = []
+    if predictions.empty or genes.empty:
+        return pd.DataFrame(rows, columns=["sample", "locus_tag", "callers"])
+    for contig, contig_genes in genes.groupby(genes["contig"].astype(str)):
+        local = predictions[predictions["contig_id"].astype(str) == str(contig)]
+        if local.empty:
+            continue
+        for _, gene in contig_genes.iterrows():
+            covering = local[
+                (local["start_num"] <= gene["end_num"]) & (local["end_num"] >= gene["start_num"])
+            ]
+            if covering.empty:
+                continue
+            tools = {str(tool).strip().lower() for tool in covering["tool"] if str(tool).strip()}
+            rows.append({
+                "sample": covering.iloc[0]["sample"],
+                "locus_tag": str(gene.get("locus_tag", "")).strip(),
+                "callers": len(tools),
+            })
+    frame = pd.DataFrame(rows, columns=["sample", "locus_tag", "callers"])
+    return frame[frame["locus_tag"] != ""]
+
+
+write_tsv(caller_support_per_gene(bgcs, bakta), snakemake.output.gene_support)

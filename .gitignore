@@ -19,3 +19,6 @@ __pycache__/
 agent_handoff/
 backup/
 tools/arts/
+
+# Benchmark scratch: truth sets, evaluation scripts, prototypes
+benchmark/

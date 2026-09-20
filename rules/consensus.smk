@@ -8,7 +8,8 @@ rule build_consensus:
         fna=lambda wc: bakta_file(wc, "fna")
     output:
         consensus="results/{sample}/summary/consensus_bgcs.tsv",
-        overlap="results/{sample}/summary/tool_overlap.tsv"
+        overlap="results/{sample}/summary/tool_overlap.tsv",
+        gene_support="results/{sample}/summary/gene_caller_support.tsv"
     conda:
         "../envs/report.yaml"
     script:
