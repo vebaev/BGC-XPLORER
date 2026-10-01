@@ -1245,19 +1245,16 @@ def html_page(title, sections):
         aiResult.innerHTML = html;
       }}
       function renderFacts(data) {{
+        // The facts are stored with the result for audit but not listed here: the summary
+        // already states every one of them, so the list would only repeat it.
         var check = data.fact_check || {{reasons: []}};
         var fromModel = data.shown_source === 'model';
         var note = fromModel
-          ? 'Checked against the facts below: every fact is kept and nothing is added.'
+          ? 'Checked against the facts selected by the workflow: every fact is kept and nothing is added.'
           : 'The model text did not pass the check (' + escapeHtml((check.reasons || []).join('; ')) + '), so the facts are shown as written by the workflow.';
-        var facts = (data.facts || []).map(function (fact) {{
-          return '<li>' + escapeHtml(fact.sentence) + '</li>';
-        }}).join('');
         aiResult.innerHTML = '<div class="ai-status' + (fromModel ? '' : ' ai-trace-warning') + '"><h3>Locus summary</h3><p>'
           + escapeHtml(data.shown_summary || '') + '</p><p class="muted ai-trace-note">'
-          + (fromModel ? '&#10003; ' : '&#9888; ') + note + '</p></div>'
-          + '<details class="ai-status"><summary>Facts selected by the workflow (' + (data.facts || []).length + ')</summary><ul>'
-          + facts + '</ul></details>';
+          + (fromModel ? '&#10003; ' : '&#9888; ') + note + '</p></div>';
       }}
       function renderAnalysis(data) {{
         if (data.model) {{
