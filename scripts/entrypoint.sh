@@ -58,9 +58,9 @@ fi
 
 echo "Starting AI cluster server on port 8484..."
 export AI_TIMEOUT="${AI_TIMEOUT:-240}"
-# AI_MODE (evidence | interpretation), AI_MAX_TOKENS and AI_TEMPERATURE default
+# AI_MODE (facts | evidence | interpretation), AI_MAX_TOKENS and AI_TEMPERATURE default
 # per mode inside ai_cluster_server.py; set them here only to override.
-export AI_MODE="${AI_MODE:-evidence}"
+export AI_MODE="${AI_MODE:-facts}"
 $PYTHON "$APP_DIR/scripts/ai_cluster_server.py" \
     --host 0.0.0.0 \
     --port 8484 \

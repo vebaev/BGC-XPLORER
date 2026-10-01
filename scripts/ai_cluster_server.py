@@ -16,6 +16,7 @@ from urllib.parse import unquote
 import pandas as pd
 
 import ai_evidence
+import ai_facts
 
 
 DEFAULT_BASE_URL = "https://integrate.api.nvidia.com/v1"
@@ -23,9 +24,11 @@ DEFAULT_MODEL = "nvidia/nemotron-3-ultra-550b-a55b"
 # "evidence": a summary that only restates the evidence, checked statement by
 # statement (ai_evidence.py). "interpretation": the earlier free-text analysis
 # with biosynthetic logic and proposed roles, unverified; opt-in.
-MODES = ("evidence", "interpretation")
-DEFAULT_MODE = "evidence"
-MODE_DEFAULTS = {"evidence": {"temperature": 0.0, "max_tokens": 4000},
+# "facts": code selects the key facts, the model only words them (ai_facts.py).
+MODES = ("facts", "evidence", "interpretation")
+DEFAULT_MODE = "facts"
+MODE_DEFAULTS = {"facts": {"temperature": 0.0, "max_tokens": 800},
+                 "evidence": {"temperature": 0.0, "max_tokens": 4000},
                  "interpretation": {"temperature": 0.1, "max_tokens": 1800}}
 PLACEHOLDER_API_KEYS = frozenset({
     "validation-only",
@@ -114,6 +117,9 @@ def build_analysis_prompt(model_payload):
 
 def mode_prompts(server, model_payload):
     """(prompt version, system prompt, user prompt, JSON schema) for the server's mode."""
+    if getattr(server, "mode", "interpretation") == "facts":
+        return (ai_facts.PROMPT_VERSION, ai_facts.SYSTEM_PROMPT,
+                ai_facts.build_user_prompt(model_payload), ai_facts.JSON_SCHEMA)
     if getattr(server, "mode", "interpretation") == "evidence":
         return (ai_evidence.PROMPT_VERSION, ai_evidence.SYSTEM_PROMPT,
                 ai_evidence.build_user_prompt(model_payload), ai_evidence.JSON_SCHEMA)
@@ -709,7 +715,7 @@ class AIClusterServer(BaseHTTPRequestHandler):
                           / cache_name.format(consensus_id, self.server.mode))
 
             payload = build_cluster_payload(self.server.results_dir, sample, consensus_id)
-            model_payload = compact_payload_for_model(payload)
+            model_payload = self.model_input(payload)
             fingerprint = analysis_fingerprint(model_payload, self.server)
             if cache_path.exists() and not force and not preview:
                 with open(cache_path, "r", encoding="utf-8") as handle:
@@ -747,7 +753,7 @@ class AIClusterServer(BaseHTTPRequestHandler):
                 return
 
             payload = build_cluster_payload(self.server.results_dir, sample, consensus_id)
-            model_payload = compact_payload_for_model(payload)
+            model_payload = self.model_input(payload)
             prompt_version, system_prompt, prompt, schema = mode_prompts(self.server, model_payload)
             request_body = {
                 "model": self.server.model,
@@ -777,13 +783,15 @@ class AIClusterServer(BaseHTTPRequestHandler):
                 "timeout_seconds": self.server.timeout,
                 "payload_chars": len(json.dumps(model_payload, ensure_ascii=False, separators=(",", ":"))),
                 "gene_count": len(payload.get("genes", [])),
-                "representative_gene_count": len(model_payload.get("representative_genes", [])),
+                "representative_gene_count": (len(model_payload.get("representative_genes", []))
+                                              if isinstance(model_payload, dict) else None),
+                "facts": len(model_payload) if isinstance(model_payload, list) else None,
                 "guided_json": bool(self.server.use_guided_json),
             }
             self.server.rate_limiter.wait()
             started_at = time.time()
             try:
-                raw_content = self.call_nvidia(request_body)
+                raw_content = self.call_with_retries(request_body, diagnostics)
             except RuntimeError as exc:
                 if self.server.use_guided_json and any(
                         word in str(exc).lower() for word in ("guided_json", "response_format", "json_schema")):
@@ -818,7 +826,8 @@ class AIClusterServer(BaseHTTPRequestHandler):
                 })
                 self._json(diagnostics, status=504 if isinstance(exc, (TimeoutError, socket.timeout)) else 502)
                 return
-            analysis = (ai_evidence.normalize(raw_content) if self.server.mode == "evidence"
+            analysis = (ai_facts.normalize(raw_content) if self.server.mode == "facts"
+                        else ai_evidence.normalize(raw_content) if self.server.mode == "evidence"
                         else normalize_analysis(raw_content))
             response = {
                 "sample": sample,
@@ -842,8 +851,40 @@ class AIClusterServer(BaseHTTPRequestHandler):
         except Exception as exc:
             self._json({"error": str(exc)}, status=500)
 
+    def model_input(self, payload):
+        """What the model is given: the fact card, or the compacted evidence record."""
+        if self.server.mode == "facts":
+            conflicts = ai_facts.load_conflicts(self.server.results_dir, payload.get("sample"), payload.get("consensus_id"))
+            return ai_facts.build_fact_card(payload, conflicts)
+        return compact_payload_for_model(payload)
+
+    def call_with_retries(self, request_body, diagnostics, attempts=4, wait_seconds=20):
+        """Retry when the free endpoint is overloaded (503/429) or returns an empty answer."""
+        last_error = None
+        for attempt in range(attempts):
+            try:
+                content = self.call_nvidia(request_body)
+                empty = (self.server.mode == "facts" and not ai_facts.normalize(content)["summary"]) or (
+                    self.server.mode == "evidence" and not any(ai_evidence.normalize(content).values()))
+                if not empty:
+                    diagnostics["attempts"] = attempt + 1
+                    return content
+                last_error = RuntimeError("empty answer")
+            except RuntimeError as exc:
+                if not any(code in str(exc) for code in ("503", "429", "overloaded", "timed out")):
+                    raise
+                last_error = exc
+            self.server.rate_limiter.wait()
+            time.sleep(wait_seconds * (attempt + 1))
+        diagnostics["attempts"] = attempts
+        if self.server.mode == "facts":
+            return {"summary": ""}
+        raise last_error
+
     def checks(self, analysis, model_payload):
-        """Statement-level verification in evidence mode; the identifier check otherwise."""
+        """The fact check in facts mode; statement verification in evidence mode; the identifier check otherwise."""
+        if self.server.mode == "facts":
+            return ai_facts.result(analysis, model_payload)
         if self.server.mode == "evidence":
             return {"verification": ai_evidence.verify(analysis, model_payload)}
         return {"traceability": trace_identifiers(analysis, model_payload)}

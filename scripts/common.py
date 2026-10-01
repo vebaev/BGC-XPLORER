@@ -1244,9 +1244,28 @@ def html_page(title, sections):
         }});
         aiResult.innerHTML = html;
       }}
+      function renderFacts(data) {{
+        var check = data.fact_check || {{reasons: []}};
+        var fromModel = data.shown_source === 'model';
+        var note = fromModel
+          ? 'Checked against the facts below: every fact is kept and nothing is added.'
+          : 'The model text did not pass the check (' + escapeHtml((check.reasons || []).join('; ')) + '), so the facts are shown as written by the workflow.';
+        var facts = (data.facts || []).map(function (fact) {{
+          return '<li>' + escapeHtml(fact.sentence) + '</li>';
+        }}).join('');
+        aiResult.innerHTML = '<div class="ai-status' + (fromModel ? '' : ' ai-trace-warning') + '"><h3>Locus summary</h3><p>'
+          + escapeHtml(data.shown_summary || '') + '</p><p class="muted ai-trace-note">'
+          + (fromModel ? '&#10003; ' : '&#9888; ') + note + '</p></div>'
+          + '<details class="ai-status"><summary>Facts selected by the workflow (' + (data.facts || []).length + ')</summary><ul>'
+          + facts + '</ul></details>';
+      }}
       function renderAnalysis(data) {{
         if (data.model) {{
           showActiveAiModel(data.model);
+        }}
+        if (data.mode === 'facts' || data.fact_check) {{
+          renderFacts(data);
+          return;
         }}
         if (data.mode === 'evidence' || (data.analysis && data.analysis.overview)) {{
           renderEvidence(data);
