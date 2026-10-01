@@ -127,4 +127,4 @@ If you use BGC-XPLORER in research, cite the associated publication when its cit
 
 ## License
 
-BGC-XPLORER's original code, documentation and images are licensed under [CC BY-NC-SA 4.0](LICENSE). Attribution is required, commercial use is not permitted, and adaptations must use the same license. Bundled third-party tools and downloaded databases keep their own licenses; review those terms before redistributing a container image.
+BGC-XPLORER's original code, documentation and images are released under the [MIT License](LICENSE). Bundled third-party tools and downloaded databases keep their own licenses; review those terms before redistributing a container image.

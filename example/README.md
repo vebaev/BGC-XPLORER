@@ -33,9 +33,11 @@ DeepBGC call against the start of the fragment, is not found in the
 full-genome run: it comes from cutting the chromosome, and it is why
 fragmented assemblies are not supported in this version.
 
-The report shows the cyclofaulknamycin locus with a dashed outline on two
-adenylation-domain genes, where dbCAN assigns glycosyltransferase family GT1:
-an annotation conflict, flagged for the reader to judge.
+In the cyclofaulknamycin locus dbCAN's DIAMOND search alone assigns
+glycosyltransferase family GT1 to the two adenylation-domain genes. dbCAN does
+not recommend that family, because only one of its three methods finds it, so
+the report shows the hit in the gene tooltip as a single-method hit and neither
+labels the genes as CAZymes nor flags an annotation conflict.
 
 On a 16-thread run (Intel Xeon Gold 6148) the fragment took 73 minutes, 70 of
 them in eggNOG-mapper, whose DIAMOND search scans the whole eggNOG protein
