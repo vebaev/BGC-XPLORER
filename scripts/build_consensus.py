@@ -287,6 +287,32 @@ merge_mode = str(snakemake.config["consensus"].get("mode", "voting")).strip().lo
 # A majority of the three callers. With a different number of callers this
 # stops meaning "majority", so it is stated rather than assumed.
 min_votes = int(snakemake.config["consensus"].get("min_callers_per_gene", 2))
+# A prediction votes for a gene when it covers at least this fraction of the
+# gene. 0 keeps the original rule, where any overlap of 1 bp or more counts.
+min_gene_overlap = float(snakemake.config["consensus"].get("min_gene_overlap_fraction", 0.0))
+# Shortest run of agreed genes reported as a multi-caller locus. Shorter runs
+# are dropped and their predictions are kept whole, as when no run covers them.
+min_run_genes = max(1, int(snakemake.config["consensus"].get("min_genes_per_locus", 1)))
+
+
+def covers(pred_start, pred_end, gene_start, gene_end):
+    """Whether a prediction covers enough of a gene to count as a vote for it."""
+    overlap = min(pred_end, gene_end) - max(pred_start, gene_start) + 1
+    if overlap < 1:
+        return False
+    return overlap >= min_gene_overlap * (gene_end - gene_start + 1)
+
+
+def covering_predictions(local, gene):
+    """Predictions in `local` that vote for `gene`."""
+    touching = local[(local["start_num"] <= gene["end_num"]) & (local["end_num"] >= gene["start_num"])]
+    if min_gene_overlap <= 0 or touching.empty:
+        return touching
+    keep = [
+        covers(row["start_num"], row["end_num"], gene["start_num"], gene["end_num"])
+        for _, row in touching.iterrows()
+    ]
+    return touching[keep]
 
 if not bakta.empty:
     for column in ["contig", "type", "start", "end", "strand", "locus_tag", "gene", "product", "dbxrefs"]:
@@ -364,9 +390,7 @@ def voted_groups(min_votes):
         ordered = contig_genes.sort_values("start_num").reset_index(drop=True)
         votes = []
         for _, gene in ordered.iterrows():
-            covering = local[
-                (local["start_num"] <= gene["end_num"]) & (local["end_num"] >= gene["start_num"])
-            ]
+            covering = covering_predictions(local, gene)
             votes.append({str(tool).strip().lower() for tool in covering["tool"]})
         run = None
         runs = []
@@ -378,6 +402,7 @@ def voted_groups(min_votes):
                 run = None
         if run is not None:
             runs.append(run)
+        runs = [(first, last) for first, last in runs if last - first + 1 >= min_run_genes]
         for first, last in runs:
             window = ordered.iloc[first:last + 1]
             locus_genes = set(window["locus_tag"].astype(str))
@@ -411,6 +436,12 @@ def region_locus_tags(row):
             & (bakta["start_num"] <= float(row["end_num"]))
             & (bakta["end_num"] >= float(row["start_num"]))
         ]
+        if min_gene_overlap > 0:
+            keep = [
+                covers(float(row["start_num"]), float(row["end_num"]), gene["start_num"], gene["end_num"])
+                for _, gene in local.iterrows()
+            ]
+            local = local[keep]
         tags = set(local["locus_tag"].astype(str))
     LOCUS_TAGS_BY_REGION[key] = tags
     return tags
@@ -558,9 +589,7 @@ def caller_support_per_gene(predictions, genes):
         if local.empty:
             continue
         for _, gene in contig_genes.iterrows():
-            covering = local[
-                (local["start_num"] <= gene["end_num"]) & (local["end_num"] >= gene["start_num"])
-            ]
+            covering = covering_predictions(local, gene)
             if covering.empty:
                 continue
             tools = {str(tool).strip().lower() for tool in covering["tool"] if str(tool).strip()}

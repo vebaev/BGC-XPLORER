@@ -68,6 +68,12 @@ consensus:
   # A majority of the three callers. With a different number of callers this
   # stops meaning "majority".
   min_callers_per_gene: 2
+  # A prediction votes for a gene when it covers at least this fraction of the
+  # gene's length. 0 counts any overlap of 1 bp or more (the published rule).
+  min_gene_overlap_fraction: 0.0
+  # Shortest run of agreed genes reported as a multi-caller locus. 1 means a
+  # single gene with enough votes is a locus (the published rule).
+  min_genes_per_locus: 1
   # Only used when mode is "containment": the previous pairwise rule, where a
   # prediction joins a group when the group anchor covers this fraction of the
   # shorter region. Kept so published results stay reproducible.
