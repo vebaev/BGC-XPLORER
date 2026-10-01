@@ -17,7 +17,7 @@ import pandas as pd
 
 
 DEFAULT_BASE_URL = "https://integrate.api.nvidia.com/v1"
-DEFAULT_MODEL = "nvidia/nemotron-3.5-lightning-30b-a3b"
+DEFAULT_MODEL = "nvidia/nemotron-3-ultra-550b-a55b"
 PLACEHOLDER_API_KEYS = frozenset({
     "validation-only",
     "replace-with-your-nvidia-api-key",
@@ -543,6 +543,40 @@ def normalize_analysis(analysis):
     return normalized
 
 
+# Bakta locus tags (PREFIX_00229) and MIBiG accessions (BGC0002358.3).
+IDENTIFIER_PATTERN = re.compile(r"\b(BGC\d{7}(?:\.\d+)?|[A-Z][A-Z0-9]{2,11}_\d{4,6})\b")
+TEXT_FIELDS = ("summary", "likely_product_or_function", "biosynthetic_logic", "resistance_transport_regulation")
+LIST_FIELDS = ("key_genes", "recommended_followup")
+
+
+def trace_identifiers(analysis, model_payload):
+    """Flag statements that cite a locus tag or MIBiG entry the model was not given.
+
+    This catches invented identifiers only. A statement without identifiers, or
+    one that cites real genes but says something the evidence does not, passes;
+    the report says so next to the result.
+    """
+    evidence = json.dumps(model_payload, ensure_ascii=False)
+    statements = []
+    for field in TEXT_FIELDS:
+        for sentence in re.split(r"(?<=[.!?])\s+", clean(analysis.get(field, ""))):
+            if sentence.strip():
+                statements.append((field, sentence.strip()))
+    for field in LIST_FIELDS:
+        statements.extend((field, item) for item in analysis.get(field, []) or [] if clean(item))
+    cited = 0
+    untraceable = []
+    for field, text in statements:
+        identifiers = sorted(set(IDENTIFIER_PATTERN.findall(text)))
+        if not identifiers:
+            continue
+        cited += 1
+        missing = [value for value in identifiers if value.split(".")[0] not in evidence]
+        if missing:
+            untraceable.append({"field": field, "text": text, "missing": missing})
+    return {"statements": len(statements), "with_identifiers": cited, "untraceable": untraceable}
+
+
 def normalize_list(value):
     if not value:
         return []
@@ -661,6 +695,7 @@ class AIClusterServer(BaseHTTPRequestHandler):
                     cached = json.load(handle)
                 if cached.get("request_fingerprint") == fingerprint:
                     cached["cached"] = True
+                    cached["traceability"] = trace_identifiers(cached.get("analysis", {}), model_payload)
                     self._json(cached)
                     return
 
@@ -765,6 +800,7 @@ class AIClusterServer(BaseHTTPRequestHandler):
                 "request_fingerprint": fingerprint,
                 "created_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                 "analysis": analysis,
+                "traceability": trace_identifiers(analysis, model_payload),
             }
             cache_path.parent.mkdir(parents=True, exist_ok=True)
             with open(cache_path, "w", encoding="utf-8") as handle:

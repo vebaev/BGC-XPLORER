@@ -31,7 +31,7 @@ class ReportBrandingTests(unittest.TestCase):
     def test_donut_palette_is_pastel(self):
         self.assertEqual(
             DONUT_COLORS,
-            ("#b8a9e8", "#a8d8c7", "#a9cce8", "#f3c6a8", "#e8b4c4", "#9fd6d2"),
+            ("#b8a9e8", "#a8d8c7", "#a9cce8", "#f3c6a8", "#e8b4c4", "#9fd6d2", "#e3d7a6", "#cfd4dc"),
         )
 
     def test_embeds_first_existing_image_with_correct_media_type(self):

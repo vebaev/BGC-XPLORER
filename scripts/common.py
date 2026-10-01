@@ -896,6 +896,16 @@ def html_page(title, sections):
     .gene-table tbody td.gene-dbcan {{
       white-space: nowrap;
     }}
+    .gene-conflict {{
+      display: inline-block;
+      margin-left: 4px;
+      padding: 0 6px;
+      border: 1px dashed #c2410c;
+      border-radius: 999px;
+      color: #9a3412;
+      font-size: 0.75em;
+      cursor: help;
+    }}
     .gene-map-ai {{
       border-top: 1px solid var(--line);
       padding: 16px 18px 18px;
@@ -978,6 +988,12 @@ def html_page(title, sections):
       background: #ffffff;
       padding: 14px 16px;
       color: var(--text);
+    }}
+    .ai-trace-warning {{
+      border-left: 3px solid #c2410c;
+    }}
+    .ai-trace-note {{
+      font-size: 0.85em;
     }}
     .ai-status-error {{
       border-left-color: var(--rose);
@@ -1110,7 +1126,9 @@ def html_page(title, sections):
             + '<td class="gene-name">' + escapeHtml(row.gene) + '</td>'
             + '<td class="gene-product">' + escapeHtml(row.product) + '</td>'
             + '<td class="gene-eggnog">' + escapeHtml(row.eggnog) + '</td>'
-            + '<td class="gene-dbcan">' + escapeHtml(row.dbcan) + '</td>';
+            + '<td class="gene-dbcan">' + escapeHtml(row.dbcan)
+            + (row.conflict ? ' <span class="gene-conflict" title="' + escapeHtml(row.conflict) + '">conflict</span>' : '')
+            + '</td>';
           geneTableBody.appendChild(tr);
         }});
         geneTableContainer.hidden = false;
@@ -1176,7 +1194,27 @@ def html_page(title, sections):
         }}).join('');
         html += '<div class="ai-status"><h3>Key genes</h3>' + listItems(analysis.key_genes) + '</div>';
         html += '<div class="ai-status"><h3>Recommended follow-up</h3>' + listItems(analysis.recommended_followup) + '</div>';
+        html += traceabilityNote(data.traceability);
         aiResult.innerHTML = html;
+      }}
+      function traceabilityNote(trace) {{
+        if (!trace) {{
+          return '';
+        }}
+        var flagged = trace.untraceable || [];
+        var limits = 'Only cited locus tags and MIBiG IDs are checked; statements without them, and the claims themselves, are not.';
+        if (!flagged.length) {{
+          return '<p class="muted ai-trace-note">' + trace.with_identifiers + ' of ' + trace.statements
+            + ' statements cite locus tags or MIBiG IDs, and every cited identifier is in the evidence sent to the model. '
+            + escapeHtml(limits) + '</p>';
+        }}
+        return '<div class="ai-status ai-trace-warning"><h3>Not traceable to the evidence</h3><p>'
+          + flagged.length + (flagged.length === 1 ? ' statement cites' : ' statements cite')
+          + ' identifiers that were not in the evidence sent to the model:</p><ul>'
+          + flagged.map(function (item) {{
+            return '<li>' + escapeHtml(item.text) + ' <em>(' + escapeHtml((item.missing || []).join(', ')) + ')</em></li>';
+          }}).join('')
+          + '</ul><p class="muted">' + escapeHtml(limits) + '</p></div>';
       }}
       function statusEndpoint(endpoint, jobId) {{
         return endpoint.replace(/\/analyze_cluster\/?$/, '/analyze_cluster_status/' + encodeURIComponent(jobId));

@@ -15,6 +15,8 @@ DONUT_COLORS = (
     "#f3c6a8",
     "#e8b4c4",
     "#9fd6d2",
+    "#e3d7a6",
+    "#cfd4dc",
 )
 
 

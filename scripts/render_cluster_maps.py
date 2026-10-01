@@ -35,6 +35,7 @@ GENE_COLUMNS = [
     "dbcan_substrate",
     "arts_evidence",
     "predictor_core_evidence",
+    "annotation_conflict",
     "gene_category",
     "display_label",
     "tooltip_text",
@@ -211,6 +212,28 @@ def load_dbcan_sub(outdir):
     return substrate
 
 
+DBCAN_SOURCES = (("dbcan_hmm", "HMMER"), ("dbcan_subfamily", "dbCAN-sub"), ("dbcan_diamond", "DIAMOND"))
+
+
+def annotation_conflict(row):
+    """A CAZyme family on a gene the callers mark as biosynthetic core.
+
+    A glycosyltransferase family on an adenylation-domain protein is far more
+    likely a spurious dbCAN hit than a second function, so the two are shown as
+    a conflict for the reader to judge rather than as agreeing evidence.
+    """
+    core = clean(row.get("predictor_core_evidence"))
+    family = best_cazyme_family(row)
+    if not core or not family:
+        return ""
+    sources = [label for column, label in DBCAN_SOURCES if cazyme_family(row.get(column))]
+    return "dbCAN {family}{sources} on a biosynthetic core gene ({core})".format(
+        family=family,
+        sources=" ({0})".format(", ".join(sources)) if sources else "",
+        core=core,
+    )
+
+
 def overlaps(start_a, end_a, start_b, end_b):
     return int(start_a) <= int(end_b) and int(end_a) >= int(start_b)
 
@@ -291,6 +314,8 @@ def tooltip_for(row):
         parts.append("dbCAN substrate: {0}".format(clean(row.get("dbcan_substrate"))))
     if clean(row.get("arts_evidence")):
         parts.append("ARTS: {0}".format(clean(row.get("arts_evidence"))))
+    if clean(row.get("annotation_conflict")):
+        parts.append("Annotation conflict: {0}".format(clean(row.get("annotation_conflict"))))
     parts.append("Category: {0}".format(CATEGORY_LABELS.get(clean(row.get("gene_category")), "Other")))
     return " | ".join(parts)
 
@@ -432,6 +457,7 @@ def build_cluster_genes(sample, clusters, bakta, eggnog, dbcan, dbcan_sub, arts)
                 "arts_evidence": arts_evidence,
                 "predictor_core_evidence": core_by_locus.get(clean(gene.get("locus_tag")), ""),
             }
+            row["annotation_conflict"] = annotation_conflict(row)
             row["gene_category"] = classify_gene(row)
             row["display_label"] = display_label(row)
             row["tooltip_text"] = tooltip_for(row)
@@ -492,6 +518,12 @@ def render_svg(cluster, genes, output_path):
                 )
             )
 
+    if not genes.empty and genes["annotation_conflict"].fillna("").astype(str).str.strip().ne("").any():
+        legend_items.append(
+            "<g><rect width='14' height='14' fill='none' class='conflict-key' rx='3'/>"
+            "<text x='20' y='12'>Annotation conflict</text></g>"
+        )
+
     legend_groups = []
     x_cursor = margin_left
     y_cursor = height - legend_height + 30
@@ -523,7 +555,8 @@ def render_svg(cluster, genes, output_path):
                 label=escape(label[:30]),
             )
         gene_shapes.append(
-            "<g class='gene'><title>{title}</title><polygon points='{points}' fill='{color}' />{text}</g>".format(
+            "<g class='{css}'><title>{title}</title><polygon points='{points}' fill='{color}' />{text}</g>".format(
+                css="gene conflict" if clean(gene.get("annotation_conflict")) else "gene",
                 title=title,
                 points=points,
                 color=color,
@@ -562,13 +595,14 @@ def render_svg(cluster, genes, output_path):
 
     svg = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc">
 <title id="title">{cluster_id} gene map</title>
-<desc id="desc">Horizontal gene map colored by functional category. Hover genes for Bakta, eggNOG, dbCAN and ARTS details.</desc>
+<desc id="desc">Horizontal gene map colored by functional category. Hover genes for Bakta, eggNOG, dbCAN and ARTS details. A dashed outline marks a CAZyme family on a biosynthetic core gene.</desc>
 <style>
   .bg {{ fill: #fbfcff; stroke: rgba(94, 108, 152, 0.18); stroke-width: 1.25; }}
   .title {{ font: 700 24px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; fill: #161f33; }}
   .meta {{ font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; fill: #5e6c8f; }}
   .axis {{ stroke: #b9c3dc; stroke-width: 2; }}
   .gene polygon {{ stroke: rgba(39, 49, 73, 0.22); stroke-width: 1; }}
+  .gene.conflict polygon, .conflict-key {{ stroke: #c2410c; stroke-width: 2; stroke-dasharray: 4 2; }}
   .gene-label {{ font: 9.5px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; fill: #44506b; pointer-events: none; }}
   .agreement {{ fill: rgba(94, 108, 152, 0.10); }}
   text {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; fill: #5e6c8f; }}

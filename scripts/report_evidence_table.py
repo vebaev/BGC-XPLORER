@@ -4,6 +4,8 @@ from html import escape
 
 import pandas as pd
 
+from bgc_classes import activity_labels, harmonised_classes, mibig_class
+
 
 def clean(value):
     if pd.isna(value):
@@ -159,12 +161,6 @@ EVIDENCE_JS = """
 """
 
 
-ACTIVITY_TERMS = {
-    "antibacterial", "antifungal", "cytotoxic", "inhibitor",
-    "antibacterial-cytotoxic", "antibacterial-inhibitor",
-}
-
-
 def split_terms(value):
     return [term.strip() for term in clean(value).split(",") if term.strip()]
 
@@ -220,30 +216,32 @@ def signal_cell(row):
 
     The old Product signals column repeated the class list verbatim in 32 of 53
     regions; the only thing it added was the predicted activity, which now reads
-    as a badge instead of a second wide column.
+    as a badge instead of a second wide column. Classes are shown as MIBiG
+    classes so NRPS, NRP and NRPS-like read as one; the callers' own labels stay
+    in the tooltip and in the search text.
     """
-    seen = set()
-    classes = []
-    for term in split_terms(row.get("bgc_types")):
-        if term.lower() not in seen:
-            seen.add(term.lower())
-            classes.append(term)
+    raw = split_terms(row.get("bgc_types"))
+    classes = harmonised_classes(row.get("bgc_types"))
+    activities = activity_labels(row.get("products"))
+    # Product terms that are neither an activity nor a class already shown.
     extras = []
     for term in split_terms(row.get("products")):
-        if term.lower() not in seen:
-            seen.add(term.lower())
+        mapped = mibig_class(term)
+        if mapped is not None and mapped not in classes and term not in extras:
             extras.append(term)
     parts = []
     if classes:
-        parts.append("<span class='signal-classes'>{}</span>".format(escape(", ".join(classes))))
-    for term in extras:
-        tone = "activity" if term.lower() in ACTIVITY_TERMS else "other"
-        parts.append("<span class='signal-badge signal-{tone}'>{term}</span>".format(
-            tone=tone, term=escape(term)
+        parts.append("<span class='signal-classes' title='{raw}'>{classes}</span>".format(
+            raw=escape("Caller labels: " + ", ".join(raw), quote=True) if raw else "",
+            classes=escape(", ".join(classes)),
         ))
+    for term in activities:
+        parts.append("<span class='signal-badge signal-activity'>{}</span>".format(escape(term)))
+    for term in extras:
+        parts.append("<span class='signal-badge signal-other'>{}</span>".format(escape(term)))
     if not parts:
         return "<span class='muted'>\u2014</span>", ""
-    return "<div class='signal-cell'>{}</div>".format("".join(parts)), ", ".join(classes + extras)
+    return "<div class='signal-cell'>{}</div>".format("".join(parts)), ", ".join(classes + activities + extras + raw)
 
 
 def grouping_description(mode, min_containment, min_callers):
@@ -326,7 +324,7 @@ def render_evidence_table(frame, map_index, gene_map_button, min_containment=0.8
         "<div><dt>Callers</dt><dd>tools that predicted it</dd></div>"
         "<div><dt>ARTS</dt><dd>known resistance-model hits and DUF hits</dd></div>"
         "<div><dt>MIBiG</dt><dd>closest characterised cluster; expand for method and product</dd></div>"
-        "<div><dt>Signals</dt><dd>predicted BGC classes, activity as a badge</dd></div>"
+        "<div><dt>Signals</dt><dd>BGC classes mapped onto the MIBiG classes (hover for the callers' labels); DeepBGC activity predictions as badges</dd></div>"
         "</dl>"
         "<div class='evidence-toolbar'>"
         "<label>Search<input id='evidence-search' type='search' placeholder='Region, contig, class, product, MIBiG'></label>"

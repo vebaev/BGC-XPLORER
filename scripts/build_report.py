@@ -8,6 +8,7 @@ import pandas as pd
 
 from common import html_page, load_table_if_exists, read_json
 from report_branding import image_data_uri, report_home_link
+from bgc_classes import activity_labels, count_per_locus, harmonised_classes
 from report_design import DONUT_COLORS, PRIMARY_GLANCE_LABELS, reproducibility_panel
 from report_evidence_table import grouping_description, location_html, render_evidence_table
 
@@ -62,18 +63,6 @@ def render_html_table(df, html_columns=None):
     )
 
 
-
-
-def top_terms(series, limit=6):
-    counts = {}
-    for value in series.fillna(""):
-        for part in str(value).split(","):
-            text = part.strip()
-            if not text or text.lower() == "nan":
-                continue
-            counts[text] = counts.get(text, 0) + 1
-    ordered = sorted(counts.items(), key=lambda item: (-item[1], item[0]))
-    return ordered[:limit]
 
 
 STAT_TONES = {
@@ -151,7 +140,7 @@ def donut_style(pairs):
     return "background: conic-gradient({0});".format(", ".join(stops))
 
 
-def render_donut_panel(title, pairs, total):
+def render_donut_panel(title, pairs, note):
     if not pairs:
         return (
             "<section class='panel'>"
@@ -175,17 +164,16 @@ def render_donut_panel(title, pairs, total):
         "<div class='chart-grid'>"
         "<div class='donut-shell'>"
         "<div class='donut-chart' style='{style}'>"
-        "<div class='donut-hole'><strong>{signals}</strong><span>Top signals</span></div>"
+        "<div class='donut-hole'><strong>{signals}</strong><span>Labels</span></div>"
         "</div>"
         "</div>"
         "<ul class='legend-list'>{legend}</ul>"
         "</div>"
-        "<p class='muted chart-note'>Six most frequent signals across {regions} grouped candidate loci. "
-        "A region may have multiple signals or none.</p>"
+        "<p class='muted chart-note'>{note}</p>"
         "</section>"
     ).format(
         title=escape(title), style=donut_style(pairs), signals=shown_signals,
-        regions=escape(str(total)), legend=legend,
+        note=escape(note), legend=legend,
     )
 
 
@@ -280,7 +268,8 @@ def _best_dbcan_family(row):
 def load_gene_table_data(cluster_genes_path, cluster_maps):
     """Build a {cluster_key: [gene_rows,...]} mapping for the popover gene table.
 
-    Each gene row carries: locus, gene_name, product, eggnog, dbcan.
+    Each gene row carries: locus, gene_name, product, eggnog, dbcan, and the
+    annotation conflict when dbCAN gives a CAZyme family to a core gene.
     The table is shared between consensus clusters (key = consensus_id) and
     dbCAN CGC clusters (key = {sample}_cgc_{cgc_id}); both keys appear in
     cluster_maps and in cluster_genes.tsv as `cluster_key`.
@@ -314,6 +303,7 @@ def load_gene_table_data(cluster_genes_path, cluster_maps):
             "product": as_text(row.get("bakta_product"), ""),
             "eggnog": as_text(row.get("eggnog_description"), ""),
             "dbcan": _best_dbcan_family(row),
+            "conflict": as_text(row.get("annotation_conflict"), ""),
         })
     return table
 
@@ -387,8 +377,11 @@ ai_endpoint = ai_config.get("endpoint", "/analyze_cluster")
 
 supported = consensus[consensus.get("support_count", pd.Series(dtype=int)).fillna(0).astype(int) > 1] if not consensus.empty else pd.DataFrame()
 
-top_product_terms = top_terms(consensus["products"]) if "products" in consensus.columns else []
-top_type_terms = top_terms(consensus["bgc_types"]) if "bgc_types" in consensus.columns else []
+# Activity (DeepBGC only) and structural class are counted apart, and class
+# labels are mapped onto the MIBiG classes so NRPS, NRP and NRPS-like count once.
+activity_counts = count_per_locus(consensus["products"], activity_labels) if "products" in consensus.columns else []
+class_counts = (count_per_locus(consensus["bgc_types"], harmonised_classes, limit=len(DONUT_COLORS))
+                if "bgc_types" in consensus.columns else [])
 mibig_backed = evidence[evidence.get("best_mibig_id", pd.Series(dtype=str)).fillna("").astype(str).str.strip() != ""] if not evidence.empty else pd.DataFrame()
 arts_known = evidence[pd.to_numeric(evidence.get("arts_known_hits", pd.Series(dtype=float)), errors="coerce").fillna(0) > 0] if not evidence.empty else pd.DataFrame()
 
@@ -676,8 +669,17 @@ sections = [
         ),
     ),
     "<section class='chart-panels'>{left}{right}</section>".format(
-        left=render_donut_panel("Top Product Signals", top_product_terms, len(consensus)),
-        right=render_donut_panel("Top BGC Class Signals", top_type_terms, len(consensus)),
+        left=render_donut_panel(
+            "BGC Classes", class_counts,
+            "Classes reported by antiSMASH, GECCO and DeepBGC, mapped onto the MIBiG compound classes "
+            "and counted once per locus across {0} loci. A locus carries several classes when it is a "
+            "hybrid or the callers disagree; Unknown means a caller assigned no class.".format(len(consensus)),
+        ),
+        right=render_donut_panel(
+            "Predicted Activity (DeepBGC)", activity_counts,
+            "Activity predicted by DeepBGC, counted once per locus across {0} loci. These are "
+            "computational predictions, not assay results.".format(len(consensus)),
+        ),
     ),
     (
         "<section class='panel gene-map-viewer' id='gene-map-viewer' "
