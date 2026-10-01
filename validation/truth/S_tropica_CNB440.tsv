@@ -1,0 +1,7 @@
+mibig_id	compound	class	contig	start	end	length	identity	coverage	mibig_length	source_accession	source_match	quality	completeness	organism	aliases	nested_in
+BGC0001041	salinosporamide A	NRPS;PKS	CP000667.1	1140547	1182556	42010	100.0	1.0	42010	CP000667.1	own_record	questionable	complete	Salinispora tropica CNB-440	BGC0000145	
+BGC0000241	lomaiviticin A;lomaiviticin C;lomaiviticin D;lomaiviticin E	PKS;saccharide	CP000667.1	2460444	2522674	62231	100.0	1.0	62231	CP000667.1	own_record	questionable	complete	Salinispora tropica CNB-440		
+BGC0000150	sporolide A;sporolide B	NRPS;PKS	CP000667.1	3027087	3086780	59694	100.0	1.0	59694	CP000667.1	own_record	questionable	complete	Salinispora tropica CNB-440		
+BGC0000142	salinilactam	PKS	CP000667.1	3103236	3185224	81989	97.48	1.0	81989	CP000667.1	own_record	questionable	unknown	Salinispora tropica CNB-440		
+BGC0001006	lymphostin;neolymphostinol B;lymphostinol;neolymphostin B	NRPS;PKS	CP000667.1	3494094	3519138	25045	99.91	1.0	25045	CP000667.1	own_record	questionable	complete	Salinispora tropica CNB-440		
+BGC0001458	salinipostin G;Salinipostin G;Salinipostin A;Salinipostin B;Salinipostin C;Salinipostin D;Salinipostin E;Salinipostin F;Salinipostin H;Salinipostin I;Salinipostin J;Salinipostin K	other	CP000667.1	4714378	4725672	11295	100.0	1.0	11295	NC_009380.1	own_record	questionable	unknown	Salinispora tropica CNB-440		

@@ -1,0 +1,14 @@
+{
+ "sequences": [
+  {
+   "id": "contig_1",
+   "orig_id": "NC_003155.5",
+   "length": 9025608
+  },
+  {
+   "id": "contig_2",
+   "orig_id": "NC_004719.1",
+   "length": 94287
+  }
+ ]
+}

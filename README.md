@@ -64,6 +64,8 @@ Stop the application with `docker compose down`. Your inputs, databases and resu
 
 > The first start can take considerable time and disk space because the biological reference databases must be downloaded. Completed databases are reused and are not automatically upgraded on later starts.
 
+To check an installation, run the 320 kb test genome in [`example/`](example/README.md); its README lists the loci a complete run should report.
+
 ## Configuration
 
 The main settings live in `.env`:
@@ -71,14 +73,14 @@ The main settings live in `.env`:
 | Variable | Default | Purpose |
 | --- | --- | --- |
 | `NVIDIA_API_KEY` | required | API key used by the optional AI interpretation service. |
-| `NVIDIA_MODEL` | Set in `.env` | NVIDIA-hosted model used in reports; the example above uses Nemotron 3 Ultra. |
+| `NVIDIA_MODEL` | `nvidia/nemotron-3-ultra-550b-a55b` | NVIDIA-hosted model for the optional AI interpretation. This is the recommended model; outputs from other models, or later versions of this one, are not comparable. |
 | `BGC_PORT` | `8778` | Port exposed on the host. |
 | `BGC_THREADS` | `8` in `.env.example` | CPU limit shared by Snakemake and supported tools. |
 | `BAKTA_DB_TYPE` | `light` | Bakta database: `light` for a smaller download or `full` for maximum coverage. |
 | `AUTO_PREPARE_DATABASES` | `true` | Downloads missing databases before starting the app. |
 | `ARTS_REFERENCE` | `actinobacteria` | Taxon-specific ARTS reference set. |
 | `BGC_IMAGE` | `vebaev/bgc-xplorer` | GHCR image owner and name. |
-| `BGC_VERSION` | `latest` | Container image tag to run. |
+| `BGC_VERSION` | `1.2.0` | Container image tag to run; pinned to the release the manuscript describes. |
 
 To use another port, model or CPU limit, edit `.env` and recreate the service:
 
@@ -86,11 +88,36 @@ To use another port, model or CPU limit, edit `.env` and recreate the service:
 docker compose up -d --force-recreate
 ```
 
+### Execution modes
+
+`execution.mode` in `config/config.yaml` selects how the tools are run:
+
+| Mode | What it does |
+| --- | --- |
+| `local` (default) | Runs every tool inside the BGC-XPLORER container. Use this for analysis. |
+| `docker` | Runs each tool in its own container image, set under `tools.<name>.container`. |
+| `mock` | Writes small placeholder outputs without running the tools or needing the databases. For testing the workflow and the interface only; its results are not biological. |
+
+### Grouping of caller predictions
+
+antiSMASH, GECCO and DeepBGC predictions are grouped gene by gene on the Bakta gene set. A caller votes for a gene when its predicted region covers the gene; a locus is a run of consecutive genes that each carry enough votes. A single gene below the threshold ends the run, a caller region spanning two runs is split between them, and neighbouring regions inside one run are joined. Predictions that no run covers are kept as single-caller loci. The reported coordinates are the agreed span; the gene map shows the full extent of the contributing predictions.
+
+The rule is set under `consensus` in `config/config.yaml`:
+
+| Key | Default | Meaning |
+| --- | --- | --- |
+| `mode` | `voting` | `voting` is the rule above; `containment` restores the earlier pairwise rule. |
+| `min_callers_per_gene` | `2` | Callers that must cover a gene for it to join a locus. |
+| `min_gene_overlap_fraction` | `0.0` | Fraction of a gene a prediction must cover to vote for it; `0` counts any overlap of 1 bp or more. |
+| `min_genes_per_locus` | `1` | Shortest run of agreed genes reported as a multi-caller locus. |
+
 ## Reference databases
 
 The container keeps reference data in the mounted `./db/` directory, outside the image. With `AUTO_PREPARE_DATABASES=true`, startup checks the selected **Bakta** database and the required **antiSMASH**, **DeepBGC**, **ARTS** (Actinobacteria) and **eggNOG-mapper** resources. Missing or incomplete databases are downloaded and validated before the web app starts. You can follow progress with `docker compose logs -f`.
 
 Choose `BAKTA_DB_TYPE=light` for the smaller Bakta database or `BAKTA_DB_TYPE=full` for the full database. Both can coexist under `./db/bakta/`. The first download may take time and require substantial disk space. Later starts reuse valid databases without checking for new versions; an interrupted download is retried on the next start. Removing a specific database directory explicitly requests a fresh installation.
+
+**dbCAN is optional** and is the one resource without an automatic download. To add CAZyme gene clusters and substrate predictions to the report, place a dbCAN v5 database in `./db/dbcan/`; it must contain `dbCAN.hmm`, `dbCAN-sub.hmm` and `CAZy.dmnd` (see the [run_dbcan documentation](https://github.com/linnabrown/run_dbcan) for how to prepare it). Without it the workflow runs normally and the report shows no CAZyme gene clusters.
 
 For the directory layout and manual preparation commands, see [Database setup](docs/database_setup.md).
 

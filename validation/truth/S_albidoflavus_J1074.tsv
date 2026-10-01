@@ -1,0 +1,8 @@
+mibig_id	compound	class	contig	start	end	length	identity	coverage	mibig_length	source_accession	source_match	quality	completeness	organism	aliases	nested_in
+BGC0001731	paulomycin	other	CP004370.1	663718	727714	63997	99.38	1.0	64000	KJ721164.1	other_record	questionable	unknown	Streptomyces paulus	BGC0001732	
+BGC0002358	cyclofaulknamycin	PKS	CP004370.1	1139018	1186162	47145	99.64	1.0	47145	CP004370.1	own_record	questionable	unknown	Streptomyces albidoflavus		
+BGC0000546	SAL-2242	ribosomal	CP004370.1	2718054	2725999	7946	99.99	0.987	7976	NZ_DS999645.1	other_record	questionable	complete	Streptomyces albidoflavus		
+BGC0001792	surugamide A;surugamide D	NRPS	CP004370.1	3888752	3971215	82464	100.0	1.0	82464	CP004370.1	own_record	questionable	unknown	Streptomyces albidoflavus		
+BGC0002115	streptamidine	ribosomal	CP004370.1	6498603	6513041	14439	100.0	1.0	14439	CP004370.1	own_record	questionable	complete	Streptomyces albidoflavus J1074		
+BGC0000034	candicidin	NRPS;PKS	CP004370.1	6584353	6733792	149440	98.7	1.0	138203	AY310323.2	other_record	questionable	unknown	Streptomyces sp. FR-008		
+BGC0000958	antimycin	NRPS;PKS	CP004370.1	6730572	6755197	24626	98.84	1.0	24626	NZ_FR873698.1	other_record	questionable	complete	Streptomyces sp. S4	BGC0001216	

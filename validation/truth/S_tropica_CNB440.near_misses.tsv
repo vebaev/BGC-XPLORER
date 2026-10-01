@@ -1,0 +1,2 @@
+mibig_id	compound	class	quality	completeness	source_accession	organism	contig	start	end	length	identity	coverage	mibig_length	source_match
+BGC0000240	lomaiviticin A;lomaiviticin C;lomaiviticin D;lomaiviticin E	PKS;saccharide	questionable	unknown	KF731828.1	Salinispora pacifica	CP000667.1	2468844	2519596	50753	90.83	0.576	75641	other_record

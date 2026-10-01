@@ -1,0 +1,13 @@
+# Environment for building the MIBiG truth sets and scoring the benchmark.
+name: bgcx-benchmark
+channels: [conda-forge, bioconda]
+dependencies:
+  - python=3.11
+  - pandas=2.2
+  - numpy=1.26
+  - scipy=1.13
+  - matplotlib=3.9
+  - openpyxl
+  - biopython=1.84
+  - blast=2.16
+  - pytest

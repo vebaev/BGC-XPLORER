@@ -1,0 +1,81 @@
+samples: "config/samples.tsv"
+
+bakta_dir: "data/bakta"
+fasta_dir: "data/fasta"
+results_dir: "results"
+
+execution:
+  mode: "local"
+  work_root: "/work"
+  host_db_root: "/db"
+  container_db_root: "/db"
+  reuse_existing_outputs: true
+
+bakta_extensions:
+  gbff: ".gbff"
+  fna: ".fna"
+  faa: ".faa"
+  gff3: ".gff3"
+  json: ".json"
+  tsv: ".tsv"
+
+tools:
+  bakta:
+    executable: "/opt/conda/envs/bakta/bin/bakta"
+    db_root: "/db/bakta"
+    extra_args: ""
+  antismash:
+    extra_args: "--databases /db/antismash --cb-knownclusters --cc-mibig"
+    container: "antismash/standalone-lite:8.0.4"
+    db_subdir: "antismash"
+    executable: "/opt/conda/envs/antismash/bin/antismash"
+  gecco:
+    extra_args: ""
+    container: "aktino/gecco:latest"
+    executable: "/opt/conda/envs/gecco/bin/gecco"
+  deepbgc:
+    extra_args: "--prodigal-meta-mode --score 0.5 --merge-max-protein-gap 20 --merge-max-nucl-gap 10000 --min-nucl 5000 --min-proteins 5 --min-domains 5 --min-bio-domains 1"
+    container: "aktino/deepbgc:latest"
+    db_subdir: "deepbgc"
+    executable: "/opt/conda/envs/deepbgc/bin/deepbgc"
+  arts:
+    extra_args: ""
+    reference_set: "actinobacteria"
+    antismash_as_input: true
+    container: "ziemertlab/arts-beta:3.0.b2"
+    ref_subdir: "arts"
+    python: "/opt/conda/envs/arts/bin/python"
+    script: "/opt/arts/artspipeline1.py"
+  eggnog:
+    extra_args: ""
+    search_mode: "diamond"
+    container: "aktino/eggnog:latest"
+    db_subdir: "eggnog"
+    executable: "/opt/conda/envs/eggnog/bin/emapper.py"
+  dbcan:
+    extra_args: ""
+    container: "aktino/dbcan:latest"
+    db_subdir: "dbcan"
+    binary: "/opt/conda/envs/dbcan/bin/run_dbcan"
+    hmmer_bin_dir: "/opt/conda/envs/dbcan/bin"
+
+consensus:
+  # "voting": a locus is the run of genes that at least `min_callers_per_gene`
+  # callers place inside a cluster. Callers disagree about boundaries mostly by
+  # convention, so counting them per gene avoids judging whether two whole
+  # regions are similar enough to merge.
+  mode: "voting"
+  # A majority of the three callers. With a different number of callers this
+  # stops meaning "majority".
+  min_callers_per_gene: 2
+  # Only used when mode is "containment": the previous pairwise rule, where a
+  # prediction joins a group when the group anchor covers this fraction of the
+  # shorter region. Kept so published results stay reproducible.
+  min_containment: 0.80
+  comparippson_preference_similarity_percent: 80.0
+
+report:
+  title: "BGC-XPLORER"
+  ai:
+    enabled: true
+    endpoint: "/analyze_cluster"

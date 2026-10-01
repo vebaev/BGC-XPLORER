@@ -22,3 +22,15 @@ tools/arts/
 
 # Benchmark scratch: truth sets, evaluation scripts, prototypes
 benchmark/
+
+# Reviewer comments for the revision (private)
+revision_handover.md
+revision_status.md
+
+# Validation: environments and downloads stay local; the scored inputs are tracked
+validation/.env*/
+validation/mibig/
+validation/tools/
+validation/.pytest_cache/
+!validation/work/results/
+!validation/work/data/

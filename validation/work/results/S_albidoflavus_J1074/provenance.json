@@ -1,0 +1,466 @@
+{
+  "ai": {
+    "model": "not-configured",
+    "provider": "NVIDIA"
+  },
+  "application": {
+    "git_commit": "81d608fe6571d1559a2e5ad609c44dd36b5fadc5",
+    "image_reference": "unknown",
+    "name": "BGC-XPLORER",
+    "version": "81d608fe6571d1559a2e5ad609c44dd36b5fadc5"
+  },
+  "artifacts": [
+    {
+      "exists": true,
+      "path": "results/S_albidoflavus_J1074/bakta/S_albidoflavus_J1074.metadata.json",
+      "sha256": "ee6e932fcf41022f0a3b7d4d6b3f45390a106aca5324db433078a5d1e0c2c41e",
+      "size_bytes": 1041
+    },
+    {
+      "exists": true,
+      "path": "results/S_albidoflavus_J1074/qc/bakta_input_check.json",
+      "sha256": "819c9b4f90b53c075ef025505ae38bedeb8f3ab760e393eb16c68edb693791dd",
+      "size_bytes": 904
+    },
+    {
+      "exists": true,
+      "path": "results/S_albidoflavus_J1074/summary/antismash.bgc.tsv",
+      "sha256": "e2f32d5a5ee32f3836e56615bd8d2d839f356afc94a15c960411bcb041f64388",
+      "size_bytes": 11480
+    },
+    {
+      "exists": true,
+      "path": "results/S_albidoflavus_J1074/summary/arts.hits.tsv",
+      "sha256": "cd97e66815b4534be0f59e0ab999c85d505828692b10484e03562da783cdbeef",
+      "size_bytes": 61729
+    },
+    {
+      "exists": true,
+      "path": "results/S_albidoflavus_J1074/summary/consensus_bgcs.tsv",
+      "sha256": "476fe20ad167a6b2e2dc95c9000a59fbfffc0dd8faa75f92d0807a8c0a9657ff",
+      "size_bytes": 43262
+    },
+    {
+      "exists": true,
+      "path": "results/S_albidoflavus_J1074/summary/dbcan.cgc.tsv",
+      "sha256": "c5624c0eb0bec27795f9ebf0544f8af194b7260343af4d40438e8f43a8fee563",
+      "size_bytes": 13314
+    },
+    {
+      "exists": true,
+      "path": "results/S_albidoflavus_J1074/summary/deepbgc.bgc.tsv",
+      "sha256": "2db45ea83ba8d3bb130e6af018597e49bcbc8dfffa443097911b929c0a2f1021",
+      "size_bytes": 8969
+    },
+    {
+      "exists": true,
+      "path": "results/S_albidoflavus_J1074/summary/gecco.bgc.tsv",
+      "sha256": "c955a3aa2b84024ebd8b23f9f8263026e532f6d7034e736097001c0e4fe0a46a",
+      "size_bytes": 10985
+    },
+    {
+      "exists": true,
+      "path": "results/S_albidoflavus_J1074/summary/region_evidence.tsv",
+      "sha256": "bd0d7cd9640cf320d5c80ef6db3f6e117d82183e4d01e471a869727f4bf84a95",
+      "size_bytes": 47246
+    },
+    {
+      "exists": true,
+      "path": "results/S_albidoflavus_J1074/summary/tool_overlap.tsv",
+      "sha256": "78b01316718d6cff54c0afe3f9563dd222c7f1606297904998e6039ebff33e47",
+      "size_bytes": 13394
+    }
+  ],
+  "arts_reference": "actinobacteria",
+  "configuration": {
+    "effective": {
+      "bakta_dir": "data/bakta",
+      "bakta_extensions": {
+        "faa": ".faa",
+        "fna": ".fna",
+        "gbff": ".gbff",
+        "gff3": ".gff3",
+        "json": ".json",
+        "tsv": ".tsv"
+      },
+      "consensus": {
+        "comparippson_preference_similarity_percent": 80.0,
+        "min_callers_per_gene": 2,
+        "min_containment": 0.8,
+        "mode": "voting"
+      },
+      "execution": {
+        "container_db_root": "/db",
+        "host_db_root": "/db",
+        "mode": "local",
+        "reuse_existing_outputs": true,
+        "work_root": "/work"
+      },
+      "fasta_dir": "data/fasta",
+      "report": {
+        "ai": {
+          "enabled": true,
+          "endpoint": "/analyze_cluster"
+        },
+        "title": "BGC-XPLORER"
+      },
+      "results_dir": "results",
+      "samples": "config/samples.tsv",
+      "tools": {
+        "antismash": {
+          "container": "antismash/standalone-lite:8.0.4",
+          "db_subdir": "antismash",
+          "executable": "/opt/conda/envs/antismash/bin/antismash",
+          "extra_args": "--databases /db/antismash --cb-knownclusters --cc-mibig"
+        },
+        "arts": {
+          "antismash_as_input": true,
+          "container": "ziemertlab/arts-beta:3.0.b2",
+          "extra_args": "",
+          "python": "/opt/conda/envs/arts/bin/python",
+          "ref_subdir": "arts",
+          "reference_set": "actinobacteria",
+          "script": "/opt/arts/artspipeline1.py"
+        },
+        "bakta": {
+          "db_root": "/db/bakta",
+          "executable": "/opt/conda/envs/bakta/bin/bakta",
+          "extra_args": ""
+        },
+        "dbcan": {
+          "binary": "/opt/conda/envs/dbcan/bin/run_dbcan",
+          "container": "aktino/dbcan:latest",
+          "db_subdir": "dbcan",
+          "extra_args": "",
+          "hmmer_bin_dir": "/opt/conda/envs/dbcan/bin"
+        },
+        "deepbgc": {
+          "container": "aktino/deepbgc:latest",
+          "db_subdir": "deepbgc",
+          "executable": "/opt/conda/envs/deepbgc/bin/deepbgc",
+          "extra_args": "--prodigal-meta-mode --score 0.5 --merge-max-protein-gap 20 --merge-max-nucl-gap 10000 --min-nucl 5000 --min-proteins 5 --min-domains 5 --min-bio-domains 1"
+        },
+        "eggnog": {
+          "container": "aktino/eggnog:latest",
+          "db_subdir": "eggnog",
+          "executable": "/opt/conda/envs/eggnog/bin/emapper.py",
+          "extra_args": "",
+          "search_mode": "diamond"
+        },
+        "gecco": {
+          "container": "aktino/gecco:latest",
+          "executable": "/opt/conda/envs/gecco/bin/gecco",
+          "extra_args": ""
+        }
+      }
+    },
+    "path": "config/config.yaml",
+    "sha256": "2a55cf7d5ead64e7b920ad8a75de9d8353b2cfc694ad6c5cb4e5ad061b4cc11d"
+  },
+  "databases": {
+    "antismash": {
+      "files": [
+        {
+          "exists": true,
+          "path": "/db/antismash/pfam/35.0/Pfam-A.hmm",
+          "relative_path": "pfam/35.0/Pfam-A.hmm",
+          "sha256": "8d3e2ffa785f91ee0e24a3994d2dcfff6f382e3cf663784a47688e7d95297fee",
+          "size_bytes": 1572192814
+        },
+        {
+          "exists": true,
+          "path": "/db/antismash/clusterblast/clusters.txt",
+          "relative_path": "clusterblast/clusters.txt",
+          "sha256": "553e3b911d13ad86157bd217377ae1df0713f2d81a97ac3fa6fc66cd00583b79",
+          "size_bytes": 171136994
+        },
+        {
+          "exists": true,
+          "path": "/db/antismash/knownclusterblast/4.0/clusters.txt",
+          "relative_path": "knownclusterblast/4.0/clusters.txt",
+          "sha256": "47210c4a0af91d535f8ad3685b53b6c7d9912984721fb605dc0ef143f60e865f",
+          "size_bytes": 1040440
+        },
+        {
+          "exists": true,
+          "path": "/db/antismash/knownclusterblast/4.0/proteins.dmnd",
+          "relative_path": "knownclusterblast/4.0/proteins.dmnd",
+          "sha256": "179f25c2b004115181ef1c6505b6fa07a25114782ee6b028264bf9b612db0af4",
+          "size_bytes": 28855540
+        },
+        {
+          "exists": true,
+          "path": "/db/antismash/clustercompare/mibig/4.0/data.json",
+          "relative_path": "clustercompare/mibig/4.0/data.json",
+          "sha256": "0d5d6544b9a94564d2f9ef957a415672acf82afb00aef1ad9ac779e06f637faa",
+          "size_bytes": 17132594
+        }
+      ],
+      "required": true,
+      "source": "https://docs.antismash.secondarymetabolites.org/install/",
+      "status": "managed"
+    },
+    "arts": {
+      "files": [
+        {
+          "exists": true,
+          "path": "/db/arts/actinobacteria/coremodels.hmm",
+          "relative_path": "actinobacteria/coremodels.hmm",
+          "sha256": "63b0071c5e613519cb859f60d20a63d3b5284dc48e9ddebddd7b992497aeb4d0",
+          "size_bytes": 66118998
+        },
+        {
+          "exists": true,
+          "path": "/db/arts/actinobacteria/model_metadata.json",
+          "relative_path": "actinobacteria/model_metadata.json",
+          "sha256": "a7f02e936cfaacadc7473e25b27f1d8251af64808236afa8ded57b0f0772bf8c",
+          "size_bytes": 750257
+        },
+        {
+          "exists": true,
+          "path": "/db/arts/actinobacteria/genematrix.txt",
+          "relative_path": "actinobacteria/genematrix.txt",
+          "sha256": "fba0c050c14a41b9a5073a670c1d9ac413eb484a4c48af5aeb0a7bde735a2a02",
+          "size_bytes": 537430
+        },
+        {
+          "exists": true,
+          "path": "/db/arts/knownresistance.hmm",
+          "relative_path": "knownresistance.hmm",
+          "sha256": "509d65ca4f871d93b5d3b37a195c74f9f22dda482373262c2e4bcbfc180798f3",
+          "size_bytes": 22075433
+        },
+        {
+          "exists": true,
+          "path": "/db/arts/dufmodels.hmm",
+          "relative_path": "dufmodels.hmm",
+          "sha256": "cd0934300fb80a97f989b46edbd00373d957a0fb0e7fd4d7ca3d4eb480dc5eb5",
+          "size_bytes": 291346294
+        },
+        {
+          "exists": true,
+          "path": "/db/arts/.bgc-xplorer-actinobacteria.ready",
+          "relative_path": ".bgc-xplorer-actinobacteria.ready",
+          "sha256": "4780a6e0eb17e5564867ca22ad5bb482e7c0e83a074fb2a01106a600e2bdb2a3",
+          "size_bytes": 78
+        }
+      ],
+      "required": true,
+      "source": "https://github.com/ZiemertLab/ARTS",
+      "status": "managed"
+    },
+    "bakta_full": {
+      "files": [
+        {
+          "exists": true,
+          "path": "/db/bakta/db/version.json",
+          "relative_path": "version.json",
+          "sha256": "88fc5e2c946faa314138a9c810a6a883bfa6ffe7914a32d48ae8f5c279957905",
+          "size_bytes": 835
+        },
+        {
+          "exists": true,
+          "path": "/db/bakta/db/bakta.db",
+          "relative_path": "bakta.db",
+          "sha256": "94eca606b698323d563b835fae420377167de0d805b39bd759213c9374dd4d13",
+          "size_bytes": 41569640448
+        },
+        {
+          "exists": true,
+          "path": "/db/bakta/db/psc.dmnd",
+          "relative_path": "psc.dmnd",
+          "sha256": "f4b296db8798de3563cd2fa136247ba12db6e3b6bb51630a2a5a23285ea2b095",
+          "size_bytes": 46327368945
+        }
+      ],
+      "required": false,
+      "source": "https://github.com/oschwengers/bakta",
+      "status": "selected-by-environment"
+    },
+    "bakta_light": {
+      "files": [
+        {
+          "exists": true,
+          "path": "/db/bakta/db-light/version.json",
+          "relative_path": "version.json",
+          "sha256": "2922dbac15ff5c5564257727a44daf3e5e4e5dc5800961149a802a0ce53ba3aa",
+          "size_bytes": 836
+        },
+        {
+          "exists": true,
+          "path": "/db/bakta/db-light/bakta.db",
+          "relative_path": "bakta.db",
+          "sha256": "96657903e433ece5b3d2b3ae19cd293e4d00f60eeff1a319dda1e166e1367261",
+          "size_bytes": 1456009216
+        },
+        {
+          "exists": true,
+          "path": "/db/bakta/db-light/pscc.dmnd",
+          "relative_path": "pscc.dmnd",
+          "sha256": "ac5c38cbc74e94f1ee26795cc355cc7d64972a98e76c89adeb16927067c3ca62",
+          "size_bytes": 1345054222
+        }
+      ],
+      "required": false,
+      "source": "https://github.com/oschwengers/bakta",
+      "status": "selected-by-environment"
+    },
+    "dbcan": {
+      "files": [
+        {
+          "exists": true,
+          "path": "/db/dbcan/dbCAN.hmm",
+          "relative_path": "dbCAN.hmm",
+          "sha256": "396c791fb13defab152864d8046687ef03b492937ec6f9bbab008bc77cbaa7a5",
+          "size_bytes": 129842960
+        },
+        {
+          "exists": true,
+          "path": "/db/dbcan/dbCAN-sub.hmm",
+          "relative_path": "dbCAN-sub.hmm",
+          "sha256": "8e58b944108272142b57c0c260f996220b4f11c8ef290896a46d67dba6ab5136",
+          "size_bytes": 5132429983
+        },
+        {
+          "exists": true,
+          "path": "/db/dbcan/CAZy.dmnd",
+          "relative_path": "CAZy.dmnd",
+          "sha256": "aed31a864ee6fed9a5550eb34750b51f379cf151013f50a9cccd5bf2499b4662",
+          "size_bytes": 2177198564
+        }
+      ],
+      "required": false,
+      "source": "https://github.com/linnabrown/run_dbcan",
+      "status": "optional"
+    },
+    "deepbgc": {
+      "files": [
+        {
+          "exists": true,
+          "path": "/db/deepbgc/0.1.0/detector/deepbgc.pkl",
+          "relative_path": "0.1.0/detector/deepbgc.pkl",
+          "sha256": "030dc20ea97f1c5265edc4d24f92c371168b32427348cf5b5fced5951073281e",
+          "size_bytes": 16778662
+        },
+        {
+          "exists": true,
+          "path": "/db/deepbgc/0.1.0/classifier/product_class.pkl",
+          "relative_path": "0.1.0/classifier/product_class.pkl",
+          "sha256": "67f0aa067add954dd021244015cf88e91794698aa63fe8881c67b8098d6141cf",
+          "size_bytes": 23669094
+        },
+        {
+          "exists": true,
+          "path": "/db/deepbgc/common/Pfam-A.31.0.hmm",
+          "relative_path": "common/Pfam-A.31.0.hmm",
+          "sha256": "40b742a1bebca10f6b86c1364624dbdc34f79890954777eb95f8a48428de39d3",
+          "size_bytes": 1372159421
+        },
+        {
+          "exists": true,
+          "path": "/db/deepbgc/common/Pfam-A.31.0.hmm.h3i",
+          "relative_path": "common/Pfam-A.31.0.hmm.h3i",
+          "sha256": "d0552ac48534afcdca7804b6f547c6b0babc65a07d70b6e13e58de024259ea2f",
+          "size_bytes": 1153257
+        }
+      ],
+      "required": true,
+      "source": "https://github.com/Merck/deepbgc",
+      "status": "managed"
+    },
+    "eggnog": {
+      "files": [
+        {
+          "exists": true,
+          "path": "/db/eggnog/eggnog.db",
+          "relative_path": "eggnog.db",
+          "sha256": "4d6857c129423889edcd607995b28d97944787a588224f31dd7f745fe9ef1e4f",
+          "size_bytes": 41370988544
+        },
+        {
+          "exists": true,
+          "path": "/db/eggnog/eggnog_proteins.dmnd",
+          "relative_path": "eggnog_proteins.dmnd",
+          "sha256": "f4b63db0313021e4a2ca1d47a6b3f7862a3c8c2016abf3b51ef5865e653642a7",
+          "size_bytes": 9285439161
+        },
+        {
+          "exists": true,
+          "path": "/db/eggnog/eggnog.taxa.db",
+          "relative_path": "eggnog.taxa.db",
+          "sha256": "84d56ba1cbb091cc4c4064ba0f8235020654ed50fd6d617f829c4e45551faffd",
+          "size_bytes": 278003712
+        }
+      ],
+      "required": true,
+      "source": "https://github.com/eggnogdb/eggnog-mapper",
+      "status": "managed"
+    },
+    "gecco": {
+      "files": [],
+      "required": false,
+      "source": "https://github.com/zellerlab/GECCO",
+      "status": "n/a"
+    }
+  },
+  "execution": {
+    "threads": 16
+  },
+  "generated_at_utc": "2026-09-30T14:15:59Z",
+  "inputs": [
+    {
+      "exists": true,
+      "path": "data/bakta/S_albidoflavus_J1074/S_albidoflavus_J1074.faa",
+      "sha256": "2f75be00ffb038d22c52e0eb2bcd6923ecba8cda0ead40e08a3050936dd74a03",
+      "size_bytes": 2269494
+    },
+    {
+      "exists": true,
+      "path": "data/bakta/S_albidoflavus_J1074/S_albidoflavus_J1074.fna",
+      "sha256": "5f4585fe29b67330ffac046c9ec3423535a0df8dc688c99635418c5c1bcb8b6d",
+      "size_bytes": 6955764
+    },
+    {
+      "exists": true,
+      "path": "data/bakta/S_albidoflavus_J1074/S_albidoflavus_J1074.gbff",
+      "sha256": "79b74b087290c465f81d8aebb0ca406347c5e9b43b22c7865c249a5779caa133",
+      "size_bytes": 15388775
+    },
+    {
+      "exists": true,
+      "path": "data/bakta/S_albidoflavus_J1074/S_albidoflavus_J1074.gff3",
+      "sha256": "2c9ed04f174cd626acef5e398dc4689f83e3ef9552537c5c31f523092d0f969f",
+      "size_bytes": 8197671
+    },
+    {
+      "exists": true,
+      "path": "data/bakta/S_albidoflavus_J1074/S_albidoflavus_J1074.json",
+      "sha256": "263ba6a2dddebae8e71035542aedf5b6b27d170bc104e2e12f23920d035c8b81",
+      "size_bytes": 21717893
+    },
+    {
+      "exists": true,
+      "path": "data/bakta/S_albidoflavus_J1074/S_albidoflavus_J1074.tsv",
+      "sha256": "21e6aa1d43a4672fc9a377c0ca8684ef15f30ffe55d67762a8c2fc69afa1e23c",
+      "size_bytes": 684717
+    },
+    {
+      "exists": true,
+      "path": "data/fasta/S_albidoflavus_J1074.fasta",
+      "sha256": "fdb649aef6e41ae1832d206278385671caef698f9320c9a625a90800ca6d9753",
+      "size_bytes": 6939456
+    }
+  ],
+  "sample": "S_albidoflavus_J1074",
+  "schema_version": 1,
+  "tools": {
+    "antismash": "8.0.4",
+    "arts_commit": "8922f296b2a532ba51f4d5daa6a807838c21be24",
+    "bakta": "1.12.0",
+    "dbcan": "5.2.9",
+    "deepbgc": "0.1.31",
+    "eggnog-mapper": "2.1.13",
+    "gecco": "0.10.3",
+    "snakemake": "9.23.1"
+  }
+}

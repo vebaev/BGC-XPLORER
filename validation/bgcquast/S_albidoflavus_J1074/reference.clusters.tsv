@@ -1,0 +1,8 @@
+sequence_id	cluster_id	start	end	type	alkaloid_probability	nrp_probability	polyketide_probability	ripp_probability	saccharide_probability	terpene_probability
+CP004370.1	BGC0001731	663718	727714	Unknown	0.0	0.0	0.0	0.0	0.0	0.0
+CP004370.1	BGC0002358	1139018	1186162	polyketide	0.0	0.0	0.0	0.0	0.0	0.0
+CP004370.1	BGC0000546	2718054	2725999	ripp	0.0	0.0	0.0	0.0	0.0	0.0
+CP004370.1	BGC0001792	3888752	3971215	nrp	0.0	0.0	0.0	0.0	0.0	0.0
+CP004370.1	BGC0002115	6498603	6513041	ripp	0.0	0.0	0.0	0.0	0.0	0.0
+CP004370.1	BGC0000034	6584353	6733792	nrp;polyketide	0.0	0.0	0.0	0.0	0.0	0.0
+CP004370.1	BGC0000958	6730572	6755197	nrp;polyketide	0.0	0.0	0.0	0.0	0.0	0.0

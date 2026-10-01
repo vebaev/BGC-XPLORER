@@ -1,0 +1,12 @@
+# Separate environment for the BGC-QUAST cross-check: QUAST pins older
+# pandas/scipy, which must not leak into the scoring environment.
+name: bgcx-bgcquast
+channels: [conda-forge, bioconda]
+dependencies:
+  - python=3.11
+  - quast=5.3.0
+  - pandas>=2
+  - biopython
+  - pyyaml
+  - scipy
+  - matplotlib

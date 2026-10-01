@@ -1,0 +1,12 @@
+mibig_id	compound	class	contig	start	end	length	identity	coverage	mibig_length	source_accession	source_match	quality	completeness	organism	aliases	nested_in
+BGC0000683	avermitilol	terpene	NC_003155.5	86073	87080	1008	100.0	1.0	1008	BA000030.3	own_record	questionable	unknown	Streptomyces avermitilis MA-4680 = NBRC 14893		
+BGC0000059	filipin	PKS	NC_003155.5	486648	567017	80370	100.0	1.0	80370	BA000030.3	own_record	questionable	unknown	Streptomyces avermitilis MA-4680 = NBRC 14893		
+BGC0000633	carotenoid	terpene	NC_003155.5	1284066	1298369	14304	100.0	1.0	14304	AB070934.1	other_record	questionable	unknown	Streptomyces avermitilis		
+BGC0000908	melanin	other	NC_003155.5	1421141	1427637	6497	100.0	1.0	6497	AB070938.1	other_record	questionable	unknown	Streptomyces avermitilis		
+BGC0000271	spore pigment	PKS	NC_003155.5	3479839	3491017	11179	100.0	1.0	11118	AB070937.1	other_record	questionable	unknown	Streptomyces avermitilis		
+BGC0000117	oligomycin	PKS	NC_003155.5	3533486	3637804	104319	100.0	1.0	104326	AB070940.1	other_record	questionable	unknown	Streptomyces avermitilis		
+BGC0000678	pentalenolactone	terpene	NC_003155.5	3745497	3758933	13437	100.0	1.0	13437	BA000030.3	own_record	questionable	unknown	Streptomyces avermitilis MA-4680 = NBRC 14893		
+BGC0000918	ochronotic pigment	other	NC_003155.5	6253005	6257998	4994	100.0	1.0	4994	AB070935.1	other_record	questionable	unknown	Streptomyces avermitilis		
+BGC0000909	melanin	other	NC_003155.5	6499049	6505673	6625	100.0	1.0	6625	AB070939.1	other_record	questionable	unknown	Streptomyces avermitilis		
+BGC0001587	ethylenediaminesuccinic acid hydroxyarginine (EDHA)	other	NC_003155.5	6792146	6800400	8255	100.0	1.0	8255	BA000030.3	own_record	questionable	unknown	Streptomyces avermitilis MA-4680 = NBRC 14893		
+BGC0001552	citrulassin F	ribosomal	NC_003155.5	6877533	6882094	4562	100.0	1.0	4562	BA000030.3	own_record	questionable	unknown	Streptomyces avermitilis MA-4680 = NBRC 14893		
