@@ -143,11 +143,23 @@ def cazyme_family(value):
 
 
 def best_cazyme_family(row):
-    for column in ["dbcan_recommendation", "dbcan_hmm", "dbcan_subfamily", "dbcan_diamond"]:
-        family = cazyme_family(row.get(column))
-        if family:
-            return family
-    return ""
+    """The CAZyme family dbCAN itself recommends, or "".
+
+    run_dbcan fills "Recommend Results" only when at least two of its three
+    methods (HMMER, dbCAN-sub, DIAMOND) agree. A family found by one method
+    alone - most often a DIAMOND hit, such as GT1 on an NRPS adenylation
+    domain - is shown as a single-method hit but does not label the gene,
+    make it a CAZyme or raise an annotation conflict.
+    """
+    return cazyme_family(row.get("dbcan_recommendation"))
+
+
+def single_method_dbcan(row):
+    """'DIAMOND GT1' when exactly one dbCAN method reports a family and dbCAN recommends none."""
+    if best_cazyme_family(row):
+        return ""
+    hits = [(label, cazyme_family(row.get(column))) for column, label in DBCAN_SOURCES if cazyme_family(row.get(column))]
+    return "{0} {1}".format(*hits[0]) if len(hits) == 1 else ""
 
 
 def load_optional_table(path):
@@ -251,7 +263,7 @@ def classify_gene(row):
         return "resistance"
     if clean(row.get("predictor_core_evidence")):
         return "biosynthetic_core"
-    if any(clean(row.get(column)) for column in ["dbcan_hmm", "dbcan_subfamily", "dbcan_diamond", "dbcan_substrate"]):
+    if best_cazyme_family(row):
         return "cazyme"
     if any(term in text for term in [
         "transposase", "integrase", "recombinase", "insertion sequence",
@@ -309,7 +321,10 @@ def tooltip_for(row):
     ]
     dbcan_bits = [bit for bit in dbcan_bits if bit]
     if dbcan_bits:
-        parts.append("dbCAN: {0}".format(" | ".join(dbcan_bits)))
+        single = single_method_dbcan(row)
+        parts.append("dbCAN: {0}{1}".format(
+            " | ".join(dbcan_bits),
+            " (single method {0}; not recommended by dbCAN)".format(single) if single else ""))
     if clean(row.get("dbcan_substrate")):
         parts.append("dbCAN substrate: {0}".format(clean(row.get("dbcan_substrate"))))
     if clean(row.get("arts_evidence")):

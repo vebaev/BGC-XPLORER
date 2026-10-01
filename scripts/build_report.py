@@ -258,11 +258,8 @@ def _cazyme_family(value):
 
 
 def _best_dbcan_family(row):
-    for column in ["dbcan_recommendation", "dbcan_hmm", "dbcan_subfamily", "dbcan_diamond"]:
-        family = _cazyme_family(row.get(column))
-        if family:
-            return family
-    return ""
+    """The family dbCAN recommends (two or more of its methods agree); single-method hits are not used."""
+    return _cazyme_family(row.get("dbcan_recommendation"))
 
 
 def load_gene_table_data(cluster_genes_path, cluster_maps):
