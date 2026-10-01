@@ -10,10 +10,15 @@ mkdir -p "${DB_DIR}"
 mkdir -p "${BIN_DIR}"
 mkdir -p "${MPL_DIR}"
 
-echo "Preparing antiSMASH database download helper"
+# The helper of the antiSMASH release in the image, not the latest one: a newer
+# helper fetches databases laid out for a newer antiSMASH, which this one and
+# db/manifest.yaml do not expect.
+ANTISMASH_VERSION="${ANTISMASH_VERSION:-8.0.4}"
+
+echo "Preparing antiSMASH ${ANTISMASH_VERSION} database download helper"
 HELPER_TMP="${BIN_DIR}/download_antismash_databases.tmp.$$"
 trap 'rm -f "${HELPER_TMP}"' EXIT INT TERM
-curl -fsSL "https://dl.secondarymetabolites.org/releases/latest/download_antismash_databases_docker" \
+curl -fsSL "https://dl.secondarymetabolites.org/releases/${ANTISMASH_VERSION}/download_antismash_databases_docker" \
   -o "${HELPER_TMP}"
 mv "${HELPER_TMP}" "${BIN_DIR}/download_antismash_databases"
 chmod +x "${BIN_DIR}/download_antismash_databases"

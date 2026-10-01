@@ -24,7 +24,7 @@ antismash:
   required: true
   host_path: "db/antismash"
   status: "managed"
-  notes: "Downloaded automatically with the official antiSMASH latest database helper when missing."
+  notes: "Downloaded automatically with the official antiSMASH 8.0.4 database helper when missing."
   source: "https://docs.antismash.secondarymetabolites.org/install/"
   required_files:
     - "pfam/35.0/Pfam-A.hmm"

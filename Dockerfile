@@ -54,7 +54,7 @@ RUN micromamba create -y -n gecco -c bioconda -c conda-forge gecco=${GECCO_VERSI
     && micromamba clean -a -y
 
 RUN micromamba create -y -n deepbgc -c conda-forge -c bioconda \
-        python=3.7 hmmer prodigal pip \
+        python=3.7 hmmer prodigal=2.6.3 pip \
     && micromamba run -n deepbgc pip install deepbgc==${DEEPBGC_VERSION} \
     && micromamba clean -a -y
 
@@ -80,7 +80,7 @@ RUN mkdir -p /opt/arts \
     && rm /tmp/arts.tar.gz
 
 RUN micromamba create -y -n arts -c conda-forge -c bioconda \
-        python=3.8 hmmer blast mafft fasttree prodigal pip \
+        python=3.8 hmmer blast mafft fasttree prodigal=2.6.3 pip \
     && micromamba run -n arts pip install -r /opt/arts/requirements.txt \
     && micromamba clean -a -y
 
@@ -108,6 +108,7 @@ LABEL org.opencontainers.image.version="${BGC_XPLORER_VERSION}" \
       org.opencontainers.image.revision="${VCS_REF}"
 ENV BGC_XPLORER_VERSION="${BGC_XPLORER_VERSION}" \
     BGC_XPLORER_COMMIT="${VCS_REF}" \
+    ANTISMASH_VERSION="${ANTISMASH_VERSION}" \
     BGC_TOOL_VERSIONS_JSON="{\"snakemake\":\"9.23.1\",\"bakta\":\"1.12.0\",\"antismash\":\"8.0.4\",\"gecco\":\"0.10.3\",\"deepbgc\":\"0.1.31\",\"eggnog-mapper\":\"2.1.13\",\"dbcan\":\"5.2.9\",\"arts_commit\":\"8922f296b2a532ba51f4d5daa6a807838c21be24\"}"
 
 WORKDIR /work

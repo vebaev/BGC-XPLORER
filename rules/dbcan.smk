@@ -23,6 +23,10 @@ rule run_dbcan:
         if [ "{params.mode}" = "mock" ]; then
           printf '#cgcid\tPULID\tdbCAN-PUL substrate\tbitscore\tsignature pairs\tdbCAN-sub substrate\tdbCAN-sub substrate score\ncontig_1|CGC1\tPUL0001\tchitin\t185.2\tCAZyme-CAZyme;CAZyme-TC\tchitin\t3.6\n' > {params.outdir}/substrate_prediction.tsv
           printf 'CGC#\tContig ID\tCluster Start\tCluster End\tGenes\tCAZymes\tTC\tTF\tSTP\tSulfatase\tPeptidase\tSignatures\tLength (bp)\nCGC1\tcontig_1\t90000\t118000\t14\t5\t2\t1\t0\t0\t0\t8\t28001\n' > {params.outdir}/cgc_standard_out_summary.tsv
+        elif [ ! -f "{params.db_dir}/dbCAN.hmm" ] || [ ! -f "{params.db_dir}/dbCAN-sub.hmm" ] || [ ! -f "{params.db_dir}/CAZy.dmnd" ]; then
+          # dbCAN is optional (db/manifest.yaml): without its database the run
+          # continues and the report shows no CAZyme gene clusters.
+          printf 'dbCAN database not found in %s; skipping CAZyme annotation\n' "{params.db_dir}" >&2
         elif [ "{params.mode}" = "docker" ]; then
           docker run --rm \
             --user "$(id -u):$(id -g)" \
