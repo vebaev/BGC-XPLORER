@@ -35,33 +35,33 @@ S_coelicolor_A3_2	gecco	BGC0001283	Bisenarsan	30440	21		partial	True	0.606	0.606
 S_coelicolor_A3_2	gecco	BGC0002128	5-dimethylallylindole-3-acetonitrile	8672	9		partial	True	0.872	0.872	False	1	0.6745	0.6745	True	10108	1.166	2543.0	-1107.0	0.6667	0.8889	0.7619	False
 S_coelicolor_A3_2	gecco	BGC0000324	coelibactin	25121	11		full	True	1.0	1.0	False	1	0.4132	0.4132	False	60801	2.42	13308.0	22372.0	0.22	1.0	0.3607	False
 S_coelicolor_A3_2	gecco	BGC0000914	methylenomycin A	19342	21		full	True	1.0	1.0	False	1	0.6587	0.6587	True	29363	1.518	0.0	10021.0	0.5676	1.0	0.7241	False
-S_coelicolor_A3_2	deepbgc	BGC0000325	coelichelin	22626	11		full	True	1.0	1.0	False	1	0.3824	0.3824	False	59172	2.615	20373.0	16173.0	0.234	1.0	0.3793	False
-S_coelicolor_A3_2	deepbgc	BGC0002127	flaviolin;1,3,6,8-tetrahydroxynaphthalene	3014	3		full	True	1.0	1.0	False	1	0.449	0.449	False	6712	2.227	1649.0	2049.0	0.4286	1.0	0.6	False
+S_coelicolor_A3_2	deepbgc	BGC0000325	coelichelin	22626	11		full	True	1.0	1.0	False	1	0.3824	0.3824	False	59171	2.615	20372.0	16173.0	0.234	1.0	0.3793	False
+S_coelicolor_A3_2	deepbgc	BGC0002127	flaviolin;1,3,6,8-tetrahydroxynaphthalene	3014	3		full	True	1.0	1.0	False	1	0.4491	0.4491	False	6711	2.227	1648.0	2049.0	0.4286	1.0	0.6	False
 S_coelicolor_A3_2	deepbgc	BGC0000595	SCO-2138	21771	14		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
-S_coelicolor_A3_2	deepbgc	BGC0000910	melanin	1420	2		full	True	1.0	1.0	False	1	0.0424	0.0424	False	33477	23.575	9343.0	22714.0	0.0625	1.0	0.1176	False
+S_coelicolor_A3_2	deepbgc	BGC0000910	melanin	1420	2		full	True	1.0	1.0	False	1	0.0424	0.0424	False	33476	23.575	9342.0	22714.0	0.0625	1.0	0.1176	False
 S_coelicolor_A3_2	deepbgc	BGC0000940	desferrioxamin B;desferrioxamine E	7328	6		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
-S_coelicolor_A3_2	deepbgc	BGC0000315	CDA1b;CDA2a;CDA2b;CDA3a;CDA3b;CDA4a;CDA4b	82872	40		partial	True	0.919	0.919	False	1	0.902	0.902	True	77772	0.938	-6687.0	1587.0	0.9714	0.85	0.9067	False
-S_coelicolor_A3_2	deepbgc	BGC0000194	actinorhodin	21283	22		full	True	1.0	1.0	False	1	0.8037	0.8037	True	26480	1.244	3294.0	1903.0	0.7857	1.0	0.88	False
+S_coelicolor_A3_2	deepbgc	BGC0000315	CDA1b;CDA2a;CDA2b;CDA3a;CDA3b;CDA4a;CDA4b	82872	40		partial	True	0.919	0.919	False	1	0.902	0.902	True	77771	0.938	-6688.0	1587.0	0.9714	0.85	0.9067	False
+S_coelicolor_A3_2	deepbgc	BGC0000194	actinorhodin	21283	22		full	True	1.0	1.0	False	1	0.8038	0.8038	True	26479	1.244	3293.0	1903.0	0.7857	1.0	0.88	False
 S_coelicolor_A3_2	deepbgc	BGC0000660	albaflavenone	2468	2		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
-S_coelicolor_A3_2	deepbgc	BGC0001063	undecylprodigiosin	31641	22		full	True	0.999	0.999	False	1	0.8646	0.8646	True	36540	1.155	-26.0	4925.0	0.8462	1.0	0.9167	False
+S_coelicolor_A3_2	deepbgc	BGC0001063	undecylprodigiosin	31641	22		full	True	0.999	0.999	False	1	0.8646	0.8646	True	36539	1.155	-27.0	4925.0	0.8462	1.0	0.9167	False
 S_coelicolor_A3_2	deepbgc	BGC0001181	geosmin	2181	1		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
-S_coelicolor_A3_2	deepbgc	BGC0000038	coelimycin P1	57887	24		full	True	1.0	1.0	False	1	0.3114	0.3114	False	185872	3.211	109914.0	18071.0	0.1832	1.0	0.3097	False
-S_coelicolor_A3_2	deepbgc	BGC0000849	SCB1;SCB2;SCB3	1710	2	BGC0000038	full	True	1.0	1.0	False	1	0.0092	0.0092	False	185872	108.697	109914.0	74248.0	0.0153	1.0	0.0301	False
+S_coelicolor_A3_2	deepbgc	BGC0000038	coelimycin P1	57887	24		full	True	1.0	1.0	False	1	0.3114	0.3114	False	185871	3.211	109913.0	18071.0	0.1832	1.0	0.3097	False
+S_coelicolor_A3_2	deepbgc	BGC0000849	SCB1;SCB2;SCB3	1710	2	BGC0000038	full	True	1.0	1.0	False	1	0.0092	0.0092	False	185871	108.696	109913.0	74248.0	0.0153	1.0	0.0301	False
 S_coelicolor_A3_2	deepbgc	BGC0000551	SapB	6728	4		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
-S_coelicolor_A3_2	deepbgc	BGC0000663	hopene	13757	13		full	True	1.0	1.0	False	1	0.2997	0.2997	False	45895	3.336	3055.0	29083.0	0.3171	1.0	0.4815	False
+S_coelicolor_A3_2	deepbgc	BGC0000663	hopene	13757	13		full	True	1.0	1.0	False	1	0.2998	0.2998	False	45894	3.336	3054.0	29083.0	0.3171	1.0	0.4815	False
 S_coelicolor_A3_2	deepbgc	BGC0001283	Bisenarsan	30440	21		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
-S_coelicolor_A3_2	deepbgc	BGC0002128	5-dimethylallylindole-3-acetonitrile	8672	9		full	True	1.0	1.0	False	1	0.0563	0.0563	False	153934	17.751	111312.0	33950.0	0.0588	1.0	0.1111	False
-S_coelicolor_A3_2	deepbgc	BGC0000324	coelibactin	25121	11		full	True	1.0	1.0	False	1	0.1293	0.1293	False	194259	7.733	66311.0	102827.0	0.0585	1.0	0.1106	False
-S_coelicolor_A3_2	deepbgc	BGC0000914	methylenomycin A	19342	21		full	True	1.0	1.0	False	1	0.2083	0.2083	False	92838	4.8	1.0	73495.0	0.2039	1.0	0.3387	False
+S_coelicolor_A3_2	deepbgc	BGC0002128	5-dimethylallylindole-3-acetonitrile	8672	9		full	True	1.0	1.0	False	1	0.0563	0.0563	False	153933	17.751	111311.0	33950.0	0.0588	1.0	0.1111	False
+S_coelicolor_A3_2	deepbgc	BGC0000324	coelibactin	25121	11		full	True	1.0	1.0	False	1	0.1293	0.1293	False	194258	7.733	66310.0	102827.0	0.0585	1.0	0.1106	False
+S_coelicolor_A3_2	deepbgc	BGC0000914	methylenomycin A	19342	21		full	True	1.0	1.0	False	1	0.2083	0.2083	False	92837	4.8	0.0	73495.0	0.2039	1.0	0.3387	False
 S_coelicolor_A3_2	side_by_side	BGC0000325	coelichelin	22626	11		full	True	1.0	1.0	False	3	0.4081	0.4541	False	49828	2.202	16563.0	10639.0	0.2973	1.0	0.4583	False
-S_coelicolor_A3_2	side_by_side	BGC0002127	flaviolin;1,3,6,8-tetrahydroxynaphthalene	3014	3		full	True	1.0	1.0	False	3	0.3116	0.449	False	6712	2.227	1649.0	2049.0	0.4286	1.0	0.6	False
+S_coelicolor_A3_2	side_by_side	BGC0002127	flaviolin;1,3,6,8-tetrahydroxynaphthalene	3014	3		full	True	1.0	1.0	False	3	0.3116	0.4491	False	6711	2.227	1648.0	2049.0	0.4286	1.0	0.6	False
 S_coelicolor_A3_2	side_by_side	BGC0000595	SCO-2138	21771	14		full	True	1.0	1.0	False	1	0.7339	0.7339	True	29663	1.363	6429.0	1463.0	0.6667	1.0	0.8	False
 S_coelicolor_A3_2	side_by_side	BGC0000910	melanin	1420	2		full	True	1.0	1.0	False	3	0.0832	0.1343	False	10571	7.444	4151.0	5000.0	0.1538	1.0	0.2667	False
 S_coelicolor_A3_2	side_by_side	BGC0000940	desferrioxamin B;desferrioxamine E	7328	6		full	True	1.0	1.0	False	2	0.3541	0.4621	False	15857	2.164	5841.0	2688.0	0.5	1.0	0.6667	False
 S_coelicolor_A3_2	side_by_side	BGC0000315	CDA1b;CDA2a;CDA2b;CDA3a;CDA3b;CDA4a;CDA4b	82872	40		full	True	1.0	1.0	False	3	0.9154	0.9343	True	80655	0.973	-3885.0	1668.0	0.973	0.9	0.9351	False
 S_coelicolor_A3_2	side_by_side	BGC0000194	actinorhodin	21283	22		full	True	1.0	1.0	False	3	0.6494	0.8507	True	25017	1.175	2538.0	1196.0	0.8462	1.0	0.9167	False
 S_coelicolor_A3_2	side_by_side	BGC0000660	albaflavenone	2468	2		full	True	1.0	1.0	False	2	0.4164	0.7154	True	3450	1.398	0.0	982.0	0.6667	1.0	0.8	False
-S_coelicolor_A3_2	side_by_side	BGC0001063	undecylprodigiosin	31641	22		full	True	1.0	1.0	False	3	0.739	0.8646	True	36540	1.155	-26.0	4925.0	0.8462	1.0	0.9167	False
+S_coelicolor_A3_2	side_by_side	BGC0001063	undecylprodigiosin	31641	22		full	True	1.0	1.0	False	3	0.739	0.8646	True	36539	1.155	-27.0	4925.0	0.8462	1.0	0.9167	False
 S_coelicolor_A3_2	side_by_side	BGC0001181	geosmin	2181	1		full	True	1.0	1.0	False	1	0.0983	0.0983	False	22182	10.171	10001.0	10000.0	0.0556	1.0	0.1053	False
 S_coelicolor_A3_2	side_by_side	BGC0000038	coelimycin P1	57887	24		full	True	1.0	1.0	False	3	0.6796	0.9621	True	60165	1.039	934.0	1344.0	0.9231	1.0	0.96	False
 S_coelicolor_A3_2	side_by_side	BGC0000849	SCB1;SCB2;SCB3	1710	2	BGC0000038	full	True	1.0	1.0	False	3	0.0201	0.0284	False	60165	35.184	934.0	57521.0	0.0769	1.0	0.1429	False
@@ -70,7 +70,7 @@ S_coelicolor_A3_2	side_by_side	BGC0000663	hopene	13757	13		full	True	1.0	1.0	Fal
 S_coelicolor_A3_2	side_by_side	BGC0001283	Bisenarsan	30440	21		full	True	1.0	1.0	False	2	0.606	0.6323	True	48145	1.582	4009.0	13696.0	0.5833	1.0	0.7368	False
 S_coelicolor_A3_2	side_by_side	BGC0002128	5-dimethylallylindole-3-acetonitrile	8672	9		full	True	1.0	1.0	False	3	0.3804	0.6745	True	10108	1.166	2543.0	-1107.0	0.6667	0.8889	0.7619	False
 S_coelicolor_A3_2	side_by_side	BGC0000324	coelibactin	25121	11		full	True	1.0	1.0	False	3	0.2933	0.4132	False	60801	2.42	13308.0	22372.0	0.22	1.0	0.3607	False
-S_coelicolor_A3_2	side_by_side	BGC0000914	methylenomycin A	19342	21		full	True	1.0	1.0	False	3	0.5115	0.6676	True	28973	1.498	5267.0	4364.0	0.6364	1.0	0.7778	False
+S_coelicolor_A3_2	side_by_side	BGC0000914	methylenomycin A	19342	21		full	True	1.0	1.0	False	3	0.5116	0.6676	True	28973	1.498	5267.0	4364.0	0.6364	1.0	0.7778	False
 S_coelicolor_A3_2	voting2:agreed	BGC0000325	coelichelin	22626	11		full	True	1.0	1.0	False	1	0.4	0.4	False	56567	2.5	17768.0	16173.0	0.25	1.0	0.4	False
 S_coelicolor_A3_2	voting2:agreed	BGC0002127	flaviolin;1,3,6,8-tetrahydroxynaphthalene	3014	3		full	True	1.0	1.0	False	1	0.3409	0.3409	False	8841	2.933	3778.0	2049.0	0.3333	1.0	0.5	False
 S_coelicolor_A3_2	voting2:agreed	BGC0000595	SCO-2138	21771	14		full	True	1.0	1.0	False	1	0.7339	0.7339	True	29663	1.363	6429.0	1463.0	0.6667	1.0	0.8	False
@@ -89,23 +89,23 @@ S_coelicolor_A3_2	voting2:agreed	BGC0001283	Bisenarsan	30440	21		partial	True	0.
 S_coelicolor_A3_2	voting2:agreed	BGC0002128	5-dimethylallylindole-3-acetonitrile	8672	9		full	True	1.0	1.0	False	1	0.235	0.235	False	36902	4.255	25056.0	3174.0	0.2368	1.0	0.383	False
 S_coelicolor_A3_2	voting2:agreed	BGC0000324	coelibactin	25121	11		full	True	1.0	1.0	False	1	0.3249	0.3249	False	77319	3.078	29826.0	22372.0	0.1618	1.0	0.2785	False
 S_coelicolor_A3_2	voting2:agreed	BGC0000914	methylenomycin A	19342	21		full	True	1.0	1.0	False	1	0.6587	0.6587	True	29363	1.518	0.0	10021.0	0.5676	1.0	0.7241	False
-S_coelicolor_A3_2	voting2:union	BGC0000325	coelichelin	22626	11		full	True	1.0	1.0	False	1	0.3657	0.3657	False	61876	2.735	20373.0	18877.0	0.2245	1.0	0.3667	False
+S_coelicolor_A3_2	voting2:union	BGC0000325	coelichelin	22626	11		full	True	1.0	1.0	False	1	0.3657	0.3657	False	61875	2.735	20372.0	18877.0	0.2245	1.0	0.3667	False
 S_coelicolor_A3_2	voting2:union	BGC0002127	flaviolin;1,3,6,8-tetrahydroxynaphthalene	3014	3		full	True	1.0	1.0	False	1	0.0733	0.0733	False	41126	13.645	19854.0	18258.0	0.0732	1.0	0.1364	False
 S_coelicolor_A3_2	voting2:union	BGC0000595	SCO-2138	21771	14		full	True	1.0	1.0	False	1	0.7339	0.7339	True	29663	1.363	6429.0	1463.0	0.6667	1.0	0.8	False
-S_coelicolor_A3_2	voting2:union	BGC0000910	melanin	1420	2		full	True	1.0	1.0	False	1	0.0424	0.0424	False	33477	23.575	9343.0	22714.0	0.0625	1.0	0.1176	False
+S_coelicolor_A3_2	voting2:union	BGC0000910	melanin	1420	2		full	True	1.0	1.0	False	1	0.0424	0.0424	False	33476	23.575	9342.0	22714.0	0.0625	1.0	0.1176	False
 S_coelicolor_A3_2	voting2:union	BGC0000940	desferrioxamin B;desferrioxamine E	7328	6		full	True	1.0	1.0	False	1	0.246	0.246	False	29789	4.065	8461.0	14000.0	0.24	1.0	0.3871	False
 S_coelicolor_A3_2	voting2:union	BGC0000315	CDA1b;CDA2a;CDA2b;CDA3a;CDA3b;CDA4a;CDA4b	82872	40		full	True	1.0	1.0	False	1	0.9098	0.9098	True	91084	1.099	6425.0	1787.0	0.8511	1.0	0.9195	False
 S_coelicolor_A3_2	voting2:union	BGC0000194	actinorhodin	21283	22		full	True	1.0	1.0	False	1	0.2936	0.2936	False	72496	3.406	18880.0	32333.0	0.3438	1.0	0.5116	False
 S_coelicolor_A3_2	voting2:union	BGC0000660	albaflavenone	2468	2		full	True	1.0	1.0	False	1	0.1174	0.1174	False	21015	8.515	9929.0	8618.0	0.1	1.0	0.1818	False
 S_coelicolor_A3_2	voting2:union	BGC0001063	undecylprodigiosin	31641	22		full	True	1.0	1.0	False	1	0.5993	0.5993	True	52794	1.669	8917.0	12236.0	0.5	1.0	0.6667	False
 S_coelicolor_A3_2	voting2:union	BGC0001181	geosmin	2181	1		full	True	1.0	1.0	False	1	0.0983	0.0983	False	22182	10.171	10001.0	10000.0	0.0556	1.0	0.1053	False
-S_coelicolor_A3_2	voting2:union	BGC0000038	coelimycin P1	57887	24		full	True	1.0	1.0	False	2	0.3114	0.3114	False	185872	3.211	109914.0	18071.0	0.1832	1.0	0.3097	False
-S_coelicolor_A3_2	voting2:union	BGC0000849	SCB1;SCB2;SCB3	1710	2	BGC0000038	full	True	1.0	1.0	False	2	0.0092	0.0092	False	185872	108.697	109914.0	74248.0	0.0153	1.0	0.0301	False
+S_coelicolor_A3_2	voting2:union	BGC0000038	coelimycin P1	57887	24		full	True	1.0	1.0	False	2	0.3114	0.3114	False	185871	3.211	109913.0	18071.0	0.1832	1.0	0.3097	False
+S_coelicolor_A3_2	voting2:union	BGC0000849	SCB1;SCB2;SCB3	1710	2	BGC0000038	full	True	1.0	1.0	False	2	0.0092	0.0092	False	185871	108.696	109913.0	74248.0	0.0153	1.0	0.0301	False
 S_coelicolor_A3_2	voting2:union	BGC0000551	SapB	6728	4		full	True	1.0	1.0	False	1	0.2208	0.2208	False	30475	4.53	9923.0	13824.0	0.1818	1.0	0.3077	False
 S_coelicolor_A3_2	voting2:union	BGC0000663	hopene	13757	13		full	True	1.0	1.0	False	1	0.2603	0.2603	False	52841	3.841	10001.0	29083.0	0.2766	1.0	0.4333	False
 S_coelicolor_A3_2	voting2:union	BGC0001283	Bisenarsan	30440	21		full	True	1.0	1.0	False	2	0.3924	0.6323	True	48145	1.582	4009.0	13696.0	0.5833	1.0	0.7368	False
-S_coelicolor_A3_2	voting2:union	BGC0002128	5-dimethylallylindole-3-acetonitrile	8672	9		full	True	1.0	1.0	False	2	0.0563	0.0563	False	153934	17.751	111312.0	33950.0	0.0588	1.0	0.1111	False
-S_coelicolor_A3_2	voting2:union	BGC0000324	coelibactin	25121	11		full	True	1.0	1.0	False	2	0.1293	0.1293	False	194259	7.733	66311.0	102827.0	0.0585	1.0	0.1106	False
+S_coelicolor_A3_2	voting2:union	BGC0002128	5-dimethylallylindole-3-acetonitrile	8672	9		full	True	1.0	1.0	False	2	0.0563	0.0563	False	153933	17.751	111311.0	33950.0	0.0588	1.0	0.1111	False
+S_coelicolor_A3_2	voting2:union	BGC0000324	coelibactin	25121	11		full	True	1.0	1.0	False	2	0.1293	0.1293	False	194258	7.733	66310.0	102827.0	0.0585	1.0	0.1106	False
 S_coelicolor_A3_2	voting2:union	BGC0000914	methylenomycin A	19342	21		full	True	1.0	1.0	False	2	0.1915	0.1972	False	98104	5.072	5267.0	73495.0	0.1963	1.0	0.3281	False
 S_coelicolor_A3_2	voting2:multi	BGC0000325	coelichelin	22626	11		full	True	1.0	1.0	False	1	0.4	0.4	False	56567	2.5	17768.0	16173.0	0.25	1.0	0.4	False
 S_coelicolor_A3_2	voting2:multi	BGC0002127	flaviolin;1,3,6,8-tetrahydroxynaphthalene	3014	3		full	True	1.0	1.0	False	1	0.3409	0.3409	False	8841	2.933	3778.0	2049.0	0.3333	1.0	0.5	False
@@ -143,23 +143,23 @@ S_coelicolor_A3_2	voting1:agreed	BGC0001283	Bisenarsan	30440	21		full	True	1.0	1
 S_coelicolor_A3_2	voting1:agreed	BGC0002128	5-dimethylallylindole-3-acetonitrile	8672	9		full	True	1.0	1.0	False	1	0.0563	0.0563	False	153933	17.751	111311.0	33950.0	0.0588	1.0	0.1111	False
 S_coelicolor_A3_2	voting1:agreed	BGC0000324	coelibactin	25121	11		full	True	1.0	1.0	False	1	0.1287	0.1287	False	195235	7.772	67287.0	102827.0	0.0582	1.0	0.11	False
 S_coelicolor_A3_2	voting1:agreed	BGC0000914	methylenomycin A	19342	21		full	True	1.0	1.0	False	1	0.1736	0.1736	False	111401	5.76	7326.0	84733.0	0.178	1.0	0.3022	False
-S_coelicolor_A3_2	voting1:union	BGC0000325	coelichelin	22626	11		full	True	1.0	1.0	False	1	0.3657	0.3657	False	61876	2.735	20373.0	18877.0	0.2245	1.0	0.3667	False
+S_coelicolor_A3_2	voting1:union	BGC0000325	coelichelin	22626	11		full	True	1.0	1.0	False	1	0.3657	0.3657	False	61875	2.735	20372.0	18877.0	0.2245	1.0	0.3667	False
 S_coelicolor_A3_2	voting1:union	BGC0002127	flaviolin;1,3,6,8-tetrahydroxynaphthalene	3014	3		full	True	1.0	1.0	False	1	0.0733	0.0733	False	41126	13.645	19854.0	18258.0	0.0732	1.0	0.1364	False
 S_coelicolor_A3_2	voting1:union	BGC0000595	SCO-2138	21771	14		full	True	1.0	1.0	False	1	0.7339	0.7339	True	29663	1.363	6429.0	1463.0	0.6667	1.0	0.8	False
-S_coelicolor_A3_2	voting1:union	BGC0000910	melanin	1420	2		full	True	1.0	1.0	False	1	0.0424	0.0424	False	33477	23.575	9343.0	22714.0	0.0625	1.0	0.1176	False
+S_coelicolor_A3_2	voting1:union	BGC0000910	melanin	1420	2		full	True	1.0	1.0	False	1	0.0424	0.0424	False	33476	23.575	9342.0	22714.0	0.0625	1.0	0.1176	False
 S_coelicolor_A3_2	voting1:union	BGC0000940	desferrioxamin B;desferrioxamine E	7328	6		full	True	1.0	1.0	False	1	0.246	0.246	False	29789	4.065	8461.0	14000.0	0.24	1.0	0.3871	False
 S_coelicolor_A3_2	voting1:union	BGC0000315	CDA1b;CDA2a;CDA2b;CDA3a;CDA3b;CDA4a;CDA4b	82872	40		full	True	1.0	1.0	False	1	0.9098	0.9098	True	91084	1.099	6425.0	1787.0	0.8511	1.0	0.9195	False
 S_coelicolor_A3_2	voting1:union	BGC0000194	actinorhodin	21283	22		full	True	1.0	1.0	False	1	0.2936	0.2936	False	72496	3.406	18880.0	32333.0	0.3438	1.0	0.5116	False
 S_coelicolor_A3_2	voting1:union	BGC0000660	albaflavenone	2468	2		full	True	1.0	1.0	False	1	0.1174	0.1174	False	21015	8.515	9929.0	8618.0	0.1	1.0	0.1818	False
 S_coelicolor_A3_2	voting1:union	BGC0001063	undecylprodigiosin	31641	22		full	True	1.0	1.0	False	1	0.5993	0.5993	True	52794	1.669	8917.0	12236.0	0.5	1.0	0.6667	False
 S_coelicolor_A3_2	voting1:union	BGC0001181	geosmin	2181	1		full	True	1.0	1.0	False	1	0.0983	0.0983	False	22182	10.171	10001.0	10000.0	0.0556	1.0	0.1053	False
-S_coelicolor_A3_2	voting1:union	BGC0000038	coelimycin P1	57887	24		full	True	1.0	1.0	False	1	0.3114	0.3114	False	185872	3.211	109914.0	18071.0	0.1832	1.0	0.3097	False
-S_coelicolor_A3_2	voting1:union	BGC0000849	SCB1;SCB2;SCB3	1710	2	BGC0000038	full	True	1.0	1.0	False	1	0.0092	0.0092	False	185872	108.697	109914.0	74248.0	0.0153	1.0	0.0301	False
+S_coelicolor_A3_2	voting1:union	BGC0000038	coelimycin P1	57887	24		full	True	1.0	1.0	False	1	0.3114	0.3114	False	185871	3.211	109913.0	18071.0	0.1832	1.0	0.3097	False
+S_coelicolor_A3_2	voting1:union	BGC0000849	SCB1;SCB2;SCB3	1710	2	BGC0000038	full	True	1.0	1.0	False	1	0.0092	0.0092	False	185871	108.696	109913.0	74248.0	0.0153	1.0	0.0301	False
 S_coelicolor_A3_2	voting1:union	BGC0000551	SapB	6728	4		full	True	1.0	1.0	False	1	0.2208	0.2208	False	30475	4.53	9923.0	13824.0	0.1818	1.0	0.3077	False
 S_coelicolor_A3_2	voting1:union	BGC0000663	hopene	13757	13		full	True	1.0	1.0	False	1	0.2603	0.2603	False	52841	3.841	10001.0	29083.0	0.2766	1.0	0.4333	False
 S_coelicolor_A3_2	voting1:union	BGC0001283	Bisenarsan	30440	21		full	True	1.0	1.0	False	1	0.1524	0.1524	False	199673	6.56	4009.0	165224.0	0.1111	1.0	0.2	False
-S_coelicolor_A3_2	voting1:union	BGC0002128	5-dimethylallylindole-3-acetonitrile	8672	9		full	True	1.0	1.0	False	1	0.0563	0.0563	False	153934	17.751	111312.0	33950.0	0.0588	1.0	0.1111	False
-S_coelicolor_A3_2	voting1:union	BGC0000324	coelibactin	25121	11		full	True	1.0	1.0	False	1	0.1293	0.1293	False	194259	7.733	66311.0	102827.0	0.0585	1.0	0.1106	False
+S_coelicolor_A3_2	voting1:union	BGC0002128	5-dimethylallylindole-3-acetonitrile	8672	9		full	True	1.0	1.0	False	1	0.0563	0.0563	False	153933	17.751	111311.0	33950.0	0.0588	1.0	0.1111	False
+S_coelicolor_A3_2	voting1:union	BGC0000324	coelibactin	25121	11		full	True	1.0	1.0	False	1	0.1293	0.1293	False	194258	7.733	66310.0	102827.0	0.0585	1.0	0.1106	False
 S_coelicolor_A3_2	voting1:union	BGC0000914	methylenomycin A	19342	21		full	True	1.0	1.0	False	1	0.1769	0.1769	False	109342	5.653	5267.0	84733.0	0.1795	1.0	0.3043	False
 S_coelicolor_A3_2	voting1:multi	BGC0000325	coelichelin	22626	11		full	True	1.0	1.0	False	1	0.3641	0.3641	False	62144	2.747	20372.0	19146.0	0.22	1.0	0.3607	False
 S_coelicolor_A3_2	voting1:multi	BGC0002127	flaviolin;1,3,6,8-tetrahydroxynaphthalene	3014	3		full	True	1.0	1.0	False	1	0.0682	0.0682	False	44194	14.663	21340.0	19840.0	0.0714	1.0	0.1333	False
@@ -197,23 +197,23 @@ S_coelicolor_A3_2	voting3:agreed	BGC0001283	Bisenarsan	30440	21		full	True	1.0	1
 S_coelicolor_A3_2	voting3:agreed	BGC0002128	5-dimethylallylindole-3-acetonitrile	8672	9		full	True	1.0	1.0	False	1	0.7732	0.7732	True	11214	1.293	2543.0	-1.0	0.6923	1.0	0.8182	False
 S_coelicolor_A3_2	voting3:agreed	BGC0000324	coelibactin	25121	11		full	True	1.0	1.0	False	1	0.4342	0.4342	False	57851	2.303	13308.0	19422.0	0.234	1.0	0.3793	False
 S_coelicolor_A3_2	voting3:agreed	BGC0000914	methylenomycin A	19342	21		full	True	1.0	1.0	False	1	0.7981	0.7981	True	24234	1.253	0.0	4892.0	0.7	1.0	0.8235	False
-S_coelicolor_A3_2	voting3:union	BGC0000325	coelichelin	22626	11		full	True	1.0	1.0	False	1	0.3657	0.3657	False	61876	2.735	20373.0	18877.0	0.2245	1.0	0.3667	False
+S_coelicolor_A3_2	voting3:union	BGC0000325	coelichelin	22626	11		full	True	1.0	1.0	False	1	0.3657	0.3657	False	61875	2.735	20372.0	18877.0	0.2245	1.0	0.3667	False
 S_coelicolor_A3_2	voting3:union	BGC0002127	flaviolin;1,3,6,8-tetrahydroxynaphthalene	3014	3		full	True	1.0	1.0	False	1	0.0733	0.0733	False	41126	13.645	19854.0	18258.0	0.0732	1.0	0.1364	False
 S_coelicolor_A3_2	voting3:union	BGC0000595	SCO-2138	21771	14		full	True	1.0	1.0	False	1	0.7339	0.7339	True	29663	1.363	6429.0	1463.0	0.6667	1.0	0.8	False
-S_coelicolor_A3_2	voting3:union	BGC0000910	melanin	1420	2		full	True	1.0	1.0	False	1	0.0424	0.0424	False	33477	23.575	9343.0	22714.0	0.0625	1.0	0.1176	False
+S_coelicolor_A3_2	voting3:union	BGC0000910	melanin	1420	2		full	True	1.0	1.0	False	1	0.0424	0.0424	False	33476	23.575	9342.0	22714.0	0.0625	1.0	0.1176	False
 S_coelicolor_A3_2	voting3:union	BGC0000940	desferrioxamin B;desferrioxamine E	7328	6		full	True	1.0	1.0	False	2	0.3541	0.4621	False	15857	2.164	5841.0	2688.0	0.5	1.0	0.6667	False
 S_coelicolor_A3_2	voting3:union	BGC0000315	CDA1b;CDA2a;CDA2b;CDA3a;CDA3b;CDA4a;CDA4b	82872	40		full	True	1.0	1.0	False	1	0.9098	0.9098	True	91084	1.099	6425.0	1787.0	0.8511	1.0	0.9195	False
 S_coelicolor_A3_2	voting3:union	BGC0000194	actinorhodin	21283	22		full	True	1.0	1.0	False	1	0.2936	0.2936	False	72496	3.406	18880.0	32333.0	0.3438	1.0	0.5116	False
 S_coelicolor_A3_2	voting3:union	BGC0000660	albaflavenone	2468	2		full	True	1.0	1.0	False	2	0.4164	0.7154	True	3450	1.398	0.0	982.0	0.6667	1.0	0.8	False
 S_coelicolor_A3_2	voting3:union	BGC0001063	undecylprodigiosin	31641	22		full	True	1.0	1.0	False	1	0.5993	0.5993	True	52794	1.669	8917.0	12236.0	0.5	1.0	0.6667	False
 S_coelicolor_A3_2	voting3:union	BGC0001181	geosmin	2181	1		full	True	1.0	1.0	False	1	0.0983	0.0983	False	22182	10.171	10001.0	10000.0	0.0556	1.0	0.1053	False
-S_coelicolor_A3_2	voting3:union	BGC0000038	coelimycin P1	57887	24		full	True	1.0	1.0	False	2	0.3114	0.3114	False	185872	3.211	109914.0	18071.0	0.1832	1.0	0.3097	False
-S_coelicolor_A3_2	voting3:union	BGC0000849	SCB1;SCB2;SCB3	1710	2	BGC0000038	full	True	1.0	1.0	False	2	0.0092	0.0092	False	185872	108.697	109914.0	74248.0	0.0153	1.0	0.0301	False
+S_coelicolor_A3_2	voting3:union	BGC0000038	coelimycin P1	57887	24		full	True	1.0	1.0	False	2	0.3114	0.3114	False	185871	3.211	109913.0	18071.0	0.1832	1.0	0.3097	False
+S_coelicolor_A3_2	voting3:union	BGC0000849	SCB1;SCB2;SCB3	1710	2	BGC0000038	full	True	1.0	1.0	False	2	0.0092	0.0092	False	185871	108.696	109913.0	74248.0	0.0153	1.0	0.0301	False
 S_coelicolor_A3_2	voting3:union	BGC0000551	SapB	6728	4		full	True	1.0	1.0	False	2	0.2736	0.2962	False	22716	3.376	9923.0	6065.0	0.2105	1.0	0.3478	False
 S_coelicolor_A3_2	voting3:union	BGC0000663	hopene	13757	13		full	True	1.0	1.0	False	1	0.2603	0.2603	False	52841	3.841	10001.0	29083.0	0.2766	1.0	0.4333	False
 S_coelicolor_A3_2	voting3:union	BGC0001283	Bisenarsan	30440	21		full	True	1.0	1.0	False	2	0.606	0.6323	True	48145	1.582	4009.0	13696.0	0.5833	1.0	0.7368	False
-S_coelicolor_A3_2	voting3:union	BGC0002128	5-dimethylallylindole-3-acetonitrile	8672	9		full	True	1.0	1.0	False	1	0.0563	0.0563	False	153934	17.751	111312.0	33950.0	0.0588	1.0	0.1111	False
-S_coelicolor_A3_2	voting3:union	BGC0000324	coelibactin	25121	11		full	True	1.0	1.0	False	1	0.1293	0.1293	False	194259	7.733	66311.0	102827.0	0.0585	1.0	0.1106	False
+S_coelicolor_A3_2	voting3:union	BGC0002128	5-dimethylallylindole-3-acetonitrile	8672	9		full	True	1.0	1.0	False	1	0.0563	0.0563	False	153933	17.751	111311.0	33950.0	0.0588	1.0	0.1111	False
+S_coelicolor_A3_2	voting3:union	BGC0000324	coelibactin	25121	11		full	True	1.0	1.0	False	1	0.1293	0.1293	False	194258	7.733	66310.0	102827.0	0.0585	1.0	0.1106	False
 S_coelicolor_A3_2	voting3:union	BGC0000914	methylenomycin A	19342	21		full	True	1.0	1.0	False	1	0.1972	0.1972	False	98104	5.072	5267.0	73495.0	0.1963	1.0	0.3281	False
 S_coelicolor_A3_2	voting3:multi	BGC0000325	coelichelin	22626	11		full	True	1.0	1.0	False	1	0.4434	0.4434	False	51033	2.256	17768.0	10639.0	0.2895	1.0	0.449	False
 S_coelicolor_A3_2	voting3:multi	BGC0002127	flaviolin;1,3,6,8-tetrahydroxynaphthalene	3014	3		full	True	1.0	1.0	False	1	0.4491	0.4491	False	6711	2.227	1648.0	2049.0	0.4286	1.0	0.6	False
@@ -233,60 +233,60 @@ S_coelicolor_A3_2	voting3:multi	BGC0001283	Bisenarsan	30440	21		missed	False	0.0
 S_coelicolor_A3_2	voting3:multi	BGC0002128	5-dimethylallylindole-3-acetonitrile	8672	9		full	True	1.0	1.0	False	1	0.7732	0.7732	True	11214	1.293	2543.0	-1.0	0.6923	1.0	0.8182	False
 S_coelicolor_A3_2	voting3:multi	BGC0000324	coelibactin	25121	11		full	True	1.0	1.0	False	1	0.4342	0.4342	False	57851	2.303	13308.0	19422.0	0.234	1.0	0.3793	False
 S_coelicolor_A3_2	voting3:multi	BGC0000914	methylenomycin A	19342	21		full	True	1.0	1.0	False	1	0.7981	0.7981	True	24234	1.253	0.0	4892.0	0.7	1.0	0.8235	False
-S_coelicolor_A3_2	containment:agreed	BGC0000325	coelichelin	22626	11		full	True	1.0	1.0	False	1	0.3824	0.3824	False	59172	2.615	20373.0	16173.0	0.234	1.0	0.3793	False
+S_coelicolor_A3_2	containment:agreed	BGC0000325	coelichelin	22626	11		full	True	1.0	1.0	False	1	0.3824	0.3824	False	59171	2.615	20372.0	16173.0	0.234	1.0	0.3793	False
 S_coelicolor_A3_2	containment:agreed	BGC0002127	flaviolin;1,3,6,8-tetrahydroxynaphthalene	3014	3		full	True	1.0	1.0	False	1	0.0733	0.0733	False	41126	13.645	19854.0	18258.0	0.0732	1.0	0.1364	False
 S_coelicolor_A3_2	containment:agreed	BGC0000595	SCO-2138	21771	14		full	True	1.0	1.0	False	1	0.7339	0.7339	True	29663	1.363	6429.0	1463.0	0.6667	1.0	0.8	False
-S_coelicolor_A3_2	containment:agreed	BGC0000910	melanin	1420	2		full	True	1.0	1.0	False	1	0.0424	0.0424	False	33477	23.575	9343.0	22714.0	0.0625	1.0	0.1176	False
+S_coelicolor_A3_2	containment:agreed	BGC0000910	melanin	1420	2		full	True	1.0	1.0	False	1	0.0424	0.0424	False	33476	23.575	9342.0	22714.0	0.0625	1.0	0.1176	False
 S_coelicolor_A3_2	containment:agreed	BGC0000940	desferrioxamin B;desferrioxamine E	7328	6		full	True	1.0	1.0	False	1	0.246	0.246	False	29789	4.065	8461.0	14000.0	0.24	1.0	0.3871	False
 S_coelicolor_A3_2	containment:agreed	BGC0000315	CDA1b;CDA2a;CDA2b;CDA3a;CDA3b;CDA4a;CDA4b	82872	40		full	True	1.0	1.0	False	1	0.9098	0.9098	True	91084	1.099	6425.0	1787.0	0.8511	1.0	0.9195	False
 S_coelicolor_A3_2	containment:agreed	BGC0000194	actinorhodin	21283	22		full	True	1.0	1.0	False	1	0.2936	0.2936	False	72496	3.406	18880.0	32333.0	0.3438	1.0	0.5116	False
 S_coelicolor_A3_2	containment:agreed	BGC0000660	albaflavenone	2468	2		full	True	1.0	1.0	False	1	0.1174	0.1174	False	21015	8.515	9929.0	8618.0	0.1	1.0	0.1818	False
 S_coelicolor_A3_2	containment:agreed	BGC0001063	undecylprodigiosin	31641	22		full	True	1.0	1.0	False	1	0.5993	0.5993	True	52794	1.669	8917.0	12236.0	0.5	1.0	0.6667	False
 S_coelicolor_A3_2	containment:agreed	BGC0001181	geosmin	2181	1		full	True	1.0	1.0	False	1	0.0983	0.0983	False	22182	10.171	10001.0	10000.0	0.0556	1.0	0.1053	False
-S_coelicolor_A3_2	containment:agreed	BGC0000038	coelimycin P1	57887	24		full	True	1.0	1.0	False	1	0.3114	0.3114	False	185872	3.211	109914.0	18071.0	0.1832	1.0	0.3097	False
-S_coelicolor_A3_2	containment:agreed	BGC0000849	SCB1;SCB2;SCB3	1710	2	BGC0000038	full	True	1.0	1.0	False	1	0.0092	0.0092	False	185872	108.697	109914.0	74248.0	0.0153	1.0	0.0301	False
+S_coelicolor_A3_2	containment:agreed	BGC0000038	coelimycin P1	57887	24		full	True	1.0	1.0	False	1	0.3114	0.3114	False	185871	3.211	109913.0	18071.0	0.1832	1.0	0.3097	False
+S_coelicolor_A3_2	containment:agreed	BGC0000849	SCB1;SCB2;SCB3	1710	2	BGC0000038	full	True	1.0	1.0	False	1	0.0092	0.0092	False	185871	108.696	109913.0	74248.0	0.0153	1.0	0.0301	False
 S_coelicolor_A3_2	containment:agreed	BGC0000551	SapB	6728	4		full	True	1.0	1.0	False	1	0.251	0.251	False	26804	3.984	6252.0	13824.0	0.2105	1.0	0.3478	False
 S_coelicolor_A3_2	containment:agreed	BGC0000663	hopene	13757	13		full	True	1.0	1.0	False	2	0.4071	0.5144	True	26743	1.944	10001.0	2985.0	0.52	1.0	0.6842	False
 S_coelicolor_A3_2	containment:agreed	BGC0001283	Bisenarsan	30440	21		full	True	1.0	1.0	False	1	0.6323	0.6323	True	48145	1.582	4009.0	13696.0	0.5833	1.0	0.7368	False
-S_coelicolor_A3_2	containment:agreed	BGC0002128	5-dimethylallylindole-3-acetonitrile	8672	9		full	True	1.0	1.0	False	1	0.0563	0.0563	False	153934	17.751	111312.0	33950.0	0.0588	1.0	0.1111	False
-S_coelicolor_A3_2	containment:agreed	BGC0000324	coelibactin	25121	11		full	True	1.0	1.0	False	1	0.1293	0.1293	False	194259	7.733	66311.0	102827.0	0.0585	1.0	0.1106	False
-S_coelicolor_A3_2	containment:agreed	BGC0000914	methylenomycin A	19342	21		full	True	1.0	1.0	False	1	0.2083	0.2083	False	92838	4.8	1.0	73495.0	0.2039	1.0	0.3387	False
-S_coelicolor_A3_2	containment:union	BGC0000325	coelichelin	22626	11		full	True	1.0	1.0	False	1	0.3657	0.3657	False	61876	2.735	20373.0	18877.0	0.2245	1.0	0.3667	False
+S_coelicolor_A3_2	containment:agreed	BGC0002128	5-dimethylallylindole-3-acetonitrile	8672	9		full	True	1.0	1.0	False	1	0.0563	0.0563	False	153933	17.751	111311.0	33950.0	0.0588	1.0	0.1111	False
+S_coelicolor_A3_2	containment:agreed	BGC0000324	coelibactin	25121	11		full	True	1.0	1.0	False	1	0.1293	0.1293	False	194258	7.733	66310.0	102827.0	0.0585	1.0	0.1106	False
+S_coelicolor_A3_2	containment:agreed	BGC0000914	methylenomycin A	19342	21		full	True	1.0	1.0	False	1	0.2083	0.2083	False	92837	4.8	0.0	73495.0	0.2039	1.0	0.3387	False
+S_coelicolor_A3_2	containment:union	BGC0000325	coelichelin	22626	11		full	True	1.0	1.0	False	1	0.3657	0.3657	False	61875	2.735	20372.0	18877.0	0.2245	1.0	0.3667	False
 S_coelicolor_A3_2	containment:union	BGC0002127	flaviolin;1,3,6,8-tetrahydroxynaphthalene	3014	3		full	True	1.0	1.0	False	1	0.0733	0.0733	False	41126	13.645	19854.0	18258.0	0.0732	1.0	0.1364	False
 S_coelicolor_A3_2	containment:union	BGC0000595	SCO-2138	21771	14		full	True	1.0	1.0	False	1	0.7339	0.7339	True	29663	1.363	6429.0	1463.0	0.6667	1.0	0.8	False
-S_coelicolor_A3_2	containment:union	BGC0000910	melanin	1420	2		full	True	1.0	1.0	False	1	0.0424	0.0424	False	33477	23.575	9343.0	22714.0	0.0625	1.0	0.1176	False
+S_coelicolor_A3_2	containment:union	BGC0000910	melanin	1420	2		full	True	1.0	1.0	False	1	0.0424	0.0424	False	33476	23.575	9342.0	22714.0	0.0625	1.0	0.1176	False
 S_coelicolor_A3_2	containment:union	BGC0000940	desferrioxamin B;desferrioxamine E	7328	6		full	True	1.0	1.0	False	1	0.246	0.246	False	29789	4.065	8461.0	14000.0	0.24	1.0	0.3871	False
 S_coelicolor_A3_2	containment:union	BGC0000315	CDA1b;CDA2a;CDA2b;CDA3a;CDA3b;CDA4a;CDA4b	82872	40		full	True	1.0	1.0	False	1	0.9098	0.9098	True	91084	1.099	6425.0	1787.0	0.8511	1.0	0.9195	False
 S_coelicolor_A3_2	containment:union	BGC0000194	actinorhodin	21283	22		full	True	1.0	1.0	False	1	0.2936	0.2936	False	72496	3.406	18880.0	32333.0	0.3438	1.0	0.5116	False
 S_coelicolor_A3_2	containment:union	BGC0000660	albaflavenone	2468	2		full	True	1.0	1.0	False	1	0.1174	0.1174	False	21015	8.515	9929.0	8618.0	0.1	1.0	0.1818	False
 S_coelicolor_A3_2	containment:union	BGC0001063	undecylprodigiosin	31641	22		full	True	1.0	1.0	False	1	0.5993	0.5993	True	52794	1.669	8917.0	12236.0	0.5	1.0	0.6667	False
 S_coelicolor_A3_2	containment:union	BGC0001181	geosmin	2181	1		full	True	1.0	1.0	False	1	0.0983	0.0983	False	22182	10.171	10001.0	10000.0	0.0556	1.0	0.1053	False
-S_coelicolor_A3_2	containment:union	BGC0000038	coelimycin P1	57887	24		full	True	1.0	1.0	False	1	0.3114	0.3114	False	185872	3.211	109914.0	18071.0	0.1832	1.0	0.3097	False
-S_coelicolor_A3_2	containment:union	BGC0000849	SCB1;SCB2;SCB3	1710	2	BGC0000038	full	True	1.0	1.0	False	1	0.0092	0.0092	False	185872	108.697	109914.0	74248.0	0.0153	1.0	0.0301	False
+S_coelicolor_A3_2	containment:union	BGC0000038	coelimycin P1	57887	24		full	True	1.0	1.0	False	1	0.3114	0.3114	False	185871	3.211	109913.0	18071.0	0.1832	1.0	0.3097	False
+S_coelicolor_A3_2	containment:union	BGC0000849	SCB1;SCB2;SCB3	1710	2	BGC0000038	full	True	1.0	1.0	False	1	0.0092	0.0092	False	185871	108.696	109913.0	74248.0	0.0153	1.0	0.0301	False
 S_coelicolor_A3_2	containment:union	BGC0000551	SapB	6728	4		full	True	1.0	1.0	False	1	0.2208	0.2208	False	30475	4.53	9923.0	13824.0	0.1818	1.0	0.3077	False
 S_coelicolor_A3_2	containment:union	BGC0000663	hopene	13757	13		full	True	1.0	1.0	False	2	0.4071	0.5144	True	26743	1.944	10001.0	2985.0	0.52	1.0	0.6842	False
 S_coelicolor_A3_2	containment:union	BGC0001283	Bisenarsan	30440	21		full	True	1.0	1.0	False	1	0.6323	0.6323	True	48145	1.582	4009.0	13696.0	0.5833	1.0	0.7368	False
-S_coelicolor_A3_2	containment:union	BGC0002128	5-dimethylallylindole-3-acetonitrile	8672	9		full	True	1.0	1.0	False	1	0.0563	0.0563	False	153934	17.751	111312.0	33950.0	0.0588	1.0	0.1111	False
-S_coelicolor_A3_2	containment:union	BGC0000324	coelibactin	25121	11		full	True	1.0	1.0	False	1	0.1293	0.1293	False	194259	7.733	66311.0	102827.0	0.0585	1.0	0.1106	False
+S_coelicolor_A3_2	containment:union	BGC0002128	5-dimethylallylindole-3-acetonitrile	8672	9		full	True	1.0	1.0	False	1	0.0563	0.0563	False	153933	17.751	111311.0	33950.0	0.0588	1.0	0.1111	False
+S_coelicolor_A3_2	containment:union	BGC0000324	coelibactin	25121	11		full	True	1.0	1.0	False	1	0.1293	0.1293	False	194258	7.733	66310.0	102827.0	0.0585	1.0	0.1106	False
 S_coelicolor_A3_2	containment:union	BGC0000914	methylenomycin A	19342	21		full	True	1.0	1.0	False	1	0.1972	0.1972	False	98104	5.072	5267.0	73495.0	0.1963	1.0	0.3281	False
-S_coelicolor_A3_2	containment:multi	BGC0000325	coelichelin	22626	11		full	True	1.0	1.0	False	1	0.3824	0.3824	False	59172	2.615	20373.0	16173.0	0.234	1.0	0.3793	False
+S_coelicolor_A3_2	containment:multi	BGC0000325	coelichelin	22626	11		full	True	1.0	1.0	False	1	0.3824	0.3824	False	59171	2.615	20372.0	16173.0	0.234	1.0	0.3793	False
 S_coelicolor_A3_2	containment:multi	BGC0002127	flaviolin;1,3,6,8-tetrahydroxynaphthalene	3014	3		full	True	1.0	1.0	False	1	0.0733	0.0733	False	41126	13.645	19854.0	18258.0	0.0732	1.0	0.1364	False
 S_coelicolor_A3_2	containment:multi	BGC0000595	SCO-2138	21771	14		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
-S_coelicolor_A3_2	containment:multi	BGC0000910	melanin	1420	2		full	True	1.0	1.0	False	1	0.0424	0.0424	False	33477	23.575	9343.0	22714.0	0.0625	1.0	0.1176	False
+S_coelicolor_A3_2	containment:multi	BGC0000910	melanin	1420	2		full	True	1.0	1.0	False	1	0.0424	0.0424	False	33476	23.575	9342.0	22714.0	0.0625	1.0	0.1176	False
 S_coelicolor_A3_2	containment:multi	BGC0000940	desferrioxamin B;desferrioxamine E	7328	6		full	True	1.0	1.0	False	1	0.246	0.246	False	29789	4.065	8461.0	14000.0	0.24	1.0	0.3871	False
 S_coelicolor_A3_2	containment:multi	BGC0000315	CDA1b;CDA2a;CDA2b;CDA3a;CDA3b;CDA4a;CDA4b	82872	40		full	True	1.0	1.0	False	1	0.9098	0.9098	True	91084	1.099	6425.0	1787.0	0.8511	1.0	0.9195	False
 S_coelicolor_A3_2	containment:multi	BGC0000194	actinorhodin	21283	22		full	True	1.0	1.0	False	1	0.2936	0.2936	False	72496	3.406	18880.0	32333.0	0.3438	1.0	0.5116	False
 S_coelicolor_A3_2	containment:multi	BGC0000660	albaflavenone	2468	2		full	True	1.0	1.0	False	1	0.1174	0.1174	False	21015	8.515	9929.0	8618.0	0.1	1.0	0.1818	False
 S_coelicolor_A3_2	containment:multi	BGC0001063	undecylprodigiosin	31641	22		full	True	1.0	1.0	False	1	0.5993	0.5993	True	52794	1.669	8917.0	12236.0	0.5	1.0	0.6667	False
 S_coelicolor_A3_2	containment:multi	BGC0001181	geosmin	2181	1		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
-S_coelicolor_A3_2	containment:multi	BGC0000038	coelimycin P1	57887	24		full	True	1.0	1.0	False	1	0.3114	0.3114	False	185872	3.211	109914.0	18071.0	0.1832	1.0	0.3097	False
-S_coelicolor_A3_2	containment:multi	BGC0000849	SCB1;SCB2;SCB3	1710	2	BGC0000038	full	True	1.0	1.0	False	1	0.0092	0.0092	False	185872	108.697	109914.0	74248.0	0.0153	1.0	0.0301	False
+S_coelicolor_A3_2	containment:multi	BGC0000038	coelimycin P1	57887	24		full	True	1.0	1.0	False	1	0.3114	0.3114	False	185871	3.211	109913.0	18071.0	0.1832	1.0	0.3097	False
+S_coelicolor_A3_2	containment:multi	BGC0000849	SCB1;SCB2;SCB3	1710	2	BGC0000038	full	True	1.0	1.0	False	1	0.0092	0.0092	False	185871	108.696	109913.0	74248.0	0.0153	1.0	0.0301	False
 S_coelicolor_A3_2	containment:multi	BGC0000551	SapB	6728	4		full	True	1.0	1.0	False	1	0.251	0.251	False	26804	3.984	6252.0	13824.0	0.2105	1.0	0.3478	False
 S_coelicolor_A3_2	containment:multi	BGC0000663	hopene	13757	13		full	True	1.0	1.0	False	1	0.5144	0.5144	True	26743	1.944	10001.0	2985.0	0.52	1.0	0.6842	False
 S_coelicolor_A3_2	containment:multi	BGC0001283	Bisenarsan	30440	21		full	True	1.0	1.0	False	1	0.6323	0.6323	True	48145	1.582	4009.0	13696.0	0.5833	1.0	0.7368	False
-S_coelicolor_A3_2	containment:multi	BGC0002128	5-dimethylallylindole-3-acetonitrile	8672	9		full	True	1.0	1.0	False	1	0.0563	0.0563	False	153934	17.751	111312.0	33950.0	0.0588	1.0	0.1111	False
-S_coelicolor_A3_2	containment:multi	BGC0000324	coelibactin	25121	11		full	True	1.0	1.0	False	1	0.1293	0.1293	False	194259	7.733	66311.0	102827.0	0.0585	1.0	0.1106	False
-S_coelicolor_A3_2	containment:multi	BGC0000914	methylenomycin A	19342	21		full	True	1.0	1.0	False	1	0.2083	0.2083	False	92838	4.8	1.0	73495.0	0.2039	1.0	0.3387	False
+S_coelicolor_A3_2	containment:multi	BGC0002128	5-dimethylallylindole-3-acetonitrile	8672	9		full	True	1.0	1.0	False	1	0.0563	0.0563	False	153933	17.751	111311.0	33950.0	0.0588	1.0	0.1111	False
+S_coelicolor_A3_2	containment:multi	BGC0000324	coelibactin	25121	11		full	True	1.0	1.0	False	1	0.1293	0.1293	False	194258	7.733	66310.0	102827.0	0.0585	1.0	0.1106	False
+S_coelicolor_A3_2	containment:multi	BGC0000914	methylenomycin A	19342	21		full	True	1.0	1.0	False	1	0.2083	0.2083	False	92837	4.8	0.0	73495.0	0.2039	1.0	0.3387	False
 S_albidoflavus_J1074	antismash	BGC0001731	paulomycin	63997	57		partial	True	0.641	0.641	False	1	0.6415	0.6415	True	41051	0.641	-6234.0	-16712.0	1.0	0.6316	0.7742	False
 S_albidoflavus_J1074	antismash	BGC0002358	cyclofaulknamycin	47145	24		full	True	1.0	1.0	False	1	0.7471	0.7471	True	63108	1.339	2703.0	13260.0	0.6154	1.0	0.7619	False
 S_albidoflavus_J1074	antismash	BGC0000546	SAL-2242	7946	5		full	True	1.0	1.0	False	1	0.3519	0.3519	False	22581	2.842	4767.0	9868.0	0.2778	1.0	0.4348	False
@@ -301,15 +301,15 @@ S_albidoflavus_J1074	gecco	BGC0001792	surugamide A;surugamide D	82464	21		full	T
 S_albidoflavus_J1074	gecco	BGC0002115	streptamidine	14439	12		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
 S_albidoflavus_J1074	gecco	BGC0000034	candicidin	149440	30		full	True	1.0	1.0	False	1	0.5846	0.5846	True	255613	1.71	9006.0	97167.0	0.3529	1.0	0.5217	True
 S_albidoflavus_J1074	gecco	BGC0000958	antimycin	24626	14		full	True	1.0	1.0	False	1	0.0963	0.0963	False	255613	10.38	155225.0	75762.0	0.1647	1.0	0.2828	True
-S_albidoflavus_J1074	deepbgc	BGC0001731	paulomycin	63997	57		full	True	1.0	1.0	False	1	0.2987	0.2987	False	214275	3.348	92298.0	57980.0	0.2984	1.0	0.4597	False
-S_albidoflavus_J1074	deepbgc	BGC0002358	cyclofaulknamycin	47145	24		partial	True	0.914	0.914	False	1	0.9136	0.9136	True	43070	0.914	-4075.0	0.0	1.0	0.8333	0.9091	False
+S_albidoflavus_J1074	deepbgc	BGC0001731	paulomycin	63997	57		full	True	1.0	1.0	False	1	0.2987	0.2987	False	214274	3.348	92297.0	57980.0	0.2984	1.0	0.4597	False
+S_albidoflavus_J1074	deepbgc	BGC0002358	cyclofaulknamycin	47145	24		partial	True	0.914	0.914	False	1	0.9135	0.9135	True	43069	0.914	-4076.0	0.0	1.0	0.8333	0.9091	False
 S_albidoflavus_J1074	deepbgc	BGC0000546	SAL-2242	7946	5		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
-S_albidoflavus_J1074	deepbgc	BGC0001792	surugamide A;surugamide D	82464	21		full	True	1.0	1.0	False	1	0.4239	0.4239	False	194515	2.359	102532.0	9519.0	0.1707	1.0	0.2917	False
-S_albidoflavus_J1074	deepbgc	BGC0002115	streptamidine	14439	12		full	True	1.0	1.0	False	1	0.1236	0.1236	False	116784	8.088	102345.0	0.0	0.1091	1.0	0.1967	False
-S_albidoflavus_J1074	deepbgc	BGC0000034	candicidin	149440	30		full	True	1.0	1.0	False	1	0.4939	0.4939	False	302556	2.025	48929.0	104187.0	0.2222	1.0	0.3636	True
-S_albidoflavus_J1074	deepbgc	BGC0000958	antimycin	24626	14		full	True	1.0	1.0	False	1	0.0814	0.0814	False	302556	12.286	195148.0	82782.0	0.1037	1.0	0.1879	True
+S_albidoflavus_J1074	deepbgc	BGC0001792	surugamide A;surugamide D	82464	21		full	True	1.0	1.0	False	1	0.4239	0.4239	False	194514	2.359	102531.0	9519.0	0.1707	1.0	0.2917	False
+S_albidoflavus_J1074	deepbgc	BGC0002115	streptamidine	14439	12		full	True	1.0	1.0	False	1	0.1236	0.1236	False	116783	8.088	102344.0	0.0	0.1091	1.0	0.1967	False
+S_albidoflavus_J1074	deepbgc	BGC0000034	candicidin	149440	30		full	True	1.0	1.0	False	1	0.4939	0.4939	False	302555	2.025	48928.0	104187.0	0.2222	1.0	0.3636	True
+S_albidoflavus_J1074	deepbgc	BGC0000958	antimycin	24626	14		full	True	1.0	1.0	False	1	0.0814	0.0814	False	302555	12.286	195147.0	82782.0	0.1037	1.0	0.1879	True
 S_albidoflavus_J1074	side_by_side	BGC0001731	paulomycin	63997	57		full	True	1.0	1.0	False	3	0.6022	0.8664	True	66468	1.039	5905.0	-3434.0	0.9	0.9474	0.9231	False
-S_albidoflavus_J1074	side_by_side	BGC0002358	cyclofaulknamycin	47145	24		full	True	1.0	1.0	False	3	0.8109	0.9136	True	43070	0.914	-4075.0	0.0	1.0	0.8333	0.9091	False
+S_albidoflavus_J1074	side_by_side	BGC0002358	cyclofaulknamycin	47145	24		full	True	1.0	1.0	False	3	0.8109	0.9135	True	43069	0.914	-4076.0	0.0	1.0	0.8333	0.9091	False
 S_albidoflavus_J1074	side_by_side	BGC0000546	SAL-2242	7946	5		full	True	1.0	1.0	False	2	0.2925	0.3519	False	22581	2.842	4767.0	9868.0	0.2778	1.0	0.4348	False
 S_albidoflavus_J1074	side_by_side	BGC0001792	surugamide A;surugamide D	82464	21		full	True	1.0	1.0	False	3	0.6971	0.9084	True	87521	1.061	-1549.0	6606.0	0.7917	0.9048	0.8444	False
 S_albidoflavus_J1074	side_by_side	BGC0002115	streptamidine	14439	12		full	True	1.0	1.0	False	2	0.4498	0.7759	True	11369	0.787	-3163.0	93.0	1.0	0.75	0.8571	False
@@ -322,13 +322,13 @@ S_albidoflavus_J1074	voting2:agreed	BGC0001792	surugamide A;surugamide D	82464	2
 S_albidoflavus_J1074	voting2:agreed	BGC0002115	streptamidine	14439	12		partial	True	0.833	0.833	False	1	0.8332	0.8332	True	12031	0.833	-2408.0	0.0	1.0	0.8333	0.9091	False
 S_albidoflavus_J1074	voting2:agreed	BGC0000034	candicidin	149440	30		full	True	1.0	1.0	False	1	0.5498	0.5498	True	271790	1.819	18163.0	104187.0	0.2885	1.0	0.4478	True
 S_albidoflavus_J1074	voting2:agreed	BGC0000958	antimycin	24626	14		full	True	1.0	1.0	False	1	0.0906	0.0906	False	271790	11.037	164382.0	82782.0	0.1346	1.0	0.2373	True
-S_albidoflavus_J1074	voting2:union	BGC0001731	paulomycin	63997	57		full	True	1.0	1.0	False	1	0.2987	0.2987	False	214275	3.348	92298.0	57980.0	0.2984	1.0	0.4597	False
+S_albidoflavus_J1074	voting2:union	BGC0001731	paulomycin	63997	57		full	True	1.0	1.0	False	1	0.2987	0.2987	False	214274	3.348	92297.0	57980.0	0.2984	1.0	0.4597	False
 S_albidoflavus_J1074	voting2:union	BGC0002358	cyclofaulknamycin	47145	24		full	True	1.0	1.0	False	1	0.7471	0.7471	True	63108	1.339	2703.0	13260.0	0.6154	1.0	0.7619	False
 S_albidoflavus_J1074	voting2:union	BGC0000546	SAL-2242	7946	5		full	True	1.0	1.0	False	2	0.163	0.2292	False	34674	4.364	16860.0	9868.0	0.2174	1.0	0.3571	False
-S_albidoflavus_J1074	voting2:union	BGC0001792	surugamide A;surugamide D	82464	21		full	True	1.0	1.0	False	1	0.4133	0.4133	False	199539	2.42	102532.0	14543.0	0.1654	1.0	0.2838	False
-S_albidoflavus_J1074	voting2:union	BGC0002115	streptamidine	14439	12		full	True	1.0	1.0	False	2	0.1236	0.1236	False	116784	8.088	102345.0	0.0	0.1091	1.0	0.1967	False
-S_albidoflavus_J1074	voting2:union	BGC0000034	candicidin	149440	30		full	True	1.0	1.0	False	2	0.4817	0.4928	False	303216	2.029	48929.0	104847.0	0.2222	1.0	0.3636	True
-S_albidoflavus_J1074	voting2:union	BGC0000958	antimycin	24626	14		full	True	1.0	1.0	False	2	0.0794	0.0812	False	303216	12.313	195148.0	83442.0	0.1037	1.0	0.1879	True
+S_albidoflavus_J1074	voting2:union	BGC0001792	surugamide A;surugamide D	82464	21		full	True	1.0	1.0	False	1	0.4133	0.4133	False	199538	2.42	102531.0	14543.0	0.1654	1.0	0.2838	False
+S_albidoflavus_J1074	voting2:union	BGC0002115	streptamidine	14439	12		full	True	1.0	1.0	False	2	0.1236	0.1236	False	116783	8.088	102344.0	0.0	0.1091	1.0	0.1967	False
+S_albidoflavus_J1074	voting2:union	BGC0000034	candicidin	149440	30		full	True	1.0	1.0	False	2	0.4817	0.4929	False	303215	2.029	48928.0	104847.0	0.2222	1.0	0.3636	True
+S_albidoflavus_J1074	voting2:union	BGC0000958	antimycin	24626	14		full	True	1.0	1.0	False	2	0.0794	0.0812	False	303215	12.313	195147.0	83442.0	0.1037	1.0	0.1879	True
 S_albidoflavus_J1074	voting2:multi	BGC0001731	paulomycin	63997	57		partial	True	0.946	0.946	False	1	0.8664	0.8664	True	66468	1.039	5905.0	-3434.0	0.9	0.9474	0.9231	False
 S_albidoflavus_J1074	voting2:multi	BGC0002358	cyclofaulknamycin	47145	24		partial	True	0.932	0.932	False	1	0.8343	0.8343	True	49445	1.049	-3213.0	5513.0	0.84	0.875	0.8571	False
 S_albidoflavus_J1074	voting2:multi	BGC0000546	SAL-2242	7946	5		full	True	1.0	1.0	False	1	0.3545	0.3545	False	22412	2.821	5199.0	9267.0	0.2778	1.0	0.4348	False
@@ -343,11 +343,11 @@ S_albidoflavus_J1074	voting1:agreed	BGC0001792	surugamide A;surugamide D	82464	2
 S_albidoflavus_J1074	voting1:agreed	BGC0002115	streptamidine	14439	12		full	True	1.0	1.0	False	1	0.1236	0.1236	False	116783	8.088	102344.0	0.0	0.1091	1.0	0.1967	False
 S_albidoflavus_J1074	voting1:agreed	BGC0000034	candicidin	149440	30		full	True	1.0	1.0	False	1	0.4675	0.4675	False	319627	2.139	66000.0	104187.0	0.1974	1.0	0.3297	True
 S_albidoflavus_J1074	voting1:agreed	BGC0000958	antimycin	24626	14		full	True	1.0	1.0	False	1	0.077	0.077	False	319627	12.979	212219.0	82782.0	0.0921	1.0	0.1687	True
-S_albidoflavus_J1074	voting1:union	BGC0001731	paulomycin	63997	57		full	True	1.0	1.0	False	1	0.2987	0.2987	False	214275	3.348	92298.0	57980.0	0.2984	1.0	0.4597	False
+S_albidoflavus_J1074	voting1:union	BGC0001731	paulomycin	63997	57		full	True	1.0	1.0	False	1	0.2987	0.2987	False	214274	3.348	92297.0	57980.0	0.2984	1.0	0.4597	False
 S_albidoflavus_J1074	voting1:union	BGC0002358	cyclofaulknamycin	47145	24		full	True	1.0	1.0	False	1	0.7471	0.7471	True	63108	1.339	2703.0	13260.0	0.6154	1.0	0.7619	False
-S_albidoflavus_J1074	voting1:union	BGC0000546	SAL-2242	7946	5		full	True	1.0	1.0	False	1	0.0962	0.0962	False	82586	10.393	64772.0	9868.0	0.0704	1.0	0.1316	False
-S_albidoflavus_J1074	voting1:union	BGC0001792	surugamide A;surugamide D	82464	21		full	True	1.0	1.0	False	1	0.4133	0.4133	False	199539	2.42	102532.0	14543.0	0.1654	1.0	0.2838	False
-S_albidoflavus_J1074	voting1:union	BGC0002115	streptamidine	14439	12		full	True	1.0	1.0	False	1	0.1235	0.1235	False	116877	8.095	102345.0	93.0	0.1091	1.0	0.1967	False
+S_albidoflavus_J1074	voting1:union	BGC0000546	SAL-2242	7946	5		full	True	1.0	1.0	False	1	0.0962	0.0962	False	82585	10.393	64771.0	9868.0	0.0704	1.0	0.1316	False
+S_albidoflavus_J1074	voting1:union	BGC0001792	surugamide A;surugamide D	82464	21		full	True	1.0	1.0	False	1	0.4133	0.4133	False	199538	2.42	102531.0	14543.0	0.1654	1.0	0.2838	False
+S_albidoflavus_J1074	voting1:union	BGC0002115	streptamidine	14439	12		full	True	1.0	1.0	False	1	0.1235	0.1235	False	116876	8.094	102344.0	93.0	0.1091	1.0	0.1967	False
 S_albidoflavus_J1074	voting1:union	BGC0000034	candicidin	149440	30		full	True	1.0	1.0	False	1	0.4695	0.4695	False	318267	2.13	63980.0	104847.0	0.1987	1.0	0.3315	True
 S_albidoflavus_J1074	voting1:union	BGC0000958	antimycin	24626	14		full	True	1.0	1.0	False	1	0.0774	0.0774	False	318267	12.924	210199.0	83442.0	0.0927	1.0	0.1697	True
 S_albidoflavus_J1074	voting1:multi	BGC0001731	paulomycin	63997	57		full	True	1.0	1.0	False	1	0.2987	0.2987	False	214274	3.348	92297.0	57980.0	0.2984	1.0	0.4597	False
@@ -364,13 +364,13 @@ S_albidoflavus_J1074	voting3:agreed	BGC0001792	surugamide A;surugamide D	82464	2
 S_albidoflavus_J1074	voting3:agreed	BGC0002115	streptamidine	14439	12		partial	True	0.781	0.781	False	1	0.7759	0.7759	True	11369	0.787	-3163.0	93.0	1.0	0.75	0.8571	False
 S_albidoflavus_J1074	voting3:agreed	BGC0000034	candicidin	149440	30		full	True	1.0	1.0	False	1	0.5846	0.5846	True	255613	1.71	9006.0	97167.0	0.3529	1.0	0.5217	True
 S_albidoflavus_J1074	voting3:agreed	BGC0000958	antimycin	24626	14		full	True	1.0	1.0	False	1	0.0963	0.0963	False	255613	10.38	155225.0	75762.0	0.1647	1.0	0.2828	True
-S_albidoflavus_J1074	voting3:union	BGC0001731	paulomycin	63997	57		full	True	1.0	1.0	False	1	0.2987	0.2987	False	214275	3.348	92298.0	57980.0	0.2984	1.0	0.4597	False
+S_albidoflavus_J1074	voting3:union	BGC0001731	paulomycin	63997	57		full	True	1.0	1.0	False	1	0.2987	0.2987	False	214274	3.348	92297.0	57980.0	0.2984	1.0	0.4597	False
 S_albidoflavus_J1074	voting3:union	BGC0002358	cyclofaulknamycin	47145	24		full	True	1.0	1.0	False	1	0.7471	0.7471	True	63108	1.339	2703.0	13260.0	0.6154	1.0	0.7619	False
 S_albidoflavus_J1074	voting3:union	BGC0000546	SAL-2242	7946	5		full	True	1.0	1.0	False	2	0.2925	0.3519	False	22581	2.842	4767.0	9868.0	0.2778	1.0	0.4348	False
-S_albidoflavus_J1074	voting3:union	BGC0001792	surugamide A;surugamide D	82464	21		full	True	1.0	1.0	False	1	0.4133	0.4133	False	199539	2.42	102532.0	14543.0	0.1654	1.0	0.2838	False
+S_albidoflavus_J1074	voting3:union	BGC0001792	surugamide A;surugamide D	82464	21		full	True	1.0	1.0	False	1	0.4133	0.4133	False	199538	2.42	102531.0	14543.0	0.1654	1.0	0.2838	False
 S_albidoflavus_J1074	voting3:union	BGC0002115	streptamidine	14439	12		full	True	1.0	1.0	False	2	0.4498	0.7759	True	11369	0.787	-3163.0	93.0	1.0	0.75	0.8571	False
-S_albidoflavus_J1074	voting3:union	BGC0000034	candicidin	149440	30		full	True	1.0	1.0	False	2	0.4817	0.4928	False	303216	2.029	48929.0	104847.0	0.2222	1.0	0.3636	True
-S_albidoflavus_J1074	voting3:union	BGC0000958	antimycin	24626	14		full	True	1.0	1.0	False	2	0.0794	0.0812	False	303216	12.313	195148.0	83442.0	0.1037	1.0	0.1879	True
+S_albidoflavus_J1074	voting3:union	BGC0000034	candicidin	149440	30		full	True	1.0	1.0	False	2	0.4817	0.4929	False	303215	2.029	48928.0	104847.0	0.2222	1.0	0.3636	True
+S_albidoflavus_J1074	voting3:union	BGC0000958	antimycin	24626	14		full	True	1.0	1.0	False	2	0.0794	0.0812	False	303215	12.313	195147.0	83442.0	0.1037	1.0	0.1879	True
 S_albidoflavus_J1074	voting3:multi	BGC0001731	paulomycin	63997	57		partial	True	0.661	0.661	False	1	0.6611	0.6611	True	42309	0.661	-4969.0	-16719.0	1.0	0.6491	0.7872	False
 S_albidoflavus_J1074	voting3:multi	BGC0002358	cyclofaulknamycin	47145	24		partial	True	0.887	0.887	False	1	0.887	0.887	True	41817	0.887	-5328.0	0.0	1.0	0.7917	0.8837	False
 S_albidoflavus_J1074	voting3:multi	BGC0000546	SAL-2242	7946	5		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
@@ -378,27 +378,27 @@ S_albidoflavus_J1074	voting3:multi	BGC0001792	surugamide A;surugamide D	82464	21
 S_albidoflavus_J1074	voting3:multi	BGC0002115	streptamidine	14439	12		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
 S_albidoflavus_J1074	voting3:multi	BGC0000034	candicidin	149440	30		full	True	1.0	1.0	False	1	0.5846	0.5846	True	255613	1.71	9006.0	97167.0	0.3529	1.0	0.5217	True
 S_albidoflavus_J1074	voting3:multi	BGC0000958	antimycin	24626	14		full	True	1.0	1.0	False	1	0.0963	0.0963	False	255613	10.38	155225.0	75762.0	0.1647	1.0	0.2828	True
-S_albidoflavus_J1074	containment:agreed	BGC0001731	paulomycin	63997	57		full	True	1.0	1.0	False	1	0.2987	0.2987	False	214275	3.348	92298.0	57980.0	0.2984	1.0	0.4597	False
+S_albidoflavus_J1074	containment:agreed	BGC0001731	paulomycin	63997	57		full	True	1.0	1.0	False	1	0.2987	0.2987	False	214274	3.348	92297.0	57980.0	0.2984	1.0	0.4597	False
 S_albidoflavus_J1074	containment:agreed	BGC0002358	cyclofaulknamycin	47145	24		full	True	1.0	1.0	False	1	0.7471	0.7471	True	63108	1.339	2703.0	13260.0	0.6154	1.0	0.7619	False
 S_albidoflavus_J1074	containment:agreed	BGC0000546	SAL-2242	7946	5		full	True	1.0	1.0	False	1	0.2332	0.2332	False	34073	4.288	16860.0	9267.0	0.2174	1.0	0.3571	False
-S_albidoflavus_J1074	containment:agreed	BGC0001792	surugamide A;surugamide D	82464	21		full	True	1.0	1.0	False	1	0.4239	0.4239	False	194515	2.359	102532.0	9519.0	0.1707	1.0	0.2917	False
+S_albidoflavus_J1074	containment:agreed	BGC0001792	surugamide A;surugamide D	82464	21		full	True	1.0	1.0	False	1	0.4239	0.4239	False	194514	2.359	102531.0	9519.0	0.1707	1.0	0.2917	False
 S_albidoflavus_J1074	containment:agreed	BGC0002115	streptamidine	14439	12		full	True	1.0	1.0	False	2	0.4498	0.7759	True	11369	0.787	-3163.0	93.0	1.0	0.75	0.8571	False
-S_albidoflavus_J1074	containment:agreed	BGC0000034	candicidin	149440	30		full	True	1.0	1.0	False	1	0.4939	0.4939	False	302556	2.025	48929.0	104187.0	0.2222	1.0	0.3636	True
-S_albidoflavus_J1074	containment:agreed	BGC0000958	antimycin	24626	14		full	True	1.0	1.0	False	1	0.0814	0.0814	False	302556	12.286	195148.0	82782.0	0.1037	1.0	0.1879	True
-S_albidoflavus_J1074	containment:union	BGC0001731	paulomycin	63997	57		full	True	1.0	1.0	False	1	0.2987	0.2987	False	214275	3.348	92298.0	57980.0	0.2984	1.0	0.4597	False
+S_albidoflavus_J1074	containment:agreed	BGC0000034	candicidin	149440	30		full	True	1.0	1.0	False	1	0.4939	0.4939	False	302555	2.025	48928.0	104187.0	0.2222	1.0	0.3636	True
+S_albidoflavus_J1074	containment:agreed	BGC0000958	antimycin	24626	14		full	True	1.0	1.0	False	1	0.0814	0.0814	False	302555	12.286	195147.0	82782.0	0.1037	1.0	0.1879	True
+S_albidoflavus_J1074	containment:union	BGC0001731	paulomycin	63997	57		full	True	1.0	1.0	False	1	0.2987	0.2987	False	214274	3.348	92297.0	57980.0	0.2984	1.0	0.4597	False
 S_albidoflavus_J1074	containment:union	BGC0002358	cyclofaulknamycin	47145	24		full	True	1.0	1.0	False	1	0.7471	0.7471	True	63108	1.339	2703.0	13260.0	0.6154	1.0	0.7619	False
 S_albidoflavus_J1074	containment:union	BGC0000546	SAL-2242	7946	5		full	True	1.0	1.0	False	1	0.2292	0.2292	False	34674	4.364	16860.0	9868.0	0.2174	1.0	0.3571	False
-S_albidoflavus_J1074	containment:union	BGC0001792	surugamide A;surugamide D	82464	21		full	True	1.0	1.0	False	1	0.4133	0.4133	False	199539	2.42	102532.0	14543.0	0.1654	1.0	0.2838	False
+S_albidoflavus_J1074	containment:union	BGC0001792	surugamide A;surugamide D	82464	21		full	True	1.0	1.0	False	1	0.4133	0.4133	False	199538	2.42	102531.0	14543.0	0.1654	1.0	0.2838	False
 S_albidoflavus_J1074	containment:union	BGC0002115	streptamidine	14439	12		full	True	1.0	1.0	False	2	0.4498	0.7759	True	11369	0.787	-3163.0	93.0	1.0	0.75	0.8571	False
-S_albidoflavus_J1074	containment:union	BGC0000034	candicidin	149440	30		full	True	1.0	1.0	False	1	0.4928	0.4928	False	303216	2.029	48929.0	104847.0	0.2222	1.0	0.3636	True
-S_albidoflavus_J1074	containment:union	BGC0000958	antimycin	24626	14		full	True	1.0	1.0	False	1	0.0812	0.0812	False	303216	12.313	195148.0	83442.0	0.1037	1.0	0.1879	True
-S_albidoflavus_J1074	containment:multi	BGC0001731	paulomycin	63997	57		full	True	1.0	1.0	False	1	0.2987	0.2987	False	214275	3.348	92298.0	57980.0	0.2984	1.0	0.4597	False
+S_albidoflavus_J1074	containment:union	BGC0000034	candicidin	149440	30		full	True	1.0	1.0	False	1	0.4929	0.4929	False	303215	2.029	48928.0	104847.0	0.2222	1.0	0.3636	True
+S_albidoflavus_J1074	containment:union	BGC0000958	antimycin	24626	14		full	True	1.0	1.0	False	1	0.0812	0.0812	False	303215	12.313	195147.0	83442.0	0.1037	1.0	0.1879	True
+S_albidoflavus_J1074	containment:multi	BGC0001731	paulomycin	63997	57		full	True	1.0	1.0	False	1	0.2987	0.2987	False	214274	3.348	92297.0	57980.0	0.2984	1.0	0.4597	False
 S_albidoflavus_J1074	containment:multi	BGC0002358	cyclofaulknamycin	47145	24		full	True	1.0	1.0	False	1	0.7471	0.7471	True	63108	1.339	2703.0	13260.0	0.6154	1.0	0.7619	False
 S_albidoflavus_J1074	containment:multi	BGC0000546	SAL-2242	7946	5		full	True	1.0	1.0	False	1	0.2332	0.2332	False	34073	4.288	16860.0	9267.0	0.2174	1.0	0.3571	False
-S_albidoflavus_J1074	containment:multi	BGC0001792	surugamide A;surugamide D	82464	21		full	True	1.0	1.0	False	1	0.4239	0.4239	False	194515	2.359	102532.0	9519.0	0.1707	1.0	0.2917	False
-S_albidoflavus_J1074	containment:multi	BGC0002115	streptamidine	14439	12		full	True	1.0	1.0	False	1	0.1236	0.1236	False	116784	8.088	102345.0	0.0	0.1091	1.0	0.1967	False
-S_albidoflavus_J1074	containment:multi	BGC0000034	candicidin	149440	30		full	True	1.0	1.0	False	1	0.4939	0.4939	False	302556	2.025	48929.0	104187.0	0.2222	1.0	0.3636	True
-S_albidoflavus_J1074	containment:multi	BGC0000958	antimycin	24626	14		full	True	1.0	1.0	False	1	0.0814	0.0814	False	302556	12.286	195148.0	82782.0	0.1037	1.0	0.1879	True
+S_albidoflavus_J1074	containment:multi	BGC0001792	surugamide A;surugamide D	82464	21		full	True	1.0	1.0	False	1	0.4239	0.4239	False	194514	2.359	102531.0	9519.0	0.1707	1.0	0.2917	False
+S_albidoflavus_J1074	containment:multi	BGC0002115	streptamidine	14439	12		full	True	1.0	1.0	False	1	0.1236	0.1236	False	116783	8.088	102344.0	0.0	0.1091	1.0	0.1967	False
+S_albidoflavus_J1074	containment:multi	BGC0000034	candicidin	149440	30		full	True	1.0	1.0	False	1	0.4939	0.4939	False	302555	2.025	48928.0	104187.0	0.2222	1.0	0.3636	True
+S_albidoflavus_J1074	containment:multi	BGC0000958	antimycin	24626	14		full	True	1.0	1.0	False	1	0.0814	0.0814	False	302555	12.286	195147.0	82782.0	0.1037	1.0	0.1879	True
 S_avermitilis_MA4680	antismash	BGC0000683	avermitilol	1008	1		full	True	1.0	1.0	False	1	0.048	0.048	False	21009	20.842	10001.0	10000.0	0.0417	1.0	0.08	False
 S_avermitilis_MA4680	antismash	BGC0000059	filipin	80370	13		full	True	1.0	1.0	False	1	0.743	0.743	True	108173	1.346	7803.0	20000.0	0.325	1.0	0.4906	False
 S_avermitilis_MA4680	antismash	BGC0000633	carotenoid	14304	11		full	True	1.0	1.0	False	1	0.5651	0.5651	True	25312	1.77	6549.0	4459.0	0.4783	1.0	0.6471	False
@@ -422,25 +422,25 @@ S_avermitilis_MA4680	gecco	BGC0000909	melanin	6625	5		full	True	1.0	1.0	False	1	
 S_avermitilis_MA4680	gecco	BGC0001587	ethylenediaminesuccinic acid hydroxyarginine (EDHA)	8255	7		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
 S_avermitilis_MA4680	gecco	BGC0001552	citrulassin F	4562	5		full	True	1.0	1.0	False	1	0.3638	0.3638	False	12539	2.749	7977.0	0.0	0.4545	1.0	0.625	False
 S_avermitilis_MA4680	deepbgc	BGC0000683	avermitilol	1008	1		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
-S_avermitilis_MA4680	deepbgc	BGC0000059	filipin	80370	13		full	True	1.0	1.0	False	1	0.1246	0.1246	False	645227	8.028	281038.0	283819.0	0.0226	1.0	0.0443	False
-S_avermitilis_MA4680	deepbgc	BGC0000633	carotenoid	14304	11		full	True	1.0	1.0	False	1	0.067	0.067	False	213550	14.929	158894.0	40352.0	0.0827	1.0	0.1528	False
-S_avermitilis_MA4680	deepbgc	BGC0000908	melanin	6497	7		full	True	1.0	1.0	False	1	0.1941	0.1941	False	33473	5.152	24949.0	2027.0	0.2333	1.0	0.3784	False
-S_avermitilis_MA4680	deepbgc	BGC0000271	spore pigment	11179	12		full	True	1.0	1.0	False	1	0.5938	0.5938	True	18826	1.684	2182.0	5465.0	0.5217	1.0	0.6857	False
-S_avermitilis_MA4680	deepbgc	BGC0000117	oligomycin	104319	18		full	True	1.0	1.0	False	1	0.9855	0.9855	True	105852	1.015	1.0	1532.0	0.9474	1.0	0.973	False
-S_avermitilis_MA4680	deepbgc	BGC0000678	pentalenolactone	13437	13		full	True	1.0	1.0	False	1	0.2865	0.2865	False	46907	3.491	1352.0	32118.0	0.2826	1.0	0.4407	False
+S_avermitilis_MA4680	deepbgc	BGC0000059	filipin	80370	13		full	True	1.0	1.0	False	1	0.1246	0.1246	False	645226	8.028	281037.0	283819.0	0.0226	1.0	0.0443	False
+S_avermitilis_MA4680	deepbgc	BGC0000633	carotenoid	14304	11		full	True	1.0	1.0	False	1	0.067	0.067	False	213549	14.929	158893.0	40352.0	0.0827	1.0	0.1528	False
+S_avermitilis_MA4680	deepbgc	BGC0000908	melanin	6497	7		full	True	1.0	1.0	False	1	0.1941	0.1941	False	33472	5.152	24948.0	2027.0	0.2333	1.0	0.3784	False
+S_avermitilis_MA4680	deepbgc	BGC0000271	spore pigment	11179	12		full	True	1.0	1.0	False	1	0.5938	0.5938	True	18825	1.684	2181.0	5465.0	0.5217	1.0	0.6857	False
+S_avermitilis_MA4680	deepbgc	BGC0000117	oligomycin	104319	18		full	True	1.0	1.0	False	1	0.9855	0.9855	True	105851	1.015	0.0	1532.0	0.9474	1.0	0.973	False
+S_avermitilis_MA4680	deepbgc	BGC0000678	pentalenolactone	13437	13		full	True	1.0	1.0	False	1	0.2865	0.2865	False	46906	3.491	1351.0	32118.0	0.2826	1.0	0.4407	False
 S_avermitilis_MA4680	deepbgc	BGC0000918	ochronotic pigment	4994	4		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
-S_avermitilis_MA4680	deepbgc	BGC0000909	melanin	6625	5		partial	True	0.672	0.672	False	1	0.1079	0.1079	False	39105	5.903	34651.0	-2171.0	0.129	0.8	0.2222	False
+S_avermitilis_MA4680	deepbgc	BGC0000909	melanin	6625	5		partial	True	0.672	0.672	False	1	0.1079	0.1079	False	39104	5.902	34650.0	-2171.0	0.129	0.8	0.2222	False
 S_avermitilis_MA4680	deepbgc	BGC0001587	ethylenediaminesuccinic acid hydroxyarginine (EDHA)	8255	7		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
-S_avermitilis_MA4680	deepbgc	BGC0001552	citrulassin F	4562	5		full	True	1.0	1.0	False	1	0.0361	0.0361	False	126215	27.667	1.0	121652.0	0.0431	1.0	0.0826	False
+S_avermitilis_MA4680	deepbgc	BGC0001552	citrulassin F	4562	5		full	True	1.0	1.0	False	1	0.0361	0.0361	False	126214	27.666	0.0	121652.0	0.0431	1.0	0.0826	False
 S_avermitilis_MA4680	side_by_side	BGC0000683	avermitilol	1008	1		full	True	1.0	1.0	False	2	0.0563	0.0646	False	15597	15.473	13393.0	1196.0	0.0556	1.0	0.1053	False
 S_avermitilis_MA4680	side_by_side	BGC0000059	filipin	80370	13		full	True	1.0	1.0	False	3	0.5807	0.8744	True	91910	1.144	11540.0	0.0	0.65	1.0	0.7879	False
 S_avermitilis_MA4680	side_by_side	BGC0000633	carotenoid	14304	11		full	True	1.0	1.0	False	3	0.4401	0.6884	True	20780	1.453	4059.0	2417.0	0.5789	1.0	0.7333	False
 S_avermitilis_MA4680	side_by_side	BGC0000908	melanin	6497	7		full	True	1.0	1.0	False	3	0.2288	0.2858	False	22736	3.499	13651.0	2588.0	0.35	1.0	0.5185	False
 S_avermitilis_MA4680	side_by_side	BGC0000271	spore pigment	11179	12		full	True	1.0	1.0	False	3	0.5502	1.0	True	11179	1.0	0.0	0.0	1.0	1.0	1.0	False
-S_avermitilis_MA4680	side_by_side	BGC0000117	oligomycin	104319	18		full	True	1.0	1.0	False	3	0.8171	0.9855	True	105852	1.015	1.0	1532.0	0.9474	1.0	0.973	False
+S_avermitilis_MA4680	side_by_side	BGC0000117	oligomycin	104319	18		full	True	1.0	1.0	False	3	0.8171	0.9855	True	105851	1.015	0.0	1532.0	0.9474	1.0	0.973	False
 S_avermitilis_MA4680	side_by_side	BGC0000678	pentalenolactone	13437	13		full	True	1.0	1.0	False	3	0.5001	0.7476	True	17973	1.338	0.0	4536.0	0.7222	1.0	0.8387	False
 S_avermitilis_MA4680	side_by_side	BGC0000918	ochronotic pigment	4994	4		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
-S_avermitilis_MA4680	side_by_side	BGC0000909	melanin	6625	5		full	True	1.0	1.0	False	3	0.3945	0.5999	True	10568	1.595	4121.0	-178.0	0.625	1.0	0.7692	False
+S_avermitilis_MA4680	side_by_side	BGC0000909	melanin	6625	5		full	True	1.0	1.0	False	3	0.3946	0.5999	True	10568	1.595	4121.0	-178.0	0.625	1.0	0.7692	False
 S_avermitilis_MA4680	side_by_side	BGC0001587	ethylenediaminesuccinic acid hydroxyarginine (EDHA)	8255	7		full	True	1.0	1.0	False	1	0.6132	0.6132	True	13462	1.631	4995.0	212.0	0.6364	1.0	0.7778	False
 S_avermitilis_MA4680	side_by_side	BGC0001552	citrulassin F	4562	5		full	True	1.0	1.0	False	3	0.2007	0.3638	False	12539	2.749	7977.0	0.0	0.4545	1.0	0.625	False
 S_avermitilis_MA4680	voting2:agreed	BGC0000683	avermitilol	1008	1		full	True	1.0	1.0	False	1	0.08	0.08	False	12593	12.493	10389.0	1196.0	0.0714	1.0	0.1333	False
@@ -455,16 +455,16 @@ S_avermitilis_MA4680	voting2:agreed	BGC0000909	melanin	6625	5		full	True	1.0	1.0
 S_avermitilis_MA4680	voting2:agreed	BGC0001587	ethylenediaminesuccinic acid hydroxyarginine (EDHA)	8255	7		full	True	1.0	1.0	False	1	0.6132	0.6132	True	13462	1.631	4995.0	212.0	0.6364	1.0	0.7778	False
 S_avermitilis_MA4680	voting2:agreed	BGC0001552	citrulassin F	4562	5		full	True	1.0	1.0	False	1	0.1967	0.1967	False	23194	5.084	7977.0	10655.0	0.2632	1.0	0.4167	False
 S_avermitilis_MA4680	voting2:union	BGC0000683	avermitilol	1008	1		full	True	1.0	1.0	False	2	0.0287	0.0413	False	24401	24.207	13393.0	10000.0	0.0357	1.0	0.069	False
-S_avermitilis_MA4680	voting2:union	BGC0000059	filipin	80370	13		full	True	1.0	1.0	False	6	0.1246	0.1246	False	645227	8.028	281038.0	283819.0	0.0226	1.0	0.0443	False
-S_avermitilis_MA4680	voting2:union	BGC0000633	carotenoid	14304	11		full	True	1.0	1.0	False	2	0.0659	0.067	False	213550	14.929	158894.0	40352.0	0.0827	1.0	0.1528	False
+S_avermitilis_MA4680	voting2:union	BGC0000059	filipin	80370	13		full	True	1.0	1.0	False	6	0.1246	0.1246	False	645226	8.028	281037.0	283819.0	0.0226	1.0	0.0443	False
+S_avermitilis_MA4680	voting2:union	BGC0000633	carotenoid	14304	11		full	True	1.0	1.0	False	2	0.0659	0.067	False	213549	14.929	158893.0	40352.0	0.0827	1.0	0.1528	False
 S_avermitilis_MA4680	voting2:union	BGC0000908	melanin	6497	7		full	True	1.0	1.0	False	1	0.1042	0.1042	False	62365	9.599	36652.0	19216.0	0.1207	1.0	0.2154	False
 S_avermitilis_MA4680	voting2:union	BGC0000271	spore pigment	11179	12		full	True	1.0	1.0	False	2	0.0567	0.0567	False	197189	17.639	30608.0	155402.0	0.1111	1.0	0.2	True
 S_avermitilis_MA4680	voting2:union	BGC0000117	oligomycin	104319	18		full	True	1.0	1.0	False	2	0.529	0.529	True	197189	1.89	84255.0	8615.0	0.1667	1.0	0.2857	True
 S_avermitilis_MA4680	voting2:union	BGC0000678	pentalenolactone	13437	13		full	True	1.0	1.0	False	2	0.2582	0.2803	False	47946	3.568	2391.0	32118.0	0.2708	1.0	0.4262	False
 S_avermitilis_MA4680	voting2:union	BGC0000918	ochronotic pigment	4994	4		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
-S_avermitilis_MA4680	voting2:union	BGC0000909	melanin	6625	5		full	True	1.0	1.0	False	1	0.1605	0.1605	False	41276	6.23	34651.0	0.0	0.1562	1.0	0.2703	False
+S_avermitilis_MA4680	voting2:union	BGC0000909	melanin	6625	5		full	True	1.0	1.0	False	1	0.1605	0.1605	False	41275	6.23	34650.0	0.0	0.1562	1.0	0.2703	False
 S_avermitilis_MA4680	voting2:union	BGC0001587	ethylenediaminesuccinic acid hydroxyarginine (EDHA)	8255	7		full	True	1.0	1.0	False	1	0.6132	0.6132	True	13462	1.631	4995.0	212.0	0.6364	1.0	0.7778	False
-S_avermitilis_MA4680	voting2:union	BGC0001552	citrulassin F	4562	5		full	True	1.0	1.0	False	2	0.035	0.0361	False	126215	27.667	1.0	121652.0	0.0431	1.0	0.0826	False
+S_avermitilis_MA4680	voting2:union	BGC0001552	citrulassin F	4562	5		full	True	1.0	1.0	False	2	0.035	0.0361	False	126214	27.666	0.0	121652.0	0.0431	1.0	0.0826	False
 S_avermitilis_MA4680	voting2:multi	BGC0000683	avermitilol	1008	1		full	True	1.0	1.0	False	1	0.08	0.08	False	12593	12.493	10389.0	1196.0	0.0714	1.0	0.1333	False
 S_avermitilis_MA4680	voting2:multi	BGC0000059	filipin	80370	13		full	True	1.0	1.0	False	1	0.718	0.718	True	111931	1.393	11540.0	20021.0	0.3095	1.0	0.4727	False
 S_avermitilis_MA4680	voting2:multi	BGC0000633	carotenoid	14304	11		full	True	1.0	1.0	False	1	0.5487	0.5487	True	26070	1.823	7156.0	4610.0	0.4783	1.0	0.6471	False
@@ -488,14 +488,14 @@ S_avermitilis_MA4680	voting1:agreed	BGC0000909	melanin	6625	5		full	True	1.0	1.0
 S_avermitilis_MA4680	voting1:agreed	BGC0001587	ethylenediaminesuccinic acid hydroxyarginine (EDHA)	8255	7		full	True	1.0	1.0	False	1	0.5381	0.5381	True	15341	1.858	5500.0	1586.0	0.5385	1.0	0.7	False
 S_avermitilis_MA4680	voting1:agreed	BGC0001552	citrulassin F	4562	5		full	True	1.0	1.0	False	1	0.0336	0.0336	False	135589	29.721	9375.0	121652.0	0.0407	1.0	0.0781	False
 S_avermitilis_MA4680	voting1:union	BGC0000683	avermitilol	1008	1		full	True	1.0	1.0	False	1	0.0142	0.0142	False	70982	70.419	13393.0	56581.0	0.0145	1.0	0.0286	False
-S_avermitilis_MA4680	voting1:union	BGC0000059	filipin	80370	13		full	True	1.0	1.0	False	1	0.1246	0.1246	False	645227	8.028	281038.0	283819.0	0.0226	1.0	0.0443	False
+S_avermitilis_MA4680	voting1:union	BGC0000059	filipin	80370	13		full	True	1.0	1.0	False	1	0.1246	0.1246	False	645226	8.028	281037.0	283819.0	0.0226	1.0	0.0443	False
 S_avermitilis_MA4680	voting1:union	BGC0000633	carotenoid	14304	11		full	True	1.0	1.0	False	1	0.0648	0.0648	False	220849	15.44	166193.0	40352.0	0.0809	1.0	0.1497	False
 S_avermitilis_MA4680	voting1:union	BGC0000908	melanin	6497	7		full	True	1.0	1.0	False	1	0.1042	0.1042	False	62365	9.599	36652.0	19216.0	0.1207	1.0	0.2154	False
 S_avermitilis_MA4680	voting1:union	BGC0000271	spore pigment	11179	12		full	True	1.0	1.0	False	1	0.0567	0.0567	False	197189	17.639	30608.0	155402.0	0.1111	1.0	0.2	True
 S_avermitilis_MA4680	voting1:union	BGC0000117	oligomycin	104319	18		full	True	1.0	1.0	False	1	0.529	0.529	True	197189	1.89	84255.0	8615.0	0.1667	1.0	0.2857	True
 S_avermitilis_MA4680	voting1:union	BGC0000678	pentalenolactone	13437	13		full	True	1.0	1.0	False	1	0.2319	0.2319	False	57946	4.312	2391.0	42118.0	0.2241	1.0	0.3662	False
 S_avermitilis_MA4680	voting1:union	BGC0000918	ochronotic pigment	4994	4		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
-S_avermitilis_MA4680	voting1:union	BGC0000909	melanin	6625	5		full	True	1.0	1.0	False	1	0.1605	0.1605	False	41276	6.23	34651.0	0.0	0.1562	1.0	0.2703	False
+S_avermitilis_MA4680	voting1:union	BGC0000909	melanin	6625	5		full	True	1.0	1.0	False	1	0.1605	0.1605	False	41275	6.23	34650.0	0.0	0.1562	1.0	0.2703	False
 S_avermitilis_MA4680	voting1:union	BGC0001587	ethylenediaminesuccinic acid hydroxyarginine (EDHA)	8255	7		full	True	1.0	1.0	False	1	0.6132	0.6132	True	13462	1.631	4995.0	212.0	0.6364	1.0	0.7778	False
 S_avermitilis_MA4680	voting1:union	BGC0001552	citrulassin F	4562	5		full	True	1.0	1.0	False	1	0.034	0.034	False	134362	29.452	8148.0	121652.0	0.041	1.0	0.0787	False
 S_avermitilis_MA4680	voting1:multi	BGC0000683	avermitilol	1008	1		full	True	1.0	1.0	False	1	0.014	0.014	False	72075	71.503	13884.0	57183.0	0.0141	1.0	0.0278	False
@@ -521,14 +521,14 @@ S_avermitilis_MA4680	voting3:agreed	BGC0000909	melanin	6625	5		full	True	1.0	1.0
 S_avermitilis_MA4680	voting3:agreed	BGC0001587	ethylenediaminesuccinic acid hydroxyarginine (EDHA)	8255	7		full	True	1.0	1.0	False	1	0.6132	0.6132	True	13462	1.631	4995.0	212.0	0.6364	1.0	0.7778	False
 S_avermitilis_MA4680	voting3:agreed	BGC0001552	citrulassin F	4562	5		full	True	1.0	1.0	False	1	1.0	1.0	True	4562	1.0	0.0	0.0	1.0	1.0	1.0	False
 S_avermitilis_MA4680	voting3:union	BGC0000683	avermitilol	1008	1		full	True	1.0	1.0	False	2	0.0563	0.0646	False	15597	15.473	13393.0	1196.0	0.0556	1.0	0.1053	False
-S_avermitilis_MA4680	voting3:union	BGC0000059	filipin	80370	13		full	True	1.0	1.0	False	3	0.1246	0.1246	False	645227	8.028	281038.0	283819.0	0.0226	1.0	0.0443	False
-S_avermitilis_MA4680	voting3:union	BGC0000633	carotenoid	14304	11		full	True	1.0	1.0	False	2	0.0659	0.067	False	213550	14.929	158894.0	40352.0	0.0827	1.0	0.1528	False
+S_avermitilis_MA4680	voting3:union	BGC0000059	filipin	80370	13		full	True	1.0	1.0	False	3	0.1246	0.1246	False	645226	8.028	281037.0	283819.0	0.0226	1.0	0.0443	False
+S_avermitilis_MA4680	voting3:union	BGC0000633	carotenoid	14304	11		full	True	1.0	1.0	False	2	0.0659	0.067	False	213549	14.929	158893.0	40352.0	0.0827	1.0	0.1528	False
 S_avermitilis_MA4680	voting3:union	BGC0000908	melanin	6497	7		full	True	1.0	1.0	False	2	0.1351	0.1421	False	45737	7.04	36652.0	2588.0	0.1628	1.0	0.28	False
 S_avermitilis_MA4680	voting3:union	BGC0000271	spore pigment	11179	12		full	True	1.0	1.0	False	2	0.0567	0.0567	False	197189	17.639	30608.0	155402.0	0.1111	1.0	0.2	True
 S_avermitilis_MA4680	voting3:union	BGC0000117	oligomycin	104319	18		full	True	1.0	1.0	False	2	0.529	0.529	True	197189	1.89	84255.0	8615.0	0.1667	1.0	0.2857	True
 S_avermitilis_MA4680	voting3:union	BGC0000678	pentalenolactone	13437	13		full	True	1.0	1.0	False	2	0.2582	0.2803	False	47946	3.568	2391.0	32118.0	0.2708	1.0	0.4262	False
 S_avermitilis_MA4680	voting3:union	BGC0000918	ochronotic pigment	4994	4		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
-S_avermitilis_MA4680	voting3:union	BGC0000909	melanin	6625	5		full	True	1.0	1.0	False	1	0.1605	0.1605	False	41276	6.23	34651.0	0.0	0.1562	1.0	0.2703	False
+S_avermitilis_MA4680	voting3:union	BGC0000909	melanin	6625	5		full	True	1.0	1.0	False	1	0.1605	0.1605	False	41275	6.23	34650.0	0.0	0.1562	1.0	0.2703	False
 S_avermitilis_MA4680	voting3:union	BGC0001587	ethylenediaminesuccinic acid hydroxyarginine (EDHA)	8255	7		full	True	1.0	1.0	False	1	0.6132	0.6132	True	13462	1.631	4995.0	212.0	0.6364	1.0	0.7778	False
 S_avermitilis_MA4680	voting3:union	BGC0001552	citrulassin F	4562	5		full	True	1.0	1.0	False	1	0.034	0.034	False	134362	29.452	8148.0	121652.0	0.041	1.0	0.0787	False
 S_avermitilis_MA4680	voting3:multi	BGC0000683	avermitilol	1008	1		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
@@ -543,36 +543,36 @@ S_avermitilis_MA4680	voting3:multi	BGC0000909	melanin	6625	5		full	True	1.0	1.0	
 S_avermitilis_MA4680	voting3:multi	BGC0001587	ethylenediaminesuccinic acid hydroxyarginine (EDHA)	8255	7		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
 S_avermitilis_MA4680	voting3:multi	BGC0001552	citrulassin F	4562	5		full	True	1.0	1.0	False	1	1.0	1.0	True	4562	1.0	0.0	0.0	1.0	1.0	1.0	False
 S_avermitilis_MA4680	containment:agreed	BGC0000683	avermitilol	1008	1		full	True	1.0	1.0	False	2	0.0563	0.0646	False	15597	15.473	13393.0	1196.0	0.0556	1.0	0.1053	False
-S_avermitilis_MA4680	containment:agreed	BGC0000059	filipin	80370	13		full	True	1.0	1.0	False	1	0.1246	0.1246	False	645227	8.028	281038.0	283819.0	0.0226	1.0	0.0443	False
+S_avermitilis_MA4680	containment:agreed	BGC0000059	filipin	80370	13		full	True	1.0	1.0	False	1	0.1246	0.1246	False	645226	8.028	281037.0	283819.0	0.0226	1.0	0.0443	False
 S_avermitilis_MA4680	containment:agreed	BGC0000633	carotenoid	14304	11		full	True	1.0	1.0	False	2	0.316	0.5651	True	25312	1.77	6549.0	4459.0	0.4783	1.0	0.6471	False
 S_avermitilis_MA4680	containment:agreed	BGC0000908	melanin	6497	7		full	True	1.0	1.0	False	2	0.2003	0.2064	False	31476	4.845	5763.0	19216.0	0.2414	1.0	0.3889	False
 S_avermitilis_MA4680	containment:agreed	BGC0000271	spore pigment	11179	12		full	True	1.0	1.0	False	1	0.0567	0.0567	False	197189	17.639	30608.0	155402.0	0.1111	1.0	0.2	True
 S_avermitilis_MA4680	containment:agreed	BGC0000117	oligomycin	104319	18		full	True	1.0	1.0	False	1	0.529	0.529	True	197189	1.89	84255.0	8615.0	0.1667	1.0	0.2857	True
-S_avermitilis_MA4680	containment:agreed	BGC0000678	pentalenolactone	13437	13		full	True	1.0	1.0	False	1	0.2865	0.2865	False	46907	3.491	1352.0	32118.0	0.2826	1.0	0.4407	False
+S_avermitilis_MA4680	containment:agreed	BGC0000678	pentalenolactone	13437	13		full	True	1.0	1.0	False	1	0.2865	0.2865	False	46906	3.491	1351.0	32118.0	0.2826	1.0	0.4407	False
 S_avermitilis_MA4680	containment:agreed	BGC0000918	ochronotic pigment	4994	4		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
-S_avermitilis_MA4680	containment:agreed	BGC0000909	melanin	6625	5		partial	True	0.672	0.672	False	1	0.1079	0.1079	False	39105	5.903	34651.0	-2171.0	0.129	0.8	0.2222	False
+S_avermitilis_MA4680	containment:agreed	BGC0000909	melanin	6625	5		partial	True	0.672	0.672	False	1	0.1079	0.1079	False	39104	5.902	34650.0	-2171.0	0.129	0.8	0.2222	False
 S_avermitilis_MA4680	containment:agreed	BGC0001587	ethylenediaminesuccinic acid hydroxyarginine (EDHA)	8255	7		full	True	1.0	1.0	False	1	0.6132	0.6132	True	13462	1.631	4995.0	212.0	0.6364	1.0	0.7778	False
 S_avermitilis_MA4680	containment:agreed	BGC0001552	citrulassin F	4562	5		full	True	1.0	1.0	False	2	0.1191	0.2021	False	22573	4.948	8148.0	9863.0	0.2778	1.0	0.4348	False
 S_avermitilis_MA4680	containment:union	BGC0000683	avermitilol	1008	1		full	True	1.0	1.0	False	2	0.0563	0.0646	False	15597	15.473	13393.0	1196.0	0.0556	1.0	0.1053	False
-S_avermitilis_MA4680	containment:union	BGC0000059	filipin	80370	13		full	True	1.0	1.0	False	1	0.1246	0.1246	False	645227	8.028	281038.0	283819.0	0.0226	1.0	0.0443	False
+S_avermitilis_MA4680	containment:union	BGC0000059	filipin	80370	13		full	True	1.0	1.0	False	1	0.1246	0.1246	False	645226	8.028	281037.0	283819.0	0.0226	1.0	0.0443	False
 S_avermitilis_MA4680	containment:union	BGC0000633	carotenoid	14304	11		full	True	1.0	1.0	False	2	0.3149	0.5651	True	25312	1.77	6549.0	4459.0	0.4783	1.0	0.6471	False
 S_avermitilis_MA4680	containment:union	BGC0000908	melanin	6497	7		full	True	1.0	1.0	False	2	0.1987	0.2064	False	31476	4.845	5763.0	19216.0	0.2414	1.0	0.3889	False
 S_avermitilis_MA4680	containment:union	BGC0000271	spore pigment	11179	12		full	True	1.0	1.0	False	1	0.0567	0.0567	False	197189	17.639	30608.0	155402.0	0.1111	1.0	0.2	True
 S_avermitilis_MA4680	containment:union	BGC0000117	oligomycin	104319	18		full	True	1.0	1.0	False	1	0.529	0.529	True	197189	1.89	84255.0	8615.0	0.1667	1.0	0.2857	True
 S_avermitilis_MA4680	containment:union	BGC0000678	pentalenolactone	13437	13		full	True	1.0	1.0	False	1	0.2803	0.2803	False	47946	3.568	2391.0	32118.0	0.2708	1.0	0.4262	False
 S_avermitilis_MA4680	containment:union	BGC0000918	ochronotic pigment	4994	4		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
-S_avermitilis_MA4680	containment:union	BGC0000909	melanin	6625	5		full	True	1.0	1.0	False	1	0.1605	0.1605	False	41276	6.23	34651.0	0.0	0.1562	1.0	0.2703	False
+S_avermitilis_MA4680	containment:union	BGC0000909	melanin	6625	5		full	True	1.0	1.0	False	1	0.1605	0.1605	False	41275	6.23	34650.0	0.0	0.1562	1.0	0.2703	False
 S_avermitilis_MA4680	containment:union	BGC0001587	ethylenediaminesuccinic acid hydroxyarginine (EDHA)	8255	7		full	True	1.0	1.0	False	1	0.6132	0.6132	True	13462	1.631	4995.0	212.0	0.6364	1.0	0.7778	False
 S_avermitilis_MA4680	containment:union	BGC0001552	citrulassin F	4562	5		full	True	1.0	1.0	False	2	0.1191	0.2021	False	22573	4.948	8148.0	9863.0	0.2778	1.0	0.4348	False
 S_avermitilis_MA4680	containment:multi	BGC0000683	avermitilol	1008	1		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
-S_avermitilis_MA4680	containment:multi	BGC0000059	filipin	80370	13		full	True	1.0	1.0	False	1	0.1246	0.1246	False	645227	8.028	281038.0	283819.0	0.0226	1.0	0.0443	False
+S_avermitilis_MA4680	containment:multi	BGC0000059	filipin	80370	13		full	True	1.0	1.0	False	1	0.1246	0.1246	False	645226	8.028	281037.0	283819.0	0.0226	1.0	0.0443	False
 S_avermitilis_MA4680	containment:multi	BGC0000633	carotenoid	14304	11		full	True	1.0	1.0	False	2	0.316	0.5651	True	25312	1.77	6549.0	4459.0	0.4783	1.0	0.6471	False
-S_avermitilis_MA4680	containment:multi	BGC0000908	melanin	6497	7		full	True	1.0	1.0	False	1	0.1941	0.1941	False	33473	5.152	24949.0	2027.0	0.2333	1.0	0.3784	False
+S_avermitilis_MA4680	containment:multi	BGC0000908	melanin	6497	7		full	True	1.0	1.0	False	1	0.1941	0.1941	False	33472	5.152	24948.0	2027.0	0.2333	1.0	0.3784	False
 S_avermitilis_MA4680	containment:multi	BGC0000271	spore pigment	11179	12		full	True	1.0	1.0	False	1	0.0567	0.0567	False	197189	17.639	30608.0	155402.0	0.1111	1.0	0.2	True
 S_avermitilis_MA4680	containment:multi	BGC0000117	oligomycin	104319	18		full	True	1.0	1.0	False	1	0.529	0.529	True	197189	1.89	84255.0	8615.0	0.1667	1.0	0.2857	True
-S_avermitilis_MA4680	containment:multi	BGC0000678	pentalenolactone	13437	13		full	True	1.0	1.0	False	1	0.2865	0.2865	False	46907	3.491	1352.0	32118.0	0.2826	1.0	0.4407	False
+S_avermitilis_MA4680	containment:multi	BGC0000678	pentalenolactone	13437	13		full	True	1.0	1.0	False	1	0.2865	0.2865	False	46906	3.491	1351.0	32118.0	0.2826	1.0	0.4407	False
 S_avermitilis_MA4680	containment:multi	BGC0000918	ochronotic pigment	4994	4		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
-S_avermitilis_MA4680	containment:multi	BGC0000909	melanin	6625	5		partial	True	0.672	0.672	False	1	0.1079	0.1079	False	39105	5.903	34651.0	-2171.0	0.129	0.8	0.2222	False
+S_avermitilis_MA4680	containment:multi	BGC0000909	melanin	6625	5		partial	True	0.672	0.672	False	1	0.1079	0.1079	False	39104	5.902	34650.0	-2171.0	0.129	0.8	0.2222	False
 S_avermitilis_MA4680	containment:multi	BGC0001587	ethylenediaminesuccinic acid hydroxyarginine (EDHA)	8255	7		missed	False	0.0	0.0	False	0	0.0	0.0	False	0					0.0	0.0	False
 S_avermitilis_MA4680	containment:multi	BGC0001552	citrulassin F	4562	5		full	True	1.0	1.0	False	2	0.1191	0.2021	False	22573	4.948	8148.0	9863.0	0.2778	1.0	0.4348	False
 S_tropica_CNB440	antismash	BGC0001041	salinosporamide A	42010	32		full	True	0.966	0.966	False	1	0.7915	0.7915	True	49848	1.187	9263.0	-1425.0	0.8824	0.9375	0.9091	False
@@ -587,14 +587,14 @@ S_tropica_CNB440	gecco	BGC0000150	sporolide A;sporolide B	59694	44		full	True	1.
 S_tropica_CNB440	gecco	BGC0000142	salinilactam	81989	26		full	True	1.0	1.0	False	1	0.5025	0.5025	True	163175	1.99	4485.0	76701.0	0.2737	1.0	0.4298	False
 S_tropica_CNB440	gecco	BGC0001006	lymphostin;neolymphostinol B;lymphostinol;neolymphostin B	25045	12		full	True	1.0	1.0	False	1	0.4265	0.4265	False	58724	2.345	23422.0	10257.0	0.3158	1.0	0.48	False
 S_tropica_CNB440	gecco	BGC0001458	salinipostin G;Salinipostin G;Salinipostin A;Salinipostin B;Salinipostin C;Salinipostin D;Salinipostin E;Salinipostin F;Salinipostin H;Salinipostin I;Salinipostin J;Salinipostin K	11295	9		full	True	1.0	1.0	False	1	0.4493	0.4493	False	25137	2.225	10574.0	3268.0	0.4091	1.0	0.5806	False
-S_tropica_CNB440	deepbgc	BGC0001041	salinosporamide A	42010	32		full	True	1.0	1.0	False	1	0.3116	0.3116	False	134804	3.209	31544.0	61250.0	0.2963	1.0	0.4571	False
-S_tropica_CNB440	deepbgc	BGC0000241	lomaiviticin A;lomaiviticin C;lomaiviticin D;lomaiviticin E	62231	58		full	True	0.998	0.998	False	1	0.9758	0.9758	True	63560	1.021	-107.0	1436.0	0.9831	1.0	0.9915	False
-S_tropica_CNB440	deepbgc	BGC0000150	sporolide A;sporolide B	59694	44		full	True	1.0	1.0	False	1	0.1663	0.1663	False	358987	6.014	118692.0	180601.0	0.1705	1.0	0.2914	True
-S_tropica_CNB440	deepbgc	BGC0000142	salinilactam	81989	26		full	True	1.0	1.0	False	1	0.2284	0.2284	False	358987	4.378	194841.0	82157.0	0.1008	1.0	0.1831	True
-S_tropica_CNB440	deepbgc	BGC0001006	lymphostin;neolymphostinol B;lymphostinol;neolymphostin B	25045	12		partial	True	0.639	0.639	False	1	0.3059	0.3059	False	43287	1.728	27281.0	-9039.0	0.24	0.5	0.3243	False
-S_tropica_CNB440	deepbgc	BGC0001458	salinipostin G;Salinipostin G;Salinipostin A;Salinipostin B;Salinipostin C;Salinipostin D;Salinipostin E;Salinipostin F;Salinipostin H;Salinipostin I;Salinipostin J;Salinipostin K	11295	9		full	True	1.0	1.0	False	1	0.1605	0.1605	False	70393	6.232	34673.0	24425.0	0.1216	1.0	0.2169	False
+S_tropica_CNB440	deepbgc	BGC0001041	salinosporamide A	42010	32		full	True	1.0	1.0	False	1	0.3116	0.3116	False	134803	3.209	31543.0	61250.0	0.2963	1.0	0.4571	False
+S_tropica_CNB440	deepbgc	BGC0000241	lomaiviticin A;lomaiviticin C;lomaiviticin D;lomaiviticin E	62231	58		full	True	0.998	0.998	False	1	0.9757	0.9757	True	63559	1.021	-108.0	1436.0	0.9831	1.0	0.9915	False
+S_tropica_CNB440	deepbgc	BGC0000150	sporolide A;sporolide B	59694	44		full	True	1.0	1.0	False	1	0.1663	0.1663	False	358986	6.014	118691.0	180601.0	0.1705	1.0	0.2914	True
+S_tropica_CNB440	deepbgc	BGC0000142	salinilactam	81989	26		full	True	1.0	1.0	False	1	0.2284	0.2284	False	358986	4.378	194840.0	82157.0	0.1008	1.0	0.1831	True
+S_tropica_CNB440	deepbgc	BGC0001006	lymphostin;neolymphostinol B;lymphostinol;neolymphostin B	25045	12		partial	True	0.639	0.639	False	1	0.3059	0.3059	False	43286	1.728	27280.0	-9039.0	0.24	0.5	0.3243	False
+S_tropica_CNB440	deepbgc	BGC0001458	salinipostin G;Salinipostin G;Salinipostin A;Salinipostin B;Salinipostin C;Salinipostin D;Salinipostin E;Salinipostin F;Salinipostin H;Salinipostin I;Salinipostin J;Salinipostin K	11295	9		full	True	1.0	1.0	False	1	0.1605	0.1605	False	70392	6.232	34672.0	24425.0	0.1216	1.0	0.2169	False
 S_tropica_CNB440	side_by_side	BGC0001041	salinosporamide A	42010	32		full	True	1.0	1.0	False	3	0.6589	0.8734	True	47688	1.135	-192.0	5870.0	0.8421	1.0	0.9143	False
-S_tropica_CNB440	side_by_side	BGC0000241	lomaiviticin A;lomaiviticin C;lomaiviticin D;lomaiviticin E	62231	58		full	True	0.998	0.998	False	3	0.7751	0.9758	True	63560	1.021	-107.0	1436.0	0.9831	1.0	0.9915	False
+S_tropica_CNB440	side_by_side	BGC0000241	lomaiviticin A;lomaiviticin C;lomaiviticin D;lomaiviticin E	62231	58		full	True	0.998	0.998	False	3	0.7751	0.9757	True	63559	1.021	-108.0	1436.0	0.9831	1.0	0.9915	False
 S_tropica_CNB440	side_by_side	BGC0000150	sporolide A;sporolide B	59694	44		full	True	1.0	1.0	False	3	0.5674	0.7969	True	74909	1.255	11216.0	3999.0	0.7586	1.0	0.8627	False
 S_tropica_CNB440	side_by_side	BGC0000142	salinilactam	81989	26		full	True	1.0	1.0	False	3	0.4159	0.5167	True	158665	1.935	5267.0	71409.0	0.2826	1.0	0.4407	False
 S_tropica_CNB440	side_by_side	BGC0001006	lymphostin;neolymphostinol B;lymphostinol;neolymphostin B	25045	12		full	True	1.0	1.0	False	3	0.4082	0.4921	False	50892	2.032	19033.0	6814.0	0.375	1.0	0.5455	False
@@ -605,12 +605,12 @@ S_tropica_CNB440	voting2:agreed	BGC0000150	sporolide A;sporolide B	59694	44		ful
 S_tropica_CNB440	voting2:agreed	BGC0000142	salinilactam	81989	26		full	True	1.0	1.0	False	1	0.5003	0.5003	True	163867	1.999	5177.0	76701.0	0.2708	1.0	0.4262	False
 S_tropica_CNB440	voting2:agreed	BGC0001006	lymphostin;neolymphostinol B;lymphostinol;neolymphostin B	25045	12		full	True	1.0	1.0	False	1	0.4385	0.4385	False	57117	2.281	24018.0	8054.0	0.3333	1.0	0.5	False
 S_tropica_CNB440	voting2:agreed	BGC0001458	salinipostin G;Salinipostin G;Salinipostin A;Salinipostin B;Salinipostin C;Salinipostin D;Salinipostin E;Salinipostin F;Salinipostin H;Salinipostin I;Salinipostin J;Salinipostin K	11295	9		full	True	1.0	1.0	False	1	0.4038	0.4038	False	27974	2.477	11563.0	5116.0	0.3462	1.0	0.5143	False
-S_tropica_CNB440	voting2:union	BGC0001041	salinosporamide A	42010	32		full	True	1.0	1.0	False	1	0.3116	0.3116	False	134804	3.209	31544.0	61250.0	0.2963	1.0	0.4571	False
-S_tropica_CNB440	voting2:union	BGC0000241	lomaiviticin A;lomaiviticin C;lomaiviticin D;lomaiviticin E	62231	58		full	True	0.998	0.998	False	1	0.6685	0.6685	True	92825	1.492	-107.0	30701.0	0.6744	1.0	0.8056	False
-S_tropica_CNB440	voting2:union	BGC0000150	sporolide A;sporolide B	59694	44		full	True	1.0	1.0	False	2	0.1663	0.1663	False	358987	6.014	118692.0	180601.0	0.1705	1.0	0.2914	True
-S_tropica_CNB440	voting2:union	BGC0000142	salinilactam	81989	26		full	True	1.0	1.0	False	2	0.2284	0.2284	False	358987	4.378	194841.0	82157.0	0.1008	1.0	0.1831	True
-S_tropica_CNB440	voting2:union	BGC0001006	lymphostin;neolymphostinol B;lymphostinol;neolymphostin B	25045	12		full	True	1.0	1.0	False	1	0.4002	0.4002	False	62583	2.499	27281.0	10257.0	0.2857	1.0	0.4444	False
-S_tropica_CNB440	voting2:union	BGC0001458	salinipostin G;Salinipostin G;Salinipostin A;Salinipostin B;Salinipostin C;Salinipostin D;Salinipostin E;Salinipostin F;Salinipostin H;Salinipostin I;Salinipostin J;Salinipostin K	11295	9		full	True	1.0	1.0	False	1	0.1605	0.1605	False	70393	6.232	34673.0	24425.0	0.1216	1.0	0.2169	False
+S_tropica_CNB440	voting2:union	BGC0001041	salinosporamide A	42010	32		full	True	1.0	1.0	False	1	0.3116	0.3116	False	134803	3.209	31543.0	61250.0	0.2963	1.0	0.4571	False
+S_tropica_CNB440	voting2:union	BGC0000241	lomaiviticin A;lomaiviticin C;lomaiviticin D;lomaiviticin E	62231	58		full	True	0.998	0.998	False	1	0.6685	0.6685	True	92824	1.492	-108.0	30701.0	0.6744	1.0	0.8056	False
+S_tropica_CNB440	voting2:union	BGC0000150	sporolide A;sporolide B	59694	44		full	True	1.0	1.0	False	2	0.1663	0.1663	False	358986	6.014	118691.0	180601.0	0.1705	1.0	0.2914	True
+S_tropica_CNB440	voting2:union	BGC0000142	salinilactam	81989	26		full	True	1.0	1.0	False	2	0.2284	0.2284	False	358986	4.378	194840.0	82157.0	0.1008	1.0	0.1831	True
+S_tropica_CNB440	voting2:union	BGC0001006	lymphostin;neolymphostinol B;lymphostinol;neolymphostin B	25045	12		full	True	1.0	1.0	False	1	0.4002	0.4002	False	62582	2.499	27280.0	10257.0	0.2857	1.0	0.4444	False
+S_tropica_CNB440	voting2:union	BGC0001458	salinipostin G;Salinipostin G;Salinipostin A;Salinipostin B;Salinipostin C;Salinipostin D;Salinipostin E;Salinipostin F;Salinipostin H;Salinipostin I;Salinipostin J;Salinipostin K	11295	9		full	True	1.0	1.0	False	1	0.1605	0.1605	False	70392	6.232	34672.0	24425.0	0.1216	1.0	0.2169	False
 S_tropica_CNB440	voting2:multi	BGC0001041	salinosporamide A	42010	32		full	True	1.0	1.0	False	1	0.7319	0.7319	True	57396	1.366	9516.0	5870.0	0.7619	1.0	0.8649	False
 S_tropica_CNB440	voting2:multi	BGC0000241	lomaiviticin A;lomaiviticin C;lomaiviticin D;lomaiviticin E	62231	58		full	True	1.0	1.0	False	1	0.8884	0.8884	True	70048	1.126	0.0	7817.0	0.9062	1.0	0.9508	False
 S_tropica_CNB440	voting2:multi	BGC0000150	sporolide A;sporolide B	59694	44		full	True	1.0	1.0	False	1	0.4417	0.4417	False	135141	2.264	69252.0	6195.0	0.4231	1.0	0.5946	False
@@ -623,12 +623,12 @@ S_tropica_CNB440	voting1:agreed	BGC0000150	sporolide A;sporolide B	59694	44		ful
 S_tropica_CNB440	voting1:agreed	BGC0000142	salinilactam	81989	26		full	True	1.0	1.0	False	1	0.2284	0.2284	False	358986	4.378	194840.0	82157.0	0.1008	1.0	0.1831	True
 S_tropica_CNB440	voting1:agreed	BGC0001006	lymphostin;neolymphostinol B;lymphostinol;neolymphostin B	25045	12		full	True	1.0	1.0	False	1	0.3972	0.3972	False	63055	2.518	27280.0	10730.0	0.2791	1.0	0.4364	False
 S_tropica_CNB440	voting1:agreed	BGC0001458	salinipostin G;Salinipostin G;Salinipostin A;Salinipostin B;Salinipostin C;Salinipostin D;Salinipostin E;Salinipostin F;Salinipostin H;Salinipostin I;Salinipostin J;Salinipostin K	11295	9		full	True	1.0	1.0	False	1	0.1605	0.1605	False	70392	6.232	34672.0	24425.0	0.1216	1.0	0.2169	False
-S_tropica_CNB440	voting1:union	BGC0001041	salinosporamide A	42010	32		full	True	1.0	1.0	False	1	0.3116	0.3116	False	134804	3.209	31544.0	61250.0	0.2963	1.0	0.4571	False
-S_tropica_CNB440	voting1:union	BGC0000241	lomaiviticin A;lomaiviticin C;lomaiviticin D;lomaiviticin E	62231	58		full	True	0.998	0.998	False	1	0.6685	0.6685	True	92825	1.492	-107.0	30701.0	0.6744	1.0	0.8056	False
-S_tropica_CNB440	voting1:union	BGC0000150	sporolide A;sporolide B	59694	44		full	True	1.0	1.0	False	1	0.1663	0.1663	False	358987	6.014	118692.0	180601.0	0.1705	1.0	0.2914	True
-S_tropica_CNB440	voting1:union	BGC0000142	salinilactam	81989	26		full	True	1.0	1.0	False	1	0.2284	0.2284	False	358987	4.378	194841.0	82157.0	0.1008	1.0	0.1831	True
-S_tropica_CNB440	voting1:union	BGC0001006	lymphostin;neolymphostinol B;lymphostinol;neolymphostin B	25045	12		full	True	1.0	1.0	False	1	0.4002	0.4002	False	62583	2.499	27281.0	10257.0	0.2857	1.0	0.4444	False
-S_tropica_CNB440	voting1:union	BGC0001458	salinipostin G;Salinipostin G;Salinipostin A;Salinipostin B;Salinipostin C;Salinipostin D;Salinipostin E;Salinipostin F;Salinipostin H;Salinipostin I;Salinipostin J;Salinipostin K	11295	9		full	True	1.0	1.0	False	1	0.1605	0.1605	False	70393	6.232	34673.0	24425.0	0.1216	1.0	0.2169	False
+S_tropica_CNB440	voting1:union	BGC0001041	salinosporamide A	42010	32		full	True	1.0	1.0	False	1	0.3116	0.3116	False	134803	3.209	31543.0	61250.0	0.2963	1.0	0.4571	False
+S_tropica_CNB440	voting1:union	BGC0000241	lomaiviticin A;lomaiviticin C;lomaiviticin D;lomaiviticin E	62231	58		full	True	0.998	0.998	False	1	0.6685	0.6685	True	92824	1.492	-108.0	30701.0	0.6744	1.0	0.8056	False
+S_tropica_CNB440	voting1:union	BGC0000150	sporolide A;sporolide B	59694	44		full	True	1.0	1.0	False	1	0.1663	0.1663	False	358986	6.014	118691.0	180601.0	0.1705	1.0	0.2914	True
+S_tropica_CNB440	voting1:union	BGC0000142	salinilactam	81989	26		full	True	1.0	1.0	False	1	0.2284	0.2284	False	358986	4.378	194840.0	82157.0	0.1008	1.0	0.1831	True
+S_tropica_CNB440	voting1:union	BGC0001006	lymphostin;neolymphostinol B;lymphostinol;neolymphostin B	25045	12		full	True	1.0	1.0	False	1	0.4002	0.4002	False	62582	2.499	27280.0	10257.0	0.2857	1.0	0.4444	False
+S_tropica_CNB440	voting1:union	BGC0001458	salinipostin G;Salinipostin G;Salinipostin A;Salinipostin B;Salinipostin C;Salinipostin D;Salinipostin E;Salinipostin F;Salinipostin H;Salinipostin I;Salinipostin J;Salinipostin K	11295	9		full	True	1.0	1.0	False	1	0.1605	0.1605	False	70392	6.232	34672.0	24425.0	0.1216	1.0	0.2169	False
 S_tropica_CNB440	voting1:multi	BGC0001041	salinosporamide A	42010	32		full	True	1.0	1.0	False	1	0.3116	0.3116	False	134803	3.209	31543.0	61250.0	0.2963	1.0	0.4571	False
 S_tropica_CNB440	voting1:multi	BGC0000241	lomaiviticin A;lomaiviticin C;lomaiviticin D;lomaiviticin E	62231	58		full	True	1.0	1.0	False	1	0.6652	0.6652	True	93547	1.503	0.0	31316.0	0.6667	1.0	0.8	False
 S_tropica_CNB440	voting1:multi	BGC0000150	sporolide A;sporolide B	59694	44		full	True	1.0	1.0	False	1	0.1663	0.1663	False	358986	6.014	118691.0	180601.0	0.1705	1.0	0.2914	True
@@ -641,33 +641,33 @@ S_tropica_CNB440	voting3:agreed	BGC0000150	sporolide A;sporolide B	59694	44		ful
 S_tropica_CNB440	voting3:agreed	BGC0000142	salinilactam	81989	26		full	True	1.0	1.0	False	1	0.5154	0.5154	True	159067	1.94	5177.0	71901.0	0.2826	1.0	0.4407	False
 S_tropica_CNB440	voting3:agreed	BGC0001006	lymphostin;neolymphostinol B;lymphostinol;neolymphostin B	25045	12		partial	True	0.639	0.639	False	1	0.363	0.363	False	35054	1.4	19048.0	-9039.0	0.3158	0.5	0.3871	False
 S_tropica_CNB440	voting3:agreed	BGC0001458	salinipostin G;Salinipostin G;Salinipostin A;Salinipostin B;Salinipostin C;Salinipostin D;Salinipostin E;Salinipostin F;Salinipostin H;Salinipostin I;Salinipostin J;Salinipostin K	11295	9		partial	True	0.607	0.607	False	1	0.471	0.471	False	10127	0.897	-4436.0	3268.0	0.5833	0.7778	0.6667	False
-S_tropica_CNB440	voting3:union	BGC0001041	salinosporamide A	42010	32		full	True	1.0	1.0	False	1	0.3116	0.3116	False	134804	3.209	31544.0	61250.0	0.2963	1.0	0.4571	False
-S_tropica_CNB440	voting3:union	BGC0000241	lomaiviticin A;lomaiviticin C;lomaiviticin D;lomaiviticin E	62231	58		full	True	0.998	0.998	False	1	0.6685	0.6685	True	92825	1.492	-107.0	30701.0	0.6744	1.0	0.8056	False
-S_tropica_CNB440	voting3:union	BGC0000150	sporolide A;sporolide B	59694	44		full	True	1.0	1.0	False	3	0.1663	0.1663	False	358987	6.014	118692.0	180601.0	0.1705	1.0	0.2914	True
-S_tropica_CNB440	voting3:union	BGC0000142	salinilactam	81989	26		full	True	1.0	1.0	False	3	0.2284	0.2284	False	358987	4.378	194841.0	82157.0	0.1008	1.0	0.1831	True
-S_tropica_CNB440	voting3:union	BGC0001006	lymphostin;neolymphostinol B;lymphostinol;neolymphostin B	25045	12		full	True	1.0	1.0	False	1	0.4002	0.4002	False	62583	2.499	27281.0	10257.0	0.2857	1.0	0.4444	False
-S_tropica_CNB440	voting3:union	BGC0001458	salinipostin G;Salinipostin G;Salinipostin A;Salinipostin B;Salinipostin C;Salinipostin D;Salinipostin E;Salinipostin F;Salinipostin H;Salinipostin I;Salinipostin J;Salinipostin K	11295	9		full	True	1.0	1.0	False	1	0.1605	0.1605	False	70393	6.232	34673.0	24425.0	0.1216	1.0	0.2169	False
+S_tropica_CNB440	voting3:union	BGC0001041	salinosporamide A	42010	32		full	True	1.0	1.0	False	1	0.3116	0.3116	False	134803	3.209	31543.0	61250.0	0.2963	1.0	0.4571	False
+S_tropica_CNB440	voting3:union	BGC0000241	lomaiviticin A;lomaiviticin C;lomaiviticin D;lomaiviticin E	62231	58		full	True	0.998	0.998	False	1	0.6685	0.6685	True	92824	1.492	-108.0	30701.0	0.6744	1.0	0.8056	False
+S_tropica_CNB440	voting3:union	BGC0000150	sporolide A;sporolide B	59694	44		full	True	1.0	1.0	False	3	0.1663	0.1663	False	358986	6.014	118691.0	180601.0	0.1705	1.0	0.2914	True
+S_tropica_CNB440	voting3:union	BGC0000142	salinilactam	81989	26		full	True	1.0	1.0	False	3	0.2284	0.2284	False	358986	4.378	194840.0	82157.0	0.1008	1.0	0.1831	True
+S_tropica_CNB440	voting3:union	BGC0001006	lymphostin;neolymphostinol B;lymphostinol;neolymphostin B	25045	12		full	True	1.0	1.0	False	1	0.4002	0.4002	False	62582	2.499	27280.0	10257.0	0.2857	1.0	0.4444	False
+S_tropica_CNB440	voting3:union	BGC0001458	salinipostin G;Salinipostin G;Salinipostin A;Salinipostin B;Salinipostin C;Salinipostin D;Salinipostin E;Salinipostin F;Salinipostin H;Salinipostin I;Salinipostin J;Salinipostin K	11295	9		full	True	1.0	1.0	False	1	0.1605	0.1605	False	70392	6.232	34672.0	24425.0	0.1216	1.0	0.2169	False
 S_tropica_CNB440	voting3:multi	BGC0001041	salinosporamide A	42010	32		full	True	0.967	0.967	False	1	0.9666	0.9666	True	40608	0.967	-192.0	-1210.0	1.0	0.9375	0.9677	False
 S_tropica_CNB440	voting3:multi	BGC0000241	lomaiviticin A;lomaiviticin C;lomaiviticin D;lomaiviticin E	62231	58		partial	True	0.674	0.674	False	1	0.6586	0.6586	True	43367	0.697	-20300.0	1436.0	0.9762	0.7069	0.82	False
 S_tropica_CNB440	voting3:multi	BGC0000150	sporolide A;sporolide B	59694	44		full	True	1.0	1.0	False	1	0.7921	0.7921	True	75361	1.262	11216.0	4451.0	0.7458	1.0	0.8544	False
 S_tropica_CNB440	voting3:multi	BGC0000142	salinilactam	81989	26		full	True	1.0	1.0	False	1	0.5154	0.5154	True	159067	1.94	5177.0	71901.0	0.2826	1.0	0.4407	False
 S_tropica_CNB440	voting3:multi	BGC0001006	lymphostin;neolymphostinol B;lymphostinol;neolymphostin B	25045	12		partial	True	0.639	0.639	False	1	0.363	0.363	False	35054	1.4	19048.0	-9039.0	0.3158	0.5	0.3871	False
 S_tropica_CNB440	voting3:multi	BGC0001458	salinipostin G;Salinipostin G;Salinipostin A;Salinipostin B;Salinipostin C;Salinipostin D;Salinipostin E;Salinipostin F;Salinipostin H;Salinipostin I;Salinipostin J;Salinipostin K	11295	9		partial	True	0.607	0.607	False	1	0.471	0.471	False	10127	0.897	-4436.0	3268.0	0.5833	0.7778	0.6667	False
-S_tropica_CNB440	containment:agreed	BGC0001041	salinosporamide A	42010	32		full	True	1.0	1.0	False	1	0.3116	0.3116	False	134804	3.209	31544.0	61250.0	0.2963	1.0	0.4571	False
+S_tropica_CNB440	containment:agreed	BGC0001041	salinosporamide A	42010	32		full	True	1.0	1.0	False	1	0.3116	0.3116	False	134803	3.209	31543.0	61250.0	0.2963	1.0	0.4571	False
 S_tropica_CNB440	containment:agreed	BGC0000241	lomaiviticin A;lomaiviticin C;lomaiviticin D;lomaiviticin E	62231	58		full	True	0.998	0.998	False	2	0.6747	0.8993	True	68975	1.108	-108.0	6852.0	0.9206	1.0	0.9587	False
 S_tropica_CNB440	containment:agreed	BGC0000150	sporolide A;sporolide B	59694	44		full	True	1.0	1.0	False	2	0.4526	0.739	True	80776	1.353	15126.0	5956.0	0.6875	1.0	0.8148	False
-S_tropica_CNB440	containment:agreed	BGC0000142	salinilactam	81989	26		full	True	1.0	1.0	False	1	0.2284	0.2284	False	358987	4.378	194841.0	82157.0	0.1008	1.0	0.1831	True
+S_tropica_CNB440	containment:agreed	BGC0000142	salinilactam	81989	26		full	True	1.0	1.0	False	1	0.2284	0.2284	False	358986	4.378	194840.0	82157.0	0.1008	1.0	0.1831	True
 S_tropica_CNB440	containment:agreed	BGC0001006	lymphostin;neolymphostinol B;lymphostinol;neolymphostin B	25045	12		full	True	1.0	1.0	False	1	0.4265	0.4265	False	58724	2.345	23422.0	10257.0	0.3158	1.0	0.48	False
-S_tropica_CNB440	containment:agreed	BGC0001458	salinipostin G;Salinipostin G;Salinipostin A;Salinipostin B;Salinipostin C;Salinipostin D;Salinipostin E;Salinipostin F;Salinipostin H;Salinipostin I;Salinipostin J;Salinipostin K	11295	9		full	True	1.0	1.0	False	1	0.1605	0.1605	False	70393	6.232	34673.0	24425.0	0.1216	1.0	0.2169	False
-S_tropica_CNB440	containment:union	BGC0001041	salinosporamide A	42010	32		full	True	1.0	1.0	False	1	0.3116	0.3116	False	134804	3.209	31544.0	61250.0	0.2963	1.0	0.4571	False
-S_tropica_CNB440	containment:union	BGC0000241	lomaiviticin A;lomaiviticin C;lomaiviticin D;lomaiviticin E	62231	58		full	True	0.998	0.998	False	2	0.6747	0.8993	True	68976	1.108	-107.0	6852.0	0.9206	1.0	0.9587	False
+S_tropica_CNB440	containment:agreed	BGC0001458	salinipostin G;Salinipostin G;Salinipostin A;Salinipostin B;Salinipostin C;Salinipostin D;Salinipostin E;Salinipostin F;Salinipostin H;Salinipostin I;Salinipostin J;Salinipostin K	11295	9		full	True	1.0	1.0	False	1	0.1605	0.1605	False	70392	6.232	34672.0	24425.0	0.1216	1.0	0.2169	False
+S_tropica_CNB440	containment:union	BGC0001041	salinosporamide A	42010	32		full	True	1.0	1.0	False	1	0.3116	0.3116	False	134803	3.209	31543.0	61250.0	0.2963	1.0	0.4571	False
+S_tropica_CNB440	containment:union	BGC0000241	lomaiviticin A;lomaiviticin C;lomaiviticin D;lomaiviticin E	62231	58		full	True	0.998	0.998	False	2	0.6747	0.8993	True	68975	1.108	-108.0	6852.0	0.9206	1.0	0.9587	False
 S_tropica_CNB440	containment:union	BGC0000150	sporolide A;sporolide B	59694	44		full	True	1.0	1.0	False	2	0.4526	0.739	True	80776	1.353	15126.0	5956.0	0.6875	1.0	0.8148	False
-S_tropica_CNB440	containment:union	BGC0000142	salinilactam	81989	26		full	True	1.0	1.0	False	1	0.2284	0.2284	False	358987	4.378	194841.0	82157.0	0.1008	1.0	0.1831	True
-S_tropica_CNB440	containment:union	BGC0001006	lymphostin;neolymphostinol B;lymphostinol;neolymphostin B	25045	12		full	True	1.0	1.0	False	1	0.4002	0.4002	False	62583	2.499	27281.0	10257.0	0.2857	1.0	0.4444	False
-S_tropica_CNB440	containment:union	BGC0001458	salinipostin G;Salinipostin G;Salinipostin A;Salinipostin B;Salinipostin C;Salinipostin D;Salinipostin E;Salinipostin F;Salinipostin H;Salinipostin I;Salinipostin J;Salinipostin K	11295	9		full	True	1.0	1.0	False	1	0.1605	0.1605	False	70393	6.232	34673.0	24425.0	0.1216	1.0	0.2169	False
-S_tropica_CNB440	containment:multi	BGC0001041	salinosporamide A	42010	32		full	True	1.0	1.0	False	1	0.3116	0.3116	False	134804	3.209	31544.0	61250.0	0.2963	1.0	0.4571	False
+S_tropica_CNB440	containment:union	BGC0000142	salinilactam	81989	26		full	True	1.0	1.0	False	1	0.2284	0.2284	False	358986	4.378	194840.0	82157.0	0.1008	1.0	0.1831	True
+S_tropica_CNB440	containment:union	BGC0001006	lymphostin;neolymphostinol B;lymphostinol;neolymphostin B	25045	12		full	True	1.0	1.0	False	1	0.4002	0.4002	False	62582	2.499	27280.0	10257.0	0.2857	1.0	0.4444	False
+S_tropica_CNB440	containment:union	BGC0001458	salinipostin G;Salinipostin G;Salinipostin A;Salinipostin B;Salinipostin C;Salinipostin D;Salinipostin E;Salinipostin F;Salinipostin H;Salinipostin I;Salinipostin J;Salinipostin K	11295	9		full	True	1.0	1.0	False	1	0.1605	0.1605	False	70392	6.232	34672.0	24425.0	0.1216	1.0	0.2169	False
+S_tropica_CNB440	containment:multi	BGC0001041	salinosporamide A	42010	32		full	True	1.0	1.0	False	1	0.3116	0.3116	False	134803	3.209	31543.0	61250.0	0.2963	1.0	0.4571	False
 S_tropica_CNB440	containment:multi	BGC0000241	lomaiviticin A;lomaiviticin C;lomaiviticin D;lomaiviticin E	62231	58		full	True	0.998	0.998	False	1	0.8993	0.8993	True	68975	1.108	-108.0	6852.0	0.9206	1.0	0.9587	False
 S_tropica_CNB440	containment:multi	BGC0000150	sporolide A;sporolide B	59694	44		full	True	1.0	1.0	False	2	0.4526	0.739	True	80776	1.353	15126.0	5956.0	0.6875	1.0	0.8148	False
-S_tropica_CNB440	containment:multi	BGC0000142	salinilactam	81989	26		full	True	1.0	1.0	False	1	0.2284	0.2284	False	358987	4.378	194841.0	82157.0	0.1008	1.0	0.1831	True
+S_tropica_CNB440	containment:multi	BGC0000142	salinilactam	81989	26		full	True	1.0	1.0	False	1	0.2284	0.2284	False	358986	4.378	194840.0	82157.0	0.1008	1.0	0.1831	True
 S_tropica_CNB440	containment:multi	BGC0001006	lymphostin;neolymphostinol B;lymphostinol;neolymphostin B	25045	12		full	True	1.0	1.0	False	1	0.4265	0.4265	False	58724	2.345	23422.0	10257.0	0.3158	1.0	0.48	False
-S_tropica_CNB440	containment:multi	BGC0001458	salinipostin G;Salinipostin G;Salinipostin A;Salinipostin B;Salinipostin C;Salinipostin D;Salinipostin E;Salinipostin F;Salinipostin H;Salinipostin I;Salinipostin J;Salinipostin K	11295	9		full	True	1.0	1.0	False	1	0.1605	0.1605	False	70393	6.232	34673.0	24425.0	0.1216	1.0	0.2169	False
+S_tropica_CNB440	containment:multi	BGC0001458	salinipostin G;Salinipostin G;Salinipostin A;Salinipostin B;Salinipostin C;Salinipostin D;Salinipostin E;Salinipostin F;Salinipostin H;Salinipostin I;Salinipostin J;Salinipostin K	11295	9		full	True	1.0	1.0	False	1	0.1605	0.1605	False	70392	6.232	34672.0	24425.0	0.1216	1.0	0.2169	False

@@ -26,7 +26,7 @@ A complete run gives three loci (`expected_loci.tsv`, written by
 |---|---|---|---|
 | STR_S001_test_2 | 132,869–190,082 (57,214 bp) | antiSMASH, GECCO, DeepBGC | BGC0002358.3, cyclofaulknamycin |
 | STR_S001_test_3 | 271,431–282,301 (10,871 bp) | antiSMASH, GECCO | BGC0002470.2, synechobactins |
-| STR_S001_test_1 | 0–16,869 | DeepBGC | none |
+| STR_S001_test_1 | 1–16,869 (16,869 bp) | DeepBGC | none |
 
 The first two are the full-genome loci at the same place. The third, a
 DeepBGC call against the start of the fragment, is not found in the

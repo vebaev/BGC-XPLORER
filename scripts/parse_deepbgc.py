@@ -10,6 +10,11 @@ sample = snakemake.wildcards.sample
 outdir = Path(snakemake.input.done).parent
 source = first_existing_path(outdir, ["**/*bgc*.tsv", "**/*cluster*.tsv", "*.bgc.tsv", "*.clusters.tsv"])
 
+# DeepBGC writes 0-based, end-exclusive intervals (nucl_start/nucl_end in the
+# cluster table, gene_start/gene_end in the Pfam table); everything downstream
+# is 1-based and end-inclusive like GenBank, so only the starts move.
+ZERO_BASED_OFFSET = 1
+
 if source is not None:
     df = pd.read_csv(str(source), sep="\t")
     pfam_path = first_existing_path(outdir, ["*.pfam.tsv", "**/*.pfam.tsv"])
@@ -34,8 +39,8 @@ if source is not None:
         for protein_id, protein in local.groupby("protein_id", sort=False):
             domains = [domain for domain in protein["pfam_id"].tolist() if str(domain).split(".")[0] in biological]
             record = domain_core_record(
-                protein_id, protein["gene_start"].min(), protein["gene_end"].max(),
-                "deepbgc", domains,
+                protein_id, int(protein["gene_start"].min()) + ZERO_BASED_OFFSET,
+                protein["gene_end"].max(), "deepbgc", domains,
             )
             if record:
                 records.append(record)
@@ -45,7 +50,8 @@ if source is not None:
         "sample": sample,
         "tool": "deepbgc",
         "contig": first_existing_column(df, ["sequence_id", "contig_id", "sequence"]),
-        "start": first_existing_column(df, ["nucl_start", "start"]),
+        "start": (pd.to_numeric(df["nucl_start"], errors="coerce") + ZERO_BASED_OFFSET).astype("Int64")
+                 if "nucl_start" in df.columns else first_existing_column(df, ["start"]),
         "end": first_existing_column(df, ["nucl_end", "end"]),
         "strand": first_existing_column(df, ["strand"], "."),
         "bgc_id": first_existing_column(df, ["bgc_candidate_id", "cluster_id", "id"]),

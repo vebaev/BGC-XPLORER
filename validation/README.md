@@ -10,7 +10,7 @@ workflow itself needs the genomes and the reference databases.
 | | |
 |---|---|
 | Genomes | *Streptomyces coelicolor* A3(2) (NC_003888.3, plasmids SCP1 NC_003903.1 and SCP2 NC_003904.1), *S. albidoflavus* J1074 (CP004370.1), *S. avermitilis* MA-4680 (NC_003155.5, plasmid SAP1 NC_004719.1), *Salinispora tropica* CNB-440 (CP000667.1) |
-| Workflow | commit `81d608f` (voting rule) mounted over image `ghcr.io/vebaev/bgc-xplorer:1.1.1`; tool versions are those of v1.1.1 (Bakta 1.12.0 light, antiSMASH 8.0.4, GECCO 0.10.3, DeepBGC 0.1.31). The grouping code is unchanged in v1.2.0 with default settings: every variant below is reproduced byte for byte. |
+| Workflow | commit `81d608f` (voting rule) mounted over image `ghcr.io/vebaev/bgc-xplorer:1.1.1`; tool versions are those of v1.1.1 (Bakta 1.12.0 light, antiSMASH 8.0.4, GECCO 0.10.3, DeepBGC 0.1.31). The grouping code is unchanged in v1.2.0 with default settings. v1.2.0 fixed a 1 bp offset in DeepBGC start coordinates (DeepBGC writes 0-based starts); the DeepBGC tables, the consensus tables and every variant here were regenerated from the unchanged raw DeepBGC output with the v1.2.0 parser (`reparse_deepbgc.py`). The fix moved DeepBGC-derived boundaries by 1 bp and changed no grouping and no recovery status. |
 | Truth | 42 MIBiG 4.0 loci (18 / 7 / 11 / 6). Every active MIBiG entry was aligned to each genome with megablast and accepted at ≥95 % identity over ≥90 % of its length; coordinates come from the alignment, not from MIBiG. Entries at the same place (reciprocal overlap ≥80 %, or nested with a shared compound) were collapsed. `build_truth.py` |
 | Prediction sets | each caller alone; **side-by-side** = the three callers' rows concatenated without grouping, as nf-core/funcscan's comBGC reports them; the earlier **containment** rule; **voting** with 1, 2 (default) or 3 callers per gene, agreed span and union span. Variants are produced by the unmodified `scripts/build_consensus.py` (`run_consensus_variant.py`). |
 | Metrics | fixed before scoring, in `validate_consensus.py`: BGC-QUAST recovery categories (full ≥95 %, partial 10–95 %, missed <10 %); delimited = Jaccard ≥0.5; bp Jaccard of the best-matching prediction; signed boundary extension; gene-level precision, recall and F1 inside the recovered locus; split, fused, fragments. Locus-level precision is not reported, because MIBiG does not annotate every cluster in these genomes. |
@@ -50,7 +50,7 @@ Paired comparisons of voting 2/3 (agreed span) with each other set, Jaccard:
 | Other set | Loci better / worse / tied | Mean Δ Jaccard [95 % CI] | Wilcoxon p |
 |---|---|---|---|
 | Containment (earlier rule) | 32 / 6 / 4 | +0.168 [0.106, 0.234] | 9 × 10⁻⁷ |
-| DeepBGC | 34 / 7 / 1 | +0.236 [0.163, 0.312] | 4 × 10⁻⁷ |
+| DeepBGC | 33 / 7 / 2 | +0.236 [0.163, 0.312] | 4 × 10⁻⁷ |
 | antiSMASH | 22 / 17 / 3 | +0.079 [0.020, 0.145] | 0.12 |
 | Side-by-side, any row | 29 / 9 / 4 | +0.054 [0.027, 0.081] | 3 × 10⁻⁴ |
 | GECCO | 9 / 26 / 7 | −0.028 [−0.084, 0.036] | 0.02 |
@@ -84,7 +84,7 @@ From scratch:
 
 1. Download the genomes above and MIBiG 4.0 (`mibig_json_4.0`, `mibig_gbk_4.0`) and build the truth sets with `build_truth.py`.
 2. Run the workflow on the genomes with `run_benchmark_container.sh` (set `DB_ROOT` and, if they live elsewhere, `BAKTA_DB_DIR`, `EGGNOG_DB_DIR`, `DBCAN_DB_DIR`; `IMAGE` and `MOUNT_CODE=0` to use a later release).
-3. Run `run_validation.sh`: grouping variants, the check that the default variant equals the workflow's own output, scoring and figures.
+3. Run `run_validation.sh`: grouping variants, the check that the default variant equals the workflow's own output, scoring and figures. The grouping reads the Bakta genome FASTA, which `work/` does not carry: set `RUNS` to the workflow's work directory (or any directory with `data/bakta/<sample>/<sample>.fna` next to these tables).
 4. The BGC-QUAST cross-check uses BGC-QUAST 1.1.0 (commit `45f50f2d82cd423d275ef38f9a8c902278b04da9`) in the environment from `environment.bgcquast.yaml`: `bgcquast_crosscheck.py`, with per-locus status captured by `bgcquast_percluster.py`.
 
 ## Files
@@ -94,6 +94,7 @@ From scratch:
 | `build_truth.py` | MIBiG truth set per genome |
 | `run_benchmark_container.sh` | workflow run on the benchmark genomes |
 | `run_consensus_variant.py` | runs `scripts/build_consensus.py` under another grouping rule |
+| `reparse_deepbgc.py` | re-parses finished DeepBGC runs with the current `scripts/parse_deepbgc.py` (used for the v1.2.0 coordinate fix) |
 | `run_validation.sh` | variants, scoring and figures |
 | `validate_consensus.py`, `test_validate_consensus.py` | metric definitions, scoring and their tests |
 | `make_figures.py`, `make_tables.py` | figures and per-genome tables |
