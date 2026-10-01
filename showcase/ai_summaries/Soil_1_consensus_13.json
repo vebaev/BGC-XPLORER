@@ -1,0 +1,48 @@
+{
+  "sample": "Soil_1",
+  "consensus_id": "Soil_1_consensus_13",
+  "model": "nvidia/nemotron-3-ultra-550b-a55b",
+  "cached": false,
+  "diagnostics": {
+    "sample": "Soil_1",
+    "consensus_id": "Soil_1_consensus_13",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "timeout_seconds": 240,
+    "payload_chars": 14467,
+    "gene_count": 36,
+    "representative_gene_count": 36,
+    "guided_json": true,
+    "guided_json_retry": true
+  },
+  "prompt_version": "2.0",
+  "request_fingerprint": "a43e7809b526c26add84efd9ef0298b290217a9c1078369d0f8d15819d8412e2",
+  "created_at": "2026-10-01T13:24:40Z",
+  "analysis": {
+    "summary": "Three tools (antiSMASH, DeepBGC, GECCO) converge on a ~57 kb NRPS locus (contig_1:1.33–1.39 Mb) with two large NRPS subunits (CJLEIP_01147, CJLEIP_01149) and a C-terminal thioesterase (CJLEIP_01154). KnownClusterBlast returns a 100 % empirical score against the cyclofaulknamycin BGC (BGC0002358.3), but only 2 of the matched genes are core NRPS genes; the remaining 22 matched genes are likely peripheral or housekeeping genes shared with the reference cluster. ARTS flags three DUF hits (CJLEIP_01137, CJLEIP_01156, CJLEIP_01158) but no known resistance determinants. The region is gene-dense (36 genes) and flanked by urea/sugar ABC transporters and a transposase, suggesting a composite genomic island.",
+    "likely_product_or_function": "Non-ribosomal peptide (NRP) with high architectural similarity to cyclofaulknamycin-type cyclic peptides; exact ring topology, tailoring pattern, and bioactivity remain unresolved. Alternative: a distinct NRP scaffold that shares only the two-module NRPS core with cyclofaulknamycin.",
+    "biosynthetic_logic": "1) Two iterative or sequential NRPS modules (CJLEIP_01147, CJLEIP_01149), each harbouring C-A-PCP domains, activate and condense two amino-acid substrates (substrate specificity unknown; no Stachelhaus code extracted). 2) MbtH-like protein CJLEIP_01148 may chaperone adenylation domains. 3) Terminal thioesterase CJLEIP_01154 likely releases and cyclizes the dipeptide. 4) Tailoring enzymes encoded in-cluster: cytochrome P450 (CJLEIP_01152), GT1-family glycosyltransferase (CJLEIP_01139), FkbM-like methyltransferase (CJLEIP_01138), and a class A β-lactamase-fold hydrolase (CJLEIP_01146) could modify the peptide backbone or side chains. 5) Clavaminate-synthase-like oxygenase (CJLEIP_01150) may install hydroxyl groups. Unobserved required steps: substrate prediction for A-domains, order of tailoring events, and final cyclization chemistry.",
+    "key_genes": [
+      "CJLEIP_01147 (NRPS module 1: C-A-PCP): initiates peptide assembly; supported by antiSMASH/DeepBGC/GECCO core calls and PF00501+PF00550+PF00668 domains",
+      "CJLEIP_01149 (NRPS module 2: C-A-PCP): extends peptide chain; identical tool/domain support as CJLEIP_01147",
+      "CJLEIP_01154 (thioesterase, PF00975): putative cyclization/release; core gene in all three tools",
+      "CJLEIP_01148 (MbtH-like): probable A-domain chaperone; co-localized between the two NRPS genes",
+      "CJLEIP_01152 (cytochrome P450): oxidative tailoring; pfam p450",
+      "CJLEIP_01139 (GT1 glycosyltransferase, dbCAN GT4_e7003): sugar decoration",
+      "CJLEIP_01138 (FkbM-like methyltransferase, ARTS DUF hit): N- or O-methylation",
+      "CJLEIP_01146 (class A β-lactamase-fold hydrolase): possible hydrolysis/editing side reaction",
+      "CJLEIP_01150 (clavaminate-synthase-like oxygenase): hydroxylation",
+      "CJLEIP_01142/CJLEIP_01143 (ABC transporter permease/ATPase, FtsX-like): candidate NRP export"
+    ],
+    "resistance_transport_regulation": "Observed: two-component systems (CJLEIP_01140/CJLEIP_01141, CJLEIP_01144/CJLEIP_01145), ArsR-type repressor (CJLEIP_01153), ABC transporter pair CJLEIP_01142/01143 (annotated as antimicrobial peptide transport), MFS transporter CJLEIP_01151, cation efflux CJLEIP_01157, and three ARTS DUF hits (CJLEIP_01137 GT87, CJLEIP_01156/01158 DUF2075). Proposed roles: CJLEIP_01142/01143 may export the NRP; two-component systems may sense product or environmental cues; ArsR may regulate stress response. No experimentally validated self-resistance gene identified; ARTS DUF hits are uncharacterized.",
+    "recommended_followup": [
+      "Extract A-domain Stachelhaus codes from CJLEIP_01147 and CJLEIP_01149 to predict amino-acid substrates and discriminate cyclofaulknamycin-like vs. novel scaffold.",
+      "Heterologous expression of the minimal NRPS cassette (CJLEIP_01147–01149–01154 ± CJLEIP_01148) in a tractable host to detect core peptide product by LC-MS/MS.",
+      "Targeted deletion of CJLEIP_01142/01143 (ABC transporter) in the native strain to test for self-resistance/export phenotype and intracellular product accumulation."
+    ]
+  },
+  "traceability": {
+    "statements": 28,
+    "with_identifiers": 23,
+    "untraceable": []
+  }
+}
