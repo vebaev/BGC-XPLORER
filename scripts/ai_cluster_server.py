@@ -15,9 +15,18 @@ from urllib.parse import unquote
 
 import pandas as pd
 
+import ai_evidence
+
 
 DEFAULT_BASE_URL = "https://integrate.api.nvidia.com/v1"
 DEFAULT_MODEL = "nvidia/nemotron-3-ultra-550b-a55b"
+# "evidence": a summary that only restates the evidence, checked statement by
+# statement (ai_evidence.py). "interpretation": the earlier free-text analysis
+# with biosynthetic logic and proposed roles, unverified; opt-in.
+MODES = ("evidence", "interpretation")
+DEFAULT_MODE = "evidence"
+MODE_DEFAULTS = {"evidence": {"temperature": 0.0, "max_tokens": 4000},
+                 "interpretation": {"temperature": 0.1, "max_tokens": 1800}}
 PLACEHOLDER_API_KEYS = frozenset({
     "validation-only",
     "replace-with-your-nvidia-api-key",
@@ -103,9 +112,18 @@ def build_analysis_prompt(model_payload):
         model_payload, ensure_ascii=False, separators=(",", ":"))
 
 
+def mode_prompts(server, model_payload):
+    """(prompt version, system prompt, user prompt, JSON schema) for the server's mode."""
+    if getattr(server, "mode", "interpretation") == "evidence":
+        return (ai_evidence.PROMPT_VERSION, ai_evidence.SYSTEM_PROMPT,
+                ai_evidence.build_user_prompt(model_payload), ai_evidence.JSON_SCHEMA)
+    return PROMPT_VERSION, SYSTEM_PROMPT, build_analysis_prompt(model_payload), ANALYSIS_JSON_SCHEMA
+
+
 def analysis_fingerprint(model_payload, server):
-    record = {"prompt_version": PROMPT_VERSION, "system": SYSTEM_PROMPT,
-              "user": build_analysis_prompt(model_payload), "model": server.model,
+    version, system, user, _ = mode_prompts(server, model_payload)
+    record = {"prompt_version": version, "system": system,
+              "user": user, "model": server.model,
               "base_url": server.base_url,
               "parameters": {key: getattr(server, key) for key in
                   ("temperature", "top_p", "max_tokens", "reasoning_effort", "seed", "use_guided_json")}}
@@ -627,6 +645,7 @@ class AIClusterServer(BaseHTTPRequestHandler):
             self._json({
                 "ok": True,
                 "model": self.server.model,
+                "mode": self.server.mode,
                 "api_key_loaded": api_key_state(self.server.api_key) == "configured",
                 "api_key_state": api_key_state(self.server.api_key),
                 "timeout_seconds": self.server.timeout,
@@ -685,7 +704,9 @@ class AIClusterServer(BaseHTTPRequestHandler):
             consensus_id = safe_name(body.get("consensus_id"))
             force = bool(body.get("force", False))
             preview = bool(body.get("preview", False))
-            cache_path = self.server.results_dir / sample / "ai_cluster_reports" / "{0}.json".format(consensus_id)
+            cache_name = "{0}.json" if self.server.mode == "interpretation" else "{0}.{1}.json"
+            cache_path = (self.server.results_dir / sample / "ai_cluster_reports"
+                          / cache_name.format(consensus_id, self.server.mode))
 
             payload = build_cluster_payload(self.server.results_dir, sample, consensus_id)
             model_payload = compact_payload_for_model(payload)
@@ -695,7 +716,7 @@ class AIClusterServer(BaseHTTPRequestHandler):
                     cached = json.load(handle)
                 if cached.get("request_fingerprint") == fingerprint:
                     cached["cached"] = True
-                    cached["traceability"] = trace_identifiers(cached.get("analysis", {}), model_payload)
+                    cached.update(self.checks(cached.get("analysis", {}), model_payload))
                     self._json(cached)
                     return
 
@@ -727,11 +748,11 @@ class AIClusterServer(BaseHTTPRequestHandler):
 
             payload = build_cluster_payload(self.server.results_dir, sample, consensus_id)
             model_payload = compact_payload_for_model(payload)
-            prompt = build_analysis_prompt(model_payload)
+            prompt_version, system_prompt, prompt, schema = mode_prompts(self.server, model_payload)
             request_body = {
                 "model": self.server.model,
                 "messages": [
-                    {"role": "system", "content": SYSTEM_PROMPT},
+                    {"role": "system", "content": system_prompt},
                     {"role": "user", "content": prompt},
                 ],
                 "temperature": self.server.temperature,
@@ -741,7 +762,14 @@ class AIClusterServer(BaseHTTPRequestHandler):
                 "seed": self.server.seed,
             }
             if self.server.use_guided_json:
-                request_body["nvext"] = {"guided_json": ANALYSIS_JSON_SCHEMA}
+                # OpenAI-style structured output; NVIDIA's endpoint no longer accepts nvext.guided_json.
+                request_body["response_format"] = {
+                    "type": "json_schema",
+                    "json_schema": {"name": "bgc_" + self.server.mode, "schema": schema},
+                }
+            if self.server.reasoning_effort == "none":
+                # Without this, reasoning models spend the token budget thinking before the JSON starts.
+                request_body["chat_template_kwargs"] = {"enable_thinking": False}
             diagnostics = {
                 "sample": sample,
                 "consensus_id": consensus_id,
@@ -757,9 +785,10 @@ class AIClusterServer(BaseHTTPRequestHandler):
             try:
                 raw_content = self.call_nvidia(request_body)
             except RuntimeError as exc:
-                if self.server.use_guided_json and "guided_json" in str(exc).lower():
+                if self.server.use_guided_json and any(
+                        word in str(exc).lower() for word in ("guided_json", "response_format", "json_schema")):
                     try:
-                        request_body.pop("nvext", None)
+                        request_body.pop("response_format", None)
                         diagnostics["guided_json_retry"] = True
                         raw_content = self.call_nvidia(request_body)
                     except Exception as retry_exc:
@@ -789,25 +818,35 @@ class AIClusterServer(BaseHTTPRequestHandler):
                 })
                 self._json(diagnostics, status=504 if isinstance(exc, (TimeoutError, socket.timeout)) else 502)
                 return
-            analysis = normalize_analysis(raw_content)
+            analysis = (ai_evidence.normalize(raw_content) if self.server.mode == "evidence"
+                        else normalize_analysis(raw_content))
             response = {
                 "sample": sample,
                 "consensus_id": consensus_id,
                 "model": self.server.model,
+                "mode": self.server.mode,
                 "cached": False,
                 "diagnostics": diagnostics,
-                "prompt_version": PROMPT_VERSION,
+                "prompt_version": prompt_version,
+                "parameters": {key: getattr(self.server, key) for key in
+                               ("temperature", "top_p", "max_tokens", "reasoning_effort", "seed", "use_guided_json")},
                 "request_fingerprint": fingerprint,
                 "created_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                 "analysis": analysis,
-                "traceability": trace_identifiers(analysis, model_payload),
             }
+            response.update(self.checks(analysis, model_payload))
             cache_path.parent.mkdir(parents=True, exist_ok=True)
             with open(cache_path, "w", encoding="utf-8") as handle:
                 json.dump(response, handle, ensure_ascii=False, indent=2)
             self._json(response)
         except Exception as exc:
             self._json({"error": str(exc)}, status=500)
+
+    def checks(self, analysis, model_payload):
+        """Statement-level verification in evidence mode; the identifier check otherwise."""
+        if self.server.mode == "evidence":
+            return {"verification": ai_evidence.verify(analysis, model_payload)}
+        return {"traceability": trace_identifiers(analysis, model_payload)}
 
     def call_nvidia(self, request_body):
         url = self.server.base_url.rstrip("/") + "/chat/completions"
@@ -839,9 +878,12 @@ def main():
                         help="Directory with the HTML report to serve (auto-detected from results-dir if omitted)")
     parser.add_argument("--model", default=os.environ.get("NVIDIA_MODEL", DEFAULT_MODEL))
     parser.add_argument("--base-url", default=os.environ.get("NVIDIA_API_BASE", DEFAULT_BASE_URL))
-    parser.add_argument("--temperature", type=float, default=float(os.environ.get("AI_TEMPERATURE", "0.1")))
+    parser.add_argument("--mode", choices=MODES, default=os.environ.get("AI_MODE", DEFAULT_MODE),
+                        help="evidence: summary restating the evidence, verified per statement (default); "
+                             "interpretation: free-text analysis with proposed roles, unverified")
+    parser.add_argument("--temperature", type=float, default=None)
     parser.add_argument("--top-p", type=float, default=float(os.environ.get("AI_TOP_P", "0.95")))
-    parser.add_argument("--max-tokens", type=int, default=int(os.environ.get("AI_MAX_TOKENS", "1800")))
+    parser.add_argument("--max-tokens", type=int, default=None)
     parser.add_argument("--reasoning-effort", default=os.environ.get("AI_REASONING_EFFORT", "none"),
                         choices=["none", "high", "max"],
                         help="DeepSeek reasoning mode: none (fast, strict JSON) or high/max (deeper analysis)")
@@ -861,9 +903,13 @@ def main():
     server.api_key = os.environ.get("NVIDIA_API_KEY", "")
     server.model = args.model
     server.base_url = args.base_url
-    server.temperature = args.temperature
+    server.mode = args.mode
+    defaults = MODE_DEFAULTS[args.mode]
+    server.temperature = (args.temperature if args.temperature is not None
+                          else float(os.environ.get("AI_TEMPERATURE", defaults["temperature"])))
     server.top_p = args.top_p
-    server.max_tokens = args.max_tokens
+    server.max_tokens = (args.max_tokens if args.max_tokens is not None
+                         else int(os.environ.get("AI_MAX_TOKENS", defaults["max_tokens"])))
     server.reasoning_effort = args.reasoning_effort
     server.seed = args.seed
     server.use_guided_json = not args.no_guided_json
@@ -872,6 +918,7 @@ def main():
 
     print("AI cluster server listening on http://{0}:{1}".format(args.host, args.port))
     print("Model: {0}".format(server.model))
+    print("Mode: {0}".format(server.mode))
     print("NVIDIA_API_KEY state: {0}".format(api_key_state(server.api_key)))
     print("Parameters: temperature={t}, top_p={p}, max_tokens={m}, reasoning_effort={r}, seed={s}, guided_json={g}".format(
         t=server.temperature, p=server.top_p, m=server.max_tokens,

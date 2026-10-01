@@ -995,6 +995,30 @@ def html_page(title, sections):
     .ai-trace-note {{
       font-size: 0.85em;
     }}
+    .ai-claims {{
+      list-style: none;
+      padding-left: 0;
+    }}
+    .ai-claims li {{
+      display: flex;
+      gap: 8px;
+      align-items: baseline;
+    }}
+    .ai-claim-mark {{
+      flex: none;
+      font-weight: 700;
+    }}
+    .ai-claim-ok .ai-claim-mark {{
+      color: #15803d;
+    }}
+    .ai-claim-flag .ai-claim-mark {{
+      color: #c2410c;
+    }}
+    .ai-claim-reason {{
+      display: block;
+      font-size: 0.85em;
+      color: #c2410c;
+    }}
     .ai-status-error {{
       border-left-color: var(--rose);
       background: rgba(235, 91, 120, 0.06);
@@ -1175,9 +1199,58 @@ def html_page(title, sections):
           return '<li>' + escapeHtml(item) + '</li>';
         }}).join('') + '</ul>';
       }}
+      var EVIDENCE_SECTIONS = [
+        ['overview', 'Overview'],
+        ['core_genes', 'Biosynthetic core genes'],
+        ['other_genes', 'Other annotated genes'],
+        ['database_hits', 'MIBiG, ARTS and dbCAN'],
+        ['conflicts_and_gaps', 'Disagreements and missing evidence']
+      ];
+      function evidenceSource(statement) {{
+        return (statement.evidence || []).map(function (ref) {{
+          return (ref.locus_tag ? ref.locus_tag + ' ' : '') + ref.field + ' = ' + ref.value;
+        }}).join('\\n');
+      }}
+      function renderEvidence(data) {{
+        var analysis = data.analysis || {{}};
+        var check = data.verification || {{results: [], statements: 0, verified: 0, coverage: {{}}}};
+        var verdicts = {{}};
+        (check.results || []).forEach(function (item) {{
+          verdicts[item.section + ':' + item.index] = item;
+        }});
+        var cover = Object.keys(check.coverage || {{}}).map(function (key) {{
+          var c = check.coverage[key];
+          return key.replace('_', ' ') + ' ' + c.covered + '/' + c.expected;
+        }}).join(', ');
+        var html = '<div class="ai-status' + (check.verified < check.statements ? ' ai-trace-warning' : '') + '"><h3>Evidence summary</h3><p>'
+          + check.verified + ' of ' + check.statements + ' statements verified against the evidence sent to the model'
+          + (cover ? '; covered: ' + escapeHtml(cover) : '') + '.</p><p class="muted ai-trace-note">'
+          + 'A verified statement restates values present in the evidence; the check does not establish that the evidence itself is correct. '
+          + 'Hover a statement to see its source.</p></div>';
+        EVIDENCE_SECTIONS.forEach(function (section) {{
+          var items = analysis[section[0]] || [];
+          if (!items.length) {{
+            return;
+          }}
+          html += '<div class="ai-status"><h3>' + escapeHtml(section[1]) + '</h3><ul class="ai-claims">'
+            + items.map(function (statement, index) {{
+              var verdict = verdicts[section[0] + ':' + index] || {{verified: false, reasons: ['not checked']}};
+              return '<li class="' + (verdict.verified ? 'ai-claim-ok' : 'ai-claim-flag') + '" title="' + escapeHtml(evidenceSource(statement)) + '">'
+                + '<span class="ai-claim-mark">' + (verdict.verified ? '&#10003;' : '&#9888;') + '</span><span>'
+                + escapeHtml(statement.text)
+                + (verdict.verified ? '' : '<span class="ai-claim-reason">Unverified: ' + escapeHtml((verdict.reasons || []).join('; ')) + '</span>')
+                + '</span></li>';
+            }}).join('') + '</ul></div>';
+        }});
+        aiResult.innerHTML = html;
+      }}
       function renderAnalysis(data) {{
         if (data.model) {{
           showActiveAiModel(data.model);
+        }}
+        if (data.mode === 'evidence' || (data.analysis && data.analysis.overview)) {{
+          renderEvidence(data);
+          return;
         }}
         var analysis = data.analysis || data;
         var sections = [
