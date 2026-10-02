@@ -77,6 +77,16 @@ eggnog:
     - "eggnog_proteins.dmnd"
     - "eggnog.taxa.db"
 
+mibig:
+  required: false
+  host_path: "db/mibig"
+  status: "managed"
+  notes: "MIBiG 4.0 JSON entries for the AI summary of the closest known cluster; downloaded automatically (about 1 MB), checksum-verified."
+  source: "https://dl.secondarymetabolites.org/mibig/mibig_json_4.0.tar.gz"
+  required_files:
+    - "mibig_json_4.0.tar.gz"
+    - "mibig_json_4.0/BGC0000001.json"
+
 dbcan:
   required: false
   host_path: "db/dbcan"

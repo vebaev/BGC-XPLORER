@@ -16,6 +16,7 @@ mkdir -p "${DB_DIR}/deepbgc"
 ARTS_REFERENCE="${ARTS_REFERENCE:-actinobacteria}"
 mkdir -p "${DB_DIR}/arts"
 mkdir -p "${DB_DIR}/eggnog"
+mkdir -p "${DB_DIR}/mibig"
 
 PYTHON_BIN="${BGC_PYTHON:-$(command -v python3)}"
 # Determine missing resources only after obtaining the lock. Another container
@@ -41,4 +42,11 @@ if printf '%s\n' "${MISSING}" | grep -qx arts; then
     bash "${ROOT_DIR}/scripts/fetch_arts.sh"
 else
   echo "arts: already valid; download skipped."
+fi
+# MIBiG JSON is optional (AI summary only): a failed download does not stop the workflow.
+if [ ! -f "${DB_DIR}/mibig/mibig_json_4.0/BGC0000001.json" ]; then
+  BGC_DB_ROOT="${DB_DIR}" bash "${ROOT_DIR}/scripts/fetch_mibig_json.sh" \
+    || echo "mibig: download failed; AI summaries will omit MIBiG details." >&2
+else
+  echo "mibig: already valid; download skipped."
 fi

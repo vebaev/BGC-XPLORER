@@ -29,7 +29,7 @@ DEFAULT_MODEL = "nvidia/nemotron-3-ultra-550b-a55b"
 # "summary": a readable description from facts computed by code, checked sentence by
 # sentence, with a separate AI hypothesis labelled as such (ai_summary.py).
 MODES = ("facts", "summary", "evidence", "interpretation")
-DEFAULT_MODE = "facts"
+DEFAULT_MODE = "summary"
 MODE_DEFAULTS = {"facts": {"temperature": 0.0, "max_tokens": 800},
                  "summary": {"temperature": 0.2, "max_tokens": 2500},
                  "evidence": {"temperature": 0.0, "max_tokens": 4000},
