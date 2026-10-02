@@ -50,7 +50,8 @@ rule run_arts:
           if [ "{params.reuse_existing}" = "true" ] && [ -f "{params.outdir}/tables/knownhits.tsv" ] && [ -f "{params.outdir}/tables/coretable.tsv" ]; then
             printf 'Reusing existing ARTS output in %s\n' "{params.outdir}"
           elif [ -n "$PYTHON_BIN" ] && [ -x "$PYTHON_BIN" ] && [ -f "{params.script_path}" ]; then
-            PATH=/usr/local/bin:$PATH "$PYTHON_BIN" "{params.script_path}" {input.gbff} {params.ref_dir} -rd {params.outdir} -asp {params.antismash_dir} -khmms {params.arts_root_dir}/knownresistance.hmm -duf {params.arts_root_dir}/dufmodels.hmm {params.extra}
+            # ARTS calls mafft, FastTree and other helpers by name; they live next to its Python.
+            PATH="$(dirname "$PYTHON_BIN"):/usr/local/bin:$PATH" "$PYTHON_BIN" "{params.script_path}" {input.gbff} {params.ref_dir} -rd {params.outdir} -asp {params.antismash_dir} -khmms {params.arts_root_dir}/knownresistance.hmm -duf {params.arts_root_dir}/dufmodels.hmm {params.extra}
           else
             printf 'ARTS runtime was not found and no reusable output exists in %s\n' "{params.outdir}" >&2
             exit 1
