@@ -1280,9 +1280,12 @@ def html_page(title, sections):
                 + '</span></li>';
             }}).join('') + '</ul></div>';
         }});
-        aiResult.innerHTML = html + AI_MISTAKE_NOTE;
+        aiResult.innerHTML = html + aiMistakeNote(data);
       }}
-      var AI_MISTAKE_NOTE = '<p class="ai-result-warning">&#9888; AI-generated text. AI models can make mistakes: check every statement against the evidence table before relying on it.</p>';
+      function aiMistakeNote(data) {{
+        var model = data && data.model ? ' Model: ' + escapeHtml(data.model) + '.' : '';
+        return '<p class="ai-result-warning">&#9888; AI-generated text. AI models can make mistakes: check every statement against the evidence table before relying on it.' + model + '</p>';
+      }}
       function renderFacts(data) {{
         // The facts are stored with the result for audit but not listed here: the summary
         // already states every one of them, so the list would only repeat it.
@@ -1293,7 +1296,7 @@ def html_page(title, sections):
           : 'The model text did not pass the check (' + escapeHtml((check.reasons || []).join('; ')) + '), so the facts are shown as written by the workflow.';
         aiResult.innerHTML = '<div class="ai-status' + (fromModel ? '' : ' ai-trace-warning') + '"><h3>Locus summary</h3><p>'
           + escapeHtml(data.shown_summary || '') + '</p><p class="muted ai-trace-note">'
-          + (fromModel ? '&#10003; ' : '&#9888; ') + note + '</p></div>' + (fromModel ? AI_MISTAKE_NOTE : '');
+          + (fromModel ? '&#10003; ' : '&#9888; ') + note + '</p></div>' + (fromModel ? aiMistakeNote(data) : '');
       }}
       function renderSummary(data) {{
         var factText = {{}};
@@ -1336,7 +1339,7 @@ def html_page(title, sections):
         }} else if (hyp.text) {{
           html += '<p class="muted ai-trace-note">The AI hypothesis did not pass its check (' + escapeHtml((hyp.reasons || []).join('; ')) + ') and is not shown.</p>';
         }}
-        aiResult.innerHTML = html + (anyModel ? AI_MISTAKE_NOTE : '');
+        aiResult.innerHTML = html + (anyModel ? aiMistakeNote(data) : '');
       }}
       function renderAnalysis(data) {{
         if (data.model) {{
@@ -1370,7 +1373,7 @@ def html_page(title, sections):
         html += '<div class="ai-status"><h3>Key genes</h3>' + listItems(analysis.key_genes) + '</div>';
         html += '<div class="ai-status"><h3>Recommended follow-up</h3>' + listItems(analysis.recommended_followup) + '</div>';
         html += traceabilityNote(data.traceability);
-        aiResult.innerHTML = html + AI_MISTAKE_NOTE;
+        aiResult.innerHTML = html + aiMistakeNote(data);
       }}
       function traceabilityNote(trace) {{
         if (!trace) {{
