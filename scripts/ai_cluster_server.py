@@ -21,7 +21,7 @@ import ai_summary
 
 
 DEFAULT_BASE_URL = "https://integrate.api.nvidia.com/v1"
-DEFAULT_MODEL = "nvidia/nemotron-3-ultra-550b-a55b"
+DEFAULT_MODEL = "nvidia/nemotron-3-super-120b-a12b"
 # "evidence": a summary that only restates the evidence, checked statement by
 # statement (ai_evidence.py). "interpretation": the earlier free-text analysis
 # with biosynthetic logic and proposed roles, unverified; opt-in.

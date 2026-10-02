@@ -4,7 +4,7 @@ from pathlib import Path
 from scripts.ai_cluster_server import DEFAULT_MODEL, api_key_state
 
 
-EXPECTED_MODEL = "nvidia/nemotron-3-ultra-550b-a55b"
+EXPECTED_MODEL = "nvidia/nemotron-3-super-120b-a12b"
 
 
 class AIRuntimeConfigTests(unittest.TestCase):

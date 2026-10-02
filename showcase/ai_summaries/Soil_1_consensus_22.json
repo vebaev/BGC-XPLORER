@@ -1,0 +1,322 @@
+{
+  "sample": "Soil_1",
+  "consensus_id": "Soil_1_consensus_22",
+  "model": "nvidia/nemotron-3-super-120b-a12b",
+  "mode": "summary",
+  "cached": false,
+  "diagnostics": {
+    "sample": "Soil_1",
+    "consensus_id": "Soil_1_consensus_22",
+    "model": "nvidia/nemotron-3-super-120b-a12b",
+    "timeout_seconds": 480,
+    "payload_chars": 1777,
+    "gene_count": 32,
+    "representative_gene_count": null,
+    "facts": 6,
+    "guided_json": true,
+    "attempts": 1
+  },
+  "prompt_version": "5.6-summary",
+  "parameters": {
+    "temperature": 0.2,
+    "top_p": 0.95,
+    "max_tokens": 2500,
+    "reasoning_effort": "none",
+    "seed": 42,
+    "use_guided_json": true
+  },
+  "request_fingerprint": "5946414dbe93848c5f8ee6ae61eb548b7bb9fbe3c3ca1adfc23ae0b53258eb97",
+  "created_at": "2026-10-02T08:52:58Z",
+  "analysis": {
+    "overview": [
+      {
+        "text": "Soil_1_22 is a biosynthetic gene cluster identified by DeepBGC and GECCO, with no compound class assigned.",
+        "facts": [
+          "O1"
+        ]
+      },
+      {
+        "text": "It spans 11 kb on contig_1 from position 2,861,769 to 2,872,845 and contains 11 genes.",
+        "facts": [
+          "O2"
+        ]
+      }
+    ],
+    "genes": [
+      {
+        "text": "The cluster contains 2 regulatory, 2 transport, 2 tailoring-enzyme and 3 resistance genes, with no core biosynthetic gene detected by any tool.",
+        "facts": [
+          "G1",
+          "G2"
+        ]
+      }
+    ],
+    "similar": [
+      {
+        "text": "This locus has not been compared with MIBiG, as the comparison was performed by antiSMASH, which did not detect the cluster.",
+        "facts": [
+          "S1"
+        ]
+      }
+    ],
+    "hypothesis": {
+      "text": "The presence of cytochrome P450 enzymes, phosphoserine transaminase, and threonine dehydratase suggests the cluster may be involved in amino acid modification or primary metabolic processes rather than specialised metabolite biosynthesis.",
+      "facts": [
+        "H1"
+      ]
+    }
+  },
+  "facts": [
+    {
+      "id": "O1",
+      "section": "overview",
+      "sentence": "Soil_1_22 is a biosynthetic gene cluster, found by DeepBGC and GECCO; no compound class is assigned to it.",
+      "values": [
+        "DeepBGC",
+        "GECCO"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "O2",
+      "section": "overview",
+      "sentence": "It spans 11 kb on contig_1 (2,861,769–2,872,845) and contains 11 genes.",
+      "values": [
+        "11",
+        "2861769",
+        "2872845",
+        "11",
+        "contig_1"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "G1",
+      "section": "genes",
+      "sentence": "By the annotation categories of BGC-XPLORER, it holds 2 regulatory, 2 transport, 2 tailoring-enzyme and 3 resistance genes.",
+      "values": [
+        "2",
+        "2",
+        "2",
+        "3"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "G2",
+      "section": "genes",
+      "sentence": "No detection tool names a core biosynthetic gene inside the agreed span of this locus.",
+      "values": [],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "H1",
+      "section": "context",
+      "sentence": "Gene products in the locus, in genome order: CJLEIP_02459 sensor histidine kinase KdpD; CJLEIP_02460 Roadblock/LC7 domain-containing protein; CJLEIP_02461 DUF742 domain-containing protein; CJLEIP_02462 ATP-binding protein; CJLEIP_02463 Cytochrome P450; CJLEIP_02464 Cytochrome P450; CJLEIP_02465 phosphoserine transaminase; CJLEIP_02466 Threonine dehydratase; CJLEIP_02467 Transport permease protein; CJLEIP_02468 ATP-binding cassette domain-containing protein; CJLEIP_02469 TetR/AcrR family transcriptional regulator.",
+      "values": [],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "S1",
+      "section": "similar",
+      "sentence": "This locus has not been compared with MIBiG: the comparison is made by antiSMASH, which did not detect it.",
+      "values": [],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    }
+  ],
+  "summary_sections": [
+    {
+      "key": "overview",
+      "title": "What it is",
+      "sentences": [
+        {
+          "text": "Soil_1_22 is a biosynthetic gene cluster identified by DeepBGC and GECCO, with no compound class assigned.",
+          "facts": [
+            "O1"
+          ],
+          "source": "model",
+          "shown_text": "Soil_1_22 is a biosynthetic gene cluster identified by DeepBGC and GECCO, with no compound class assigned."
+        },
+        {
+          "text": "It spans 11 kb on contig_1 from position 2,861,769 to 2,872,845 and contains 11 genes.",
+          "facts": [
+            "O2"
+          ],
+          "source": "model",
+          "shown_text": "It spans 11 kb on contig_1 from position 2,861,769 to 2,872,845 and contains 11 genes."
+        }
+      ]
+    },
+    {
+      "key": "genes",
+      "title": "What it contains",
+      "sentences": [
+        {
+          "text": "The cluster contains 2 regulatory, 2 transport, 2 tailoring-enzyme and 3 resistance genes, with no core biosynthetic gene detected by any tool.",
+          "facts": [
+            "G1",
+            "G2"
+          ],
+          "source": "model",
+          "shown_text": "The cluster contains 2 regulatory, 2 transport, 2 tailoring-enzyme and 3 resistance genes, with no core biosynthetic gene detected by any tool."
+        }
+      ]
+    },
+    {
+      "key": "similar",
+      "title": "What it resembles",
+      "sentences": [
+        {
+          "text": "This locus has not been compared with MIBiG, as the comparison was performed by antiSMASH, which did not detect the cluster.",
+          "facts": [
+            "S1"
+          ],
+          "source": "model",
+          "shown_text": "This locus has not been compared with MIBiG, as the comparison was performed by antiSMASH, which did not detect the cluster."
+        }
+      ]
+    }
+  ],
+  "sentence_checks": [
+    {
+      "section": "overview",
+      "index": 0,
+      "text": "Soil_1_22 is a biosynthetic gene cluster identified by DeepBGC and GECCO, with no compound class assigned.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "overview",
+      "index": 1,
+      "text": "It spans 11 kb on contig_1 from position 2,861,769 to 2,872,845 and contains 11 genes.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 0,
+      "text": "The cluster contains 2 regulatory, 2 transport, 2 tailoring-enzyme and 3 resistance genes, with no core biosynthetic gene detected by any tool.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "similar",
+      "index": 0,
+      "text": "This locus has not been compared with MIBiG, as the comparison was performed by antiSMASH, which did not detect the cluster.",
+      "verified": true,
+      "reasons": []
+    }
+  ],
+  "sentences_removed": 0,
+  "hypothesis": {
+    "text": "The presence of cytochrome P450 enzymes, phosphoserine transaminase, and threonine dehydratase suggests the cluster may be involved in amino acid modification or primary metabolic processes rather than specialised metabolite biosynthesis.",
+    "facts": [
+      "H1"
+    ],
+    "shown": true,
+    "reasons": []
+  },
+  "gene_roles": [
+    {
+      "locus_tag": "CJLEIP_02459",
+      "product": "sensor histidine kinase KdpD",
+      "antismash_role": "",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_02460",
+      "product": "Roadblock/LC7 domain-containing protein",
+      "antismash_role": "",
+      "category": "resistance",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_02461",
+      "product": "DUF742 domain-containing protein",
+      "antismash_role": "",
+      "category": "resistance",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_02462",
+      "product": "ATP-binding protein",
+      "antismash_role": "",
+      "category": "resistance",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_02463",
+      "product": "Cytochrome P450",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_02464",
+      "product": "Cytochrome P450",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_02465",
+      "product": "phosphoserine transaminase",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_02466",
+      "product": "Threonine dehydratase",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_02467",
+      "product": "Transport permease protein",
+      "antismash_role": "",
+      "category": "transporter",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_02468",
+      "product": "ATP-binding cassette domain-containing protein",
+      "antismash_role": "",
+      "category": "transporter",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_02469",
+      "product": "TetR/AcrR family transcriptional regulator",
+      "antismash_role": "",
+      "category": "regulator",
+      "core_by": ""
+    }
+  ]
+}

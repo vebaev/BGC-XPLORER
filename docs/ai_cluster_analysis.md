@@ -99,34 +99,36 @@ Then open:
 http://127.0.0.1:8000/SOIL_CONTIGS.html
 ```
 
-## Input sent to the model
+## What the AI summary does (default mode `summary`)
 
-For the selected `consensus_id`, the service sends structured evidence:
+The model is never asked to interpret the raw evidence. For the selected
+`consensus_id`, `scripts/ai_summary.py` first computes numbered facts from the
+run's own outputs: location and callers; gene roles, NRPS/PKS modules,
+substrate predictions and KnownClusterBlast gene pairs from antiSMASH's JSON;
+and the closest cluster's MIBiG 4.0 entry (compound, organism, class, recorded
+activity, evidence, reference; read from `db/mibig/mibig_json_4.0`, or
+`MIBIG_JSON_DIR`). The model writes three short parts (what the cluster is,
+what it contains, what it resembles) and cites the facts of every sentence.
 
-- region coordinates, caller count, class/product signals, ARTS hit counts and representative MIBiG comparison metrics;
-- antiSMASH, GECCO and DeepBGC overlapping predictions;
-- ARTS overlapping evidence;
-- dbCAN CGC overlap when available;
-- all genes in the cluster with Bakta, eggNOG, dbCAN and ARTS annotations.
+Each sentence is then checked on its own: its numbers, locus tags,
+accessions, callers, substrates and compound names must come from the facts it
+cites, a number that counts a category must count the same one there, a gene's
+attributes and callers must come from a fact about that gene, and interpretive
+wording is not allowed. Sentences that fail are removed and counted in the
+report; a part left empty is filled with the facts as written by code.
+Definitions of technical terms come from a fixed glossary added by code.
 
-The prompt asks the model to return strict JSON with summary, likely function,
-biosynthetic logic, key genes, resistance/transport/regulation and recommended
-follow-up. The analysis is an interpretation of supplied evidence, not a calibrated
-confidence or novelty estimate.
+A separate hypothesis about what the cluster may make or do is shown in its
+own box, labelled "Hypothesis (AI-generated, not verified)". It may use all
+gene products of the locus as context and is checked only for invented
+identifiers and numbers. Every model-written result ends with a notice that AI
+models can make mistakes, naming the model.
 
-### Scientific interpretation prompt v2.0
+No literature or web search is performed. Each stored result records the
+model, prompt version, parameters, date and a SHA-256 fingerprint of the
+request (prompt, facts, model, endpoint and parameters). The prompt, an
+example input and a ten-locus evaluation are in `showcase/ai_summaries/`.
 
-The model returns six sections: summary, likely product/function, biosynthetic
-logic, key genes, resistance/transport/regulation, and recommended follow-up.
-Uncertainty belongs next to the relevant claim, rather than in separate
-confidence, caveats, or novelty sections. Interpretations must reference supplied
-locus tags or tool evidence; unsupported compounds, activities and citations are
-prohibited. No literature search is performed by this endpoint.
-
-Gene coordinates, strand, EC, KEGG KO, and complete supplied annotations are
-retained. Empty evidence tables are not treated as verified negative findings:
-tool completion is explicitly unknown in this payload. Workflow interpretations
-are labeled as preliminary hypotheses. The cache fingerprint includes the input,
-prompt/version, model, endpoint and generation parameters. Responses record the
-prompt version and fingerprint. A model response remains a computational
-interpretation requiring expert review, not experimental validation.
+Other modes can be selected with `AI_MODE`: `facts` (one paragraph worded from
+a fixed fact list), `evidence` (statement-level citations) and
+`interpretation` (the earlier free interpretation, prompt 2.0, unverified).

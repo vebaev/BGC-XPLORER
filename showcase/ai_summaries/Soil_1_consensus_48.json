@@ -1,0 +1,1811 @@
+{
+  "sample": "Soil_1",
+  "consensus_id": "Soil_1_consensus_48",
+  "model": "nvidia/nemotron-3-super-120b-a12b",
+  "mode": "summary",
+  "cached": false,
+  "diagnostics": {
+    "sample": "Soil_1",
+    "consensus_id": "Soil_1_consensus_48",
+    "model": "nvidia/nemotron-3-super-120b-a12b",
+    "timeout_seconds": 480,
+    "payload_chars": 13415,
+    "gene_count": 154,
+    "representative_gene_count": null,
+    "facts": 28,
+    "guided_json": true,
+    "attempts": 1
+  },
+  "prompt_version": "5.6-summary",
+  "parameters": {
+    "temperature": 0.2,
+    "top_p": 0.95,
+    "max_tokens": 2500,
+    "reasoning_effort": "none",
+    "seed": 42,
+    "use_guided_json": true
+  },
+  "request_fingerprint": "86d1e1afa04c31c575beaf14f6f9d2f5f13c9d4e2a1fd254900fafe5a873a7f5",
+  "created_at": "2026-10-02T08:52:12Z",
+  "analysis": {
+    "overview": [
+      {
+        "text": "Soil_1_48 is a polyketide, terpene-precursor, NRPS-like, nonribosomal peptide (NRPS) and class II lanthipeptide cluster, found by antiSMASH, DeepBGC and GECCO (all three detection tools).",
+        "facts": [
+          "O1"
+        ]
+      },
+      {
+        "text": "It spans 272 kb on contig_1 (6,762,952–7,035,108) and contains 107 genes.",
+        "facts": [
+          "O2"
+        ]
+      }
+    ],
+    "genes": [
+      {
+        "text": "antiSMASH marks 35 genes as biosynthetic (15 core and 20 additional), 12 as regulatory and 9 as transport.",
+        "facts": [
+          "G1"
+        ]
+      },
+      {
+        "text": "CJLEIP_06060, annotated by Bakta as Dimethylallyltransferase, is named as a core gene by antiSMASH.",
+        "facts": [
+          "G3"
+        ]
+      },
+      {
+        "text": "CJLEIP_06067, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 6 modules in it, and predicts malonyl-CoA for 5 and no substrate for 1 for its acyltransferase domains.",
+        "facts": [
+          "G4"
+        ]
+      },
+      {
+        "text": "CJLEIP_06073, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 3 modules in it, and predicts malonyl-CoA for all 3 for its acyltransferase domains.",
+        "facts": [
+          "G5"
+        ]
+      },
+      {
+        "text": "CJLEIP_06077, annotated by Bakta as SDR family NAD(P)-dependent oxidoreductase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 1 module in it, and predicts malonyl-CoA for its acyltransferase domain.",
+        "facts": [
+          "G6"
+        ]
+      },
+      {
+        "text": "CJLEIP_06079, annotated by Bakta as Polyketide synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 1 module in it, and predicts malonyl-CoA for its acyltransferase domain.",
+        "facts": [
+          "G7"
+        ]
+      },
+      {
+        "text": "CJLEIP_06081, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 3 modules in it, and predicts methylmalonyl-CoA for all 3 for its acyltransferase domains.",
+        "facts": [
+          "G8"
+        ]
+      },
+      {
+        "text": "Together CJLEIP_06067, CJLEIP_06073, CJLEIP_06077, CJLEIP_06079, CJLEIP_06081, CJLEIP_06084, CJLEIP_06087, CJLEIP_06094, CJLEIP_06125, CJLEIP_06126, CJLEIP_06130, CJLEIP_06151, CJLEIP_06152, CJLEIP_06153 and CJLEIP_06155 hold 36 modules; antiSMASH predicts a substrate for 27 modules (malonyl-CoA for 21, methylmalonyl-CoA for 3, threonine for 1, proline for 1 and glycine for 1) and none for 2 modules; 7 modules have no adenylation or acyltransferase domain.",
+        "facts": [
+          "G9"
+        ]
+      },
+      {
+        "text": "CJLEIP_06099 encodes Cytochrome P450 and is marked by antiSMASH as an additional biosynthetic gene.",
+        "facts": [
+          "G10"
+        ]
+      },
+      {
+        "text": "CJLEIP_06101 encodes Glycosyltransferase and is marked by antiSMASH as an additional biosynthetic gene.",
+        "facts": [
+          "G11"
+        ]
+      },
+      {
+        "text": "CJLEIP_06158 encodes Thioesterase domain-containing protein and is marked by antiSMASH as an additional biosynthetic gene.",
+        "facts": [
+          "G12"
+        ]
+      },
+      {
+        "text": "CJLEIP_06167 encodes 4-hydroxybenzoyl-CoA thioesterase and is marked by antiSMASH as an additional biosynthetic gene.",
+        "facts": [
+          "G13"
+        ]
+      },
+      {
+        "text": "CJLEIP_06058 encodes Short-chain dehydrogenase and is marked by antiSMASH as an additional biosynthetic gene.",
+        "facts": [
+          "G14"
+        ]
+      }
+    ],
+    "similar": [
+      {
+        "text": "The closest MIBiG entry is BGC0000034 (candicidin), from Streptomyces sp. FR-008.",
+        "facts": [
+          "S1"
+        ]
+      },
+      {
+        "text": "23 genes of the locus have a counterpart in BGC0000034, at 98–100 % identity; antiSMASH finds counterparts for 100 % of that cluster's genes. Overall this is a close match.",
+        "facts": [
+          "S2"
+        ]
+      },
+      {
+        "text": "MIBiG lists the compound class of BGC0000034 as NRPS and PKS.",
+        "facts": [
+          "S8"
+        ]
+      }
+    ],
+    "hypothesis": {
+      "text": "The cluster may produce a hybrid NRPS-PKS metabolite with antifungal activity, given its close match to candicidin and the presence of core PKS and NRPS genes, along with modifying enzymes such as cytochrome P450 and glycosyltransferase.",
+      "facts": [
+        "S1",
+        "S2",
+        "S8",
+        "S9",
+        "G10",
+        "G11"
+      ]
+    }
+  },
+  "facts": [
+    {
+      "id": "O1",
+      "section": "overview",
+      "sentence": "Soil_1_48 is a polyketide, terpene-precursor, NRPS-like, nonribosomal peptide (NRPS) and class II lanthipeptide cluster, found by antiSMASH, DeepBGC and GECCO (all three detection tools).",
+      "values": [
+        "antiSMASH",
+        "DeepBGC",
+        "GECCO",
+        "3"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [
+        "Polyketide",
+        "T1PKS",
+        "terpene-precursor",
+        "NRPS-like",
+        "NRPS",
+        "lanthipeptide-class-ii"
+      ],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "O2",
+      "section": "overview",
+      "sentence": "It spans 272 kb on contig_1 (6,762,952–7,035,108) and contains 107 genes.",
+      "values": [
+        "272",
+        "6762952",
+        "7035108",
+        "107",
+        "contig_1"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "G1",
+      "section": "genes",
+      "sentence": "antiSMASH marks 35 genes as biosynthetic (15 core and 20 additional), 12 as regulatory and 9 as transport.",
+      "values": [
+        "35",
+        "15",
+        "20",
+        "12",
+        "9"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "G2",
+      "section": "genes",
+      "sentence": "7 core genes are named in the locus, each by at least one of antiSMASH, DeepBGC and GECCO.",
+      "values": [
+        "7",
+        "antiSMASH",
+        "DeepBGC",
+        "GECCO"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "G3",
+      "section": "genes",
+      "sentence": "CJLEIP_06060, annotated by Bakta as Dimethylallyltransferase, is named as a core gene by antiSMASH.",
+      "values": [
+        "CJLEIP_06060",
+        "antiSMASH"
+      ],
+      "genes": [
+        "CJLEIP_06060"
+      ],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": [
+        "antismash"
+      ]
+    },
+    {
+      "id": "G4",
+      "section": "genes",
+      "sentence": "CJLEIP_06067, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 6 modules in it, and predicts malonyl-CoA for 5 and no substrate for 1 for its acyltransferase domains.",
+      "values": [
+        "CJLEIP_06067",
+        "antiSMASH",
+        "DeepBGC",
+        "GECCO",
+        "6"
+      ],
+      "genes": [
+        "CJLEIP_06067"
+      ],
+      "terms": [
+        "module"
+      ],
+      "names": [
+        "malonyl-CoA",
+        "malonyl-CoA",
+        "malonyl-CoA",
+        "malonyl-CoA",
+        "malonyl-CoA"
+      ],
+      "detail": "antiSMASH domain order: AT–DH–KR–ACP–AT–KR–ACP–AT–KR–AT–KR–ACP–AT–KR–ACP–AT–KR–ACP",
+      "callers": [
+        "antismash",
+        "deepbgc",
+        "gecco"
+      ]
+    },
+    {
+      "id": "G5",
+      "section": "genes",
+      "sentence": "CJLEIP_06073, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 3 modules in it, and predicts malonyl-CoA for all 3 for its acyltransferase domains.",
+      "values": [
+        "CJLEIP_06073",
+        "antiSMASH",
+        "DeepBGC",
+        "GECCO",
+        "3"
+      ],
+      "genes": [
+        "CJLEIP_06073"
+      ],
+      "terms": [
+        "module"
+      ],
+      "names": [
+        "malonyl-CoA",
+        "malonyl-CoA",
+        "malonyl-CoA"
+      ],
+      "detail": "antiSMASH domain order: AT–DH–ER–KR–ACP–AT–DH–ER–KR–ACP–AT",
+      "callers": [
+        "antismash",
+        "deepbgc",
+        "gecco"
+      ]
+    },
+    {
+      "id": "G6",
+      "section": "genes",
+      "sentence": "CJLEIP_06077, annotated by Bakta as SDR family NAD(P)-dependent oxidoreductase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 1 module in it, and predicts malonyl-CoA for its acyltransferase domain.",
+      "values": [
+        "CJLEIP_06077",
+        "antiSMASH",
+        "DeepBGC",
+        "GECCO",
+        "1"
+      ],
+      "genes": [
+        "CJLEIP_06077"
+      ],
+      "terms": [
+        "module"
+      ],
+      "names": [
+        "malonyl-CoA"
+      ],
+      "detail": "antiSMASH domain order: KR–ACP–AT–DH–ER–KR–ACP",
+      "callers": [
+        "antismash",
+        "deepbgc",
+        "gecco"
+      ]
+    },
+    {
+      "id": "G7",
+      "section": "genes",
+      "sentence": "CJLEIP_06079, annotated by Bakta as Polyketide synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 1 module in it, and predicts malonyl-CoA for its acyltransferase domain.",
+      "values": [
+        "CJLEIP_06079",
+        "antiSMASH",
+        "DeepBGC",
+        "GECCO",
+        "1"
+      ],
+      "genes": [
+        "CJLEIP_06079"
+      ],
+      "terms": [
+        "module"
+      ],
+      "names": [
+        "malonyl-CoA"
+      ],
+      "detail": "antiSMASH domain order: AT–DH–KR–ACP",
+      "callers": [
+        "antismash",
+        "deepbgc",
+        "gecco"
+      ]
+    },
+    {
+      "id": "G8",
+      "section": "genes",
+      "sentence": "CJLEIP_06081, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 3 modules in it, and predicts methylmalonyl-CoA for all 3 for its acyltransferase domains.",
+      "values": [
+        "CJLEIP_06081",
+        "antiSMASH",
+        "DeepBGC",
+        "GECCO",
+        "3"
+      ],
+      "genes": [
+        "CJLEIP_06081"
+      ],
+      "terms": [
+        "module"
+      ],
+      "names": [
+        "methylmalonyl-CoA",
+        "methylmalonyl-CoA",
+        "methylmalonyl-CoA"
+      ],
+      "detail": "antiSMASH domain order: AT–KR–AT–DH–ER–KR–ACP–AT–DH–KR",
+      "callers": [
+        "antismash",
+        "deepbgc",
+        "gecco"
+      ]
+    },
+    {
+      "id": "G9",
+      "section": "genes",
+      "sentence": "Together CJLEIP_06067, CJLEIP_06073, CJLEIP_06077, CJLEIP_06079, CJLEIP_06081, CJLEIP_06084, CJLEIP_06087, CJLEIP_06094, CJLEIP_06125, CJLEIP_06126, CJLEIP_06130, CJLEIP_06151, CJLEIP_06152, CJLEIP_06153 and CJLEIP_06155 hold 36 modules; antiSMASH predicts a substrate for 27 modules (malonyl-CoA for 21, methylmalonyl-CoA for 3, threonine for 1, proline for 1 and glycine for 1) and none for 2 modules; 7 modules have no adenylation or acyltransferase domain.",
+      "values": [
+        "CJLEIP_06067",
+        "CJLEIP_06073",
+        "CJLEIP_06077",
+        "CJLEIP_06079",
+        "CJLEIP_06081",
+        "CJLEIP_06084",
+        "CJLEIP_06087",
+        "CJLEIP_06094",
+        "CJLEIP_06125",
+        "CJLEIP_06126",
+        "CJLEIP_06130",
+        "CJLEIP_06151",
+        "CJLEIP_06152",
+        "CJLEIP_06153",
+        "CJLEIP_06155",
+        "36",
+        "27",
+        "2",
+        "0"
+      ],
+      "genes": [
+        "CJLEIP_06067",
+        "CJLEIP_06073",
+        "CJLEIP_06077",
+        "CJLEIP_06079",
+        "CJLEIP_06081",
+        "CJLEIP_06084",
+        "CJLEIP_06087",
+        "CJLEIP_06094",
+        "CJLEIP_06125",
+        "CJLEIP_06126",
+        "CJLEIP_06130",
+        "CJLEIP_06151",
+        "CJLEIP_06152",
+        "CJLEIP_06153",
+        "CJLEIP_06155"
+      ],
+      "terms": [
+        "module"
+      ],
+      "names": [
+        "malonyl-CoA",
+        "malonyl-CoA",
+        "malonyl-CoA",
+        "malonyl-CoA",
+        "malonyl-CoA",
+        "malonyl-CoA",
+        "malonyl-CoA",
+        "malonyl-CoA",
+        "malonyl-CoA",
+        "malonyl-CoA",
+        "methylmalonyl-CoA",
+        "methylmalonyl-CoA",
+        "methylmalonyl-CoA",
+        "malonyl-CoA",
+        "malonyl-CoA",
+        "malonyl-CoA",
+        "malonyl-CoA",
+        "malonyl-CoA",
+        "malonyl-CoA",
+        "malonyl-CoA",
+        "malonyl-CoA",
+        "threonine",
+        "proline",
+        "malonyl-CoA",
+        "glycine",
+        "malonyl-CoA",
+        "malonyl-CoA"
+      ],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "G10",
+      "section": "genes",
+      "sentence": "CJLEIP_06099 encodes Cytochrome P450 and is marked by antiSMASH as an additional biosynthetic gene.",
+      "values": [
+        "CJLEIP_06099"
+      ],
+      "genes": [
+        "CJLEIP_06099"
+      ],
+      "terms": [
+        "cytochrome P450"
+      ],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "G11",
+      "section": "genes",
+      "sentence": "CJLEIP_06101 encodes Glycosyltransferase and is marked by antiSMASH as an additional biosynthetic gene.",
+      "values": [
+        "CJLEIP_06101"
+      ],
+      "genes": [
+        "CJLEIP_06101"
+      ],
+      "terms": [
+        "glycosyltransferase"
+      ],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "G12",
+      "section": "genes",
+      "sentence": "CJLEIP_06158 encodes Thioesterase domain-containing protein and is marked by antiSMASH as an additional biosynthetic gene.",
+      "values": [
+        "CJLEIP_06158"
+      ],
+      "genes": [
+        "CJLEIP_06158"
+      ],
+      "terms": [
+        "thioesterase"
+      ],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "G13",
+      "section": "genes",
+      "sentence": "CJLEIP_06167 encodes 4-hydroxybenzoyl-CoA thioesterase and is marked by antiSMASH as an additional biosynthetic gene.",
+      "values": [
+        "CJLEIP_06167"
+      ],
+      "genes": [
+        "CJLEIP_06167"
+      ],
+      "terms": [
+        "thioesterase"
+      ],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "G14",
+      "section": "genes",
+      "sentence": "CJLEIP_06058 encodes Short-chain dehydrogenase and is marked by antiSMASH as an additional biosynthetic gene.",
+      "values": [
+        "CJLEIP_06058"
+      ],
+      "genes": [
+        "CJLEIP_06058"
+      ],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "H1",
+      "section": "context",
+      "sentence": "Gene products in the locus, in genome order: CJLEIP_06047 ATP:glycerol 3-phosphotransferase; CJLEIP_06048 MFS transporter; CJLEIP_06049 hypothetical protein; CJLEIP_06050 Cholesterol esterase; CJLEIP_06051 DUF4382 domain-containing protein; CJLEIP_06052 Integral membrane protein; CJLEIP_06053 Cholesterol esterase; CJLEIP_06054 Integral membrane protein; CJLEIP_06055 Cholesterol esterase; CJLEIP_06056 TetR family transcriptional regulator; CJLEIP_06057 signal peptidase I; CJLEIP_06058 Short-chain dehydrogenase; CJLEIP_06059 MalT-like TPR region domain-containing protein; CJLEIP_06060 Dimethylallyltransferase; CJLEIP_06061 DUF3043 domain-containing protein; CJLEIP_06062 Dioxygenase; CJLEIP_06063 globin domain-containing protein; CJLEIP_06064 Alpha/beta hydrolase; CJLEIP_06065 Peptidoglycan recognition protein family domain-containing protein; CJLEIP_06066 GDP-mannose 4,6-dehydratase; CJLEIP_06067 sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase; CJLEIP_06073 sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase; CJLEIP_06077 SDR family NAD(P)-dependent oxidoreductase; CJLEIP_06079 Polyketide synthase; CJLEIP_06081 sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase; CJLEIP_06084 ACP S-malonyltransferase; CJLEIP_06087 sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase; CJLEIP_06092 Transport permease protein; CJLEIP_06093 ABC-transporter; CJLEIP_06094 Acyl transferase; CJLEIP_06096 aminodeoxychorismate synthase component I; CJLEIP_06097 FscTE; CJLEIP_06098 Ferredoxin; CJLEIP_06099 Cytochrome P450; CJLEIP_06100 L-glutamine:2-deoxy-scyllo-inosose aminotransferase; CJLEIP_06101 Glycosyltransferase; CJLEIP_06102 HTH luxR-type domain-containing protein; CJLEIP_06103 AAA family ATPase; CJLEIP_06104 FscRII; CJLEIP_06105 PAS domain S-box protein; CJLEIP_06106 Aminotransferase; CJLEIP_06107 FscO; CJLEIP_06108 ABC transporter ATP-binding protein; CJLEIP_06109 ABC transporter ATP-binding protein; CJLEIP_06110 Branched-chain amino acid ABC transporter permease; CJLEIP_06111 ABC transporter substrate-binding protein; CJLEIP_06112 Dynein regulation protein LC7; CJLEIP_06113 histidine kinase; CJLEIP_06114 Alpha/beta hydrolase; CJLEIP_06115 Tryptophan 2,3-dioxygenase; CJLEIP_06116 3-oxoacyl-ACP reductase; CJLEIP_06117 Phenylacetate-CoA oxygenase/reductase subunit PaaK; CJLEIP_06118 1,2-phenylacetyl-CoA epoxidase subunit PaaD; CJLEIP_06119 1,2-phenylacetyl-CoA epoxidase subunit PaaC; CJLEIP_06120 1,2-phenylacetyl-CoA epoxidase subunit PaaB; CJLEIP_06121 1,2-phenylacetyl-CoA epoxidase subunit PaaA; CJLEIP_06122 Acyl carrier protein; CJLEIP_06123 2-succinylbenzoate--CoA ligase; CJLEIP_06124 crotonyl-CoA carboxylase/reductase; CJLEIP_06125 Carrier domain-containing protein; CJLEIP_06126 non-ribosomal peptide synthetase; CJLEIP_06127 Phthiocerol/phthiodiolone dimycocerosyl transferase; CJLEIP_06128 RNA polymerase sigma factor; CJLEIP_06129 DUF3592 domain-containing protein; CJLEIP_06130 Amino acid adenylation domain-containing protein; CJLEIP_06131 MFS transporter; CJLEIP_06132 Lantibiotic biosynthesis protein dehydration domain-containing protein; CJLEIP_06133 hypothetical protein; CJLEIP_06134 HTH luxR-type domain-containing protein; CJLEIP_06135 AAA family ATPase; CJLEIP_06136 class III lanthionine synthetase LanKC; CJLEIP_06137 MFS transporter; CJLEIP_06138 Albusnodin family lasso peptide; CJLEIP_06139 Radical SAM core domain-containing protein; CJLEIP_06140 Iron-containing redox enzyme family protein; CJLEIP_06141 FXSXX-COOH protein; CJLEIP_06142 Adenylate cyclase / Guanylate cyclase; CJLEIP_06143 Serine protease; CJLEIP_06144 GAF domain-containing protein; CJLEIP_06145 Integral membrane protein.",
+      "values": [],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "S1",
+      "section": "similar",
+      "sentence": "The closest MIBiG entry is BGC0000034 (candicidin), from Streptomyces sp. FR-008.",
+      "values": [
+        "BGC0000034"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [
+        "candicidin",
+        "candicidin",
+        "Streptomyces sp. FR-008"
+      ],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "S2",
+      "section": "similar",
+      "sentence": "23 genes of the locus have a counterpart in BGC0000034, at 98–100 % identity; antiSMASH finds counterparts for 100 % of that cluster's genes. Overall this is a close match.",
+      "values": [
+        "23",
+        "98",
+        "100",
+        "100",
+        "BGC0000034"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [
+        "close"
+      ],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "S3",
+      "section": "similar",
+      "sentence": "CJLEIP_06067 matches AAQ82568.1 (FscD) of BGC0000034 at 99 % identity.",
+      "values": [
+        "CJLEIP_06067",
+        "AAQ82568.1",
+        "99"
+      ],
+      "genes": [
+        "CJLEIP_06067"
+      ],
+      "terms": [],
+      "names": [
+        "FscD"
+      ],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "S4",
+      "section": "similar",
+      "sentence": "CJLEIP_06073 matches AAQ82567.1 (FscE) of BGC0000034 at 99 % identity.",
+      "values": [
+        "CJLEIP_06073",
+        "AAQ82567.1",
+        "99"
+      ],
+      "genes": [
+        "CJLEIP_06073"
+      ],
+      "terms": [],
+      "names": [
+        "FscE"
+      ],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "S5",
+      "section": "similar",
+      "sentence": "CJLEIP_06077 matches AAQ82567.1 (FscE) of BGC0000034 at 99 % identity.",
+      "values": [
+        "CJLEIP_06077",
+        "AAQ82567.1",
+        "99"
+      ],
+      "genes": [
+        "CJLEIP_06077"
+      ],
+      "terms": [],
+      "names": [
+        "FscE"
+      ],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "S6",
+      "section": "similar",
+      "sentence": "CJLEIP_06079 matches AAQ82566.1 (FscF) of BGC0000034 at 99 % identity.",
+      "values": [
+        "CJLEIP_06079",
+        "AAQ82566.1",
+        "99"
+      ],
+      "genes": [
+        "CJLEIP_06079"
+      ],
+      "terms": [],
+      "names": [
+        "FscF"
+      ],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "S7",
+      "section": "similar",
+      "sentence": "CJLEIP_06081 matches AAQ82565.1 (FscB) of BGC0000034 at 98 % identity.",
+      "values": [
+        "CJLEIP_06081",
+        "AAQ82565.1",
+        "98"
+      ],
+      "genes": [
+        "CJLEIP_06081"
+      ],
+      "terms": [],
+      "names": [
+        "FscB"
+      ],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "S8",
+      "section": "similar",
+      "sentence": "MIBiG lists the compound class of BGC0000034 as NRPS and PKS.",
+      "values": [
+        "BGC0000034"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [
+        "NRPS",
+        "PKS"
+      ],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "S9",
+      "section": "similar",
+      "sentence": "MIBiG records antifungal activity for candicidin (BGC0000034).",
+      "values": [
+        "BGC0000034"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [
+        "antifungal",
+        "candicidin"
+      ],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "S10",
+      "section": "similar",
+      "sentence": "MIBiG gives knock-out studies as evidence for BGC0000034 (PubMed 14652074).",
+      "values": [
+        "14652074",
+        "BGC0000034"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "S11",
+      "section": "similar",
+      "sentence": "MIBiG rates the annotation quality of BGC0000034 as questionable.",
+      "values": [
+        "BGC0000034"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    }
+  ],
+  "summary_sections": [
+    {
+      "key": "overview",
+      "title": "What it is",
+      "sentences": [
+        {
+          "text": "Soil_1_48 is a polyketide, terpene-precursor, NRPS-like, nonribosomal peptide (NRPS) and class II lanthipeptide cluster, found by antiSMASH, DeepBGC and GECCO (all three detection tools).",
+          "facts": [
+            "O1"
+          ],
+          "source": "model",
+          "shown_text": "Soil_1_48 is a polyketide, terpene-precursor, NRPS-like, nonribosomal peptide (NRPS) and class II lanthipeptide cluster, found by antiSMASH, DeepBGC and GECCO (all three detection tools)."
+        },
+        {
+          "text": "It spans 272 kb on contig_1 (6,762,952–7,035,108) and contains 107 genes.",
+          "facts": [
+            "O2"
+          ],
+          "source": "model",
+          "shown_text": "It spans 272 kb on contig_1 (6,762,952–7,035,108) and contains 107 genes."
+        }
+      ]
+    },
+    {
+      "key": "genes",
+      "title": "What it contains",
+      "sentences": [
+        {
+          "text": "antiSMASH marks 35 genes as biosynthetic (15 core and 20 additional), 12 as regulatory and 9 as transport.",
+          "facts": [
+            "G1"
+          ],
+          "source": "model",
+          "shown_text": "antiSMASH marks 35 genes as biosynthetic (15 core and 20 additional), 12 as regulatory and 9 as transport."
+        },
+        {
+          "text": "CJLEIP_06060, annotated by Bakta as Dimethylallyltransferase, is named as a core gene by antiSMASH.",
+          "facts": [
+            "G3"
+          ],
+          "source": "model",
+          "shown_text": "CJLEIP_06060, annotated by Bakta as Dimethylallyltransferase, is named as a core gene by antiSMASH."
+        },
+        {
+          "text": "CJLEIP_06067, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 6 modules in it, and predicts malonyl-CoA for 5 and no substrate for 1 for its acyltransferase domains.",
+          "facts": [
+            "G4"
+          ],
+          "source": "model",
+          "shown_text": "CJLEIP_06067, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 6 modules (the unit of an assembly-line enzyme that adds one building block to the growing chain) in it, and predicts malonyl-CoA for 5 and no substrate for 1 for its acyltransferase domains (selects the extender unit a polyketide module adds)."
+        },
+        {
+          "text": "CJLEIP_06073, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 3 modules in it, and predicts malonyl-CoA for all 3 for its acyltransferase domains.",
+          "facts": [
+            "G5"
+          ],
+          "source": "model",
+          "shown_text": "CJLEIP_06073, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 3 modules in it, and predicts malonyl-CoA for all 3 for its acyltransferase domains."
+        },
+        {
+          "text": "CJLEIP_06077, annotated by Bakta as SDR family NAD(P)-dependent oxidoreductase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 1 module in it, and predicts malonyl-CoA for its acyltransferase domain.",
+          "facts": [
+            "G6"
+          ],
+          "source": "model",
+          "shown_text": "CJLEIP_06077, annotated by Bakta as SDR family NAD(P)-dependent oxidoreductase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 1 module in it, and predicts malonyl-CoA for its acyltransferase domain."
+        },
+        {
+          "text": "CJLEIP_06079, annotated by Bakta as Polyketide synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 1 module in it, and predicts malonyl-CoA for its acyltransferase domain.",
+          "facts": [
+            "G7"
+          ],
+          "source": "model",
+          "shown_text": "CJLEIP_06079, annotated by Bakta as Polyketide synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 1 module in it, and predicts malonyl-CoA for its acyltransferase domain."
+        },
+        {
+          "text": "CJLEIP_06081, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 3 modules in it, and predicts methylmalonyl-CoA for all 3 for its acyltransferase domains.",
+          "facts": [
+            "G8"
+          ],
+          "source": "model",
+          "shown_text": "CJLEIP_06081, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 3 modules in it, and predicts methylmalonyl-CoA for all 3 for its acyltransferase domains."
+        },
+        {
+          "text": "Together CJLEIP_06067, CJLEIP_06073, CJLEIP_06077, CJLEIP_06079, CJLEIP_06081, CJLEIP_06084, CJLEIP_06087, CJLEIP_06094, CJLEIP_06125, CJLEIP_06126, CJLEIP_06130, CJLEIP_06151, CJLEIP_06152, CJLEIP_06153 and CJLEIP_06155 hold 36 modules; antiSMASH predicts a substrate for 27 modules (malonyl-CoA for 21, methylmalonyl-CoA for 3, threonine for 1, proline for 1 and glycine for 1) and none for 2 modules; 7 modules have no adenylation or acyltransferase domain.",
+          "facts": [
+            "G9"
+          ],
+          "source": "model",
+          "shown_text": "Together CJLEIP_06067, CJLEIP_06073, CJLEIP_06077, CJLEIP_06079, CJLEIP_06081, CJLEIP_06084, CJLEIP_06087, CJLEIP_06094, CJLEIP_06125, CJLEIP_06126, CJLEIP_06130, CJLEIP_06151, CJLEIP_06152, CJLEIP_06153 and CJLEIP_06155 hold 36 modules; antiSMASH predicts a substrate for 27 modules (malonyl-CoA for 21, methylmalonyl-CoA for 3, threonine for 1, proline for 1 and glycine for 1) and none for 2 modules; 7 modules have no adenylation or acyltransferase domain."
+        },
+        {
+          "text": "CJLEIP_06099 encodes Cytochrome P450 and is marked by antiSMASH as an additional biosynthetic gene.",
+          "facts": [
+            "G10"
+          ],
+          "source": "model",
+          "shown_text": "CJLEIP_06099 encodes Cytochrome P450 (a family of oxidising enzymes) and is marked by antiSMASH as an additional biosynthetic gene."
+        },
+        {
+          "text": "CJLEIP_06101 encodes Glycosyltransferase and is marked by antiSMASH as an additional biosynthetic gene.",
+          "facts": [
+            "G11"
+          ],
+          "source": "model",
+          "shown_text": "CJLEIP_06101 encodes Glycosyltransferase (an enzyme type that attaches sugars) and is marked by antiSMASH as an additional biosynthetic gene."
+        },
+        {
+          "text": "CJLEIP_06158 encodes Thioesterase domain-containing protein and is marked by antiSMASH as an additional biosynthetic gene.",
+          "facts": [
+            "G12"
+          ],
+          "source": "model",
+          "shown_text": "CJLEIP_06158 encodes Thioesterase (an enzyme type that releases the finished chain from NRPS and PKS assembly lines) domain-containing protein and is marked by antiSMASH as an additional biosynthetic gene."
+        },
+        {
+          "text": "CJLEIP_06167 encodes 4-hydroxybenzoyl-CoA thioesterase and is marked by antiSMASH as an additional biosynthetic gene.",
+          "facts": [
+            "G13"
+          ],
+          "source": "model",
+          "shown_text": "CJLEIP_06167 encodes 4-hydroxybenzoyl-CoA thioesterase and is marked by antiSMASH as an additional biosynthetic gene."
+        },
+        {
+          "text": "CJLEIP_06058 encodes Short-chain dehydrogenase and is marked by antiSMASH as an additional biosynthetic gene.",
+          "facts": [
+            "G14"
+          ],
+          "source": "model",
+          "shown_text": "CJLEIP_06058 encodes Short-chain dehydrogenase and is marked by antiSMASH as an additional biosynthetic gene."
+        }
+      ]
+    },
+    {
+      "key": "similar",
+      "title": "What it resembles",
+      "sentences": [
+        {
+          "text": "The closest MIBiG entry is BGC0000034 (candicidin), from Streptomyces sp. FR-008.",
+          "facts": [
+            "S1"
+          ],
+          "source": "model",
+          "shown_text": "The closest MIBiG entry is BGC0000034 (candicidin), from Streptomyces sp. FR-008."
+        },
+        {
+          "text": "23 genes of the locus have a counterpart in BGC0000034, at 98–100 % identity; antiSMASH finds counterparts for 100 % of that cluster's genes. Overall this is a close match.",
+          "facts": [
+            "S2"
+          ],
+          "source": "model",
+          "shown_text": "23 genes of the locus have a counterpart in BGC0000034, at 98–100 % identity; antiSMASH finds counterparts for 100 % of that cluster's genes. Overall this is a close match."
+        },
+        {
+          "text": "MIBiG lists the compound class of BGC0000034 as NRPS and PKS.",
+          "facts": [
+            "S8"
+          ],
+          "source": "model",
+          "shown_text": "MIBiG lists the compound class of BGC0000034 as NRPS and PKS."
+        }
+      ]
+    }
+  ],
+  "sentence_checks": [
+    {
+      "section": "overview",
+      "index": 0,
+      "text": "Soil_1_48 is a polyketide, terpene-precursor, NRPS-like, nonribosomal peptide (NRPS) and class II lanthipeptide cluster, found by antiSMASH, DeepBGC and GECCO (all three detection tools).",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "overview",
+      "index": 1,
+      "text": "It spans 272 kb on contig_1 (6,762,952–7,035,108) and contains 107 genes.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 0,
+      "text": "antiSMASH marks 35 genes as biosynthetic (15 core and 20 additional), 12 as regulatory and 9 as transport.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 1,
+      "text": "CJLEIP_06060, annotated by Bakta as Dimethylallyltransferase, is named as a core gene by antiSMASH.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 2,
+      "text": "CJLEIP_06067, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 6 modules in it, and predicts malonyl-CoA for 5 and no substrate for 1 for its acyltransferase domains.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 3,
+      "text": "CJLEIP_06073, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 3 modules in it, and predicts malonyl-CoA for all 3 for its acyltransferase domains.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 4,
+      "text": "CJLEIP_06077, annotated by Bakta as SDR family NAD(P)-dependent oxidoreductase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 1 module in it, and predicts malonyl-CoA for its acyltransferase domain.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 5,
+      "text": "CJLEIP_06079, annotated by Bakta as Polyketide synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 1 module in it, and predicts malonyl-CoA for its acyltransferase domain.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 6,
+      "text": "CJLEIP_06081, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 3 modules in it, and predicts methylmalonyl-CoA for all 3 for its acyltransferase domains.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 7,
+      "text": "Together CJLEIP_06067, CJLEIP_06073, CJLEIP_06077, CJLEIP_06079, CJLEIP_06081, CJLEIP_06084, CJLEIP_06087, CJLEIP_06094, CJLEIP_06125, CJLEIP_06126, CJLEIP_06130, CJLEIP_06151, CJLEIP_06152, CJLEIP_06153 and CJLEIP_06155 hold 36 modules; antiSMASH predicts a substrate for 27 modules (malonyl-CoA for 21, methylmalonyl-CoA for 3, threonine for 1, proline for 1 and glycine for 1) and none for 2 modules; 7 modules have no adenylation or acyltransferase domain.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 8,
+      "text": "CJLEIP_06099 encodes Cytochrome P450 and is marked by antiSMASH as an additional biosynthetic gene.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 9,
+      "text": "CJLEIP_06101 encodes Glycosyltransferase and is marked by antiSMASH as an additional biosynthetic gene.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 10,
+      "text": "CJLEIP_06158 encodes Thioesterase domain-containing protein and is marked by antiSMASH as an additional biosynthetic gene.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 11,
+      "text": "CJLEIP_06167 encodes 4-hydroxybenzoyl-CoA thioesterase and is marked by antiSMASH as an additional biosynthetic gene.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 12,
+      "text": "CJLEIP_06058 encodes Short-chain dehydrogenase and is marked by antiSMASH as an additional biosynthetic gene.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "similar",
+      "index": 0,
+      "text": "The closest MIBiG entry is BGC0000034 (candicidin), from Streptomyces sp. FR-008.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "similar",
+      "index": 1,
+      "text": "23 genes of the locus have a counterpart in BGC0000034, at 98–100 % identity; antiSMASH finds counterparts for 100 % of that cluster's genes. Overall this is a close match.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "similar",
+      "index": 2,
+      "text": "MIBiG lists the compound class of BGC0000034 as NRPS and PKS.",
+      "verified": true,
+      "reasons": []
+    }
+  ],
+  "sentences_removed": 0,
+  "hypothesis": {
+    "text": "The cluster may produce a hybrid NRPS-PKS metabolite with antifungal activity, given its close match to candicidin and the presence of core PKS and NRPS genes, along with modifying enzymes such as cytochrome P450 and glycosyltransferase.",
+    "facts": [
+      "S1",
+      "S2",
+      "S8",
+      "S9",
+      "G10",
+      "G11"
+    ],
+    "shown": true,
+    "reasons": []
+  },
+  "gene_roles": [
+    {
+      "locus_tag": "CJLEIP_06047",
+      "product": "ATP:glycerol 3-phosphotransferase",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06048",
+      "product": "MFS transporter",
+      "antismash_role": "transport",
+      "category": "transporter",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06049",
+      "product": "hypothetical protein",
+      "antismash_role": "",
+      "category": "hypothetical",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06050",
+      "product": "Cholesterol esterase",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06051",
+      "product": "DUF4382 domain-containing protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06052",
+      "product": "Integral membrane protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06053",
+      "product": "Cholesterol esterase",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06054",
+      "product": "Integral membrane protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06055",
+      "product": "Cholesterol esterase",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06056",
+      "product": "TetR family transcriptional regulator",
+      "antismash_role": "regulatory",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06057",
+      "product": "signal peptidase I",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06058",
+      "product": "Short-chain dehydrogenase",
+      "antismash_role": "biosynthetic-additional",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06059",
+      "product": "MalT-like TPR region domain-containing protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06060",
+      "product": "Dimethylallyltransferase",
+      "antismash_role": "biosynthetic",
+      "category": "biosynthetic_core",
+      "core_by": "antiSMASH"
+    },
+    {
+      "locus_tag": "CJLEIP_06061",
+      "product": "DUF3043 domain-containing protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06062",
+      "product": "Dioxygenase",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06063",
+      "product": "globin domain-containing protein",
+      "antismash_role": "other",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06064",
+      "product": "Alpha/beta hydrolase",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06065",
+      "product": "Peptidoglycan recognition protein family domain-containing protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06066",
+      "product": "GDP-mannose 4,6-dehydratase",
+      "antismash_role": "biosynthetic-additional",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06067",
+      "product": "sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase",
+      "antismash_role": "biosynthetic",
+      "category": "biosynthetic_core",
+      "core_by": "antiSMASH, DeepBGC and GECCO"
+    },
+    {
+      "locus_tag": "CJLEIP_06073",
+      "product": "sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase",
+      "antismash_role": "biosynthetic",
+      "category": "biosynthetic_core",
+      "core_by": "antiSMASH, DeepBGC and GECCO"
+    },
+    {
+      "locus_tag": "CJLEIP_06077",
+      "product": "SDR family NAD(P)-dependent oxidoreductase",
+      "antismash_role": "biosynthetic",
+      "category": "biosynthetic_core",
+      "core_by": "antiSMASH, DeepBGC and GECCO"
+    },
+    {
+      "locus_tag": "CJLEIP_06079",
+      "product": "Polyketide synthase",
+      "antismash_role": "biosynthetic",
+      "category": "biosynthetic_core",
+      "core_by": "antiSMASH, DeepBGC and GECCO"
+    },
+    {
+      "locus_tag": "CJLEIP_06081",
+      "product": "sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase",
+      "antismash_role": "biosynthetic",
+      "category": "biosynthetic_core",
+      "core_by": "antiSMASH, DeepBGC and GECCO"
+    },
+    {
+      "locus_tag": "CJLEIP_06084",
+      "product": "ACP S-malonyltransferase",
+      "antismash_role": "biosynthetic",
+      "category": "biosynthetic_core",
+      "core_by": "DeepBGC and GECCO"
+    },
+    {
+      "locus_tag": "CJLEIP_06087",
+      "product": "sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase",
+      "antismash_role": "biosynthetic",
+      "category": "biosynthetic_core",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06092",
+      "product": "Transport permease protein",
+      "antismash_role": "transport",
+      "category": "transporter",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06093",
+      "product": "ABC-transporter",
+      "antismash_role": "transport",
+      "category": "transporter",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06094",
+      "product": "Acyl transferase",
+      "antismash_role": "biosynthetic",
+      "category": "biosynthetic_core",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06096",
+      "product": "aminodeoxychorismate synthase component I",
+      "antismash_role": "biosynthetic-additional",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06097",
+      "product": "FscTE",
+      "antismash_role": "biosynthetic-additional",
+      "category": "biosynthetic_core",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06098",
+      "product": "Ferredoxin",
+      "antismash_role": "other",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06099",
+      "product": "Cytochrome P450",
+      "antismash_role": "biosynthetic-additional",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06100",
+      "product": "L-glutamine:2-deoxy-scyllo-inosose aminotransferase",
+      "antismash_role": "biosynthetic-additional",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06101",
+      "product": "Glycosyltransferase",
+      "antismash_role": "biosynthetic-additional",
+      "category": "cazyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06102",
+      "product": "HTH luxR-type domain-containing protein",
+      "antismash_role": "regulatory",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06103",
+      "product": "AAA family ATPase",
+      "antismash_role": "regulatory",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06104",
+      "product": "FscRII",
+      "antismash_role": "regulatory",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06105",
+      "product": "PAS domain S-box protein",
+      "antismash_role": "",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06106",
+      "product": "Aminotransferase",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06107",
+      "product": "FscO",
+      "antismash_role": "other",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06108",
+      "product": "ABC transporter ATP-binding protein",
+      "antismash_role": "transport",
+      "category": "transporter",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06109",
+      "product": "ABC transporter ATP-binding protein",
+      "antismash_role": "transport",
+      "category": "transporter",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06110",
+      "product": "Branched-chain amino acid ABC transporter permease",
+      "antismash_role": "",
+      "category": "transporter",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06111",
+      "product": "ABC transporter substrate-binding protein",
+      "antismash_role": "transport",
+      "category": "transporter",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06112",
+      "product": "Dynein regulation protein LC7",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06113",
+      "product": "histidine kinase",
+      "antismash_role": "",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06114",
+      "product": "Alpha/beta hydrolase",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06115",
+      "product": "Tryptophan 2,3-dioxygenase",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06116",
+      "product": "3-oxoacyl-ACP reductase",
+      "antismash_role": "biosynthetic-additional",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06117",
+      "product": "Phenylacetate-CoA oxygenase/reductase subunit PaaK",
+      "antismash_role": "other",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06118",
+      "product": "1,2-phenylacetyl-CoA epoxidase subunit PaaD",
+      "antismash_role": "",
+      "category": "resistance",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06119",
+      "product": "1,2-phenylacetyl-CoA epoxidase subunit PaaC",
+      "antismash_role": "",
+      "category": "resistance",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06120",
+      "product": "1,2-phenylacetyl-CoA epoxidase subunit PaaB",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06121",
+      "product": "1,2-phenylacetyl-CoA epoxidase subunit PaaA",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06122",
+      "product": "Acyl carrier protein",
+      "antismash_role": "biosynthetic-additional",
+      "category": "biosynthetic_core",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06123",
+      "product": "2-succinylbenzoate--CoA ligase",
+      "antismash_role": "biosynthetic-additional",
+      "category": "biosynthetic_core",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06124",
+      "product": "crotonyl-CoA carboxylase/reductase",
+      "antismash_role": "biosynthetic-additional",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06125",
+      "product": "Carrier domain-containing protein",
+      "antismash_role": "biosynthetic",
+      "category": "biosynthetic_core",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06126",
+      "product": "non-ribosomal peptide synthetase",
+      "antismash_role": "biosynthetic",
+      "category": "biosynthetic_core",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06127",
+      "product": "Phthiocerol/phthiodiolone dimycocerosyl transferase",
+      "antismash_role": "biosynthetic-additional",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06128",
+      "product": "RNA polymerase sigma factor",
+      "antismash_role": "regulatory",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06129",
+      "product": "DUF3592 domain-containing protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06130",
+      "product": "Amino acid adenylation domain-containing protein",
+      "antismash_role": "biosynthetic",
+      "category": "biosynthetic_core",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06131",
+      "product": "MFS transporter",
+      "antismash_role": "transport",
+      "category": "transporter",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06132",
+      "product": "Lantibiotic biosynthesis protein dehydration domain-containing protein",
+      "antismash_role": "biosynthetic",
+      "category": "resistance",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06133",
+      "product": "hypothetical protein",
+      "antismash_role": "",
+      "category": "hypothetical",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06134",
+      "product": "HTH luxR-type domain-containing protein",
+      "antismash_role": "regulatory",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06135",
+      "product": "AAA family ATPase",
+      "antismash_role": "regulatory",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06136",
+      "product": "class III lanthionine synthetase LanKC",
+      "antismash_role": "regulatory",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06137",
+      "product": "MFS transporter",
+      "antismash_role": "transport",
+      "category": "transporter",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06138",
+      "product": "Albusnodin family lasso peptide",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06139",
+      "product": "Radical SAM core domain-containing protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06140",
+      "product": "Iron-containing redox enzyme family protein",
+      "antismash_role": "",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06141",
+      "product": "FXSXX-COOH protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06142",
+      "product": "Adenylate cyclase / Guanylate cyclase",
+      "antismash_role": "regulatory",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06143",
+      "product": "Serine protease",
+      "antismash_role": "biosynthetic-additional",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06144",
+      "product": "GAF domain-containing protein",
+      "antismash_role": "",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06145",
+      "product": "Integral membrane protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06146",
+      "product": "SDR family oxidoreductase",
+      "antismash_role": "biosynthetic-additional",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06147",
+      "product": "SnoaL-like domain-containing protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06148",
+      "product": "LysR family transcriptional regulator",
+      "antismash_role": "regulatory",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06149",
+      "product": "NAD(P)/FAD-dependent oxidoreductase",
+      "antismash_role": "biosynthetic-additional",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06150",
+      "product": "Rieske 2Fe-2S family protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06151",
+      "product": "Amino acid adenylation domain-containing protein",
+      "antismash_role": "biosynthetic",
+      "category": "biosynthetic_core",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06152",
+      "product": "Polyketide synthase",
+      "antismash_role": "biosynthetic-additional",
+      "category": "biosynthetic_core",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06153",
+      "product": "Acyltransferase domain-containing protein",
+      "antismash_role": "biosynthetic",
+      "category": "biosynthetic_core",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06154",
+      "product": "DNA alkylation repair protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06155",
+      "product": "8-amino-7-oxononanoate synthase",
+      "antismash_role": "biosynthetic-additional",
+      "category": "biosynthetic_core",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06156",
+      "product": "DUF1844 domain-containing protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06157",
+      "product": "Class II histone deacetylase",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06158",
+      "product": "Thioesterase domain-containing protein",
+      "antismash_role": "biosynthetic-additional",
+      "category": "biosynthetic_core",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06159",
+      "product": "MFS transporter",
+      "antismash_role": "transport",
+      "category": "transporter",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06160",
+      "product": "Glyoxalase/bleomycin resistance/extradiol dioxygenase family protein",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06161",
+      "product": "Glyoxalase",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06162",
+      "product": "Recombination endonuclease VII",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06163",
+      "product": "TetR/AcrR family transcriptional regulator",
+      "antismash_role": "regulatory",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06164",
+      "product": "TetR family transcriptional regulator",
+      "antismash_role": "regulatory",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06165",
+      "product": "Methionyl-tRNA synthetase",
+      "antismash_role": "",
+      "category": "resistance",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06166",
+      "product": "L-carnitine dehydrogenase",
+      "antismash_role": "biosynthetic-additional",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06167",
+      "product": "4-hydroxybenzoyl-CoA thioesterase",
+      "antismash_role": "biosynthetic-additional",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06168",
+      "product": "VWA domain-containing protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06169",
+      "product": "Transposase",
+      "antismash_role": "other",
+      "category": "mobile_element",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06170",
+      "product": "transposase",
+      "antismash_role": "other",
+      "category": "mobile_element",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06171",
+      "product": "Putative ATP/GTP-binding protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_06172",
+      "product": "Mu transposase C-terminal domain-containing protein",
+      "antismash_role": "",
+      "category": "mobile_element",
+      "core_by": ""
+    }
+  ]
+}

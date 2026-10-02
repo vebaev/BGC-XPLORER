@@ -10,7 +10,7 @@ printf "NVIDIA API key: "
 read -r -s NVIDIA_API_KEY
 printf "\n"
 
-MODEL="${NVIDIA_MODEL:-nvidia/nemotron-3-ultra-550b-a55b}"
+MODEL="${NVIDIA_MODEL:-nvidia/nemotron-3-super-120b-a12b}"
 
 umask 077
 {

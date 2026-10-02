@@ -1,51 +1,647 @@
 {
   "sample": "Soil_1",
   "consensus_id": "Soil_1_consensus_10",
-  "model": "nvidia/nemotron-3-ultra-550b-a55b",
+  "model": "nvidia/nemotron-3-super-120b-a12b",
+  "mode": "summary",
   "cached": false,
   "diagnostics": {
     "sample": "Soil_1",
     "consensus_id": "Soil_1_consensus_10",
-    "model": "nvidia/nemotron-3-ultra-550b-a55b",
-    "timeout_seconds": 240,
-    "payload_chars": 15065,
+    "model": "nvidia/nemotron-3-super-120b-a12b",
+    "timeout_seconds": 480,
+    "payload_chars": 3847,
     "gene_count": 46,
-    "representative_gene_count": 46,
+    "representative_gene_count": null,
+    "facts": 8,
     "guided_json": true,
-    "guided_json_retry": true
+    "attempts": 1
   },
-  "prompt_version": "2.0",
-  "request_fingerprint": "1888e82a1f2b3ef250047986cd461ba519b100f0d8b968791a3c78d5b0a67e57",
-  "created_at": "2026-10-01T13:27:56Z",
+  "prompt_version": "5.6-summary",
+  "parameters": {
+    "temperature": 0.2,
+    "top_p": 0.95,
+    "max_tokens": 2500,
+    "reasoning_effort": "none",
+    "seed": 42,
+    "use_guided_json": true
+  },
+  "request_fingerprint": "8fcf45551da7505c8ef79e1513ac22af8b336576f1b4f14ba6697740ecf943de",
+  "created_at": "2026-10-02T08:53:14Z",
   "analysis": {
-    "summary": "The 49.4 kb region (contig_1:936108-985530) is predicted only by deepBGC (single-tool support) and contains two AMP-binding enzymes (CJLEIP_00811, CJLEIP_00812) as core biosynthetic genes. The dominant functional signature is a complete purine/urate catabolic pathway: urate hydroxylase (CJLEIP_00801), hydroxyisourate hydrolase (CJLEIP_00802), OHCU decarboxylase (CJLEIP_00803), xanthine dehydrogenase subunits (CJLEIP_00823-00827), and associated permeases (CJLEIP_00799, CJLEIP_00824). Additional features include a chitosanase (CJLEIP_00797, GH46_e36), catalase (CJLEIP_00808), multiple regulators (LuxR, TetR, GntR, PucR, sigma factor, PP2C), and two ARTS DUF hits (CJLEIP_00798 DUF4440, CJLEIP_00833 DUF2637). No MIBiG matches were reported. The region resembles a metabolic island for purine degradation with accessory stress-response genes rather than a canonical secondary-metabolite BGC.",
-    "likely_product_or_function": "Primary metabolic pathway for purine/urate catabolism (allantoin pathway) with associated oxidative-stress defense (catalase) and fungal cell-wall degradation (chitosanase). The two AMP-binding enzymes (CJLEIP_00811, CJLEIP_00812) could activate carboxylic acid substrates for a secondary metabolite, but no downstream PKS/NRPS or tailoring enzymes typical of specialized metabolism are present. Alternative: a hybrid locus where the AMP-binding enzymes supply activated precursors for an as-yet-uncharacterized product; however, the overwhelming catabolic gene content makes a primary metabolic function the best-supported interpretation.",
-    "biosynthetic_logic": "Observed catabolic route: (1) Urate → 5-hydroxyisourate via urate hydroxylase (CJLEIP_00801, EC 1.7.3.3). (2) 5-hydroxyisourate → 2-oxo-4-hydroxy-4-carboxy-5-ureidoimidazoline (OHCU) via hydroxyisourate hydrolase (CJLEIP_00802, EC 3.5.2.17). (3) OHCU → allantoin via OHCU decarboxylase (CJLEIP_00803, EC 4.1.1.97). (4) Xanthine → urate via xanthine dehydrogenase complex (CJLEIP_00823-00827, EC 1.2.5.3/1.17.1.4). (5) Purine/base uptake via xanthine/uracil permeases (CJLEIP_00799, CJLEIP_00824). The AMP-binding enzymes (CJLEIP_00811, CJLEIP_00812) lack partner condensation or tailoring domains; their substrates and products are unobserved. Chitosanase (CJLEIP_00797) and catalase (CJLEIP_00808) provide independent stress-defense functions. Required steps for any secondary metabolite (chain extension, cyclization, release) are not observed.",
-    "key_genes": [
-      "CJLEIP_00811 (AMP-binding enzyme, FadD5-like): proposed acyl-CoA synthetase for unknown acid substrate; deepBGC core gene, PF00501",
-      "CJLEIP_00812 (AMP-binding enzyme): second acyl-CoA synthetase; deepBGC core gene, PF00501",
-      "CJLEIP_00801 (urate hydroxylase, PucL/Uox): urate → 5-hydroxyisourate; EC 1.7.3.3, KO K00365",
-      "CJLEIP_00802 (hydroxyisourate hydrolase, UraH): 5-hydroxyisourate → OHCU; EC 3.5.2.17, KO K07127",
-      "CJLEIP_00803 (OHCU decarboxylase, UraD): OHCU → allantoin; EC 4.1.1.97, KO K16840",
-      "CJLEIP_00825-00827 (xanthine dehydrogenase subunits D, S, M): xanthine → urate; EC 1.2.5.3, KO K03518/K00156",
-      "CJLEIP_00823 (XdhC/CoxF maturation factor): xanthine dehydrogenase assembly; KO K07402",
-      "CJLEIP_00799 & CJLEIP_00824 (xanthine/uracil permeases): purine/base transport; PF Xan_ur_permease",
-      "CJLEIP_00797 (chitosanase, GH46_e36): fungal chitosan degradation; dbCAN GH46_e36",
-      "CJLEIP_00808 (catalase, KatA): H2O2 detoxification; EC 1.11.1.6, KO K03781",
-      "CJLEIP_00798 (SgcJ/EcaC family, DUF4440): ARTS DUF hit; possible self-resistance",
-      "CJLEIP_00833 (DUF2637): ARTS DUF hit; possible self-resistance",
-      "CJLEIP_00813 (LuxR), CJLEIP_00815 (TetR), CJLEIP_00831 (GntR), CJLEIP_00828 (PucR), CJLEIP_00817 (sigma factor), CJLEIP_00838 (PP2C): transcriptional/post-translational regulators"
+    "overview": [
+      {
+        "text": "Soil_1_10 is a biosynthetic gene cluster identified solely by DeepBGC, with no compound class assigned.",
+        "facts": [
+          "O1"
+        ]
+      },
+      {
+        "text": "It spans 49 kb on contig_1 from position 936,108 to 985,530 and contains 46 genes.",
+        "facts": [
+          "O2"
+        ]
+      }
     ],
-    "resistance_transport_regulation": "Observed: two ARTS DUF hits (CJLEIP_00798 DUF4440, CJLEIP_00833 DUF2637) — proposed roles as self-resistance proteins are unsupported by functional data; two xanthine/uracil permeases (CJLEIP_00799, CJLEIP_00824) — transport purine bases, not a secondary metabolite; six regulators (LuxR, two TetR, GntR, PucR, sigma factor, PP2C) — likely control catabolic operon expression and stress responses. No dedicated efflux pump or resistance gene for a specialized metabolite is identified.",
-    "recommended_followup": [
-      "Compare the AMP-binding enzyme sequences (CJLEIP_00811, CJLEIP_00812) against characterized FadD/FadK subfamilies to predict substrate specificity (resolves whether they activate a secondary-metabolite precursor).",
-      "Check genomic context outside the 49 kb window for adjacent PKS/NRPS genes or tailoring enzymes that deepBGC may have truncated (resolves completeness of the locus).",
-      "Assay growth on purines/urate vs. chitosan as sole carbon/nitrogen sources to confirm catabolic function (resolves physiological role of the dominant pathway)."
-    ]
+    "genes": [
+      {
+        "text": "The cluster includes 9 regulatory, 2 transport, 15 tailoring-enzyme, and 2 resistance genes, with 2 core genes identified by DeepBGC.",
+        "facts": [
+          "G1",
+          "G2"
+        ]
+      },
+      {
+        "text": "CJLEIP_00811 is annotated as an Acyl-CoA synthetase and is a core gene.",
+        "facts": [
+          "G3"
+        ]
+      },
+      {
+        "text": "CJLEIP_00812 is annotated as an AMP-binding protein and is a core gene.",
+        "facts": [
+          "G4"
+        ]
+      }
+    ],
+    "similar": [
+      {
+        "text": "No comparison with MIBiG has been made, as antiSMASH did not detect this locus.",
+        "facts": [
+          "S1"
+        ]
+      }
+    ],
+    "hypothesis": {
+      "text": "The presence of xanthine dehydrogenase subunits and accessory factors, along with oxidoreductases and transcriptional regulators, suggests the cluster may be involved in purine degradation rather than specialised metabolite production.",
+      "facts": [
+        "H1"
+      ]
+    }
   },
-  "traceability": {
-    "statements": 34,
-    "with_identifiers": 26,
-    "untraceable": []
-  }
+  "facts": [
+    {
+      "id": "O1",
+      "section": "overview",
+      "sentence": "Soil_1_10 is a biosynthetic gene cluster, found by DeepBGC only; no compound class is assigned to it.",
+      "values": [
+        "DeepBGC"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "O2",
+      "section": "overview",
+      "sentence": "It spans 49 kb on contig_1 (936,108–985,530) and contains 46 genes.",
+      "values": [
+        "49",
+        "936108",
+        "985530",
+        "46",
+        "contig_1"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "G1",
+      "section": "genes",
+      "sentence": "By the annotation categories of BGC-XPLORER, it holds 9 regulatory, 2 transport, 15 tailoring-enzyme and 2 resistance genes.",
+      "values": [
+        "9",
+        "2",
+        "15",
+        "2"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "G2",
+      "section": "genes",
+      "sentence": "DeepBGC names 2 core genes in the locus.",
+      "values": [
+        "2",
+        "DeepBGC"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "G3",
+      "section": "genes",
+      "sentence": "CJLEIP_00811, annotated by Bakta as Acyl-CoA synthetase, is named as a core gene by DeepBGC.",
+      "values": [
+        "CJLEIP_00811",
+        "DeepBGC"
+      ],
+      "genes": [
+        "CJLEIP_00811"
+      ],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": [
+        "deepbgc"
+      ]
+    },
+    {
+      "id": "G4",
+      "section": "genes",
+      "sentence": "CJLEIP_00812, annotated by Bakta as AMP-binding protein, is named as a core gene by DeepBGC.",
+      "values": [
+        "CJLEIP_00812",
+        "DeepBGC"
+      ],
+      "genes": [
+        "CJLEIP_00812"
+      ],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": [
+        "deepbgc"
+      ]
+    },
+    {
+      "id": "H1",
+      "section": "context",
+      "sentence": "Gene products in the locus, in genome order: CJLEIP_00793 DinB family protein; CJLEIP_00794 Monooxygenase; CJLEIP_00795 hypothetical protein; CJLEIP_00796 Integral membrane protein; CJLEIP_00797 Chitosanase; CJLEIP_00798 SgcJ/EcaC family oxidoreductase; CJLEIP_00799 Purine permease; CJLEIP_00800 8-oxoguanine deaminase; CJLEIP_00801 factor-independent urate hydroxylase; CJLEIP_00802 hydroxyisourate hydrolase; CJLEIP_00803 2-oxo-4-hydroxy-4-carboxy-5-ureidoimidazoline decarboxylase; CJLEIP_00804 Transcriptional regulator; CJLEIP_00805 Thiamine-binding protein domain-containing protein; CJLEIP_00806 Hydroxypyruvate isomerase; CJLEIP_00807 2-hydroxy-3-oxopropionate reductase; CJLEIP_00808 Catalase; CJLEIP_00809 glyoxylate carboligase; CJLEIP_00810 Restriction endonuclease; CJLEIP_00811 Acyl-CoA synthetase; CJLEIP_00812 AMP-binding protein; CJLEIP_00813 LuxR family transcriptional regulator; CJLEIP_00814 SDR family NAD(P)-dependent oxidoreductase; CJLEIP_00815 TetR family transcriptional regulator; CJLEIP_00816 NUDIX hydrolase; CJLEIP_00817 RNA polymerase subunit sigma-70; CJLEIP_00818 Beta-lactamase; CJLEIP_00819 Beta-lactamase; CJLEIP_00820 Lipoprotein; CJLEIP_00821 SMI1/KNR4 family protein; CJLEIP_00822 Streptomyces killer toxin-like beta/gamma crystallin domain-containing protein; CJLEIP_00823 Xanthine dehydrogenase accessory factor; CJLEIP_00824 Permease; CJLEIP_00825 Xanthine dehydrogenase subunit D; CJLEIP_00826 (2Fe-2S)-binding protein; CJLEIP_00827 Xanthine dehydrogenase family protein subunit M; CJLEIP_00828 PucR family transcriptional regulator; CJLEIP_00829 Methyltransferase domain-containing protein; CJLEIP_00830 MalT-like TPR region domain-containing protein; CJLEIP_00831 GntR family transcriptional regulator; CJLEIP_00832 Ferric siderophore reductase C-terminal domain-containing protein; CJLEIP_00833 DUF2637 domain-containing protein; CJLEIP_00834 Oxidoreductase; CJLEIP_00835 TetR family transcriptional regulator; CJLEIP_00836 Histidine kinase/HSP90-like ATPase domain-containing protein; CJLEIP_00837 pyruvate dehydrogenase; CJLEIP_00838 protein phosphatase 2C domain-containing protein.",
+      "values": [],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "S1",
+      "section": "similar",
+      "sentence": "This locus has not been compared with MIBiG: the comparison is made by antiSMASH, which did not detect it.",
+      "values": [],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    }
+  ],
+  "summary_sections": [
+    {
+      "key": "overview",
+      "title": "What it is",
+      "sentences": [
+        {
+          "text": "Soil_1_10 is a biosynthetic gene cluster identified solely by DeepBGC, with no compound class assigned.",
+          "facts": [
+            "O1"
+          ],
+          "source": "model",
+          "shown_text": "Soil_1_10 is a biosynthetic gene cluster identified solely by DeepBGC, with no compound class assigned."
+        },
+        {
+          "text": "It spans 49 kb on contig_1 from position 936,108 to 985,530 and contains 46 genes.",
+          "facts": [
+            "O2"
+          ],
+          "source": "model",
+          "shown_text": "It spans 49 kb on contig_1 from position 936,108 to 985,530 and contains 46 genes."
+        }
+      ]
+    },
+    {
+      "key": "genes",
+      "title": "What it contains",
+      "sentences": [
+        {
+          "text": "The cluster includes 9 regulatory, 2 transport, 15 tailoring-enzyme, and 2 resistance genes, with 2 core genes identified by DeepBGC.",
+          "facts": [
+            "G1",
+            "G2"
+          ],
+          "source": "model",
+          "shown_text": "The cluster includes 9 regulatory, 2 transport, 15 tailoring-enzyme, and 2 resistance genes, with 2 core genes identified by DeepBGC."
+        },
+        {
+          "text": "CJLEIP_00811 is annotated as an Acyl-CoA synthetase and is a core gene.",
+          "facts": [
+            "G3"
+          ],
+          "source": "model",
+          "shown_text": "CJLEIP_00811 is annotated as an Acyl-CoA synthetase and is a core gene."
+        },
+        {
+          "text": "CJLEIP_00812 is annotated as an AMP-binding protein and is a core gene.",
+          "facts": [
+            "G4"
+          ],
+          "source": "model",
+          "shown_text": "CJLEIP_00812 is annotated as an AMP-binding protein and is a core gene."
+        }
+      ]
+    },
+    {
+      "key": "similar",
+      "title": "What it resembles",
+      "sentences": [
+        {
+          "text": "No comparison with MIBiG has been made, as antiSMASH did not detect this locus.",
+          "facts": [
+            "S1"
+          ],
+          "source": "model",
+          "shown_text": "No comparison with MIBiG has been made, as antiSMASH did not detect this locus."
+        }
+      ]
+    }
+  ],
+  "sentence_checks": [
+    {
+      "section": "overview",
+      "index": 0,
+      "text": "Soil_1_10 is a biosynthetic gene cluster identified solely by DeepBGC, with no compound class assigned.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "overview",
+      "index": 1,
+      "text": "It spans 49 kb on contig_1 from position 936,108 to 985,530 and contains 46 genes.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 0,
+      "text": "The cluster includes 9 regulatory, 2 transport, 15 tailoring-enzyme, and 2 resistance genes, with 2 core genes identified by DeepBGC.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 1,
+      "text": "CJLEIP_00811 is annotated as an Acyl-CoA synthetase and is a core gene.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 2,
+      "text": "CJLEIP_00812 is annotated as an AMP-binding protein and is a core gene.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "similar",
+      "index": 0,
+      "text": "No comparison with MIBiG has been made, as antiSMASH did not detect this locus.",
+      "verified": true,
+      "reasons": []
+    }
+  ],
+  "sentences_removed": 0,
+  "hypothesis": {
+    "text": "The presence of xanthine dehydrogenase subunits and accessory factors, along with oxidoreductases and transcriptional regulators, suggests the cluster may be involved in purine degradation rather than specialised metabolite production.",
+    "facts": [
+      "H1"
+    ],
+    "shown": true,
+    "reasons": []
+  },
+  "gene_roles": [
+    {
+      "locus_tag": "CJLEIP_00793",
+      "product": "DinB family protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00794",
+      "product": "Monooxygenase",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00795",
+      "product": "hypothetical protein",
+      "antismash_role": "",
+      "category": "hypothetical",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00796",
+      "product": "Integral membrane protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00797",
+      "product": "Chitosanase",
+      "antismash_role": "",
+      "category": "cazyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00798",
+      "product": "SgcJ/EcaC family oxidoreductase",
+      "antismash_role": "",
+      "category": "resistance",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00799",
+      "product": "Purine permease",
+      "antismash_role": "",
+      "category": "transporter",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00800",
+      "product": "8-oxoguanine deaminase",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00801",
+      "product": "factor-independent urate hydroxylase",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00802",
+      "product": "hydroxyisourate hydrolase",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00803",
+      "product": "2-oxo-4-hydroxy-4-carboxy-5-ureidoimidazoline decarboxylase",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00804",
+      "product": "Transcriptional regulator",
+      "antismash_role": "",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00805",
+      "product": "Thiamine-binding protein domain-containing protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00806",
+      "product": "Hydroxypyruvate isomerase",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00807",
+      "product": "2-hydroxy-3-oxopropionate reductase",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00808",
+      "product": "Catalase",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00809",
+      "product": "glyoxylate carboligase",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00810",
+      "product": "Restriction endonuclease",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00811",
+      "product": "Acyl-CoA synthetase",
+      "antismash_role": "",
+      "category": "biosynthetic_core",
+      "core_by": "DeepBGC"
+    },
+    {
+      "locus_tag": "CJLEIP_00812",
+      "product": "AMP-binding protein",
+      "antismash_role": "",
+      "category": "biosynthetic_core",
+      "core_by": "DeepBGC"
+    },
+    {
+      "locus_tag": "CJLEIP_00813",
+      "product": "LuxR family transcriptional regulator",
+      "antismash_role": "",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00814",
+      "product": "SDR family NAD(P)-dependent oxidoreductase",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00815",
+      "product": "TetR family transcriptional regulator",
+      "antismash_role": "",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00816",
+      "product": "NUDIX hydrolase",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00817",
+      "product": "RNA polymerase subunit sigma-70",
+      "antismash_role": "",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00818",
+      "product": "Beta-lactamase",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00819",
+      "product": "Beta-lactamase",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00820",
+      "product": "Lipoprotein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00821",
+      "product": "SMI1/KNR4 family protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00822",
+      "product": "Streptomyces killer toxin-like beta/gamma crystallin domain-containing protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00823",
+      "product": "Xanthine dehydrogenase accessory factor",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00824",
+      "product": "Permease",
+      "antismash_role": "",
+      "category": "transporter",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00825",
+      "product": "Xanthine dehydrogenase subunit D",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00826",
+      "product": "(2Fe-2S)-binding protein",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00827",
+      "product": "Xanthine dehydrogenase family protein subunit M",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00828",
+      "product": "PucR family transcriptional regulator",
+      "antismash_role": "",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00829",
+      "product": "Methyltransferase domain-containing protein",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00830",
+      "product": "MalT-like TPR region domain-containing protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00831",
+      "product": "GntR family transcriptional regulator",
+      "antismash_role": "",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00832",
+      "product": "Ferric siderophore reductase C-terminal domain-containing protein",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00833",
+      "product": "DUF2637 domain-containing protein",
+      "antismash_role": "",
+      "category": "resistance",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00834",
+      "product": "Oxidoreductase",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00835",
+      "product": "TetR family transcriptional regulator",
+      "antismash_role": "",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00836",
+      "product": "Histidine kinase/HSP90-like ATPase domain-containing protein",
+      "antismash_role": "",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00837",
+      "product": "pyruvate dehydrogenase",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_00838",
+      "product": "protein phosphatase 2C domain-containing protein",
+      "antismash_role": "",
+      "category": "regulator",
+      "core_by": ""
+    }
+  ]
 }

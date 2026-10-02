@@ -1,45 +1,609 @@
 {
   "sample": "Soil_1",
   "consensus_id": "Soil_1_consensus_15",
-  "model": "nvidia/nemotron-3-ultra-550b-a55b",
+  "model": "nvidia/nemotron-3-super-120b-a12b",
+  "mode": "summary",
   "cached": false,
   "diagnostics": {
     "sample": "Soil_1",
     "consensus_id": "Soil_1_consensus_15",
-    "model": "nvidia/nemotron-3-ultra-550b-a55b",
-    "timeout_seconds": 240,
-    "payload_chars": 14346,
+    "model": "nvidia/nemotron-3-super-120b-a12b",
+    "timeout_seconds": 480,
+    "payload_chars": 4273,
     "gene_count": 41,
-    "representative_gene_count": 41,
+    "representative_gene_count": null,
+    "facts": 14,
     "guided_json": true,
-    "guided_json_retry": true
+    "attempts": 1
   },
-  "prompt_version": "2.0",
-  "request_fingerprint": "bde13112a36bfc3e5afd4680e87a3f2cfcff1c02f165c42cb5b3e60bf7f9ac25",
-  "created_at": "2026-10-01T13:25:40Z",
+  "prompt_version": "5.6-summary",
+  "parameters": {
+    "temperature": 0.2,
+    "top_p": 0.95,
+    "max_tokens": 2500,
+    "reasoning_effort": "none",
+    "seed": 42,
+    "use_guided_json": true
+  },
+  "request_fingerprint": "ac58f6bfbb6821168612651b0d5de9073a8d8b463c05bf5b20a6cf7dcebc7701",
+  "created_at": "2026-10-02T08:52:28Z",
   "analysis": {
-    "summary": "The 21.2 kb region on contig_1 (1729580–1750790) is supported by antiSMASH, GECCO, and DeepBGC. antiSMASH classifies it as a terpene BGC with a single core gene, CJLEIP_01467 (geoA), annotated as a terpene synthase (T1TS). KnownClusterBlast matches this core gene to the geosmin BGC (BGC0001181.4) with a 100% empirical score and 1.0 core-gene hit, indicating the core enzyme is identical to the characterized geosmin synthase. However, the canonical geosmin cluster contains two additional genes (germacradienol/germacrene D synthase and a cytochrome P450) that are absent here. The region is gene-dense (41 genes) but dominated by housekeeping, regulatory, and resistance-like genes (10 resistance, 5 regulators, 1 transporter, 3 tailoring enzymes) rather than a compact terpene cluster. DeepBGC predicts antibacterial activity for an overlapping upstream segment (1710877–1730062) that does not include geoA, suggesting a separate or broader signal. ARTS flags only two DUF397 hits (CJLEIP_01465, CJLEIP_01466) and one known hit (acetyl-CoA carboxylase subunit, CJLEIP_01447), none of which are terpene-specific resistance markers.",
-    "likely_product_or_function": "Geosmin (trans-1,10-dimethyl-trans-9-decalol) is the most specific product supported by the 100% KnownClusterBlast match of the core terpene synthase (geoA/CJLEIP_01467) to the geosmin BGC. Alternative: a related sesquiterpene hydrocarbon or alcohol if geoA acts without the missing cyclase/P450 partners; however, geoA is a bifunctional synthase that alone produces geosmin in Streptomyces coelicolor, making geosmin the strongest inference. The antibacterial prediction by DeepBGC is not linked to geoA and remains an uncorrelated observation.",
-    "biosynthetic_logic": "1) Primary metabolism supplies FPP (C15) via the MEP/MEV pathway (no pathway genes in cluster). 2) CJLEIP_01467 (geoA, terpene synthase, T1TS) converts FPP directly to geosmin via germacradienol intermediate (bifunctional cyclization/hydration; EC 4.2.3.22, 4.2.3.75). 3) No dedicated tailoring enzymes (e.g., P450, dehydrogenase) are present in the antiSMASH/GECCO boundaries; the three annotated tailoring enzymes (CJLEIP_01462 SDR, CJLEIP_01472 ureC, CJLEIP_01474 ilvE) are metabolic and not linked to terpene modification. 4) Export: CJLEIP_01470 (MFS dicarboxylate transporter) is the only transporter; no evidence it exports geosmin. 5) Unobserved required steps: FPP supply, possible redox balancing for the hydration step, and volatile diffusion/export mechanism.",
-    "key_genes": [
-      "CJLEIP_01467 (geoA, terpene synthase, T1TS): core biosynthetic enzyme producing geosmin from FPP; antiSMASH core gene, 100% KnownClusterBlast match to BGC0001181.4 geosmin synthase",
-      "CJLEIP_01470 (MFS dicarboxylate transporter): sole transporter in region; possible export role but substrate unknown; pfam Sugar_tr",
-      "CJLEIP_01462 (short-chain dehydrogenase/reductase): tailoring_enzyme category; generic SDR (adh_short), no terpene-specific annotation",
-      "CJLEIP_01458 (merR/tipA, MerR-family regulator): regulator; may respond to thiol stress or antibiotics, not terpene-specific",
-      "CJLEIP_01461 (tetR, TetR-family regulator): regulator; generic transcriptional repression",
-      "CJLEIP_01465 & CJLEIP_01466 (DUF397 proteins): ARTS duf_hits; unknown function, no established resistance role",
-      "CJLEIP_01447 (mmdA, acetyl-CoA carboxylase carboxyltransferase): ARTS known_hit; primary metabolism, not terpene resistance"
+    "overview": [
+      {
+        "text": "Soil_1_15 is a terpene biosynthetic gene cluster detected by antiSMASH, DeepBGC and GECCO, spanning 21 kb on contig_1 and containing 22 genes.",
+        "facts": [
+          "O1",
+          "O2"
+        ]
+      }
     ],
-    "resistance_transport_regulation": "Observed annotations: 10 genes in 'resistance' category (mostly housekeeping: gltX, mmdA, srp102, DUF742, DUF397, XRE regulator); 5 regulators (histidine kinases CJLEIP_01438/01442, MerR CJLEIP_01458, TetR CJLEIP_01461, HATPase_c CJLEIP_01463); 1 transporter (MFS CJLEIP_01470). Proposed roles: none of the resistance genes are terpene-specific; ARTS hits are DUF397 (unknown) and acetyl-CoA carboxylase (primary metabolism). The MerR/TipA regulator (CJLEIP_01458) may confer thiol/antibiotic stress response but is not linked to geosmin. The MFS transporter (CJLEIP_01470) has no evidence for geosmin export. No dedicated self-resistance mechanism for geosmin is observed.",
-    "recommended_followup": [
-      "Heterologous expression of CJLEIP_01467 alone in a suitable host (e.g., S. coelicolor, E. coli with FPP supply) to confirm geosmin production by GC-MS; resolves whether the solo synthase is sufficient without the missing cyclase/P450 genes.",
-      "Transcriptomics or qRT-PCR of the region under geosmin-inducing conditions (e.g., sporulation, nutrient limitation) to determine if CJLEIP_01467 is co-expressed with neighboring genes or stands alone; resolves whether the large gene set is a single transcriptional unit or a genomic island.",
-      "Volatile profiling (SPME-GC-MS) of the native strain to detect geosmin and related sesquiterpenes; confirms in vivo product and checks for additional terpenoids that might explain the antibacterial DeepBGC signal."
-    ]
+    "genes": [
+      {
+        "text": "antiSMASH marks 4 genes as biosynthetic, comprising 1 core gene and 3 additional biosynthetic genes, with 2 regulatory and 1 transport gene also present.",
+        "facts": [
+          "G1"
+        ]
+      },
+      {
+        "text": "The core gene CJLEIP_01467 is annotated as a terpene synthase by Bakta and identified as such by antiSMASH and GECCO.",
+        "facts": [
+          "G2",
+          "G3"
+        ]
+      },
+      {
+        "text": "Together, the additional biosynthetic genes include CJLEIP_01462 (short chain dehydrogenase), CJLEIP_01469 (citramalate synthase), and CJLEIP_01472 (urease subunit alpha), each marked by antiSMASH as biosynthetic.",
+        "facts": [
+          "G4",
+          "G5",
+          "G6"
+        ]
+      }
+    ],
+    "similar": [
+      {
+        "text": "The closest known cluster is BGC0001181 (geosmin) from Streptomyces coelicolor A3(2), a terpene cluster with questionable annotation quality in MIBiG.",
+        "facts": [
+          "S1",
+          "S4",
+          "S5"
+        ]
+      },
+      {
+        "text": "One gene in the locus, CJLEIP_01467, matches the putative cyclase CAB41566.1 in BGC0001181 at 64% identity, and antiSMASH finds counterparts for 100% of that cluster's genes, indicating a moderate match overall.",
+        "facts": [
+          "S2",
+          "S3"
+        ]
+      }
+    ],
+    "hypothesis": {
+      "text": "The cluster may produce a terpene-based metabolite, possibly related to geosmin, given the presence of a terpene synthase core gene and additional modifying enzymes such as a short chain dehydrogenase and citramalate synthase, alongside urease components that could influence nitrogen metabolism or precursor availability.",
+      "facts": [
+        "G3",
+        "G4",
+        "G5",
+        "G6",
+        "H1"
+      ]
+    }
   },
-  "traceability": {
-    "statements": 30,
-    "with_identifiers": 19,
-    "untraceable": []
-  }
+  "facts": [
+    {
+      "id": "O1",
+      "section": "overview",
+      "sentence": "Soil_1_15 is a terpene cluster, found by antiSMASH, DeepBGC and GECCO (all three detection tools).",
+      "values": [
+        "antiSMASH",
+        "DeepBGC",
+        "GECCO",
+        "3"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [
+        "terpene"
+      ],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "O2",
+      "section": "overview",
+      "sentence": "It spans 21 kb on contig_1 (1,729,580–1,750,790) and contains 22 genes.",
+      "values": [
+        "21",
+        "1729580",
+        "1750790",
+        "22",
+        "contig_1"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "G1",
+      "section": "genes",
+      "sentence": "antiSMASH marks 4 genes as biosynthetic (1 core and 3 additional), 2 as regulatory and 1 as transport.",
+      "values": [
+        "4",
+        "1",
+        "3",
+        "2",
+        "1"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "G2",
+      "section": "genes",
+      "sentence": "1 core gene is named in the locus.",
+      "values": [
+        "1",
+        "antiSMASH",
+        "GECCO"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "G3",
+      "section": "genes",
+      "sentence": "CJLEIP_01467, annotated by Bakta as Terpene synthase, is named as a core gene by antiSMASH and GECCO.",
+      "values": [
+        "CJLEIP_01467",
+        "antiSMASH",
+        "GECCO"
+      ],
+      "genes": [
+        "CJLEIP_01467"
+      ],
+      "terms": [
+        "terpene synthase"
+      ],
+      "names": [],
+      "detail": "",
+      "callers": [
+        "antismash",
+        "gecco"
+      ]
+    },
+    {
+      "id": "G4",
+      "section": "genes",
+      "sentence": "CJLEIP_01462 encodes Short chain dehydrogenase and is marked by antiSMASH as an additional biosynthetic gene.",
+      "values": [
+        "CJLEIP_01462"
+      ],
+      "genes": [
+        "CJLEIP_01462"
+      ],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "G5",
+      "section": "genes",
+      "sentence": "CJLEIP_01469 encodes citramalate synthase and is marked by antiSMASH as an additional biosynthetic gene.",
+      "values": [
+        "CJLEIP_01469"
+      ],
+      "genes": [
+        "CJLEIP_01469"
+      ],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "G6",
+      "section": "genes",
+      "sentence": "CJLEIP_01472 encodes Urease subunit alpha and is marked by antiSMASH as an additional biosynthetic gene.",
+      "values": [
+        "CJLEIP_01472"
+      ],
+      "genes": [
+        "CJLEIP_01472"
+      ],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "H1",
+      "section": "context",
+      "sentence": "Gene products in the locus, in genome order: CJLEIP_01452 SRPBCC family protein; CJLEIP_01453 Knr4/Smi1-like domain-containing protein; CJLEIP_01454 hypothetical protein; CJLEIP_01455 Murein biosynthesis integral membrane protein MurJ; CJLEIP_01456 Calcium-binding protein; CJLEIP_01457 Knr4/Smi1-like domain-containing protein; CJLEIP_01458 MerR family transcriptional regulator; CJLEIP_01459 VOC domain-containing protein; CJLEIP_01460 DUF309 domain-containing protein; CJLEIP_01461 TetR family transcriptional regulator; CJLEIP_01462 Short chain dehydrogenase; CJLEIP_01463 ATP-binding protein; CJLEIP_01464 XRE family transcriptional regulator; CJLEIP_01465 DUF397 domain-containing protein; CJLEIP_01466 DUF397 domain-containing protein; CJLEIP_01467 Terpene synthase; CJLEIP_01468 TPM domain-containing protein; CJLEIP_01469 citramalate synthase; CJLEIP_01470 MFS dicarboxylate transporter; CJLEIP_01471 Agmatine deiminase; CJLEIP_01472 Urease subunit alpha; CJLEIP_01473 urease.",
+      "values": [],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "S1",
+      "section": "similar",
+      "sentence": "The closest MIBiG entry is BGC0001181 (geosmin), from Streptomyces coelicolor A3(2).",
+      "values": [
+        "BGC0001181"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [
+        "geosmin",
+        "geosmin",
+        "Streptomyces coelicolor A3(2)"
+      ],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "S2",
+      "section": "similar",
+      "sentence": "1 gene of the locus has a counterpart in BGC0001181, at 64 % identity; antiSMASH finds counterparts for 100 % of that cluster's genes. Overall this is a moderate match.",
+      "values": [
+        "1",
+        "64",
+        "64",
+        "100",
+        "BGC0001181"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [
+        "moderate"
+      ],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "S3",
+      "section": "similar",
+      "sentence": "CJLEIP_01467 matches CAB41566.1 (putative cyclase) of BGC0001181 at 64 % identity.",
+      "values": [
+        "CJLEIP_01467",
+        "CAB41566.1",
+        "64"
+      ],
+      "genes": [
+        "CJLEIP_01467"
+      ],
+      "terms": [],
+      "names": [
+        "putative cyclase"
+      ],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "S4",
+      "section": "similar",
+      "sentence": "MIBiG lists the compound class of BGC0001181 as terpene.",
+      "values": [
+        "BGC0001181"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [
+        "terpene"
+      ],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "S5",
+      "section": "similar",
+      "sentence": "MIBiG rates the annotation quality of BGC0001181 as questionable.",
+      "values": [
+        "BGC0001181"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    }
+  ],
+  "summary_sections": [
+    {
+      "key": "overview",
+      "title": "What it is",
+      "sentences": [
+        {
+          "text": "Soil_1_15 is a terpene biosynthetic gene cluster detected by antiSMASH, DeepBGC and GECCO, spanning 21 kb on contig_1 and containing 22 genes.",
+          "facts": [
+            "O1",
+            "O2"
+          ],
+          "source": "model",
+          "shown_text": "Soil_1_15 is a terpene biosynthetic gene cluster detected by antiSMASH, DeepBGC and GECCO, spanning 21 kb on contig_1 and containing 22 genes."
+        }
+      ]
+    },
+    {
+      "key": "genes",
+      "title": "What it contains",
+      "sentences": [
+        {
+          "text": "antiSMASH marks 4 genes as biosynthetic, comprising 1 core gene and 3 additional biosynthetic genes, with 2 regulatory and 1 transport gene also present.",
+          "facts": [
+            "G1"
+          ],
+          "source": "model",
+          "shown_text": "antiSMASH marks 4 genes as biosynthetic, comprising 1 core gene and 3 additional biosynthetic genes, with 2 regulatory and 1 transport gene also present."
+        },
+        {
+          "text": "The core gene CJLEIP_01467 is annotated as a terpene synthase by Bakta and identified as such by antiSMASH and GECCO.",
+          "facts": [
+            "G2",
+            "G3"
+          ],
+          "source": "model",
+          "shown_text": "The core gene CJLEIP_01467 is annotated as a terpene synthase by Bakta and identified as such by antiSMASH and GECCO."
+        },
+        {
+          "text": "Together, the additional biosynthetic genes include CJLEIP_01462 (short chain dehydrogenase), CJLEIP_01469 (citramalate synthase), and CJLEIP_01472 (urease subunit alpha), each marked by antiSMASH as biosynthetic.",
+          "facts": [
+            "G4",
+            "G5",
+            "G6"
+          ],
+          "source": "model",
+          "shown_text": "Together, the additional biosynthetic genes include CJLEIP_01462 (short chain dehydrogenase), CJLEIP_01469 (citramalate synthase), and CJLEIP_01472 (urease subunit alpha), each marked by antiSMASH as biosynthetic."
+        }
+      ]
+    },
+    {
+      "key": "similar",
+      "title": "What it resembles",
+      "sentences": [
+        {
+          "text": "The closest known cluster is BGC0001181 (geosmin) from Streptomyces coelicolor A3(2), a terpene cluster with questionable annotation quality in MIBiG.",
+          "facts": [
+            "S1",
+            "S4",
+            "S5"
+          ],
+          "source": "model",
+          "shown_text": "The closest known cluster is BGC0001181 (geosmin) from Streptomyces coelicolor A3(2), a terpene cluster with questionable annotation quality in MIBiG."
+        },
+        {
+          "text": "One gene in the locus, CJLEIP_01467, matches the putative cyclase CAB41566.1 in BGC0001181 at 64% identity, and antiSMASH finds counterparts for 100% of that cluster's genes, indicating a moderate match overall.",
+          "facts": [
+            "S2",
+            "S3"
+          ],
+          "source": "model",
+          "shown_text": "One gene in the locus, CJLEIP_01467, matches the putative cyclase CAB41566.1 in BGC0001181 at 64% identity, and antiSMASH finds counterparts for 100% of that cluster's genes, indicating a moderate match overall."
+        }
+      ]
+    }
+  ],
+  "sentence_checks": [
+    {
+      "section": "overview",
+      "index": 0,
+      "text": "Soil_1_15 is a terpene biosynthetic gene cluster detected by antiSMASH, DeepBGC and GECCO, spanning 21 kb on contig_1 and containing 22 genes.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 0,
+      "text": "antiSMASH marks 4 genes as biosynthetic, comprising 1 core gene and 3 additional biosynthetic genes, with 2 regulatory and 1 transport gene also present.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 1,
+      "text": "The core gene CJLEIP_01467 is annotated as a terpene synthase by Bakta and identified as such by antiSMASH and GECCO.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 2,
+      "text": "Together, the additional biosynthetic genes include CJLEIP_01462 (short chain dehydrogenase), CJLEIP_01469 (citramalate synthase), and CJLEIP_01472 (urease subunit alpha), each marked by antiSMASH as biosynthetic.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "similar",
+      "index": 0,
+      "text": "The closest known cluster is BGC0001181 (geosmin) from Streptomyces coelicolor A3(2), a terpene cluster with questionable annotation quality in MIBiG.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "similar",
+      "index": 1,
+      "text": "One gene in the locus, CJLEIP_01467, matches the putative cyclase CAB41566.1 in BGC0001181 at 64% identity, and antiSMASH finds counterparts for 100% of that cluster's genes, indicating a moderate match overall.",
+      "verified": true,
+      "reasons": []
+    }
+  ],
+  "sentences_removed": 0,
+  "hypothesis": {
+    "text": "The cluster may produce a terpene-based metabolite, possibly related to geosmin, given the presence of a terpene synthase core gene and additional modifying enzymes such as a short chain dehydrogenase and citramalate synthase, alongside urease components that could influence nitrogen metabolism or precursor availability.",
+    "facts": [
+      "G3",
+      "G4",
+      "G5",
+      "G6",
+      "H1"
+    ],
+    "shown": true,
+    "reasons": []
+  },
+  "gene_roles": [
+    {
+      "locus_tag": "CJLEIP_01452",
+      "product": "SRPBCC family protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_01453",
+      "product": "Knr4/Smi1-like domain-containing protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_01454",
+      "product": "hypothetical protein",
+      "antismash_role": "",
+      "category": "hypothetical",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_01455",
+      "product": "Murein biosynthesis integral membrane protein MurJ",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_01456",
+      "product": "Calcium-binding protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_01457",
+      "product": "Knr4/Smi1-like domain-containing protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_01458",
+      "product": "MerR family transcriptional regulator",
+      "antismash_role": "regulatory",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_01459",
+      "product": "VOC domain-containing protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_01460",
+      "product": "DUF309 domain-containing protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_01461",
+      "product": "TetR family transcriptional regulator",
+      "antismash_role": "regulatory",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_01462",
+      "product": "Short chain dehydrogenase",
+      "antismash_role": "biosynthetic-additional",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_01463",
+      "product": "ATP-binding protein",
+      "antismash_role": "",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_01464",
+      "product": "XRE family transcriptional regulator",
+      "antismash_role": "",
+      "category": "resistance",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_01465",
+      "product": "DUF397 domain-containing protein",
+      "antismash_role": "",
+      "category": "resistance",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_01466",
+      "product": "DUF397 domain-containing protein",
+      "antismash_role": "",
+      "category": "resistance",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_01467",
+      "product": "Terpene synthase",
+      "antismash_role": "biosynthetic",
+      "category": "biosynthetic_core",
+      "core_by": "antiSMASH and GECCO"
+    },
+    {
+      "locus_tag": "CJLEIP_01468",
+      "product": "TPM domain-containing protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_01469",
+      "product": "citramalate synthase",
+      "antismash_role": "biosynthetic-additional",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_01470",
+      "product": "MFS dicarboxylate transporter",
+      "antismash_role": "transport",
+      "category": "transporter",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_01471",
+      "product": "Agmatine deiminase",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_01472",
+      "product": "Urease subunit alpha",
+      "antismash_role": "biosynthetic-additional",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_01473",
+      "product": "urease",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    }
+  ]
 }

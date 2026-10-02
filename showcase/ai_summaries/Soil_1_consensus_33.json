@@ -1,0 +1,424 @@
+{
+  "sample": "Soil_1",
+  "consensus_id": "Soil_1_consensus_33",
+  "model": "nvidia/nemotron-3-super-120b-a12b",
+  "mode": "summary",
+  "cached": false,
+  "diagnostics": {
+    "sample": "Soil_1",
+    "consensus_id": "Soil_1_consensus_33",
+    "model": "nvidia/nemotron-3-super-120b-a12b",
+    "timeout_seconds": 480,
+    "payload_chars": 2456,
+    "gene_count": 27,
+    "representative_gene_count": null,
+    "facts": 8,
+    "guided_json": true,
+    "attempts": 1
+  },
+  "prompt_version": "5.6-summary",
+  "parameters": {
+    "temperature": 0.2,
+    "top_p": 0.95,
+    "max_tokens": 2500,
+    "reasoning_effort": "none",
+    "seed": 42,
+    "use_guided_json": true
+  },
+  "request_fingerprint": "d3f34fc903e694cd8c8d5f335baa01351ef2b7a447bbcf132e3c8bdb5d010ff3",
+  "created_at": "2026-10-02T08:52:44Z",
+  "analysis": {
+    "overview": [
+      {
+        "text": "Soil_1_33 is a nonribosomal peptide cluster identified by DeepBGC and GECCO, spanning 16 kb on contig_1 from position 4,640,389 to 4,656,342 and containing 13 genes.",
+        "facts": [
+          "O1",
+          "O2"
+        ]
+      }
+    ],
+    "genes": [
+      {
+        "text": "The cluster contains one regulatory gene, one transport gene, three tailoring-enzyme genes, one resistance gene, and two core biosynthetic genes.",
+        "facts": [
+          "G1",
+          "G2"
+        ]
+      },
+      {
+        "text": "CJLEIP_04117 is a (pseudo) non-ribosomal peptide synthetase named as a core gene by both DeepBGC and GECCO.",
+        "facts": [
+          "G3"
+        ]
+      },
+      {
+        "text": "CJLEIP_04116 is a thioester reductase domain-containing protein named as a core gene by GECCO.",
+        "facts": [
+          "G4"
+        ]
+      },
+      {
+        "text": "Together, these two core genes represent the biosynthetic machinery of the cluster.",
+        "facts": [
+          "G3",
+          "G4"
+        ]
+      }
+    ],
+    "similar": [
+      {
+        "text": "No comparison with MIBiG has been made, as antiSMASH did not detect this locus.",
+        "facts": [
+          "S1"
+        ]
+      }
+    ],
+    "hypothesis": {
+      "text": "The cluster may produce a modified peptide, as it contains a (pseudo) non-ribosomal peptide synthetase and a thioester reductase domain-containing protein as core genes, along with tailoring enzymes such as an SDR family oxidoreductase, a 2OG-Fe(II) oxygenase, and a GNAT family N-acetyltransferase, suggesting possible oxidation, hydroxylation, and acetylation modifications.",
+      "facts": [
+        "G3",
+        "G4",
+        "H1"
+      ]
+    }
+  },
+  "facts": [
+    {
+      "id": "O1",
+      "section": "overview",
+      "sentence": "Soil_1_33 is a nonribosomal peptide cluster, found by DeepBGC and GECCO.",
+      "values": [
+        "DeepBGC",
+        "GECCO"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [
+        "NRP"
+      ],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "O2",
+      "section": "overview",
+      "sentence": "It spans 16 kb on contig_1 (4,640,389–4,656,342) and contains 13 genes.",
+      "values": [
+        "16",
+        "4640389",
+        "4656342",
+        "13",
+        "contig_1"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "G1",
+      "section": "genes",
+      "sentence": "By the annotation categories of BGC-XPLORER, it holds 1 regulatory, 1 transport, 3 tailoring-enzyme and 1 resistance genes.",
+      "values": [
+        "1",
+        "1",
+        "3",
+        "1"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "G2",
+      "section": "genes",
+      "sentence": "2 core genes are named in the locus, each by at least one of DeepBGC and GECCO.",
+      "values": [
+        "2",
+        "DeepBGC",
+        "GECCO"
+      ],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "G3",
+      "section": "genes",
+      "sentence": "CJLEIP_04117, annotated by Bakta as (pseudo) non-ribosomal peptide synthetase, is named as a core gene by DeepBGC and GECCO.",
+      "values": [
+        "CJLEIP_04117",
+        "DeepBGC",
+        "GECCO"
+      ],
+      "genes": [
+        "CJLEIP_04117"
+      ],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": [
+        "deepbgc",
+        "gecco"
+      ]
+    },
+    {
+      "id": "G4",
+      "section": "genes",
+      "sentence": "CJLEIP_04116, annotated by Bakta as thioester reductase domain-containing protein, is named as a core gene by GECCO.",
+      "values": [
+        "CJLEIP_04116",
+        "GECCO"
+      ],
+      "genes": [
+        "CJLEIP_04116"
+      ],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": [
+        "gecco"
+      ]
+    },
+    {
+      "id": "H1",
+      "section": "context",
+      "sentence": "Gene products in the locus, in genome order: CJLEIP_04109 Glycosyl transferase; CJLEIP_04110 RNA polymerase sigma factor; CJLEIP_04111 Extensin; CJLEIP_04112 Aspartyl/asparaginyl beta-hydroxylase domain-containing protein; CJLEIP_04113 ATP-grasp domain-containing protein; CJLEIP_04114 ATP-grasp domain-containing protein; CJLEIP_04115 SDR family oxidoreductase; CJLEIP_04116 thioester reductase domain-containing protein; CJLEIP_04117 (pseudo) non-ribosomal peptide synthetase; CJLEIP_04118 2OG-Fe(II) oxygenase; CJLEIP_04119 GNAT family N-acetyltransferase; CJLEIP_04120 MFS transporter; CJLEIP_04121 3-hydroxyisobutyrate dehydrogenase.",
+      "values": [],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    },
+    {
+      "id": "S1",
+      "section": "similar",
+      "sentence": "This locus has not been compared with MIBiG: the comparison is made by antiSMASH, which did not detect it.",
+      "values": [],
+      "genes": [],
+      "terms": [],
+      "names": [],
+      "detail": "",
+      "callers": []
+    }
+  ],
+  "summary_sections": [
+    {
+      "key": "overview",
+      "title": "What it is",
+      "sentences": [
+        {
+          "text": "Soil_1_33 is a nonribosomal peptide cluster identified by DeepBGC and GECCO, spanning 16 kb on contig_1 from position 4,640,389 to 4,656,342 and containing 13 genes.",
+          "facts": [
+            "O1",
+            "O2"
+          ],
+          "source": "model",
+          "shown_text": "Soil_1_33 is a nonribosomal peptide cluster identified by DeepBGC and GECCO, spanning 16 kb on contig_1 from position 4,640,389 to 4,656,342 and containing 13 genes."
+        }
+      ]
+    },
+    {
+      "key": "genes",
+      "title": "What it contains",
+      "sentences": [
+        {
+          "text": "The cluster contains one regulatory gene, one transport gene, three tailoring-enzyme genes, one resistance gene, and two core biosynthetic genes.",
+          "facts": [
+            "G1",
+            "G2"
+          ],
+          "source": "model",
+          "shown_text": "The cluster contains one regulatory gene, one transport gene, three tailoring-enzyme genes, one resistance gene, and two core biosynthetic genes."
+        },
+        {
+          "text": "CJLEIP_04117 is a (pseudo) non-ribosomal peptide synthetase named as a core gene by both DeepBGC and GECCO.",
+          "facts": [
+            "G3"
+          ],
+          "source": "model",
+          "shown_text": "CJLEIP_04117 is a (pseudo) non-ribosomal peptide synthetase named as a core gene by both DeepBGC and GECCO."
+        },
+        {
+          "text": "CJLEIP_04116 is a thioester reductase domain-containing protein named as a core gene by GECCO.",
+          "facts": [
+            "G4"
+          ],
+          "source": "model",
+          "shown_text": "CJLEIP_04116 is a thioester reductase domain-containing protein named as a core gene by GECCO."
+        }
+      ]
+    },
+    {
+      "key": "similar",
+      "title": "What it resembles",
+      "sentences": [
+        {
+          "text": "No comparison with MIBiG has been made, as antiSMASH did not detect this locus.",
+          "facts": [
+            "S1"
+          ],
+          "source": "model",
+          "shown_text": "No comparison with MIBiG has been made, as antiSMASH did not detect this locus."
+        }
+      ]
+    }
+  ],
+  "sentence_checks": [
+    {
+      "section": "overview",
+      "index": 0,
+      "text": "Soil_1_33 is a nonribosomal peptide cluster identified by DeepBGC and GECCO, spanning 16 kb on contig_1 from position 4,640,389 to 4,656,342 and containing 13 genes.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 0,
+      "text": "The cluster contains one regulatory gene, one transport gene, three tailoring-enzyme genes, one resistance gene, and two core biosynthetic genes.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 1,
+      "text": "CJLEIP_04117 is a (pseudo) non-ribosomal peptide synthetase named as a core gene by both DeepBGC and GECCO.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 2,
+      "text": "CJLEIP_04116 is a thioester reductase domain-containing protein named as a core gene by GECCO.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 3,
+      "text": "Together, these two core genes represent the biosynthetic machinery of the cluster.",
+      "verified": false,
+      "reasons": [
+        "the number 2 is not in the cited facts",
+        "the number 2 counts 'core' here, but not in the cited facts"
+      ]
+    },
+    {
+      "section": "similar",
+      "index": 0,
+      "text": "No comparison with MIBiG has been made, as antiSMASH did not detect this locus.",
+      "verified": true,
+      "reasons": []
+    }
+  ],
+  "sentences_removed": 1,
+  "hypothesis": {
+    "text": "The cluster may produce a modified peptide, as it contains a (pseudo) non-ribosomal peptide synthetase and a thioester reductase domain-containing protein as core genes, along with tailoring enzymes such as an SDR family oxidoreductase, a 2OG-Fe(II) oxygenase, and a GNAT family N-acetyltransferase, suggesting possible oxidation, hydroxylation, and acetylation modifications.",
+    "facts": [
+      "G3",
+      "G4",
+      "H1"
+    ],
+    "shown": true,
+    "reasons": []
+  },
+  "gene_roles": [
+    {
+      "locus_tag": "CJLEIP_04109",
+      "product": "Glycosyl transferase",
+      "antismash_role": "",
+      "category": "cazyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_04110",
+      "product": "RNA polymerase sigma factor",
+      "antismash_role": "",
+      "category": "regulator",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_04111",
+      "product": "Extensin",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_04112",
+      "product": "Aspartyl/asparaginyl beta-hydroxylase domain-containing protein",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_04113",
+      "product": "ATP-grasp domain-containing protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_04114",
+      "product": "ATP-grasp domain-containing protein",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_04115",
+      "product": "SDR family oxidoreductase",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_04116",
+      "product": "thioester reductase domain-containing protein",
+      "antismash_role": "",
+      "category": "biosynthetic_core",
+      "core_by": "GECCO"
+    },
+    {
+      "locus_tag": "CJLEIP_04117",
+      "product": "(pseudo) non-ribosomal peptide synthetase",
+      "antismash_role": "",
+      "category": "biosynthetic_core",
+      "core_by": "DeepBGC and GECCO"
+    },
+    {
+      "locus_tag": "CJLEIP_04118",
+      "product": "2OG-Fe(II) oxygenase",
+      "antismash_role": "",
+      "category": "other",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_04119",
+      "product": "GNAT family N-acetyltransferase",
+      "antismash_role": "",
+      "category": "resistance",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_04120",
+      "product": "MFS transporter",
+      "antismash_role": "",
+      "category": "transporter",
+      "core_by": ""
+    },
+    {
+      "locus_tag": "CJLEIP_04121",
+      "product": "3-hydroxyisobutyrate dehydrogenase",
+      "antismash_role": "",
+      "category": "tailoring_enzyme",
+      "core_by": ""
+    }
+  ]
+}

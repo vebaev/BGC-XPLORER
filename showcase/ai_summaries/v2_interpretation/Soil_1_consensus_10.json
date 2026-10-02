@@ -1,0 +1,51 @@
+{
+  "sample": "Soil_1",
+  "consensus_id": "Soil_1_consensus_10",
+  "model": "nvidia/nemotron-3-ultra-550b-a55b",
+  "cached": false,
+  "diagnostics": {
+    "sample": "Soil_1",
+    "consensus_id": "Soil_1_consensus_10",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
+    "timeout_seconds": 240,
+    "payload_chars": 15065,
+    "gene_count": 46,
+    "representative_gene_count": 46,
+    "guided_json": true,
+    "guided_json_retry": true
+  },
+  "prompt_version": "2.0",
+  "request_fingerprint": "1888e82a1f2b3ef250047986cd461ba519b100f0d8b968791a3c78d5b0a67e57",
+  "created_at": "2026-10-01T13:27:56Z",
+  "analysis": {
+    "summary": "The 49.4 kb region (contig_1:936108-985530) is predicted only by deepBGC (single-tool support) and contains two AMP-binding enzymes (CJLEIP_00811, CJLEIP_00812) as core biosynthetic genes. The dominant functional signature is a complete purine/urate catabolic pathway: urate hydroxylase (CJLEIP_00801), hydroxyisourate hydrolase (CJLEIP_00802), OHCU decarboxylase (CJLEIP_00803), xanthine dehydrogenase subunits (CJLEIP_00823-00827), and associated permeases (CJLEIP_00799, CJLEIP_00824). Additional features include a chitosanase (CJLEIP_00797, GH46_e36), catalase (CJLEIP_00808), multiple regulators (LuxR, TetR, GntR, PucR, sigma factor, PP2C), and two ARTS DUF hits (CJLEIP_00798 DUF4440, CJLEIP_00833 DUF2637). No MIBiG matches were reported. The region resembles a metabolic island for purine degradation with accessory stress-response genes rather than a canonical secondary-metabolite BGC.",
+    "likely_product_or_function": "Primary metabolic pathway for purine/urate catabolism (allantoin pathway) with associated oxidative-stress defense (catalase) and fungal cell-wall degradation (chitosanase). The two AMP-binding enzymes (CJLEIP_00811, CJLEIP_00812) could activate carboxylic acid substrates for a secondary metabolite, but no downstream PKS/NRPS or tailoring enzymes typical of specialized metabolism are present. Alternative: a hybrid locus where the AMP-binding enzymes supply activated precursors for an as-yet-uncharacterized product; however, the overwhelming catabolic gene content makes a primary metabolic function the best-supported interpretation.",
+    "biosynthetic_logic": "Observed catabolic route: (1) Urate → 5-hydroxyisourate via urate hydroxylase (CJLEIP_00801, EC 1.7.3.3). (2) 5-hydroxyisourate → 2-oxo-4-hydroxy-4-carboxy-5-ureidoimidazoline (OHCU) via hydroxyisourate hydrolase (CJLEIP_00802, EC 3.5.2.17). (3) OHCU → allantoin via OHCU decarboxylase (CJLEIP_00803, EC 4.1.1.97). (4) Xanthine → urate via xanthine dehydrogenase complex (CJLEIP_00823-00827, EC 1.2.5.3/1.17.1.4). (5) Purine/base uptake via xanthine/uracil permeases (CJLEIP_00799, CJLEIP_00824). The AMP-binding enzymes (CJLEIP_00811, CJLEIP_00812) lack partner condensation or tailoring domains; their substrates and products are unobserved. Chitosanase (CJLEIP_00797) and catalase (CJLEIP_00808) provide independent stress-defense functions. Required steps for any secondary metabolite (chain extension, cyclization, release) are not observed.",
+    "key_genes": [
+      "CJLEIP_00811 (AMP-binding enzyme, FadD5-like): proposed acyl-CoA synthetase for unknown acid substrate; deepBGC core gene, PF00501",
+      "CJLEIP_00812 (AMP-binding enzyme): second acyl-CoA synthetase; deepBGC core gene, PF00501",
+      "CJLEIP_00801 (urate hydroxylase, PucL/Uox): urate → 5-hydroxyisourate; EC 1.7.3.3, KO K00365",
+      "CJLEIP_00802 (hydroxyisourate hydrolase, UraH): 5-hydroxyisourate → OHCU; EC 3.5.2.17, KO K07127",
+      "CJLEIP_00803 (OHCU decarboxylase, UraD): OHCU → allantoin; EC 4.1.1.97, KO K16840",
+      "CJLEIP_00825-00827 (xanthine dehydrogenase subunits D, S, M): xanthine → urate; EC 1.2.5.3, KO K03518/K00156",
+      "CJLEIP_00823 (XdhC/CoxF maturation factor): xanthine dehydrogenase assembly; KO K07402",
+      "CJLEIP_00799 & CJLEIP_00824 (xanthine/uracil permeases): purine/base transport; PF Xan_ur_permease",
+      "CJLEIP_00797 (chitosanase, GH46_e36): fungal chitosan degradation; dbCAN GH46_e36",
+      "CJLEIP_00808 (catalase, KatA): H2O2 detoxification; EC 1.11.1.6, KO K03781",
+      "CJLEIP_00798 (SgcJ/EcaC family, DUF4440): ARTS DUF hit; possible self-resistance",
+      "CJLEIP_00833 (DUF2637): ARTS DUF hit; possible self-resistance",
+      "CJLEIP_00813 (LuxR), CJLEIP_00815 (TetR), CJLEIP_00831 (GntR), CJLEIP_00828 (PucR), CJLEIP_00817 (sigma factor), CJLEIP_00838 (PP2C): transcriptional/post-translational regulators"
+    ],
+    "resistance_transport_regulation": "Observed: two ARTS DUF hits (CJLEIP_00798 DUF4440, CJLEIP_00833 DUF2637) — proposed roles as self-resistance proteins are unsupported by functional data; two xanthine/uracil permeases (CJLEIP_00799, CJLEIP_00824) — transport purine bases, not a secondary metabolite; six regulators (LuxR, two TetR, GntR, PucR, sigma factor, PP2C) — likely control catabolic operon expression and stress responses. No dedicated efflux pump or resistance gene for a specialized metabolite is identified.",
+    "recommended_followup": [
+      "Compare the AMP-binding enzyme sequences (CJLEIP_00811, CJLEIP_00812) against characterized FadD/FadK subfamilies to predict substrate specificity (resolves whether they activate a secondary-metabolite precursor).",
+      "Check genomic context outside the 49 kb window for adjacent PKS/NRPS genes or tailoring enzymes that deepBGC may have truncated (resolves completeness of the locus).",
+      "Assay growth on purines/urate vs. chitosan as sole carbon/nitrogen sources to confirm catabolic function (resolves physiological role of the dominant pathway)."
+    ]
+  },
+  "traceability": {
+    "statements": 34,
+    "with_identifiers": 26,
+    "untraceable": []
+  }
+}
