@@ -63,4 +63,3 @@ sentence in `S4_sentence_check.tsv`.
 | `Soil_1_consensus_<n>.json` | the stored result: model, date, prompt version, parameters, fingerprint, facts, the model's answer, every sentence check, the shown text, the hypothesis |
 | `prompt_5.6-summary.md` | system prompt, an example user prompt, output schema, glossary |
 | `S4_sentence_check.tsv` | every sentence and hypothesis with the check's verdict and the manual reading |
-| `v2_interpretation/` | the earlier free-interpretation design (prompt 2.0), kept for the record: of its 92 statements 11 were partly incorrect or overstated and 3 incorrect, which is why it was replaced |
