@@ -17,6 +17,7 @@ import pandas as pd
 
 import ai_evidence
 import ai_facts
+import ai_summary
 
 
 DEFAULT_BASE_URL = "https://integrate.api.nvidia.com/v1"
@@ -25,9 +26,12 @@ DEFAULT_MODEL = "nvidia/nemotron-3-ultra-550b-a55b"
 # statement (ai_evidence.py). "interpretation": the earlier free-text analysis
 # with biosynthetic logic and proposed roles, unverified; opt-in.
 # "facts": code selects the key facts, the model only words them (ai_facts.py).
-MODES = ("facts", "evidence", "interpretation")
+# "summary": a readable description from facts computed by code, checked sentence by
+# sentence, with a separate AI hypothesis labelled as such (ai_summary.py).
+MODES = ("facts", "summary", "evidence", "interpretation")
 DEFAULT_MODE = "facts"
 MODE_DEFAULTS = {"facts": {"temperature": 0.0, "max_tokens": 800},
+                 "summary": {"temperature": 0.2, "max_tokens": 2500},
                  "evidence": {"temperature": 0.0, "max_tokens": 4000},
                  "interpretation": {"temperature": 0.1, "max_tokens": 1800}}
 PLACEHOLDER_API_KEYS = frozenset({
@@ -120,6 +124,9 @@ def mode_prompts(server, model_payload):
     if getattr(server, "mode", "interpretation") == "facts":
         return (ai_facts.PROMPT_VERSION, ai_facts.SYSTEM_PROMPT,
                 ai_facts.build_user_prompt(model_payload), ai_facts.JSON_SCHEMA)
+    if getattr(server, "mode", "interpretation") == "summary":
+        return (ai_summary.PROMPT_VERSION, ai_summary.SYSTEM_PROMPT,
+                ai_summary.build_user_prompt(model_payload), ai_summary.JSON_SCHEMA)
     if getattr(server, "mode", "interpretation") == "evidence":
         return (ai_evidence.PROMPT_VERSION, ai_evidence.SYSTEM_PROMPT,
                 ai_evidence.build_user_prompt(model_payload), ai_evidence.JSON_SCHEMA)
@@ -827,6 +834,7 @@ class AIClusterServer(BaseHTTPRequestHandler):
                 self._json(diagnostics, status=504 if isinstance(exc, (TimeoutError, socket.timeout)) else 502)
                 return
             analysis = (ai_facts.normalize(raw_content) if self.server.mode == "facts"
+                        else ai_summary.normalize(raw_content) if self.server.mode == "summary"
                         else ai_evidence.normalize(raw_content) if self.server.mode == "evidence"
                         else normalize_analysis(raw_content))
             response = {
@@ -844,6 +852,8 @@ class AIClusterServer(BaseHTTPRequestHandler):
                 "analysis": analysis,
             }
             response.update(self.checks(analysis, model_payload))
+            if self.server.mode == "summary":
+                response["gene_roles"] = ai_summary.gene_roles(payload, self.antismash_json(payload))
             cache_path.parent.mkdir(parents=True, exist_ok=True)
             with open(cache_path, "w", encoding="utf-8") as handle:
                 json.dump(response, handle, ensure_ascii=False, indent=2)
@@ -856,7 +866,12 @@ class AIClusterServer(BaseHTTPRequestHandler):
         if self.server.mode == "facts":
             conflicts = ai_facts.load_conflicts(self.server.results_dir, payload.get("sample"), payload.get("consensus_id"))
             return ai_facts.build_fact_card(payload, conflicts)
+        if self.server.mode == "summary":
+            return ai_summary.build_facts(payload, self.antismash_json(payload), ai_summary.default_mibig_dir())
         return compact_payload_for_model(payload)
+
+    def antismash_json(self, payload):
+        return ai_summary.load_antismash(ai_summary.antismash_json_path(self.server.results_dir, payload.get("sample")))
 
     def call_with_retries(self, request_body, diagnostics, attempts=4, wait_seconds=20):
         """Retry when the free endpoint is overloaded (503/429) or returns an empty answer."""
@@ -865,6 +880,7 @@ class AIClusterServer(BaseHTTPRequestHandler):
             try:
                 content = self.call_nvidia(request_body)
                 empty = (self.server.mode == "facts" and not ai_facts.normalize(content)["summary"]) or (
+                    self.server.mode == "summary" and not any(ai_summary.normalize(content)[k] for k, _ in ai_summary.SECTIONS)) or (
                     self.server.mode == "evidence" and not any(ai_evidence.normalize(content).values()))
                 if not empty:
                     diagnostics["attempts"] = attempt + 1
@@ -879,12 +895,16 @@ class AIClusterServer(BaseHTTPRequestHandler):
         diagnostics["attempts"] = attempts
         if self.server.mode == "facts":
             return {"summary": ""}
+        if self.server.mode == "summary":
+            return {}
         raise last_error
 
     def checks(self, analysis, model_payload):
         """The fact check in facts mode; statement verification in evidence mode; the identifier check otherwise."""
         if self.server.mode == "facts":
             return ai_facts.result(analysis, model_payload)
+        if self.server.mode == "summary":
+            return ai_summary.result(analysis, model_payload)
         if self.server.mode == "evidence":
             return {"verification": ai_evidence.verify(analysis, model_payload)}
         return {"traceability": trace_identifiers(analysis, model_payload)}

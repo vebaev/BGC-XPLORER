@@ -951,6 +951,30 @@ def html_page(title, sections):
       border-radius: 8px;
       line-height: 1.5;
     }}
+    .ai-sent-template {{
+      color: var(--muted);
+    }}
+    .ai-sent[title]:hover {{
+      background: rgba(214, 158, 46, 0.10);
+    }}
+    .ai-roles {{
+      margin: 8px 0;
+      font-size: 12px;
+    }}
+    .ai-roles summary {{
+      cursor: pointer;
+      font-weight: 600;
+    }}
+    .ai-hypothesis {{
+      margin: 12px 0 0;
+      padding: 10px 12px;
+      border: 1px dashed #8a6fd1;
+      border-radius: 8px;
+      background: rgba(138, 111, 209, 0.07);
+    }}
+    .ai-hypothesis h3 {{
+      color: #6a4fb8;
+    }}
     .ai-result-warning {{
       margin: 10px 0 0;
       padding: 6px 10px;
@@ -1271,9 +1295,56 @@ def html_page(title, sections):
           + escapeHtml(data.shown_summary || '') + '</p><p class="muted ai-trace-note">'
           + (fromModel ? '&#10003; ' : '&#9888; ') + note + '</p></div>' + (fromModel ? AI_MISTAKE_NOTE : '');
       }}
+      function renderSummary(data) {{
+        var factText = {{}};
+        (data.facts || []).forEach(function (f) {{
+          factText[f.id] = f.sentence + (f.detail ? ' (' + f.detail + ')' : '');
+        }});
+        var anyModel = false;
+        var html = (data.summary_sections || []).map(function (section) {{
+          var body = (section.sentences || []).map(function (item) {{
+            if (item.source === 'model') {{
+              anyModel = true;
+            }}
+            var source = (item.facts || []).map(function (id) {{
+              return '[' + id + '] ' + (factText[id] || '');
+            }}).join('\\n');
+            return '<span class="ai-sent' + (item.source === 'template' ? ' ai-sent-template' : '') + '" title="'
+              + escapeHtml(source) + '">' + escapeHtml(item.shown_text || item.text) + '</span>';
+          }}).join(' ');
+          return '<div class="ai-status"><h3>' + escapeHtml(section.title) + '</h3><p>' + body + '</p></div>';
+        }}).join('');
+        var removed = data.sentences_removed || 0;
+        html += '<p class="muted ai-trace-note">&#10003; Every sentence above is checked against the facts computed by the workflow'
+          + (removed ? '; ' + removed + (removed === 1 ? ' sentence' : ' sentences') + ' of the model did not pass and ' + (removed === 1 ? 'was' : 'were') + ' removed' : '')
+          + '. Hover a sentence to see the facts it rests on.</p>';
+        var roles = data.gene_roles || [];
+        if (roles.length) {{
+          html += '<details class="ai-roles"><summary>Genes by role (' + roles.length + ')</summary><table class="gene-table"><thead><tr>'
+            + '<th>Locus</th><th>Product</th><th>antiSMASH role</th><th>Category</th><th>Core gene by</th></tr></thead><tbody>'
+            + roles.map(function (r) {{
+              return '<tr><td>' + escapeHtml(r.locus_tag) + '</td><td>' + escapeHtml(r.product) + '</td><td>'
+                + escapeHtml(r.antismash_role || '') + '</td><td>' + escapeHtml((r.category || '').replace('_', ' ')) + '</td><td>'
+                + escapeHtml(r.core_by || '') + '</td></tr>';
+            }}).join('') + '</tbody></table></details>';
+        }}
+        var hyp = data.hypothesis || {{}};
+        if (hyp.shown && hyp.text) {{
+          anyModel = true;
+          html += '<div class="ai-hypothesis"><h3>Hypothesis (AI-generated, not verified)</h3><p>' + escapeHtml(hyp.text)
+            + '</p><p class="muted">A hypothesis for further work, not a result. It is checked only for identifiers and numbers that are not in the facts.</p></div>';
+        }} else if (hyp.text) {{
+          html += '<p class="muted ai-trace-note">The AI hypothesis did not pass its check (' + escapeHtml((hyp.reasons || []).join('; ')) + ') and is not shown.</p>';
+        }}
+        aiResult.innerHTML = html + (anyModel ? AI_MISTAKE_NOTE : '');
+      }}
       function renderAnalysis(data) {{
         if (data.model) {{
           showActiveAiModel(data.model);
+        }}
+        if (data.mode === 'summary' || data.summary_sections) {{
+          renderSummary(data);
+          return;
         }}
         if (data.mode === 'facts' || data.fact_check) {{
           renderFacts(data);
