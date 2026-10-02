@@ -61,6 +61,47 @@ class SentenceCheck(unittest.TestCase):
         self.assertTrue(check("Soil_1_13 probably produces an antibiotic.", ["O1"]))
 
 
+class AuditCases(unittest.TestCase):
+    """Sentences that passed an earlier version of the check although they were wrong."""
+
+    COUNTS = [fact("G1", "genes", "By the annotation categories of BGC-XPLORER, it holds 2 regulatory, 2 transport, "
+                   "2 tailoring-enzyme and 3 resistance genes.")]
+    CORE = [fact("G3", "genes", "CJLEIP_06060, annotated by Bakta as Dimethylallyltransferase, is named as a core gene by "
+                 "antiSMASH.", genes=["CJLEIP_06060"], callers=["antismash"]),
+            fact("G4", "genes", "CJLEIP_06067, annotated by Bakta as Polyketide synthase, is named as a core gene by "
+                 "antiSMASH, DeepBGC and GECCO.", genes=["CJLEIP_06067"], callers=["antismash", "deepbgc", "gecco"])]
+    MATCH = [fact("S2", "similar", "antiSMASH's ClusterCompare gives this entry a score of 0.47 on a scale of 0 to 1. "
+                  "Overall this is a distant match.")]
+
+    def run_check(self, text, facts, section="genes"):
+        return check_sentence({"text": text, "facts": [f["id"] for f in facts]}, facts, _vocabulary(facts, set()), section)
+
+    def test_number_counting_another_category_fails(self):
+        self.assertTrue(self.run_check("The cluster contains 3 biosynthetic genes, all tailoring enzymes.", self.COUNTS))
+        self.assertTrue(self.run_check("It also holds two regulatory, two transport and two resistance genes.", self.COUNTS))
+        self.assertEqual(self.run_check("It holds three resistance genes and two regulatory genes.", self.COUNTS), [])
+
+    def test_callers_moved_to_another_gene_fail(self):
+        self.assertTrue(self.run_check("The core genes CJLEIP_06060 and CJLEIP_06067 are named by antiSMASH, DeepBGC "
+                                       "and GECCO.", self.CORE))
+        self.assertEqual(self.run_check("CJLEIP_06067 is named by antiSMASH, DeepBGC and GECCO, and CJLEIP_06060 by "
+                                        "antiSMASH.", self.CORE), [])
+
+    def test_total_given_to_one_gene_fails(self):
+        facts = [fact("G3", "genes", "CJLEIP_01147 is named as a core gene by antiSMASH; antiSMASH finds 3 modules in it; "
+                      "1 of its modules carries an epimerization domain.", genes=["CJLEIP_01147"], callers=["antismash"]),
+                 fact("G6", "genes", "Together CJLEIP_01147 and CJLEIP_01149 hold 6 modules; 3 modules carry an "
+                      "epimerization domain.", genes=["CJLEIP_01147", "CJLEIP_01149"])]
+        self.assertTrue(self.run_check("CJLEIP_01147 has three modules, and three modules carry an epimerization domain.", facts))
+        self.assertEqual(self.run_check("CJLEIP_01147 has three modules, one of which carries an epimerization domain.", facts), [])
+        self.assertEqual(self.run_check("CJLEIP_01147 and CJLEIP_01149 hold six modules, three with an epimerization "
+                                        "domain.", facts), [])
+
+    def test_closeness_judged_by_the_model_fails(self):
+        self.assertTrue(self.run_check("The match is moderate.", self.MATCH, "similar"))
+        self.assertEqual(self.run_check("ClusterCompare scores it 0.47 out of 1, a distant match.", self.MATCH, "similar"), [])
+
+
 class Hypothesis(unittest.TestCase):
 
     def test_hedged_hypothesis_passes(self):

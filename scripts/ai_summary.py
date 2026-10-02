@@ -23,9 +23,9 @@ import os
 import re
 
 import ai_evidence
-from ai_facts import CALLER_NAMES, _caller_list, _clean, _core_support, _digits, _int
+from ai_facts import CALLER_NAMES, _caller_list, _clean, _core_support, _digits, _int, caller_groups
 
-PROMPT_VERSION = "5.3-summary"
+PROMPT_VERSION = "5.6-summary"
 SECTIONS = (("overview", "What it is"), ("genes", "What it contains"), ("similar", "What it resembles"))
 MAX_CORE_GENES = 6
 MAX_ADDITIONAL_GENES = 5
@@ -71,13 +71,19 @@ CLASS_PHRASES = {"NRPS": "nonribosomal peptide (NRPS)", "NRPS-like": "NRPS-like"
 ROLE_WORDS = (("biosynthetic", "core biosynthetic"), ("biosynthetic-additional", "additional biosynthetic"),
               ("regulatory", "regulatory"), ("transport", "transport"), ("resistance", "resistance"))
 INTERPRETIVE = re.compile(
-    r"\b(likely|suggests?|suggesting|may|might|probably|possibly|could|indicates?|indicating|appears?|presumably|"
+    r"\b(likely|suggests?|suggesting|may|might|probably|possibly|could|appears?|presumably|"
     r"putative|produces?|producing|synthesi[sz]es?|responsible|novel|antibiotics?|role|function(?:s|al)?)\b",
     re.IGNORECASE)
 HEDGE = re.compile(r"\b(may|might|could|possibly|perhaps|suggests?|hypothes[ie]s|consistent with|would)\b", re.IGNORECASE)
 COMPOUND_LIKE = re.compile(r"\b[a-z][a-z-]*(?:mycin|micin|cidin|statin|lactam|peptin|bactin|chelin)s?\b", re.IGNORECASE)
 AMINO_CODE = re.compile(r"\b(" + "|".join(AMINO_ACIDS) + r")\b")
 CALLER_PATTERN = re.compile(r"\b(antismash|gecco|deepbgc)\b", re.IGNORECASE)
+CLOSENESS = re.compile(r"\b(close(?:ly)?|moderate(?:ly)?|distant(?:ly)?|weak(?:ly)?|strong(?:ly)?|partial(?:ly)?|"
+                       r"high|low|good|poor|remote(?:ly)?|near|loose(?:ly)?)\b", re.IGNORECASE)
+STOP_WORDS = set("a an the of and or as at in on to for with by from is are be its it this that these those each all "
+                 "both total about only also which who whose than then there their them while whereas including "
+                 "comprising plus gene genes protein proteins cluster locus".split())
+WORD = re.compile(r"[a-z][a-z-]*")
 PUBMED = re.compile(r"\b(?:PubMed|PMID)[:\s]*(\d{6,9})\b", re.IGNORECASE)
 
 
@@ -104,12 +110,13 @@ def _location(text):
     return (numbers[0], numbers[1]) if len(numbers) >= 2 else (None, None)
 
 
-def fact(fid, section, sentence, values=(), genes=(), terms=(), names=(), detail=""):
+def fact(fid, section, sentence, values=(), genes=(), terms=(), names=(), detail="", callers=()):
     """A numbered fact: its sentence as code writes it, the checkable values it holds, the genes it is about,
     the glossary terms it uses, the names (substrates, compounds) it contains, and detail shown to the reader
     on hover but not given to the model."""
     return {"id": fid, "section": section, "sentence": sentence, "values": [str(v) for v in values if v not in ("", None)],
-            "genes": list(genes), "terms": list(terms), "names": [n for n in names if n], "detail": detail}
+            "genes": list(genes), "terms": list(terms), "names": [n for n in names if n], "detail": detail,
+            "callers": list(callers)}
 
 
 # ---------------------------------------------------------------- inputs
@@ -180,7 +187,8 @@ def antismash_locus(antismash, contig, start, end):
     consensus = record.get("modules", {}).get("antismash.modules.nrps_pks", {}).get("consensus", {})
     for gene in genes.values():
         for module in gene["modules"]:
-            module["substrates"] = [consensus.get(d) for d in module["domains"] if "AMP-binding" in d or "PKS_AT" in d]
+            module["substrates"] = [("A" if "AMP-binding" in d else "AT", consensus.get(d))
+                                    for d in module["domains"] if "AMP-binding" in d or "PKS_AT" in d]
             module["epimerization"] = any("Epimerization" in d for d in module["domains"])
     known = record.get("modules", {}).get("antismash.modules.clusterblast", {}).get("knowncluster", {})
     kcb = [r for r in known.get("results", []) if r.get("region_number") in regions]
@@ -206,7 +214,7 @@ def kcb_match(kcb_results, accession):
 # ---------------------------------------------------------------- facts
 
 def _substrate(code):
-    if not code or code == "X":
+    if not code or code in ("X", "pk"):
         return ""
     return AMINO_ACIDS.get(code, EXTENDERS.get(code, code))
 
@@ -217,6 +225,39 @@ def _short_domain(name):
 
 def _arch(gene):
     return "–".join(s for s in (_short_domain(d) for d in gene["domains"]) if s)
+
+
+def _counted(names):
+    """'phenylalanine, no substrate and valine'; with repeats 'malonyl-CoA for 5 and no substrate for 1'."""
+    names = [n or "no substrate" for n in names]
+    order = sorted(set(names), key=names.index)
+    if len(order) == len(names):
+        return _join(names)
+    if len(order) == 1:
+        return "{0} for all {1}".format(order[0], len(names))
+    return _join(["{0} for {1}".format(n, names.count(n)) for n in order])
+
+
+def _substrate_phrase(substrates):
+    """What antiSMASH predicts for a set of (domain kind, code) pairs, by kind of domain."""
+    parts = []
+    for kind, label in (("A", "adenylation"), ("AT", "acyltransferase")):
+        names = [_substrate(code) for k, code in substrates if k == kind]
+        if names:
+            parts.append("{0} for its {1} domain{2}".format(_counted(names), label, "s" if len(names) > 1 else ""))
+    return _join(parts)
+
+
+def _match_word(similarity, identities):
+    """How close a KnownClusterBlast match is, from the share of the MIBiG cluster's genes matched and the
+    median identity of the matched genes."""
+    idents = sorted(identities)
+    median = idents[len(idents) // 2] if idents else 0
+    if similarity >= 75 and median >= 80:
+        return "close"
+    if similarity >= 25 and median >= 50:
+        return "moderate"
+    return "distant"
 
 
 def _gene_terms(product):
@@ -237,15 +278,17 @@ def build_facts(payload, antismash=None, mibig_dir=""):
         facts.append(fact("{0}{1}".format(section[0].upper(), n[section]), section, sentence, **kw))
 
     # ---- what it is
-    types = [t.strip() for t in re.split(r"[,;/]", _clean(region.get("bgc_types"))) if t.strip()]
+    types = [t.strip() for t in re.split(r"[,;/]", _clean(region.get("bgc_types")))
+             if t.strip() and t.strip().lower() not in ("unknown", "other", "none")]
     phrases = []
     for t in types:
         phrase = CLASS_PHRASES.get(t, t)
         if not any(phrase in other or other in phrase for other in phrases):
             phrases.append(phrase)
-    type_phrase = _join(phrases) or "biosynthetic gene"
     who = _caller_list(callers) + (" (all three detection tools)" if len(callers) == 3 else " only" if len(callers) == 1 else "")
-    add("overview", "{0} is a {1} cluster, found by {2}.".format(label, type_phrase, who),
+    text = ("{0} is a {1} cluster, found by {2}.".format(label, _join(phrases), who) if phrases else
+            "{0} is a biosynthetic gene cluster, found by {1}; no compound class is assigned to it.".format(label, who))
+    add("overview", text,
         values=[CALLER_NAMES.get(c, c) for c in callers] + ([3] if len(callers) == 3 else []), names=types)
     in_span = [g for g in genes if start is not None and _int(g.get("gene_start")) is not None and
                start <= (_int(g.get("gene_start")) + _int(g.get("gene_end"))) / 2 <= end]
@@ -283,49 +326,70 @@ def build_facts(payload, antismash=None, mibig_dir=""):
             add("genes", "By the annotation categories of BGC-XPLORER, it holds {0} genes.".format(_join(parts)),
                 values=[counts[k] for k in ("regulator", "transporter", "tailoring_enzyme", "resistance") if counts.get(k)])
 
-    support = _core_support(region.get("core_gene_support"))
-    core_tags = [t for t in support if t in products][:MAX_CORE_GENES]
+    # Only core genes inside the agreed span count as core genes of the locus; callers sometimes name core genes
+    # in the wider region they predicted, and those are reported apart.
+    span_tags = {_clean(g.get("locus_tag")) for g in in_span}
+    support_all = _core_support(region.get("core_gene_support"))
+    support = {t: c for t, c in support_all.items() if t in span_tags}
+    outside = {t: c for t, c in support_all.items() if t not in span_tags}
+    core_tags = list(support)[:MAX_CORE_GENES]
     if support:
         by = sorted({c for tags in support.values() for c in tags})
-        add("genes", "{0} name{1} {2} in the locus.".format(
-            _caller_list(by), "s" if len(by) == 1 else "", _plural(len(support), "core gene")),
-            values=[len(support)] + [CALLER_NAMES.get(c, c) for c in by])
+        if len(by) == 1:
+            text = "{0} names {1} in the locus.".format(_caller_list(by), _plural(len(support), "core gene"))
+        elif len(support) == 1:
+            text = "1 core gene is named in the locus."
+        else:
+            text = "{0} core genes are named in the locus, each by at least one of {1}.".format(
+                len(support), _caller_list(by))
+        add("genes", text, values=[len(support)] + [CALLER_NAMES.get(c, c) for c in by])
+    else:
+        add("genes", "No detection tool names a core biosynthetic gene inside the agreed span of this locus.")
+    if outside:
+        by = sorted({c for tags in outside.values() for c in tags})
+        add("genes", "{0} named by {1} lie{2} outside the agreed span of the locus.".format(
+            _plural(len(outside), "further core gene"), _caller_list(by), "s" if len(outside) == 1 else ""),
+            values=[len(outside)])
     for tag in core_tags:
         product = products.get(tag) or as_genes.get(tag, {}).get("product", "")
         gene = as_genes.get(tag)
         names = [CALLER_NAMES.get(c, c) for c in support[tag]]
         text = "{0}{1} is named as a core gene by {2}".format(
-            tag, " ({0})".format(product) if product else "", _caller_list(support[tag]))
+            tag, ", annotated by Bakta as {0},".format(product) if product else "", _caller_list(support[tag]))
         values, terms, gnames, detail = [tag] + names, _gene_terms(product), [], ""
         if gene and gene["modules"]:
             m = len(gene["modules"])
             text += "; antiSMASH finds {0} in it".format(_plural(m, "module"))
             detail = "antiSMASH domain order: " + _arch(gene)
-            subs = [_substrate(s) for mod in gene["modules"] for s in mod["substrates"]]
-            known = [s for s in subs if s]
-            kinds = {mod["type"] for mod in gene["modules"]}
-            target = ("adenylation domains" if kinds == {"nrps"} else "acyltransferase domains" if kinds == {"pks"}
-                      else "adenylation and acyltransferase domains")
-            if subs:
-                text += ", and predicts {0} for its {1}".format(_join([s or "no substrate" for s in subs]), target)
+            pairs = [p for mod in gene["modules"] for p in mod["substrates"]]
+            known = [_substrate(c) for _, c in pairs if _substrate(c)]
+            if pairs:
+                text += ", and predicts {0}".format(_substrate_phrase(pairs))
+            gene_epi = sum(mod["epimerization"] for mod in gene["modules"])
+            if gene_epi:
+                text += "; {0} of its modules carr{1} an epimerization domain".format(gene_epi, "ies" if gene_epi == 1 else "y")
             values += [m]
             terms += ["module"] + (["epimerization domain"] if any(mod["epimerization"] for mod in gene["modules"]) else [])
             gnames += known
-        add("genes", text + ".", values=values, genes=[tag], terms=terms, names=gnames, detail=detail)
+        add("genes", text + ".", values=values, genes=[tag], terms=terms, names=gnames, detail=detail,
+            callers=support[tag])
 
     nrps = [g for t, g in as_genes.items() if g["modules"]]
     if len(nrps) > 1:
         modules = [mod for g in nrps for mod in g["modules"]]
-        subs = [_substrate(s) for mod in modules for s in mod["substrates"]]
-        known = [s for s in subs if s]
+        subs = [_substrate(c) for mod in modules for _, c in mod["substrates"]]
+        known = [x for x in subs if x]
         epi = sum(mod["epimerization"] for mod in modules)
         tags = [t for t, g in as_genes.items() if g["modules"]]
-        text = "Together {0} hold {1}; a substrate is predicted for {2} of them ({3})".format(
-            _join(tags), _plural(len(modules), "module"), len(known), _join(known) or "none")
+        text = "Together {0} hold {1}; antiSMASH predicts a substrate for {2} ({3})".format(
+            _join(tags), _plural(len(modules), "module"), _plural(len(known), "module"), _counted(known) if known else "none")
         if len(subs) > len(known):
-            text += " and none for {0}".format(len(subs) - len(known))
+            text += " and none for {0}".format(_plural(len(subs) - len(known), "module"))
+        if len(modules) > len(subs):
+            text += "; {0} no adenylation or acyltransferase domain".format(
+                _plural(len(modules) - len(subs), "module has", "modules have"))
         if epi:
-            text += ", and {0} carr{1} an epimerization domain".format(epi, "ies" if epi == 1 else "y")
+            text += "; {0} an epimerization domain".format(_plural(epi, "module carries", "modules carry"))
         add("genes", text + ".", values=tags + [len(modules), len(known), len(subs) - len(known), epi], genes=tags,
             terms=["module"] + (["epimerization domain"] if epi else []), names=known)
 
@@ -357,6 +421,7 @@ def build_facts(payload, antismash=None, mibig_dir=""):
                            "which did not detect it.")
         return facts
     entry = mibig_entry(mibig_dir, accession) or {}
+    acc = accession.split(".")[0]
     compounds = [c.get("name") for c in entry.get("compounds", []) if c.get("name")]
     compound = _join(compounds[:3]) or _clean(mibig.get("best_mibig_product")).split("/")[0]
     organism = (entry.get("taxonomy") or {}).get("name", "")
@@ -364,17 +429,18 @@ def build_facts(payload, antismash=None, mibig_dir=""):
         accession.split(".")[0], compound, ", from {0}".format(organism) if organism else ""),
         values=[accession.split(".")[0]], names=compounds[:3] + [compound, organism])
     match = kcb_match(local["kcb"], accession) if local else None
-    span_tags = {_clean(g.get("locus_tag")) for g in in_span}
     if match:
         match["pairs"] = {t: p for t, p in match["pairs"].items() if t in span_tags}
     if match and match["pairs"]:
         idents = [p.get("perc_ident") for p in match["pairs"].values() if p.get("perc_ident") is not None]
         sim = match["similarity"]
-        word = "close" if sim >= 75 else "partial" if sim >= 25 else "distant"
-        add("similar", "{0} of the locus have a counterpart in {5}, at {1}–{2} % identity; antiSMASH puts the "
-                       "similarity at {3} % ({4} match).".format(_plural(len(match["pairs"]), "gene"), min(idents),
-                                                                 max(idents), sim, word, accession.split(".")[0]),
-            values=[len(match["pairs"]), min(idents), max(idents), sim, accession.split(".")[0]])
+        word = _match_word(sim, idents)
+        span = "{0} %".format(min(idents)) if min(idents) == max(idents) else "{0}–{1} %".format(min(idents), max(idents))
+        add("similar", "{0} of the locus {1} a counterpart in {2}, at {3} identity; antiSMASH finds counterparts for "
+                       "{4} % of that cluster's genes. Overall this is a {5} match.".format(
+                           _plural(len(match["pairs"]), "gene"), "has" if len(match["pairs"]) == 1 else "have",
+                           accession.split(".")[0], span, sim, word),
+            values=[len(match["pairs"]), min(idents), max(idents), sim, accession.split(".")[0]], names=[word])
         for tag in core_tags:
             pair = match["pairs"].get(tag)
             if pair:
@@ -385,25 +451,36 @@ def build_facts(payload, antismash=None, mibig_dir=""):
                     values=[tag, pair.get("name"), pair.get("perc_ident")], genes=[tag], names=[annotation])
     else:
         metric, score = _clean(mibig.get("score_metric")), _num(mibig.get("match_score"))
-        if metric and score is not None:
-            score = round(score, 2) if isinstance(score, float) else score
+        if metric and score is not None and "ClusterCompare" in metric:
+            score = round(float(score), 2)
+            word = "close" if score >= 0.8 else "moderate" if score >= 0.5 else "distant"
+            add("similar", "antiSMASH's ClusterCompare gives this entry a score of {0} on a scale of 0 to 1. "
+                           "Overall this is a {1} match.".format(score, word), values=[score], names=[word])
+        elif metric and score is not None:
             add("similar", "antiSMASH reports a {0} of {1} for this entry.".format(metric, score), values=[score])
     classes = [c.get("class") for c in (entry.get("biosynthesis") or {}).get("classes", []) if c.get("class")]
     if classes:
-        add("similar", "MIBiG lists the compound class as {0}.".format(_join(classes)), names=classes)
-    activities = sorted({b.get("name", {}).get("activity", "") for c in entry.get("compounds", [])
-                         for b in c.get("bioactivities", []) or [] if b.get("observed")} - {""})
+        add("similar", "MIBiG lists the compound class of {0} as {1}.".format(acc, _join(classes)), values=[acc], names=classes)
+    activities = sorted({_activity(b) for c in entry.get("compounds", [])
+                         for b in c.get("bioactivities", []) or [] if isinstance(b, dict) and b.get("observed")} - {""})
     if activities:
-        add("similar", "MIBiG records {0} activity for {1}.".format(_join(activities), compound), names=activities + [compound])
+        add("similar", "MIBiG records {0} activity for {1} ({2}).".format(_join(activities), compound, acc), values=[acc],
+            names=activities + [compound])
     methods = sorted({e.get("method", "") for locus in entry.get("loci", []) for e in locus.get("evidence", [])} - {""})
     refs = [r.split(":", 1)[1] for r in entry.get("legacy_references", []) if r.startswith("pubmed:")]
     if methods:
-        add("similar", "MIBiG gives {0} as evidence for this cluster{1}.".format(
-            _join([m.lower() for m in methods]), " (PubMed {0})".format(refs[0]) if refs else ""), values=refs[:1])
+        add("similar", "MIBiG gives {0} as evidence for {1}{2}.".format(
+            _join([m.lower() for m in methods]), acc, " (PubMed {0})".format(refs[0]) if refs else ""), values=refs[:1] + [acc])
     quality = entry.get("quality")
     if quality and quality != "high":
-        add("similar", "MIBiG rates the annotation quality of this entry as {0}.".format(quality))
+        add("similar", "MIBiG rates the annotation quality of {0} as {1}.".format(acc, quality), values=[acc])
     return facts
+
+
+def _activity(bioactivity):
+    """MIBiG 4.0 stores an activity name either as text or as {"activity": text}."""
+    name = bioactivity.get("name", "")
+    return (name.get("activity", "") if isinstance(name, dict) else str(name or "")).strip()
 
 
 def gene_roles(payload, antismash=None):
@@ -436,8 +513,8 @@ Write three short parts:
 - "similar": 1-3 sentences, the closest known cluster in MIBiG and how close it is, or that there is none.
 Rules for these three parts:
 - Write for a reader, in natural, varied prose, not a list. Sentences of 15-30 words; one idea per sentence.
-- Start "genes" with the overall picture (how many biosynthetic genes, of which kinds), then the core genes, then at most
-  four additional genes, grouped by kind (e.g. "two oxidising enzymes, a cytochrome P450 and an L-asparagine oxygenase").
+- Start "genes" with the overall picture (how many biosynthetic genes, of which kinds), then the core genes (describe at
+  most three one by one and use the "Together" fact for the rest), then at most four additional genes, grouped by kind (e.g. "two oxidising enzymes, a cytochrome P450 and an L-asparagine oxygenase").
 - Say modules and substrates in words ("three modules, predicted to load phenylalanine, an unidentified residue and
   valine"); give a domain order only if it adds something. Write "an unidentified residue" for "no substrate".
 - In "similar", say how close the match is in words first, then the numbers.
@@ -534,7 +611,77 @@ def _vocabulary(facts, known_compounds=None):
     return words
 
 
-def check_sentence(item, facts, vocabulary):
+def _after(text, end, count=4):
+    """The first content words after a position: what a number counts."""
+    window = re.split(r"[,;.:()\[\]]|\d", text[end:end + 60])[0]
+    words = [w.rstrip("s") for w in WORD.findall(window.lower())]
+    return [w for w in words if w not in STOP_WORDS][:count]
+
+
+def _number_uses(text):
+    """(number, words that follow it) for every number in a text; number words count as numbers."""
+    text = _digits(text)
+    stripped = ai_evidence.NAME_WITH_DIGITS.sub(lambda m: " " * len(m.group(0)),
+                                                ai_evidence.IDENTIFIER.sub(lambda m: " " * len(m.group(0)), text))
+    uses = []
+    for match in ai_evidence.NUMBER.finditer(stripped):
+        value = ai_evidence._as_number(match.group(0))
+        if value is not None:
+            uses.append((value, _after(stripped, match.end())))
+    return uses
+
+
+NAMING = re.compile(r"\b(?:named|identified|called|detected|found|marked|flagged|recogni[sz]ed|predicted)\b"
+                    r"(?:\s+as\s+(?:an?\s+)?(?:core|biosynthetic)[\w\s-]*?)?\s+(?:by|in)\s+(?:both\s+|all\s+three\s+of\s+)?"
+                    r"((?:antiSMASH|DeepBGC|GECCO)(?:\s*(?:,|and|,\s*and)\s*(?:antiSMASH|DeepBGC|GECCO))*)", re.IGNORECASE)
+
+
+def _naming_groups(text):
+    """Locus tag -> sets of callers that a naming phrase ('named by antiSMASH and GECCO') gives it: the phrase
+    applies to the locus tags written before it in the same sentence, since the previous naming phrase."""
+    assigned = {}
+    for sentence in re.split(r"(?<=[.;])\s+", text):
+        last = 0
+        for match in NAMING.finditer(sentence):
+            callers = {c.lower() for c in CALLER_PATTERN.findall(match.group(1))}
+            for tag in re.findall(ai_evidence.LOCUS_TAG, sentence[last:match.start()]):
+                assigned.setdefault(tag, []).append(callers)
+            last = match.end()
+    return assigned
+
+
+CATEGORY_STEMS = ("regulat", "transport", "tailor", "resist", "biosynth", "core", "addition", "modul", "substrat",
+                  "domain", "hit", "epimeri", "cazyme", "mobile")
+
+
+def _category(words):
+    if any(w.startswith("epimeri") for w in words):
+        return "epimeri"
+    for word in words[:1]:
+        for stem in CATEGORY_STEMS:
+            if word.startswith(stem):
+                return stem
+    return None
+
+
+def _check_number_binding(text, cited):
+    """A number that counts a category of genes or domains must count the same category in a cited fact:
+    '3 resistance genes' needs a fact with '3 resistance', not just any 3. In a sentence about particular genes the
+    fact must be about those genes (or about no gene in particular), so a total is not given to one gene."""
+    tags = set(re.findall(ai_evidence.LOCUS_TAG, text))
+    usable = [f for f in cited if not tags or not f["genes"] or set(f["genes"]) <= tags]
+    fact_uses = [(v, _category(w)) for f in usable for v, w in _number_uses(f["sentence"])]
+    reasons = []
+    for value, words in _number_uses(text):
+        category = _category(words)
+        if category is None or value != int(value):
+            continue
+        if (value, category) not in fact_uses:
+            reasons.append("the number {0:g} counts '{1}' here, but not in the cited facts".format(value, words[0]))
+    return reasons
+
+
+def check_sentence(item, facts, vocabulary, section=""):
     by_id = {f["id"]: f for f in facts}
     text, reasons = item["text"], []
     cited = [by_id[i] for i in item["facts"] if i in by_id and by_id[i]["section"] != "context"]
@@ -559,6 +706,18 @@ def check_sentence(item, facts, vocabulary):
     match = INTERPRETIVE.search(text)
     if match and match.group(0).lower() not in pool_lower:
         reasons.append("interpretive wording: '{0}'".format(match.group(0)))
+    if section == "similar":
+        for word in {w.lower() for w in CLOSENESS.findall(text)}:
+            if not re.search(r"\b" + re.escape(word[:-2] if word.endswith("ly") else word), pool_lower):
+                reasons.append("'{0}' judges the match, but the cited facts do not".format(word))
+    reasons.extend(_check_number_binding(text, cited))
+    # Where a sentence says which callers name a core gene, they must be exactly the callers that name it.
+    known_callers = {f["genes"][0]: set(f["callers"]) for f in facts if f.get("callers") and f["genes"]}
+    for tag, groups in _naming_groups(text).items():
+        for named in groups:
+            if tag in known_callers and named != known_callers[tag]:
+                reasons.append("{0} is said to be named by {1}, but is named by {2}".format(
+                    tag, ", ".join(sorted(named)), ", ".join(sorted(known_callers[tag]))))
     for code in set(AMINO_CODE.findall(text)):
         if code not in pool:
             reasons.append("'{0}' is not in the cited facts".format(code))
@@ -629,7 +788,7 @@ def result(analysis, facts):
     for key, title in SECTIONS:
         kept = []
         for index, item in enumerate(analysis.get(key, [])):
-            reasons = check_sentence(item, facts, vocabulary)
+            reasons = check_sentence(item, facts, vocabulary, key)
             checks.append({"section": key, "index": index, "text": item["text"], "verified": not reasons,
                            "reasons": reasons})
             if reasons:
