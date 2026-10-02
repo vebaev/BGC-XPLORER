@@ -80,7 +80,7 @@ The main settings live in `.env`:
 | `AUTO_PREPARE_DATABASES` | `true` | Downloads missing databases before starting the app. |
 | `ARTS_REFERENCE` | `actinobacteria` | Taxon-specific ARTS reference set. |
 | `BGC_IMAGE` | `vebaev/bgc-xplorer` | GHCR image owner and name. |
-| `BGC_VERSION` | `1.2.0` | Container image tag to run; pinned to the release the manuscript describes. |
+| `BGC_VERSION` | `1.2.1` | Container image tag to run; pinned to the release the manuscript describes. |
 
 To use another port, model or CPU limit, edit `.env` and recreate the service:
 
