@@ -1,6 +1,6 @@
-# On-demand AI cluster analysis
+# On-demand AI cluster summary
 
-The HTML report can call a local AI analysis service through the `AI analysis`
+The HTML report can call a local AI service through the `AI summary`
 button next to each cluster. The browser never receives the API key.
 
 ## Start the local service

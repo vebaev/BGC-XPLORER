@@ -14,7 +14,7 @@ WORKFLOW_STEPS = (
     ("Genome annotation", "Bakta prepares the standardized genes and proteins used downstream.", "2"),
     ("BGC discovery", "antiSMASH, GECCO, and DeepBGC independently identify candidate regions.", "3"),
     ("Biological context", "eggNOG, dbCAN, ARTS, and MIBiG add function, substrates, resistance, and known-cluster evidence.", "4"),
-    ("Integrated report", "Compare, filter, and sort candidate loci with gene maps, provenance, and optional AI analysis.", "5"),
+    ("Integrated report", "Compare, filter, and sort candidate loci with gene maps, provenance, and optional AI summaries.", "5"),
 )
 
 RESULT_FEATURES = (
@@ -23,7 +23,7 @@ RESULT_FEATURES = (
     ("Biological context", "Resistance signals, functional annotations, substrates, and MIBiG evidence are connected to each region.", "⌘"),
     ("Interactive gene maps", "Explore gene order, predicted functions, and cluster-level biological interpretation.", "↔"),
     ("Reproducible outputs", "Download tables and provenance with tool, database, model, and execution metadata.", "✓"),
-    ("AI-supported interpretation", "Request focused AI analysis for selected clusters directly from the report.", "◇"),
+    ("Optional AI summaries", "Request a short AI summary of a selected cluster from the report; AI models can make mistakes.", "◇"),
 )
 
 

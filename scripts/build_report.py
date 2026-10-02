@@ -702,7 +702,7 @@ sections = [
         "</div>"
         "<div class='gene-map-ai'>"
         "<div class='gene-map-ai-head'>"
-        "<button id='gene-map-ai-button' class='ai-analysis-btn' type='button'>AI analysis</button>"
+        "<button id='gene-map-ai-button' class='ai-analysis-btn' type='button'>AI summary</button>"
         "<span id='gene-map-ai-spinner' class='ai-spinner' hidden></span>"
         "<span id='gene-map-ai-status' class='muted'></span>"
         "</div>"

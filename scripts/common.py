@@ -951,6 +951,16 @@ def html_page(title, sections):
       border-radius: 8px;
       line-height: 1.5;
     }}
+    .ai-result-warning {{
+      margin: 10px 0 0;
+      padding: 6px 10px;
+      color: var(--text);
+      font-size: 12px;
+      line-height: 1.45;
+      background: rgba(214, 158, 46, 0.12);
+      border-left: 3px solid #d69e2e;
+      border-radius: 4px;
+    }}
     .ai-analysis-result {{
       display: grid;
       gap: 12px;
@@ -1246,8 +1256,9 @@ def html_page(title, sections):
                 + '</span></li>';
             }}).join('') + '</ul></div>';
         }});
-        aiResult.innerHTML = html;
+        aiResult.innerHTML = html + AI_MISTAKE_NOTE;
       }}
+      var AI_MISTAKE_NOTE = '<p class="ai-result-warning">&#9888; AI-generated text. AI models can make mistakes: check every statement against the evidence table before relying on it.</p>';
       function renderFacts(data) {{
         // The facts are stored with the result for audit but not listed here: the summary
         // already states every one of them, so the list would only repeat it.
@@ -1258,7 +1269,7 @@ def html_page(title, sections):
           : 'The model text did not pass the check (' + escapeHtml((check.reasons || []).join('; ')) + '), so the facts are shown as written by the workflow.';
         aiResult.innerHTML = '<div class="ai-status' + (fromModel ? '' : ' ai-trace-warning') + '"><h3>Locus summary</h3><p>'
           + escapeHtml(data.shown_summary || '') + '</p><p class="muted ai-trace-note">'
-          + (fromModel ? '&#10003; ' : '&#9888; ') + note + '</p></div>';
+          + (fromModel ? '&#10003; ' : '&#9888; ') + note + '</p></div>' + (fromModel ? AI_MISTAKE_NOTE : '');
       }}
       function renderAnalysis(data) {{
         if (data.model) {{
@@ -1288,7 +1299,7 @@ def html_page(title, sections):
         html += '<div class="ai-status"><h3>Key genes</h3>' + listItems(analysis.key_genes) + '</div>';
         html += '<div class="ai-status"><h3>Recommended follow-up</h3>' + listItems(analysis.recommended_followup) + '</div>';
         html += traceabilityNote(data.traceability);
-        aiResult.innerHTML = html;
+        aiResult.innerHTML = html + AI_MISTAKE_NOTE;
       }}
       function traceabilityNote(trace) {{
         if (!trace) {{
@@ -1314,7 +1325,7 @@ def html_page(title, sections):
       }}
       function diagnosticMessage(data) {{
         if (!data || typeof data !== 'object') {{
-          return 'AI analysis request failed.';
+          return 'AI summary request failed.';
         }}
         var parts = [];
         if (data.error) {{
@@ -1325,10 +1336,10 @@ def html_page(title, sections):
             parts.push(key + '=' + data[key]);
           }}
         }});
-        return parts.join(' | ') || data.message || 'AI analysis request failed.';
+        return parts.join(' | ') || data.message || 'AI summary request failed.';
       }}
       function waitForAiJob(endpoint, jobId, attempt) {{
-        aiStatus.textContent = 'Analyzing...';
+        aiStatus.textContent = 'Generating summary...';
         return fetchWithNetworkRetry(statusEndpoint(endpoint, jobId), {{
           method: 'GET',
           headers: {{'Accept': 'application/json'}}
@@ -1337,7 +1348,7 @@ def html_page(title, sections):
             return response.json().then(function (data) {{
               if (response.status === 202 || data.status === 'queued' || data.status === 'running') {{
                 if (attempt >= 120) {{
-                  throw new Error('AI analysis is still running after 4 minutes. Try again in a moment or check the AI service diagnostics.');
+                  throw new Error('The AI summary is still running after 4 minutes. Try again in a moment or check the AI service diagnostics.');
                 }}
                 return new Promise(function (resolve) {{
                   window.setTimeout(resolve, 2000);
@@ -1363,7 +1374,7 @@ def html_page(title, sections):
           }}
           return (
             'The connection to the BGC-XPLORER Docker service was interrupted after three attempts. ' +
-            'Keep the report open, wait a moment, and try the AI analysis again. Browser detail: ' + detail
+            'Keep the report open, wait a moment, and try the AI summary again. Browser detail: ' + detail
           );
         }}
         if (detail.toLowerCase().indexOf('timed out') !== -1) {{
@@ -1434,7 +1445,7 @@ def html_page(title, sections):
       function setAiLoading(isLoading) {{
         aiButton.disabled = isLoading;
         aiSpinner.hidden = !isLoading;
-        aiStatus.textContent = isLoading ? 'Analyzing...' : '';
+        aiStatus.textContent = isLoading ? 'Generating summary...' : '';
       }}
       function closeViewer() {{
         viewer.hidden = true;
@@ -1503,7 +1514,7 @@ def html_page(title, sections):
           aiButton.disabled = !aiEnabled;
           aiButton.setAttribute('data-sample', sample);
           aiButton.setAttribute('data-cluster', aiCluster);
-          aiStatus.textContent = aiEnabled ? '' : 'AI analysis is available only for consensus BGC maps.';
+          aiStatus.textContent = aiEnabled ? '' : 'AI summaries are available only for consensus BGC maps.';
           error.hidden = true;
           error.textContent = '';
           inline.innerHTML = '';
@@ -1530,7 +1541,7 @@ def html_page(title, sections):
           var aiSample = aiClick.getAttribute('data-sample') || '';
           var aiCluster = aiClick.getAttribute('data-cluster') || '';
           if (!aiSample || !aiCluster) {{
-            aiResult.innerHTML = '<div class="ai-status ai-status-error">Open a cluster gene map before requesting AI analysis.</div>';
+            aiResult.innerHTML = '<div class="ai-status ai-status-error">Open a cluster gene map before requesting an AI summary.</div>';
             return;
           }}
           aiClick.setAttribute('aria-expanded', 'true');
