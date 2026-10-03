@@ -184,8 +184,7 @@ def footer_strip(sample, generated_at):
         "<footer class='report-footer'>"
         "<span>BGC-XPLORER Report</span><span class='dot'></span>"
         "<span>Sample: {sample}</span><span class='dot'></span>"
-        "<span>{generated_at}</span><span class='dot'></span>"
-        "<span>Workflow 1.0</span>"
+        "<span>{generated_at}</span>"
         "</footer>"
     ).format(sample=escape(sample), generated_at=escape(generated_at))
 
