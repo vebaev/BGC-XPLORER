@@ -34,3 +34,7 @@ validation/tools/
 validation/.pytest_cache/
 !validation/work/results/
 !validation/work/data/
+
+# Manuscript files (private)
+cimb-4615339*.docx
+manuscript/
