@@ -97,6 +97,23 @@ class AuditCases(unittest.TestCase):
         self.assertEqual(self.run_check("CJLEIP_01147 and CJLEIP_01149 hold six modules, three with an epimerization "
                                         "domain.", facts), [])
 
+    def test_number_words_and_listed_genes(self):
+        facts = [fact("S2", "similar", "21 genes of the locus have a counterpart in BGC0002358, at 96–100 % identity."),
+                 fact("S3", "similar", "CJLEIP_01147 matches XNR_0983 of BGC0002358 at 99 % identity.", genes=["CJLEIP_01147"]),
+                 fact("S4", "similar", "CJLEIP_01149 matches XNR_0985 of BGC0002358 at 99 % identity.", genes=["CJLEIP_01149"])]
+        self.assertEqual(self.run_check("Twenty-one genes of the locus have counterparts in BGC0002358.", facts[:1], "similar"), [])
+        self.assertTrue(self.run_check("Twenty-two genes of the locus have counterparts in BGC0002358.", facts[:1], "similar"))
+        self.assertEqual(self.run_check("The two synthetases CJLEIP_01147 and CJLEIP_01149 match XNR_0983 and XNR_0985 "
+                                        "of BGC0002358 at 99 % identity.", facts[1:], "similar"), [])
+        self.assertTrue(self.run_check("The three synthetases CJLEIP_01147 and CJLEIP_01149 match XNR_0983 and XNR_0985 "
+                                       "of BGC0002358 at 99 % identity.", facts[1:], "similar"))
+
+    def test_total_given_to_remaining_genes_fails(self):
+        facts = [fact("G9", "genes", "Together these 3 genes with modules (CJLEIP_06067, CJLEIP_06073 and CJLEIP_06077) hold "
+                      "10 modules in all.", genes=["CJLEIP_06067", "CJLEIP_06073", "CJLEIP_06077"], total=True)]
+        self.assertTrue(self.run_check("Together the remaining core genes hold 10 modules.", facts))
+        self.assertEqual(self.run_check("Together the three genes with modules hold 10 modules.", facts), [])
+
     def test_closeness_judged_by_the_model_fails(self):
         self.assertTrue(self.run_check("The match is moderate.", self.MATCH, "similar"))
         self.assertEqual(self.run_check("ClusterCompare scores it 0.47 out of 1, a distant match.", self.MATCH, "similar"), [])

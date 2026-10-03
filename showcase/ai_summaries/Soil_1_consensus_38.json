@@ -1,22 +1,22 @@
 {
   "sample": "Soil_1",
   "consensus_id": "Soil_1_consensus_38",
-  "model": "nvidia/nemotron-3-super-120b-a12b",
+  "model": "nvidia/nemotron-3-ultra-550b-a55b",
   "mode": "summary",
   "cached": false,
   "diagnostics": {
     "sample": "Soil_1",
     "consensus_id": "Soil_1_consensus_38",
-    "model": "nvidia/nemotron-3-super-120b-a12b",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
     "timeout_seconds": 480,
-    "payload_chars": 2027,
+    "payload_chars": 2125,
     "gene_count": 134,
     "representative_gene_count": null,
     "facts": 7,
     "guided_json": true,
-    "attempts": 1
+    "attempts": 2
   },
-  "prompt_version": "5.6-summary",
+  "prompt_version": "5.8-summary",
   "parameters": {
     "temperature": 0.2,
     "top_p": 0.95,
@@ -25,8 +25,8 @@
     "seed": 42,
     "use_guided_json": true
   },
-  "request_fingerprint": "800e8cb46133067a6ccbf8bebe0baa4e2e5ec79a02ef31593939b6dc15af8366",
-  "created_at": "2026-10-02T08:54:06Z",
+  "request_fingerprint": "7bc8843d7664c573a7bdc316f476731274851fec44aeaa7992aea7cd4c91d242",
+  "created_at": "2026-10-03T10:36:33Z",
   "analysis": {
     "overview": [
       {
@@ -36,7 +36,7 @@
         ]
       },
       {
-        "text": "It spans 11 kb on contig_1 from position 5,288,071 to 5,299,166 and contains 12 genes.",
+        "text": "It spans 11 kb on contig_1 and contains 12 genes.",
         "facts": [
           "O2"
         ]
@@ -44,19 +44,19 @@
     ],
     "genes": [
       {
-        "text": "The cluster contains 2 regulatory, 1 transport, and 4 tailoring-enzyme genes according to BGC-XPLORER annotation categories.",
+        "text": "The locus holds four tailoring-enzyme genes, two regulatory genes and one transport gene according to BGC-XPLORER annotation categories.",
         "facts": [
           "G1"
         ]
       },
       {
-        "text": "No detection tool names a core biosynthetic gene within the agreed span of the locus.",
+        "text": "No detection tool names a core biosynthetic gene inside the agreed span of this locus.",
         "facts": [
           "G2"
         ]
       },
       {
-        "text": "Three further core genes are named by DeepBGC but lie outside the agreed span of the locus.",
+        "text": "Three further core genes named by DeepBGC lie outside the agreed span of the locus.",
         "facts": [
           "G3"
         ]
@@ -64,14 +64,14 @@
     ],
     "similar": [
       {
-        "text": "This locus has not been compared with MIBiG, as the comparison was performed by antiSMASH, which did not detect the cluster.",
+        "text": "This locus has not been compared with MIBiG because antiSMASH did not detect it.",
         "facts": [
           "S1"
         ]
       }
     ],
     "hypothesis": {
-      "text": "The presence of NAD-dependent epimerase/dehydratase, NAD(P)-dependent oxidoreductase, iron-containing redox enzyme, and methyltransferase genes suggests the cluster may be involved in redox modifications or methylation of a precursor, possibly linked to primary metabolism rather than specialised metabolite production.",
+      "text": "The cluster may be involved in primary metabolic processes such as redox balancing or cell shape determination rather than specialised metabolite production, given the presence of NAD-dependent epimerase/dehydratase, NAD(P)-dependent oxidoreductases, an iron-containing redox enzyme, a CDGSH iron-sulfur protein, and the cell shape-determining protein MreB.",
       "facts": [
         "H1"
       ]
@@ -90,7 +90,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "O2",
@@ -107,7 +108,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G1",
@@ -122,7 +124,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G2",
@@ -133,7 +136,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G3",
@@ -146,7 +150,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "H1",
@@ -157,7 +162,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S1",
@@ -168,7 +174,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     }
   ],
   "summary_sections": [
@@ -185,12 +192,12 @@
           "shown_text": "Soil_1_38 is a biosynthetic gene cluster identified by DeepBGC and GECCO, with no compound class assigned."
         },
         {
-          "text": "It spans 11 kb on contig_1 from position 5,288,071 to 5,299,166 and contains 12 genes.",
+          "text": "It spans 11 kb on contig_1 and contains 12 genes.",
           "facts": [
             "O2"
           ],
           "source": "model",
-          "shown_text": "It spans 11 kb on contig_1 from position 5,288,071 to 5,299,166 and contains 12 genes."
+          "shown_text": "It spans 11 kb on contig_1 and contains 12 genes."
         }
       ]
     },
@@ -199,28 +206,28 @@
       "title": "What it contains",
       "sentences": [
         {
-          "text": "The cluster contains 2 regulatory, 1 transport, and 4 tailoring-enzyme genes according to BGC-XPLORER annotation categories.",
+          "text": "The locus holds four tailoring-enzyme genes, two regulatory genes and one transport gene according to BGC-XPLORER annotation categories.",
           "facts": [
             "G1"
           ],
           "source": "model",
-          "shown_text": "The cluster contains 2 regulatory, 1 transport, and 4 tailoring-enzyme genes according to BGC-XPLORER annotation categories."
+          "shown_text": "The locus holds four tailoring-enzyme genes, two regulatory genes and one transport gene according to BGC-XPLORER annotation categories."
         },
         {
-          "text": "No detection tool names a core biosynthetic gene within the agreed span of the locus.",
+          "text": "No detection tool names a core biosynthetic gene inside the agreed span of this locus.",
           "facts": [
             "G2"
           ],
           "source": "model",
-          "shown_text": "No detection tool names a core biosynthetic gene within the agreed span of the locus."
+          "shown_text": "No detection tool names a core biosynthetic gene inside the agreed span of this locus."
         },
         {
-          "text": "Three further core genes are named by DeepBGC but lie outside the agreed span of the locus.",
+          "text": "Three further core genes named by DeepBGC lie outside the agreed span of the locus.",
           "facts": [
             "G3"
           ],
           "source": "model",
-          "shown_text": "Three further core genes are named by DeepBGC but lie outside the agreed span of the locus."
+          "shown_text": "Three further core genes named by DeepBGC lie outside the agreed span of the locus."
         }
       ]
     },
@@ -229,12 +236,12 @@
       "title": "What it resembles",
       "sentences": [
         {
-          "text": "This locus has not been compared with MIBiG, as the comparison was performed by antiSMASH, which did not detect the cluster.",
+          "text": "This locus has not been compared with MIBiG because antiSMASH did not detect it.",
           "facts": [
             "S1"
           ],
           "source": "model",
-          "shown_text": "This locus has not been compared with MIBiG, as the comparison was performed by antiSMASH, which did not detect the cluster."
+          "shown_text": "This locus has not been compared with MIBiG because antiSMASH did not detect it."
         }
       ]
     }
@@ -250,42 +257,42 @@
     {
       "section": "overview",
       "index": 1,
-      "text": "It spans 11 kb on contig_1 from position 5,288,071 to 5,299,166 and contains 12 genes.",
+      "text": "It spans 11 kb on contig_1 and contains 12 genes.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 0,
-      "text": "The cluster contains 2 regulatory, 1 transport, and 4 tailoring-enzyme genes according to BGC-XPLORER annotation categories.",
+      "text": "The locus holds four tailoring-enzyme genes, two regulatory genes and one transport gene according to BGC-XPLORER annotation categories.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 1,
-      "text": "No detection tool names a core biosynthetic gene within the agreed span of the locus.",
+      "text": "No detection tool names a core biosynthetic gene inside the agreed span of this locus.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 2,
-      "text": "Three further core genes are named by DeepBGC but lie outside the agreed span of the locus.",
+      "text": "Three further core genes named by DeepBGC lie outside the agreed span of the locus.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "similar",
       "index": 0,
-      "text": "This locus has not been compared with MIBiG, as the comparison was performed by antiSMASH, which did not detect the cluster.",
+      "text": "This locus has not been compared with MIBiG because antiSMASH did not detect it.",
       "verified": true,
       "reasons": []
     }
   ],
   "sentences_removed": 0,
   "hypothesis": {
-    "text": "The presence of NAD-dependent epimerase/dehydratase, NAD(P)-dependent oxidoreductase, iron-containing redox enzyme, and methyltransferase genes suggests the cluster may be involved in redox modifications or methylation of a precursor, possibly linked to primary metabolism rather than specialised metabolite production.",
+    "text": "The cluster may be involved in primary metabolic processes such as redox balancing or cell shape determination rather than specialised metabolite production, given the presence of NAD-dependent epimerase/dehydratase, NAD(P)-dependent oxidoreductases, an iron-containing redox enzyme, a CDGSH iron-sulfur protein, and the cell shape-determining protein MreB.",
     "facts": [
       "H1"
     ],

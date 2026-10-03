@@ -1,22 +1,22 @@
 {
   "sample": "Soil_1",
   "consensus_id": "Soil_1_consensus_15",
-  "model": "nvidia/nemotron-3-super-120b-a12b",
+  "model": "nvidia/nemotron-3-ultra-550b-a55b",
   "mode": "summary",
   "cached": false,
   "diagnostics": {
     "sample": "Soil_1",
     "consensus_id": "Soil_1_consensus_15",
-    "model": "nvidia/nemotron-3-super-120b-a12b",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
     "timeout_seconds": 480,
-    "payload_chars": 4273,
+    "payload_chars": 4523,
     "gene_count": 41,
     "representative_gene_count": null,
     "facts": 14,
     "guided_json": true,
     "attempts": 1
   },
-  "prompt_version": "5.6-summary",
+  "prompt_version": "5.8-summary",
   "parameters": {
     "temperature": 0.2,
     "top_p": 0.95,
@@ -25,34 +25,38 @@
     "seed": 42,
     "use_guided_json": true
   },
-  "request_fingerprint": "ac58f6bfbb6821168612651b0d5de9073a8d8b463c05bf5b20a6cf7dcebc7701",
-  "created_at": "2026-10-02T08:52:28Z",
+  "request_fingerprint": "48d98594adb0b85624f68c1cb2703ffab31867c63e03912113b890a4b69d84aa",
+  "created_at": "2026-10-03T10:33:14Z",
   "analysis": {
     "overview": [
       {
-        "text": "Soil_1_15 is a terpene biosynthetic gene cluster detected by antiSMASH, DeepBGC and GECCO, spanning 21 kb on contig_1 and containing 22 genes.",
+        "text": "Soil_1_15 is a terpene biosynthetic gene cluster detected by antiSMASH, DeepBGC and GECCO.",
         "facts": [
-          "O1",
+          "O1"
+        ]
+      },
+      {
+        "text": "It spans 21 kb on contig_1 and contains 22 genes.",
+        "facts": [
           "O2"
         ]
       }
     ],
     "genes": [
       {
-        "text": "antiSMASH marks 4 genes as biosynthetic, comprising 1 core gene and 3 additional biosynthetic genes, with 2 regulatory and 1 transport gene also present.",
+        "text": "antiSMASH marks four genes as biosynthetic, comprising one core gene and three additional genes.",
         "facts": [
           "G1"
         ]
       },
       {
-        "text": "The core gene CJLEIP_01467 is annotated as a terpene synthase by Bakta and identified as such by antiSMASH and GECCO.",
+        "text": "The core gene CJLEIP_01467 encodes a terpene synthase and is identified as a core terpene gene by antiSMASH and GECCO.",
         "facts": [
-          "G2",
           "G3"
         ]
       },
       {
-        "text": "Together, the additional biosynthetic genes include CJLEIP_01462 (short chain dehydrogenase), CJLEIP_01469 (citramalate synthase), and CJLEIP_01472 (urease subunit alpha), each marked by antiSMASH as biosynthetic.",
+        "text": "Three additional biosynthetic genes are present: CJLEIP_01462 encodes a short chain dehydrogenase, CJLEIP_01469 encodes citramalate synthase, and CJLEIP_01472 encodes urease subunit alpha.",
         "facts": [
           "G4",
           "G5",
@@ -62,7 +66,7 @@
     ],
     "similar": [
       {
-        "text": "The closest known cluster is BGC0001181 (geosmin) from Streptomyces coelicolor A3(2), a terpene cluster with questionable annotation quality in MIBiG.",
+        "text": "The closest MIBiG entry is BGC0001181 (geosmin) from Streptomyces coelicolor A3(2), a terpene cluster with questionable annotation quality.",
         "facts": [
           "S1",
           "S4",
@@ -70,7 +74,7 @@
         ]
       },
       {
-        "text": "One gene in the locus, CJLEIP_01467, matches the putative cyclase CAB41566.1 in BGC0001181 at 64% identity, and antiSMASH finds counterparts for 100% of that cluster's genes, indicating a moderate match overall.",
+        "text": "One gene of the locus has a counterpart in that cluster at sixty-four percent identity, and antiSMASH finds counterparts for one hundred percent of the reference cluster's genes, representing a moderate match.",
         "facts": [
           "S2",
           "S3"
@@ -78,12 +82,13 @@
       }
     ],
     "hypothesis": {
-      "text": "The cluster may produce a terpene-based metabolite, possibly related to geosmin, given the presence of a terpene synthase core gene and additional modifying enzymes such as a short chain dehydrogenase and citramalate synthase, alongside urease components that could influence nitrogen metabolism or precursor availability.",
+      "text": "The cluster may produce a volatile terpene such as geosmin, given the terpene synthase core gene matching a geosmin cyclase and the presence of a citramalate synthase that could supply isoprenoid precursors; the additional dehydrogenase and urease genes together with the surrounding transporters and regulators could support primary metabolic functions rather than a specialised metabolite.",
       "facts": [
         "G3",
         "G4",
         "G5",
         "G6",
+        "S3",
         "H1"
       ]
     }
@@ -105,7 +110,8 @@
         "terpene"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "O2",
@@ -122,7 +128,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G1",
@@ -139,7 +146,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G2",
@@ -154,12 +162,13 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G3",
       "section": "genes",
-      "sentence": "CJLEIP_01467, annotated by Bakta as Terpene synthase, is named as a core gene by antiSMASH and GECCO.",
+      "sentence": "CJLEIP_01467, annotated by Bakta as Terpene synthase, is named as a core gene by antiSMASH and GECCO; antiSMASH classes it as a core terpene gene.",
       "values": [
         "CJLEIP_01467",
         "antiSMASH",
@@ -171,12 +180,15 @@
       "terms": [
         "terpene synthase"
       ],
-      "names": [],
+      "names": [
+        "terpene"
+      ],
       "detail": "",
       "callers": [
         "antismash",
         "gecco"
-      ]
+      ],
+      "total": false
     },
     {
       "id": "G4",
@@ -191,7 +203,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G5",
@@ -206,7 +219,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G6",
@@ -221,7 +235,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "H1",
@@ -232,7 +247,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S1",
@@ -249,7 +265,8 @@
         "Streptomyces coelicolor A3(2)"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S2",
@@ -268,7 +285,8 @@
         "moderate"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S3",
@@ -287,7 +305,8 @@
         "putative cyclase"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S4",
@@ -302,7 +321,8 @@
         "terpene"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S5",
@@ -315,7 +335,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     }
   ],
   "summary_sections": [
@@ -324,13 +345,20 @@
       "title": "What it is",
       "sentences": [
         {
-          "text": "Soil_1_15 is a terpene biosynthetic gene cluster detected by antiSMASH, DeepBGC and GECCO, spanning 21 kb on contig_1 and containing 22 genes.",
+          "text": "Soil_1_15 is a terpene biosynthetic gene cluster detected by antiSMASH, DeepBGC and GECCO.",
           "facts": [
-            "O1",
+            "O1"
+          ],
+          "source": "model",
+          "shown_text": "Soil_1_15 is a terpene biosynthetic gene cluster detected by antiSMASH, DeepBGC and GECCO."
+        },
+        {
+          "text": "It spans 21 kb on contig_1 and contains 22 genes.",
+          "facts": [
             "O2"
           ],
           "source": "model",
-          "shown_text": "Soil_1_15 is a terpene biosynthetic gene cluster detected by antiSMASH, DeepBGC and GECCO, spanning 21 kb on contig_1 and containing 22 genes."
+          "shown_text": "It spans 21 kb on contig_1 and contains 22 genes."
         }
       ]
     },
@@ -339,31 +367,20 @@
       "title": "What it contains",
       "sentences": [
         {
-          "text": "antiSMASH marks 4 genes as biosynthetic, comprising 1 core gene and 3 additional biosynthetic genes, with 2 regulatory and 1 transport gene also present.",
+          "text": "antiSMASH marks four genes as biosynthetic, comprising one core gene and three additional genes.",
           "facts": [
             "G1"
           ],
           "source": "model",
-          "shown_text": "antiSMASH marks 4 genes as biosynthetic, comprising 1 core gene and 3 additional biosynthetic genes, with 2 regulatory and 1 transport gene also present."
+          "shown_text": "antiSMASH marks four genes as biosynthetic, comprising one core gene and three additional genes."
         },
         {
-          "text": "The core gene CJLEIP_01467 is annotated as a terpene synthase by Bakta and identified as such by antiSMASH and GECCO.",
+          "text": "The core gene CJLEIP_01467 encodes a terpene synthase and is identified as a core terpene gene by antiSMASH and GECCO.",
           "facts": [
-            "G2",
             "G3"
           ],
           "source": "model",
-          "shown_text": "The core gene CJLEIP_01467 is annotated as a terpene synthase by Bakta and identified as such by antiSMASH and GECCO."
-        },
-        {
-          "text": "Together, the additional biosynthetic genes include CJLEIP_01462 (short chain dehydrogenase), CJLEIP_01469 (citramalate synthase), and CJLEIP_01472 (urease subunit alpha), each marked by antiSMASH as biosynthetic.",
-          "facts": [
-            "G4",
-            "G5",
-            "G6"
-          ],
-          "source": "model",
-          "shown_text": "Together, the additional biosynthetic genes include CJLEIP_01462 (short chain dehydrogenase), CJLEIP_01469 (citramalate synthase), and CJLEIP_01472 (urease subunit alpha), each marked by antiSMASH as biosynthetic."
+          "shown_text": "The core gene CJLEIP_01467 encodes a terpene synthase (an enzyme type that folds a linear precursor into a terpene skeleton) and is identified as a core terpene gene by antiSMASH and GECCO."
         }
       ]
     },
@@ -372,23 +389,23 @@
       "title": "What it resembles",
       "sentences": [
         {
-          "text": "The closest known cluster is BGC0001181 (geosmin) from Streptomyces coelicolor A3(2), a terpene cluster with questionable annotation quality in MIBiG.",
+          "text": "The closest MIBiG entry is BGC0001181 (geosmin) from Streptomyces coelicolor A3(2), a terpene cluster with questionable annotation quality.",
           "facts": [
             "S1",
             "S4",
             "S5"
           ],
           "source": "model",
-          "shown_text": "The closest known cluster is BGC0001181 (geosmin) from Streptomyces coelicolor A3(2), a terpene cluster with questionable annotation quality in MIBiG."
+          "shown_text": "The closest MIBiG entry is BGC0001181 (geosmin) from Streptomyces coelicolor A3(2), a terpene cluster with questionable annotation quality."
         },
         {
-          "text": "One gene in the locus, CJLEIP_01467, matches the putative cyclase CAB41566.1 in BGC0001181 at 64% identity, and antiSMASH finds counterparts for 100% of that cluster's genes, indicating a moderate match overall.",
+          "text": "One gene of the locus has a counterpart in that cluster at sixty-four percent identity, and antiSMASH finds counterparts for one hundred percent of the reference cluster's genes, representing a moderate match.",
           "facts": [
             "S2",
             "S3"
           ],
           "source": "model",
-          "shown_text": "One gene in the locus, CJLEIP_01467, matches the putative cyclase CAB41566.1 in BGC0001181 at 64% identity, and antiSMASH finds counterparts for 100% of that cluster's genes, indicating a moderate match overall."
+          "shown_text": "One gene of the locus has a counterpart in that cluster at sixty-four percent identity, and antiSMASH finds counterparts for one hundred percent of the reference cluster's genes, representing a moderate match."
         }
       ]
     }
@@ -397,54 +414,65 @@
     {
       "section": "overview",
       "index": 0,
-      "text": "Soil_1_15 is a terpene biosynthetic gene cluster detected by antiSMASH, DeepBGC and GECCO, spanning 21 kb on contig_1 and containing 22 genes.",
+      "text": "Soil_1_15 is a terpene biosynthetic gene cluster detected by antiSMASH, DeepBGC and GECCO.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "overview",
+      "index": 1,
+      "text": "It spans 21 kb on contig_1 and contains 22 genes.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 0,
-      "text": "antiSMASH marks 4 genes as biosynthetic, comprising 1 core gene and 3 additional biosynthetic genes, with 2 regulatory and 1 transport gene also present.",
+      "text": "antiSMASH marks four genes as biosynthetic, comprising one core gene and three additional genes.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 1,
-      "text": "The core gene CJLEIP_01467 is annotated as a terpene synthase by Bakta and identified as such by antiSMASH and GECCO.",
+      "text": "The core gene CJLEIP_01467 encodes a terpene synthase and is identified as a core terpene gene by antiSMASH and GECCO.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 2,
-      "text": "Together, the additional biosynthetic genes include CJLEIP_01462 (short chain dehydrogenase), CJLEIP_01469 (citramalate synthase), and CJLEIP_01472 (urease subunit alpha), each marked by antiSMASH as biosynthetic.",
-      "verified": true,
-      "reasons": []
+      "text": "Three additional biosynthetic genes are present: CJLEIP_01462 encodes a short chain dehydrogenase, CJLEIP_01469 encodes citramalate synthase, and CJLEIP_01472 encodes urease subunit alpha.",
+      "verified": false,
+      "reasons": [
+        "the number 3 is not in the cited facts",
+        "the number 3 counts 'additional' here, but not in the cited facts"
+      ]
     },
     {
       "section": "similar",
       "index": 0,
-      "text": "The closest known cluster is BGC0001181 (geosmin) from Streptomyces coelicolor A3(2), a terpene cluster with questionable annotation quality in MIBiG.",
+      "text": "The closest MIBiG entry is BGC0001181 (geosmin) from Streptomyces coelicolor A3(2), a terpene cluster with questionable annotation quality.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "similar",
       "index": 1,
-      "text": "One gene in the locus, CJLEIP_01467, matches the putative cyclase CAB41566.1 in BGC0001181 at 64% identity, and antiSMASH finds counterparts for 100% of that cluster's genes, indicating a moderate match overall.",
+      "text": "One gene of the locus has a counterpart in that cluster at sixty-four percent identity, and antiSMASH finds counterparts for one hundred percent of the reference cluster's genes, representing a moderate match.",
       "verified": true,
       "reasons": []
     }
   ],
-  "sentences_removed": 0,
+  "sentences_removed": 1,
   "hypothesis": {
-    "text": "The cluster may produce a terpene-based metabolite, possibly related to geosmin, given the presence of a terpene synthase core gene and additional modifying enzymes such as a short chain dehydrogenase and citramalate synthase, alongside urease components that could influence nitrogen metabolism or precursor availability.",
+    "text": "The cluster may produce a volatile terpene such as geosmin, given the terpene synthase core gene matching a geosmin cyclase and the presence of a citramalate synthase that could supply isoprenoid precursors; the additional dehydrogenase and urease genes together with the surrounding transporters and regulators could support primary metabolic functions rather than a specialised metabolite.",
     "facts": [
       "G3",
       "G4",
       "G5",
       "G6",
+      "S3",
       "H1"
     ],
     "shown": true,

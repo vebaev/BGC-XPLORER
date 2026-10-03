@@ -229,8 +229,15 @@ NUMBER_WORDS = {w: str(i) for i, w in enumerate(
     "seventeen eighteen nineteen twenty".split())}
 
 
+TENS = {w: 10 * i for i, w in enumerate("_ _ twenty thirty forty fifty sixty seventy eighty ninety".split()) if i > 1}
+UNITS = {w: i for i, w in enumerate("zero one two three four five six seven eight nine".split())}
+
+
 def _digits(text):
-    """Numbers written as words become digits, so 'Six genes' counts as 6 genes."""
+    """Numbers written as words become digits, so 'Six genes' counts as 6 genes and 'Twenty-one' as 21."""
+    text = re.sub(r"\b(" + "|".join(TENS) + r")[- ](" + "|".join(UNITS) + r")\b",
+                  lambda m: str(TENS[m.group(1).lower()] + UNITS[m.group(2).lower()]), text, flags=re.IGNORECASE)
+    text = re.sub(r"\b(" + "|".join(TENS) + r")\b", lambda m: str(TENS[m.group(1).lower()]), text, flags=re.IGNORECASE)
     return re.sub(r"\b(" + "|".join(NUMBER_WORDS) + r")\b", lambda m: NUMBER_WORDS[m.group(1).lower()],
                   text, flags=re.IGNORECASE)
 

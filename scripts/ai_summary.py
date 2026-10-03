@@ -25,7 +25,7 @@ import re
 import ai_evidence
 from ai_facts import CALLER_NAMES, _caller_list, _clean, _core_support, _digits, _int, caller_groups
 
-PROMPT_VERSION = "5.6-summary"
+PROMPT_VERSION = "5.8-summary"
 SECTIONS = (("overview", "What it is"), ("genes", "What it contains"), ("similar", "What it resembles"))
 MAX_CORE_GENES = 6
 MAX_ADDITIONAL_GENES = 5
@@ -84,6 +84,7 @@ STOP_WORDS = set("a an the of and or as at in on to for with by from is are be i
                  "both total about only also which who whose than then there their them while whereas including "
                  "comprising plus gene genes protein proteins cluster locus".split())
 WORD = re.compile(r"[a-z][a-z-]*")
+EXCLUSION = re.compile(r"\b(remaining|the rest|other(?:s)?|further|additional)\b", re.IGNORECASE)
 PUBMED = re.compile(r"\b(?:PubMed|PMID)[:\s]*(\d{6,9})\b", re.IGNORECASE)
 
 
@@ -110,13 +111,13 @@ def _location(text):
     return (numbers[0], numbers[1]) if len(numbers) >= 2 else (None, None)
 
 
-def fact(fid, section, sentence, values=(), genes=(), terms=(), names=(), detail="", callers=()):
+def fact(fid, section, sentence, values=(), genes=(), terms=(), names=(), detail="", callers=(), total=False):
     """A numbered fact: its sentence as code writes it, the checkable values it holds, the genes it is about,
     the glossary terms it uses, the names (substrates, compounds) it contains, and detail shown to the reader
     on hover but not given to the model."""
     return {"id": fid, "section": section, "sentence": sentence, "values": [str(v) for v in values if v not in ("", None)],
             "genes": list(genes), "terms": list(terms), "names": [n for n in names if n], "detail": detail,
-            "callers": list(callers)}
+            "callers": list(callers), "total": total}
 
 
 # ---------------------------------------------------------------- inputs
@@ -170,7 +171,9 @@ def antismash_locus(antismash, contig, start, end):
             if a is None or not start <= (a + b) / 2 <= end:
                 continue
             tag = q.get("locus_tag", [""])[0]
-            genes[tag] = {"kind": q.get("gene_kind", [""])[0], "product": q.get("product", [""])[0],
+            core_types = sorted({g.split(") ", 1)[1].split(":")[0] for g in q.get("gene_functions", [])
+                                 if g.startswith("biosynthetic (") and ") " in g})
+            genes[tag] = {"kind": q.get("gene_kind", [""])[0], "product": q.get("product", [""])[0], "core_types": core_types,
                           "domains": [d.split("Domain: ", 1)[1].split(" (", 1)[0] for d in q.get("NRPS_PKS", [])
                                       if d.startswith("Domain: ")], "modules": []}
     regions = []
@@ -340,8 +343,8 @@ def build_facts(payload, antismash=None, mibig_dir=""):
         elif len(support) == 1:
             text = "1 core gene is named in the locus."
         else:
-            text = "{0} core genes are named in the locus, each by at least one of {1}.".format(
-                len(support), _caller_list(by))
+            text = "{0} core genes are named in the locus, each by at least one of {1}{2}.".format(
+                len(support), "the three detection tools, " if len(by) == 3 else "", _caller_list(by))
         add("genes", text, values=[len(support)] + [CALLER_NAMES.get(c, c) for c in by])
     else:
         add("genes", "No detection tool names a core biosynthetic gene inside the agreed span of this locus.")
@@ -357,6 +360,9 @@ def build_facts(payload, antismash=None, mibig_dir=""):
         text = "{0}{1} is named as a core gene by {2}".format(
             tag, ", annotated by Bakta as {0},".format(product) if product else "", _caller_list(support[tag]))
         values, terms, gnames, detail = [tag] + names, _gene_terms(product), [], ""
+        if gene and gene.get("core_types") and gene["kind"] == "biosynthetic":
+            text += "; antiSMASH classes it as a core {0} gene".format(_join(gene["core_types"]))
+            gnames += gene["core_types"]
         if gene and gene["modules"]:
             m = len(gene["modules"])
             text += "; antiSMASH finds {0} in it".format(_plural(m, "module"))
@@ -381,8 +387,10 @@ def build_facts(payload, antismash=None, mibig_dir=""):
         known = [x for x in subs if x]
         epi = sum(mod["epimerization"] for mod in modules)
         tags = [t for t, g in as_genes.items() if g["modules"]]
-        text = "Together {0} hold {1}; antiSMASH predicts a substrate for {2} ({3})".format(
-            _join(tags), _plural(len(modules), "module"), _plural(len(known), "module"), _counted(known) if known else "none")
+        kinds = sorted({k.upper() for g in nrps for mod in g["modules"] for k in [mod["type"]] if k})
+        text = "Together these {0} {5}genes with modules ({1}) hold {2} in all; antiSMASH predicts a substrate for {3} ({4})".format(
+            len(tags), _join(tags), _plural(len(modules), "module"), _plural(len(known), "module"),
+            _counted(known) if known else "none", (_join(kinds) + " ") if kinds else "")
         if len(subs) > len(known):
             text += " and none for {0}".format(_plural(len(subs) - len(known), "module"))
         if len(modules) > len(subs):
@@ -390,8 +398,8 @@ def build_facts(payload, antismash=None, mibig_dir=""):
                 _plural(len(modules) - len(subs), "module has", "modules have"))
         if epi:
             text += "; {0} an epimerization domain".format(_plural(epi, "module carries", "modules carry"))
-        add("genes", text + ".", values=tags + [len(modules), len(known), len(subs) - len(known), epi], genes=tags,
-            terms=["module"] + (["epimerization domain"] if epi else []), names=known)
+        add("genes", text + ".", values=tags + [len(tags), len(modules), len(known), len(subs) - len(known), epi], genes=tags,
+            total=True, terms=["module"] + (["epimerization domain"] if epi else []), names=known + kinds)
 
     extra = [t for t in roles.get("biosynthetic-additional", []) if t not in core_tags]
     extra = [t for t in extra if products.get(t) and "hypothetical" not in products[t].lower()]
@@ -618,6 +626,14 @@ def _after(text, end, count=4):
     return [w for w in words if w not in STOP_WORDS][:count]
 
 
+TAG_RANGE = re.compile(r"\b([A-Z][A-Z0-9]{2,11}_)(\d{4,6})\s*[–-]\s*(\d{4,6})\b")
+
+
+def _expand_tag_ranges(text):
+    """'CJLEIP_03606–03609' is two locus tags, not a tag and a number."""
+    return TAG_RANGE.sub(lambda m: "{0}{1} to {0}{2}".format(m.group(1), m.group(2), m.group(3)), text)
+
+
 def _number_uses(text):
     """(number, words that follow it) for every number in a text; number words count as numbers."""
     text = _digits(text)
@@ -681,15 +697,32 @@ def _check_number_binding(text, cited):
     return reasons
 
 
+def _listed_counts(text):
+    """Numbers that count the locus tags listed right after them in the same phrase ("the two genes X and Y")."""
+    digits = _digits(text)
+    stripped = ai_evidence.NAME_WITH_DIGITS.sub(lambda m: " " * len(m.group(0)),
+                                                ai_evidence.IDENTIFIER.sub(lambda m: " " * len(m.group(0)), digits))
+    allowed = set()
+    for match in ai_evidence.NUMBER.finditer(stripped):
+        value = ai_evidence._as_number(match.group(0))
+        phrase = re.split(r";|, and |, while |, whereas |\.\s", digits[match.end():] + " ")[0]
+        by_prefix = {}
+        for tag in re.findall(ai_evidence.LOCUS_TAG, phrase):
+            by_prefix.setdefault(tag.rsplit("_", 1)[0], set()).add(tag)
+        if value is not None and value in {float(len(tags)) for tags in by_prefix.values()}:
+            allowed.add(value)
+    return allowed
+
+
 def check_sentence(item, facts, vocabulary, section=""):
     by_id = {f["id"]: f for f in facts}
-    text, reasons = item["text"], []
+    text, reasons = _expand_tag_ranges(item["text"]), []
     cited = [by_id[i] for i in item["facts"] if i in by_id and by_id[i]["section"] != "context"]
     if not cited:
         return ["cites no known fact"]
     pool = " ".join(f["sentence"] for f in cited)
     pool_lower = pool.lower()
-    for number in _numbers(text) - _fact_numbers(cited) - {3.0 if "three" in pool_lower or "3" in pool else -1}:
+    for number in _numbers(text) - _fact_numbers(cited) - _listed_counts(text):
         reasons.append("the number {0:g} is not in the cited facts".format(number))
     for identifier in set(ai_evidence.IDENTIFIER.findall(text)):
         if identifier not in pool:
@@ -711,6 +744,8 @@ def check_sentence(item, facts, vocabulary, section=""):
             if not re.search(r"\b" + re.escape(word[:-2] if word.endswith("ly") else word), pool_lower):
                 reasons.append("'{0}' judges the match, but the cited facts do not".format(word))
     reasons.extend(_check_number_binding(text, cited))
+    if any(f.get("total") for f in cited) and EXCLUSION.search(text):
+        reasons.append("'{0}' gives a total for all these genes to only some of them".format(EXCLUSION.search(text).group(0)))
     # Where a sentence says which callers name a core gene, they must be exactly the callers that name it.
     known_callers = {f["genes"][0]: set(f["callers"]) for f in facts if f.get("callers") and f["genes"]}
     for tag, groups in _naming_groups(text).items():
@@ -732,7 +767,7 @@ def check_sentence(item, facts, vocabulary, section=""):
 
 
 def check_hypothesis(hyp, facts):
-    text, reasons = hyp.get("text", ""), []
+    text, reasons = _expand_tag_ranges(hyp.get("text", "")), []
     if not text:
         return ["no hypothesis"]
     pool = " ".join(f["sentence"] for f in facts)

@@ -1,22 +1,22 @@
 {
   "sample": "Soil_1",
   "consensus_id": "Soil_1_consensus_10",
-  "model": "nvidia/nemotron-3-super-120b-a12b",
+  "model": "nvidia/nemotron-3-ultra-550b-a55b",
   "mode": "summary",
   "cached": false,
   "diagnostics": {
     "sample": "Soil_1",
     "consensus_id": "Soil_1_consensus_10",
-    "model": "nvidia/nemotron-3-super-120b-a12b",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
     "timeout_seconds": 480,
-    "payload_chars": 3847,
+    "payload_chars": 3959,
     "gene_count": 46,
     "representative_gene_count": null,
     "facts": 8,
     "guided_json": true,
     "attempts": 1
   },
-  "prompt_version": "5.6-summary",
+  "prompt_version": "5.8-summary",
   "parameters": {
     "temperature": 0.2,
     "top_p": 0.95,
@@ -25,18 +25,18 @@
     "seed": 42,
     "use_guided_json": true
   },
-  "request_fingerprint": "8fcf45551da7505c8ef79e1513ac22af8b336576f1b4f14ba6697740ecf943de",
-  "created_at": "2026-10-02T08:53:14Z",
+  "request_fingerprint": "7c12258458357f89fb04180c532482042992f147fbf7244de94caf27465fd436",
+  "created_at": "2026-10-03T10:34:32Z",
   "analysis": {
     "overview": [
       {
-        "text": "Soil_1_10 is a biosynthetic gene cluster identified solely by DeepBGC, with no compound class assigned.",
+        "text": "Soil_1_10 is a biosynthetic gene cluster detected only by DeepBGC with no compound class assigned.",
         "facts": [
           "O1"
         ]
       },
       {
-        "text": "It spans 49 kb on contig_1 from position 936,108 to 985,530 and contains 46 genes.",
+        "text": "It spans 49 kb on contig_1 from 936,108 to 985,530 and contains 46 genes.",
         "facts": [
           "O2"
         ]
@@ -44,20 +44,25 @@
     ],
     "genes": [
       {
-        "text": "The cluster includes 9 regulatory, 2 transport, 15 tailoring-enzyme, and 2 resistance genes, with 2 core genes identified by DeepBGC.",
+        "text": "The cluster holds 15 tailoring-enzyme, 9 regulatory, 2 transport and 2 resistance genes according to BGC-XPLORER annotation categories.",
         "facts": [
-          "G1",
+          "G1"
+        ]
+      },
+      {
+        "text": "DeepBGC names two core genes in the locus.",
+        "facts": [
           "G2"
         ]
       },
       {
-        "text": "CJLEIP_00811 is annotated as an Acyl-CoA synthetase and is a core gene.",
+        "text": "CJLEIP_00811 is an acyl-CoA synthetase named as a core gene by DeepBGC.",
         "facts": [
           "G3"
         ]
       },
       {
-        "text": "CJLEIP_00812 is annotated as an AMP-binding protein and is a core gene.",
+        "text": "CJLEIP_00812 is an AMP-binding protein named as a core gene by DeepBGC.",
         "facts": [
           "G4"
         ]
@@ -65,14 +70,14 @@
     ],
     "similar": [
       {
-        "text": "No comparison with MIBiG has been made, as antiSMASH did not detect this locus.",
+        "text": "This locus has not been compared with MIBiG because antiSMASH did not detect it.",
         "facts": [
           "S1"
         ]
       }
     ],
     "hypothesis": {
-      "text": "The presence of xanthine dehydrogenase subunits and accessory factors, along with oxidoreductases and transcriptional regulators, suggests the cluster may be involved in purine degradation rather than specialised metabolite production.",
+      "text": "The cluster may be involved in purine catabolism rather than specialised metabolite biosynthesis, given the presence of genes for 8-oxoguanine deaminase, urate hydroxylase, hydroxyisourate hydrolase, xanthine dehydrogenase subunits and associated oxidoreductases.",
       "facts": [
         "H1"
       ]
@@ -90,7 +95,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "O2",
@@ -107,7 +113,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G1",
@@ -123,7 +130,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G2",
@@ -137,7 +145,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G3",
@@ -155,7 +164,8 @@
       "detail": "",
       "callers": [
         "deepbgc"
-      ]
+      ],
+      "total": false
     },
     {
       "id": "G4",
@@ -173,7 +183,8 @@
       "detail": "",
       "callers": [
         "deepbgc"
-      ]
+      ],
+      "total": false
     },
     {
       "id": "H1",
@@ -184,7 +195,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S1",
@@ -195,7 +207,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     }
   ],
   "summary_sections": [
@@ -204,20 +217,20 @@
       "title": "What it is",
       "sentences": [
         {
-          "text": "Soil_1_10 is a biosynthetic gene cluster identified solely by DeepBGC, with no compound class assigned.",
+          "text": "Soil_1_10 is a biosynthetic gene cluster detected only by DeepBGC with no compound class assigned.",
           "facts": [
             "O1"
           ],
           "source": "model",
-          "shown_text": "Soil_1_10 is a biosynthetic gene cluster identified solely by DeepBGC, with no compound class assigned."
+          "shown_text": "Soil_1_10 is a biosynthetic gene cluster detected only by DeepBGC with no compound class assigned."
         },
         {
-          "text": "It spans 49 kb on contig_1 from position 936,108 to 985,530 and contains 46 genes.",
+          "text": "It spans 49 kb on contig_1 from 936,108 to 985,530 and contains 46 genes.",
           "facts": [
             "O2"
           ],
           "source": "model",
-          "shown_text": "It spans 49 kb on contig_1 from position 936,108 to 985,530 and contains 46 genes."
+          "shown_text": "It spans 49 kb on contig_1 from 936,108 to 985,530 and contains 46 genes."
         }
       ]
     },
@@ -226,29 +239,36 @@
       "title": "What it contains",
       "sentences": [
         {
-          "text": "The cluster includes 9 regulatory, 2 transport, 15 tailoring-enzyme, and 2 resistance genes, with 2 core genes identified by DeepBGC.",
+          "text": "The cluster holds 15 tailoring-enzyme, 9 regulatory, 2 transport and 2 resistance genes according to BGC-XPLORER annotation categories.",
           "facts": [
-            "G1",
+            "G1"
+          ],
+          "source": "model",
+          "shown_text": "The cluster holds 15 tailoring-enzyme, 9 regulatory, 2 transport and 2 resistance genes according to BGC-XPLORER annotation categories."
+        },
+        {
+          "text": "DeepBGC names two core genes in the locus.",
+          "facts": [
             "G2"
           ],
           "source": "model",
-          "shown_text": "The cluster includes 9 regulatory, 2 transport, 15 tailoring-enzyme, and 2 resistance genes, with 2 core genes identified by DeepBGC."
+          "shown_text": "DeepBGC names two core genes in the locus."
         },
         {
-          "text": "CJLEIP_00811 is annotated as an Acyl-CoA synthetase and is a core gene.",
+          "text": "CJLEIP_00811 is an acyl-CoA synthetase named as a core gene by DeepBGC.",
           "facts": [
             "G3"
           ],
           "source": "model",
-          "shown_text": "CJLEIP_00811 is annotated as an Acyl-CoA synthetase and is a core gene."
+          "shown_text": "CJLEIP_00811 is an acyl-CoA synthetase named as a core gene by DeepBGC."
         },
         {
-          "text": "CJLEIP_00812 is annotated as an AMP-binding protein and is a core gene.",
+          "text": "CJLEIP_00812 is an AMP-binding protein named as a core gene by DeepBGC.",
           "facts": [
             "G4"
           ],
           "source": "model",
-          "shown_text": "CJLEIP_00812 is annotated as an AMP-binding protein and is a core gene."
+          "shown_text": "CJLEIP_00812 is an AMP-binding protein named as a core gene by DeepBGC."
         }
       ]
     },
@@ -257,12 +277,12 @@
       "title": "What it resembles",
       "sentences": [
         {
-          "text": "No comparison with MIBiG has been made, as antiSMASH did not detect this locus.",
+          "text": "This locus has not been compared with MIBiG because antiSMASH did not detect it.",
           "facts": [
             "S1"
           ],
           "source": "model",
-          "shown_text": "No comparison with MIBiG has been made, as antiSMASH did not detect this locus."
+          "shown_text": "This locus has not been compared with MIBiG because antiSMASH did not detect it."
         }
       ]
     }
@@ -271,49 +291,56 @@
     {
       "section": "overview",
       "index": 0,
-      "text": "Soil_1_10 is a biosynthetic gene cluster identified solely by DeepBGC, with no compound class assigned.",
+      "text": "Soil_1_10 is a biosynthetic gene cluster detected only by DeepBGC with no compound class assigned.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "overview",
       "index": 1,
-      "text": "It spans 49 kb on contig_1 from position 936,108 to 985,530 and contains 46 genes.",
+      "text": "It spans 49 kb on contig_1 from 936,108 to 985,530 and contains 46 genes.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 0,
-      "text": "The cluster includes 9 regulatory, 2 transport, 15 tailoring-enzyme, and 2 resistance genes, with 2 core genes identified by DeepBGC.",
+      "text": "The cluster holds 15 tailoring-enzyme, 9 regulatory, 2 transport and 2 resistance genes according to BGC-XPLORER annotation categories.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 1,
-      "text": "CJLEIP_00811 is annotated as an Acyl-CoA synthetase and is a core gene.",
+      "text": "DeepBGC names two core genes in the locus.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 2,
-      "text": "CJLEIP_00812 is annotated as an AMP-binding protein and is a core gene.",
+      "text": "CJLEIP_00811 is an acyl-CoA synthetase named as a core gene by DeepBGC.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 3,
+      "text": "CJLEIP_00812 is an AMP-binding protein named as a core gene by DeepBGC.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "similar",
       "index": 0,
-      "text": "No comparison with MIBiG has been made, as antiSMASH did not detect this locus.",
+      "text": "This locus has not been compared with MIBiG because antiSMASH did not detect it.",
       "verified": true,
       "reasons": []
     }
   ],
   "sentences_removed": 0,
   "hypothesis": {
-    "text": "The presence of xanthine dehydrogenase subunits and accessory factors, along with oxidoreductases and transcriptional regulators, suggests the cluster may be involved in purine degradation rather than specialised metabolite production.",
+    "text": "The cluster may be involved in purine catabolism rather than specialised metabolite biosynthesis, given the presence of genes for 8-oxoguanine deaminase, urate hydroxylase, hydroxyisourate hydrolase, xanthine dehydrogenase subunits and associated oxidoreductases.",
     "facts": [
       "H1"
     ],

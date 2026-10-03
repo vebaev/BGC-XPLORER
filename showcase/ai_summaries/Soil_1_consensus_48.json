@@ -1,22 +1,22 @@
 {
   "sample": "Soil_1",
   "consensus_id": "Soil_1_consensus_48",
-  "model": "nvidia/nemotron-3-super-120b-a12b",
+  "model": "nvidia/nemotron-3-ultra-550b-a55b",
   "mode": "summary",
   "cached": false,
   "diagnostics": {
     "sample": "Soil_1",
     "consensus_id": "Soil_1_consensus_48",
-    "model": "nvidia/nemotron-3-super-120b-a12b",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
     "timeout_seconds": 480,
-    "payload_chars": 13415,
+    "payload_chars": 14241,
     "gene_count": 154,
     "representative_gene_count": null,
     "facts": 28,
     "guided_json": true,
     "attempts": 1
   },
-  "prompt_version": "5.6-summary",
+  "prompt_version": "5.8-summary",
   "parameters": {
     "temperature": 0.2,
     "top_p": 0.95,
@@ -25,18 +25,18 @@
     "seed": 42,
     "use_guided_json": true
   },
-  "request_fingerprint": "86d1e1afa04c31c575beaf14f6f9d2f5f13c9d4e2a1fd254900fafe5a873a7f5",
-  "created_at": "2026-10-02T08:52:12Z",
+  "request_fingerprint": "fd83b50b9e59b892df69ddc1963b0406ba3acd5b812b97ccab104242800a1428",
+  "created_at": "2026-10-03T10:32:50Z",
   "analysis": {
     "overview": [
       {
-        "text": "Soil_1_48 is a polyketide, terpene-precursor, NRPS-like, nonribosomal peptide (NRPS) and class II lanthipeptide cluster, found by antiSMASH, DeepBGC and GECCO (all three detection tools).",
+        "text": "Soil_1_48 is a hybrid polyketide, terpene-precursor, NRPS-like, nonribosomal peptide and class II lanthipeptide cluster detected by antiSMASH, DeepBGC and GECCO.",
         "facts": [
           "O1"
         ]
       },
       {
-        "text": "It spans 272 kb on contig_1 (6,762,952–7,035,108) and contains 107 genes.",
+        "text": "It spans 272 kb on contig_1 and contains 107 genes.",
         "facts": [
           "O2"
         ]
@@ -44,113 +44,118 @@
     ],
     "genes": [
       {
-        "text": "antiSMASH marks 35 genes as biosynthetic (15 core and 20 additional), 12 as regulatory and 9 as transport.",
+        "text": "antiSMASH marks 35 genes as biosynthetic, including 15 core and 20 additional genes, alongside 12 regulatory and 9 transport genes.",
         "facts": [
           "G1"
         ]
       },
       {
-        "text": "CJLEIP_06060, annotated by Bakta as Dimethylallyltransferase, is named as a core gene by antiSMASH.",
+        "text": "Seven core genes are named by at least one of the three detection tools.",
+        "facts": [
+          "G2"
+        ]
+      },
+      {
+        "text": "CJLEIP_06060 encodes a dimethylallyltransferase and is classed as a core terpene-precursor gene by antiSMASH.",
         "facts": [
           "G3"
         ]
       },
       {
-        "text": "CJLEIP_06067, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 6 modules in it, and predicts malonyl-CoA for 5 and no substrate for 1 for its acyltransferase domains.",
+        "text": "CJLEIP_06067 is a type I polyketide synthase with six modules, five predicted to load malonyl-CoA and one with no substrate.",
         "facts": [
           "G4"
         ]
       },
       {
-        "text": "CJLEIP_06073, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 3 modules in it, and predicts malonyl-CoA for all 3 for its acyltransferase domains.",
+        "text": "CJLEIP_06073 is a type I polyketide synthase with three modules, all predicted to load malonyl-CoA.",
         "facts": [
           "G5"
         ]
       },
       {
-        "text": "CJLEIP_06077, annotated by Bakta as SDR family NAD(P)-dependent oxidoreductase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 1 module in it, and predicts malonyl-CoA for its acyltransferase domain.",
+        "text": "CJLEIP_06077 is a type I polyketide synthase with one module predicted to load malonyl-CoA.",
         "facts": [
           "G6"
         ]
       },
       {
-        "text": "CJLEIP_06079, annotated by Bakta as Polyketide synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 1 module in it, and predicts malonyl-CoA for its acyltransferase domain.",
+        "text": "CJLEIP_06079 is a type I polyketide synthase with one module predicted to load malonyl-CoA.",
         "facts": [
           "G7"
         ]
       },
       {
-        "text": "CJLEIP_06081, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 3 modules in it, and predicts methylmalonyl-CoA for all 3 for its acyltransferase domains.",
+        "text": "CJLEIP_06081 is a type I polyketide synthase with three modules, all predicted to load methylmalonyl-CoA.",
         "facts": [
           "G8"
         ]
       },
       {
-        "text": "Together CJLEIP_06067, CJLEIP_06073, CJLEIP_06077, CJLEIP_06079, CJLEIP_06081, CJLEIP_06084, CJLEIP_06087, CJLEIP_06094, CJLEIP_06125, CJLEIP_06126, CJLEIP_06130, CJLEIP_06151, CJLEIP_06152, CJLEIP_06153 and CJLEIP_06155 hold 36 modules; antiSMASH predicts a substrate for 27 modules (malonyl-CoA for 21, methylmalonyl-CoA for 3, threonine for 1, proline for 1 and glycine for 1) and none for 2 modules; 7 modules have no adenylation or acyltransferase domain.",
+        "text": "Together these 15 CAL, NRPS and PKS genes hold 36 modules in all; antiSMASH predicts a substrate for 27 modules, including malonyl-CoA for 21, methylmalonyl-CoA for three, threonine for one, proline for one and glycine for one, while two modules have no substrate and seven lack an adenylation or acyltransferase domain.",
         "facts": [
           "G9"
         ]
       },
       {
-        "text": "CJLEIP_06099 encodes Cytochrome P450 and is marked by antiSMASH as an additional biosynthetic gene.",
+        "text": "Additional biosynthetic genes include a cytochrome P450 (CJLEIP_06099), a glycosyltransferase (CJLEIP_06101), a thioesterase domain-containing protein (CJLEIP_06158), a 4-hydroxybenzoyl-CoA thioesterase (CJLEIP_06167) and a short-chain dehydrogenase (CJLEIP_06058).",
         "facts": [
-          "G10"
-        ]
-      },
-      {
-        "text": "CJLEIP_06101 encodes Glycosyltransferase and is marked by antiSMASH as an additional biosynthetic gene.",
-        "facts": [
-          "G11"
-        ]
-      },
-      {
-        "text": "CJLEIP_06158 encodes Thioesterase domain-containing protein and is marked by antiSMASH as an additional biosynthetic gene.",
-        "facts": [
-          "G12"
-        ]
-      },
-      {
-        "text": "CJLEIP_06167 encodes 4-hydroxybenzoyl-CoA thioesterase and is marked by antiSMASH as an additional biosynthetic gene.",
-        "facts": [
-          "G13"
-        ]
-      },
-      {
-        "text": "CJLEIP_06058 encodes Short-chain dehydrogenase and is marked by antiSMASH as an additional biosynthetic gene.",
-        "facts": [
+          "G10",
+          "G11",
+          "G12",
+          "G13",
           "G14"
         ]
       }
     ],
     "similar": [
       {
-        "text": "The closest MIBiG entry is BGC0000034 (candicidin), from Streptomyces sp. FR-008.",
+        "text": "The closest MIBiG entry is BGC0000034 (candicidin) from Streptomyces sp. FR-008, and this is a close match.",
         "facts": [
-          "S1"
+          "S1",
+          "S2"
         ]
       },
       {
-        "text": "23 genes of the locus have a counterpart in BGC0000034, at 98–100 % identity; antiSMASH finds counterparts for 100 % of that cluster's genes. Overall this is a close match.",
+        "text": "Twenty-three genes of the locus have counterparts in BGC0000034 at 98 to 100 percent identity, and antiSMASH finds counterparts for 100 percent of that cluster's genes.",
         "facts": [
           "S2"
         ]
       },
       {
-        "text": "MIBiG lists the compound class of BGC0000034 as NRPS and PKS.",
+        "text": "Core genes CJLEIP_06067, CJLEIP_06073, CJLEIP_06077, CJLEIP_06079 and CJLEIP_06081 match FscD, FscE, FscE, FscF and FscB of the candicidin cluster at 98 to 99 percent identity.",
         "facts": [
-          "S8"
+          "S3",
+          "S4",
+          "S5",
+          "S6",
+          "S7"
         ]
       }
     ],
     "hypothesis": {
-      "text": "The cluster may produce a hybrid NRPS-PKS metabolite with antifungal activity, given its close match to candicidin and the presence of core PKS and NRPS genes, along with modifying enzymes such as cytochrome P450 and glycosyltransferase.",
+      "text": "Given the strong similarity to the candicidin cluster and the presence of multiple type I PKS modules loading malonyl-CoA and methylmalonyl-CoA, this cluster may produce a polyene macrolide antifungal similar to candicidin; the additional cytochrome P450, glycosyltransferase and thioesterase genes could further modify the macrocycle, while the dimethylallyltransferase and lanthipeptide genes suggest possible hybrid or additional peptide-polyketide products.",
       "facts": [
         "S1",
         "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
         "S8",
         "S9",
+        "G3",
+        "G4",
+        "G5",
+        "G6",
+        "G7",
+        "G8",
+        "G9",
         "G10",
-        "G11"
+        "G11",
+        "G12",
+        "H1"
       ]
     }
   },
@@ -176,7 +181,8 @@
         "lanthipeptide-class-ii"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "O2",
@@ -193,7 +199,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G1",
@@ -210,12 +217,13 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G2",
       "section": "genes",
-      "sentence": "7 core genes are named in the locus, each by at least one of antiSMASH, DeepBGC and GECCO.",
+      "sentence": "7 core genes are named in the locus, each by at least one of the three detection tools, antiSMASH, DeepBGC and GECCO.",
       "values": [
         "7",
         "antiSMASH",
@@ -226,12 +234,13 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G3",
       "section": "genes",
-      "sentence": "CJLEIP_06060, annotated by Bakta as Dimethylallyltransferase, is named as a core gene by antiSMASH.",
+      "sentence": "CJLEIP_06060, annotated by Bakta as Dimethylallyltransferase, is named as a core gene by antiSMASH; antiSMASH classes it as a core terpene-precursor gene.",
       "values": [
         "CJLEIP_06060",
         "antiSMASH"
@@ -240,16 +249,19 @@
         "CJLEIP_06060"
       ],
       "terms": [],
-      "names": [],
+      "names": [
+        "terpene-precursor"
+      ],
       "detail": "",
       "callers": [
         "antismash"
-      ]
+      ],
+      "total": false
     },
     {
       "id": "G4",
       "section": "genes",
-      "sentence": "CJLEIP_06067, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 6 modules in it, and predicts malonyl-CoA for 5 and no substrate for 1 for its acyltransferase domains.",
+      "sentence": "CJLEIP_06067, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH classes it as a core T1PKS gene; antiSMASH finds 6 modules in it, and predicts malonyl-CoA for 5 and no substrate for 1 for its acyltransferase domains.",
       "values": [
         "CJLEIP_06067",
         "antiSMASH",
@@ -264,6 +276,7 @@
         "module"
       ],
       "names": [
+        "T1PKS",
         "malonyl-CoA",
         "malonyl-CoA",
         "malonyl-CoA",
@@ -275,12 +288,13 @@
         "antismash",
         "deepbgc",
         "gecco"
-      ]
+      ],
+      "total": false
     },
     {
       "id": "G5",
       "section": "genes",
-      "sentence": "CJLEIP_06073, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 3 modules in it, and predicts malonyl-CoA for all 3 for its acyltransferase domains.",
+      "sentence": "CJLEIP_06073, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH classes it as a core T1PKS gene; antiSMASH finds 3 modules in it, and predicts malonyl-CoA for all 3 for its acyltransferase domains.",
       "values": [
         "CJLEIP_06073",
         "antiSMASH",
@@ -295,6 +309,7 @@
         "module"
       ],
       "names": [
+        "T1PKS",
         "malonyl-CoA",
         "malonyl-CoA",
         "malonyl-CoA"
@@ -304,12 +319,13 @@
         "antismash",
         "deepbgc",
         "gecco"
-      ]
+      ],
+      "total": false
     },
     {
       "id": "G6",
       "section": "genes",
-      "sentence": "CJLEIP_06077, annotated by Bakta as SDR family NAD(P)-dependent oxidoreductase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 1 module in it, and predicts malonyl-CoA for its acyltransferase domain.",
+      "sentence": "CJLEIP_06077, annotated by Bakta as SDR family NAD(P)-dependent oxidoreductase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH classes it as a core T1PKS gene; antiSMASH finds 1 module in it, and predicts malonyl-CoA for its acyltransferase domain.",
       "values": [
         "CJLEIP_06077",
         "antiSMASH",
@@ -324,6 +340,7 @@
         "module"
       ],
       "names": [
+        "T1PKS",
         "malonyl-CoA"
       ],
       "detail": "antiSMASH domain order: KR–ACP–AT–DH–ER–KR–ACP",
@@ -331,12 +348,13 @@
         "antismash",
         "deepbgc",
         "gecco"
-      ]
+      ],
+      "total": false
     },
     {
       "id": "G7",
       "section": "genes",
-      "sentence": "CJLEIP_06079, annotated by Bakta as Polyketide synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 1 module in it, and predicts malonyl-CoA for its acyltransferase domain.",
+      "sentence": "CJLEIP_06079, annotated by Bakta as Polyketide synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH classes it as a core T1PKS gene; antiSMASH finds 1 module in it, and predicts malonyl-CoA for its acyltransferase domain.",
       "values": [
         "CJLEIP_06079",
         "antiSMASH",
@@ -351,6 +369,7 @@
         "module"
       ],
       "names": [
+        "T1PKS",
         "malonyl-CoA"
       ],
       "detail": "antiSMASH domain order: AT–DH–KR–ACP",
@@ -358,12 +377,13 @@
         "antismash",
         "deepbgc",
         "gecco"
-      ]
+      ],
+      "total": false
     },
     {
       "id": "G8",
       "section": "genes",
-      "sentence": "CJLEIP_06081, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 3 modules in it, and predicts methylmalonyl-CoA for all 3 for its acyltransferase domains.",
+      "sentence": "CJLEIP_06081, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH classes it as a core T1PKS gene; antiSMASH finds 3 modules in it, and predicts methylmalonyl-CoA for all 3 for its acyltransferase domains.",
       "values": [
         "CJLEIP_06081",
         "antiSMASH",
@@ -378,6 +398,7 @@
         "module"
       ],
       "names": [
+        "T1PKS",
         "methylmalonyl-CoA",
         "methylmalonyl-CoA",
         "methylmalonyl-CoA"
@@ -387,12 +408,13 @@
         "antismash",
         "deepbgc",
         "gecco"
-      ]
+      ],
+      "total": false
     },
     {
       "id": "G9",
       "section": "genes",
-      "sentence": "Together CJLEIP_06067, CJLEIP_06073, CJLEIP_06077, CJLEIP_06079, CJLEIP_06081, CJLEIP_06084, CJLEIP_06087, CJLEIP_06094, CJLEIP_06125, CJLEIP_06126, CJLEIP_06130, CJLEIP_06151, CJLEIP_06152, CJLEIP_06153 and CJLEIP_06155 hold 36 modules; antiSMASH predicts a substrate for 27 modules (malonyl-CoA for 21, methylmalonyl-CoA for 3, threonine for 1, proline for 1 and glycine for 1) and none for 2 modules; 7 modules have no adenylation or acyltransferase domain.",
+      "sentence": "Together these 15 CAL, NRPS and PKS genes with modules (CJLEIP_06067, CJLEIP_06073, CJLEIP_06077, CJLEIP_06079, CJLEIP_06081, CJLEIP_06084, CJLEIP_06087, CJLEIP_06094, CJLEIP_06125, CJLEIP_06126, CJLEIP_06130, CJLEIP_06151, CJLEIP_06152, CJLEIP_06153 and CJLEIP_06155) hold 36 modules in all; antiSMASH predicts a substrate for 27 modules (malonyl-CoA for 21, methylmalonyl-CoA for 3, threonine for 1, proline for 1 and glycine for 1) and none for 2 modules; 7 modules have no adenylation or acyltransferase domain.",
       "values": [
         "CJLEIP_06067",
         "CJLEIP_06073",
@@ -409,6 +431,7 @@
         "CJLEIP_06152",
         "CJLEIP_06153",
         "CJLEIP_06155",
+        "15",
         "36",
         "27",
         "2",
@@ -461,10 +484,14 @@
         "malonyl-CoA",
         "glycine",
         "malonyl-CoA",
-        "malonyl-CoA"
+        "malonyl-CoA",
+        "CAL",
+        "NRPS",
+        "PKS"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": true
     },
     {
       "id": "G10",
@@ -481,7 +508,8 @@
       ],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G11",
@@ -498,7 +526,8 @@
       ],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G12",
@@ -515,7 +544,8 @@
       ],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G13",
@@ -532,7 +562,8 @@
       ],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G14",
@@ -547,7 +578,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "H1",
@@ -558,7 +590,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S1",
@@ -575,7 +608,8 @@
         "Streptomyces sp. FR-008"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S2",
@@ -594,7 +628,8 @@
         "close"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S3",
@@ -613,7 +648,8 @@
         "FscD"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S4",
@@ -632,7 +668,8 @@
         "FscE"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S5",
@@ -651,7 +688,8 @@
         "FscE"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S6",
@@ -670,7 +708,8 @@
         "FscF"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S7",
@@ -689,7 +728,8 @@
         "FscB"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S8",
@@ -705,7 +745,8 @@
         "PKS"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S9",
@@ -721,7 +762,8 @@
         "candicidin"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S10",
@@ -735,7 +777,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S11",
@@ -748,7 +791,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     }
   ],
   "summary_sections": [
@@ -757,20 +801,20 @@
       "title": "What it is",
       "sentences": [
         {
-          "text": "Soil_1_48 is a polyketide, terpene-precursor, NRPS-like, nonribosomal peptide (NRPS) and class II lanthipeptide cluster, found by antiSMASH, DeepBGC and GECCO (all three detection tools).",
+          "text": "Soil_1_48 is a hybrid polyketide, terpene-precursor, NRPS-like, nonribosomal peptide and class II lanthipeptide cluster detected by antiSMASH, DeepBGC and GECCO.",
           "facts": [
             "O1"
           ],
           "source": "model",
-          "shown_text": "Soil_1_48 is a polyketide, terpene-precursor, NRPS-like, nonribosomal peptide (NRPS) and class II lanthipeptide cluster, found by antiSMASH, DeepBGC and GECCO (all three detection tools)."
+          "shown_text": "Soil_1_48 is a hybrid polyketide, terpene-precursor, NRPS-like, nonribosomal peptide and class II lanthipeptide cluster detected by antiSMASH, DeepBGC and GECCO."
         },
         {
-          "text": "It spans 272 kb on contig_1 (6,762,952–7,035,108) and contains 107 genes.",
+          "text": "It spans 272 kb on contig_1 and contains 107 genes.",
           "facts": [
             "O2"
           ],
           "source": "model",
-          "shown_text": "It spans 272 kb on contig_1 (6,762,952–7,035,108) and contains 107 genes."
+          "shown_text": "It spans 272 kb on contig_1 and contains 107 genes."
         }
       ]
     },
@@ -779,108 +823,56 @@
       "title": "What it contains",
       "sentences": [
         {
-          "text": "antiSMASH marks 35 genes as biosynthetic (15 core and 20 additional), 12 as regulatory and 9 as transport.",
+          "text": "antiSMASH marks 35 genes as biosynthetic, including 15 core and 20 additional genes, alongside 12 regulatory and 9 transport genes.",
           "facts": [
             "G1"
           ],
           "source": "model",
-          "shown_text": "antiSMASH marks 35 genes as biosynthetic (15 core and 20 additional), 12 as regulatory and 9 as transport."
+          "shown_text": "antiSMASH marks 35 genes as biosynthetic, including 15 core and 20 additional genes, alongside 12 regulatory and 9 transport genes."
         },
         {
-          "text": "CJLEIP_06060, annotated by Bakta as Dimethylallyltransferase, is named as a core gene by antiSMASH.",
+          "text": "Seven core genes are named by at least one of the three detection tools.",
+          "facts": [
+            "G2"
+          ],
+          "source": "model",
+          "shown_text": "Seven core genes are named by at least one of the three detection tools."
+        },
+        {
+          "text": "CJLEIP_06060 encodes a dimethylallyltransferase and is classed as a core terpene-precursor gene by antiSMASH.",
           "facts": [
             "G3"
           ],
           "source": "model",
-          "shown_text": "CJLEIP_06060, annotated by Bakta as Dimethylallyltransferase, is named as a core gene by antiSMASH."
+          "shown_text": "CJLEIP_06060 encodes a dimethylallyltransferase and is classed as a core terpene-precursor gene by antiSMASH."
         },
         {
-          "text": "CJLEIP_06067, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 6 modules in it, and predicts malonyl-CoA for 5 and no substrate for 1 for its acyltransferase domains.",
-          "facts": [
-            "G4"
-          ],
-          "source": "model",
-          "shown_text": "CJLEIP_06067, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 6 modules (the unit of an assembly-line enzyme that adds one building block to the growing chain) in it, and predicts malonyl-CoA for 5 and no substrate for 1 for its acyltransferase domains (selects the extender unit a polyketide module adds)."
-        },
-        {
-          "text": "CJLEIP_06073, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 3 modules in it, and predicts malonyl-CoA for all 3 for its acyltransferase domains.",
-          "facts": [
-            "G5"
-          ],
-          "source": "model",
-          "shown_text": "CJLEIP_06073, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 3 modules in it, and predicts malonyl-CoA for all 3 for its acyltransferase domains."
-        },
-        {
-          "text": "CJLEIP_06077, annotated by Bakta as SDR family NAD(P)-dependent oxidoreductase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 1 module in it, and predicts malonyl-CoA for its acyltransferase domain.",
-          "facts": [
-            "G6"
-          ],
-          "source": "model",
-          "shown_text": "CJLEIP_06077, annotated by Bakta as SDR family NAD(P)-dependent oxidoreductase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 1 module in it, and predicts malonyl-CoA for its acyltransferase domain."
-        },
-        {
-          "text": "CJLEIP_06079, annotated by Bakta as Polyketide synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 1 module in it, and predicts malonyl-CoA for its acyltransferase domain.",
+          "text": "CJLEIP_06079 is a type I polyketide synthase with one module predicted to load malonyl-CoA.",
           "facts": [
             "G7"
           ],
           "source": "model",
-          "shown_text": "CJLEIP_06079, annotated by Bakta as Polyketide synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 1 module in it, and predicts malonyl-CoA for its acyltransferase domain."
+          "shown_text": "CJLEIP_06079 is a type I polyketide synthase with one module predicted to load malonyl-CoA."
         },
         {
-          "text": "CJLEIP_06081, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 3 modules in it, and predicts methylmalonyl-CoA for all 3 for its acyltransferase domains.",
-          "facts": [
-            "G8"
-          ],
-          "source": "model",
-          "shown_text": "CJLEIP_06081, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 3 modules in it, and predicts methylmalonyl-CoA for all 3 for its acyltransferase domains."
-        },
-        {
-          "text": "Together CJLEIP_06067, CJLEIP_06073, CJLEIP_06077, CJLEIP_06079, CJLEIP_06081, CJLEIP_06084, CJLEIP_06087, CJLEIP_06094, CJLEIP_06125, CJLEIP_06126, CJLEIP_06130, CJLEIP_06151, CJLEIP_06152, CJLEIP_06153 and CJLEIP_06155 hold 36 modules; antiSMASH predicts a substrate for 27 modules (malonyl-CoA for 21, methylmalonyl-CoA for 3, threonine for 1, proline for 1 and glycine for 1) and none for 2 modules; 7 modules have no adenylation or acyltransferase domain.",
+          "text": "Together these 15 CAL, NRPS and PKS genes hold 36 modules in all; antiSMASH predicts a substrate for 27 modules, including malonyl-CoA for 21, methylmalonyl-CoA for three, threonine for one, proline for one and glycine for one, while two modules have no substrate and seven lack an adenylation or acyltransferase domain.",
           "facts": [
             "G9"
           ],
           "source": "model",
-          "shown_text": "Together CJLEIP_06067, CJLEIP_06073, CJLEIP_06077, CJLEIP_06079, CJLEIP_06081, CJLEIP_06084, CJLEIP_06087, CJLEIP_06094, CJLEIP_06125, CJLEIP_06126, CJLEIP_06130, CJLEIP_06151, CJLEIP_06152, CJLEIP_06153 and CJLEIP_06155 hold 36 modules; antiSMASH predicts a substrate for 27 modules (malonyl-CoA for 21, methylmalonyl-CoA for 3, threonine for 1, proline for 1 and glycine for 1) and none for 2 modules; 7 modules have no adenylation or acyltransferase domain."
+          "shown_text": "Together these 15 CAL, NRPS and PKS genes hold 36 modules (the unit of an assembly-line enzyme that adds one building block to the growing chain) in all; antiSMASH predicts a substrate for 27 modules, including malonyl-CoA for 21, methylmalonyl-CoA for three, threonine for one, proline for one and glycine for one, while two modules have no substrate and seven lack an adenylation or acyltransferase domain (selects the extender unit a polyketide module adds)."
         },
         {
-          "text": "CJLEIP_06099 encodes Cytochrome P450 and is marked by antiSMASH as an additional biosynthetic gene.",
+          "text": "Additional biosynthetic genes include a cytochrome P450 (CJLEIP_06099), a glycosyltransferase (CJLEIP_06101), a thioesterase domain-containing protein (CJLEIP_06158), a 4-hydroxybenzoyl-CoA thioesterase (CJLEIP_06167) and a short-chain dehydrogenase (CJLEIP_06058).",
           "facts": [
-            "G10"
-          ],
-          "source": "model",
-          "shown_text": "CJLEIP_06099 encodes Cytochrome P450 (a family of oxidising enzymes) and is marked by antiSMASH as an additional biosynthetic gene."
-        },
-        {
-          "text": "CJLEIP_06101 encodes Glycosyltransferase and is marked by antiSMASH as an additional biosynthetic gene.",
-          "facts": [
-            "G11"
-          ],
-          "source": "model",
-          "shown_text": "CJLEIP_06101 encodes Glycosyltransferase (an enzyme type that attaches sugars) and is marked by antiSMASH as an additional biosynthetic gene."
-        },
-        {
-          "text": "CJLEIP_06158 encodes Thioesterase domain-containing protein and is marked by antiSMASH as an additional biosynthetic gene.",
-          "facts": [
-            "G12"
-          ],
-          "source": "model",
-          "shown_text": "CJLEIP_06158 encodes Thioesterase (an enzyme type that releases the finished chain from NRPS and PKS assembly lines) domain-containing protein and is marked by antiSMASH as an additional biosynthetic gene."
-        },
-        {
-          "text": "CJLEIP_06167 encodes 4-hydroxybenzoyl-CoA thioesterase and is marked by antiSMASH as an additional biosynthetic gene.",
-          "facts": [
-            "G13"
-          ],
-          "source": "model",
-          "shown_text": "CJLEIP_06167 encodes 4-hydroxybenzoyl-CoA thioesterase and is marked by antiSMASH as an additional biosynthetic gene."
-        },
-        {
-          "text": "CJLEIP_06058 encodes Short-chain dehydrogenase and is marked by antiSMASH as an additional biosynthetic gene.",
-          "facts": [
+            "G10",
+            "G11",
+            "G12",
+            "G13",
             "G14"
           ],
           "source": "model",
-          "shown_text": "CJLEIP_06058 encodes Short-chain dehydrogenase and is marked by antiSMASH as an additional biosynthetic gene."
+          "shown_text": "Additional biosynthetic genes include a cytochrome P450 (CJLEIP_06099), a glycosyltransferase (CJLEIP_06101), a thioesterase (an enzyme type that releases the finished chain from NRPS and PKS assembly lines) domain-containing protein (CJLEIP_06158), a 4-hydroxybenzoyl-CoA thioesterase (CJLEIP_06167) and a short-chain dehydrogenase (CJLEIP_06058)."
         }
       ]
     },
@@ -889,28 +881,21 @@
       "title": "What it resembles",
       "sentences": [
         {
-          "text": "The closest MIBiG entry is BGC0000034 (candicidin), from Streptomyces sp. FR-008.",
+          "text": "The closest MIBiG entry is BGC0000034 (candicidin) from Streptomyces sp. FR-008, and this is a close match.",
           "facts": [
-            "S1"
+            "S1",
+            "S2"
           ],
           "source": "model",
-          "shown_text": "The closest MIBiG entry is BGC0000034 (candicidin), from Streptomyces sp. FR-008."
+          "shown_text": "The closest MIBiG entry is BGC0000034 (candicidin) from Streptomyces sp. FR-008, and this is a close match."
         },
         {
-          "text": "23 genes of the locus have a counterpart in BGC0000034, at 98–100 % identity; antiSMASH finds counterparts for 100 % of that cluster's genes. Overall this is a close match.",
+          "text": "Twenty-three genes of the locus have counterparts in BGC0000034 at 98 to 100 percent identity, and antiSMASH finds counterparts for 100 percent of that cluster's genes.",
           "facts": [
             "S2"
           ],
           "source": "model",
-          "shown_text": "23 genes of the locus have a counterpart in BGC0000034, at 98–100 % identity; antiSMASH finds counterparts for 100 % of that cluster's genes. Overall this is a close match."
-        },
-        {
-          "text": "MIBiG lists the compound class of BGC0000034 as NRPS and PKS.",
-          "facts": [
-            "S8"
-          ],
-          "source": "model",
-          "shown_text": "MIBiG lists the compound class of BGC0000034 as NRPS and PKS."
+          "shown_text": "Twenty-three genes of the locus have counterparts in BGC0000034 at 98 to 100 percent identity, and antiSMASH finds counterparts for 100 percent of that cluster's genes."
         }
       ]
     }
@@ -919,140 +904,144 @@
     {
       "section": "overview",
       "index": 0,
-      "text": "Soil_1_48 is a polyketide, terpene-precursor, NRPS-like, nonribosomal peptide (NRPS) and class II lanthipeptide cluster, found by antiSMASH, DeepBGC and GECCO (all three detection tools).",
+      "text": "Soil_1_48 is a hybrid polyketide, terpene-precursor, NRPS-like, nonribosomal peptide and class II lanthipeptide cluster detected by antiSMASH, DeepBGC and GECCO.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "overview",
       "index": 1,
-      "text": "It spans 272 kb on contig_1 (6,762,952–7,035,108) and contains 107 genes.",
+      "text": "It spans 272 kb on contig_1 and contains 107 genes.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 0,
-      "text": "antiSMASH marks 35 genes as biosynthetic (15 core and 20 additional), 12 as regulatory and 9 as transport.",
+      "text": "antiSMASH marks 35 genes as biosynthetic, including 15 core and 20 additional genes, alongside 12 regulatory and 9 transport genes.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 1,
-      "text": "CJLEIP_06060, annotated by Bakta as Dimethylallyltransferase, is named as a core gene by antiSMASH.",
+      "text": "Seven core genes are named by at least one of the three detection tools.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 2,
-      "text": "CJLEIP_06067, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 6 modules in it, and predicts malonyl-CoA for 5 and no substrate for 1 for its acyltransferase domains.",
+      "text": "CJLEIP_06060 encodes a dimethylallyltransferase and is classed as a core terpene-precursor gene by antiSMASH.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 3,
-      "text": "CJLEIP_06073, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 3 modules in it, and predicts malonyl-CoA for all 3 for its acyltransferase domains.",
-      "verified": true,
-      "reasons": []
+      "text": "CJLEIP_06067 is a type I polyketide synthase with six modules, five predicted to load malonyl-CoA and one with no substrate.",
+      "verified": false,
+      "reasons": [
+        "'polyketide' is not in the cited facts"
+      ]
     },
     {
       "section": "genes",
       "index": 4,
-      "text": "CJLEIP_06077, annotated by Bakta as SDR family NAD(P)-dependent oxidoreductase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 1 module in it, and predicts malonyl-CoA for its acyltransferase domain.",
-      "verified": true,
-      "reasons": []
+      "text": "CJLEIP_06073 is a type I polyketide synthase with three modules, all predicted to load malonyl-CoA.",
+      "verified": false,
+      "reasons": [
+        "'polyketide' is not in the cited facts"
+      ]
     },
     {
       "section": "genes",
       "index": 5,
-      "text": "CJLEIP_06079, annotated by Bakta as Polyketide synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 1 module in it, and predicts malonyl-CoA for its acyltransferase domain.",
-      "verified": true,
-      "reasons": []
+      "text": "CJLEIP_06077 is a type I polyketide synthase with one module predicted to load malonyl-CoA.",
+      "verified": false,
+      "reasons": [
+        "'polyketide' is not in the cited facts"
+      ]
     },
     {
       "section": "genes",
       "index": 6,
-      "text": "CJLEIP_06081, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 3 modules in it, and predicts methylmalonyl-CoA for all 3 for its acyltransferase domains.",
+      "text": "CJLEIP_06079 is a type I polyketide synthase with one module predicted to load malonyl-CoA.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 7,
-      "text": "Together CJLEIP_06067, CJLEIP_06073, CJLEIP_06077, CJLEIP_06079, CJLEIP_06081, CJLEIP_06084, CJLEIP_06087, CJLEIP_06094, CJLEIP_06125, CJLEIP_06126, CJLEIP_06130, CJLEIP_06151, CJLEIP_06152, CJLEIP_06153 and CJLEIP_06155 hold 36 modules; antiSMASH predicts a substrate for 27 modules (malonyl-CoA for 21, methylmalonyl-CoA for 3, threonine for 1, proline for 1 and glycine for 1) and none for 2 modules; 7 modules have no adenylation or acyltransferase domain.",
-      "verified": true,
-      "reasons": []
+      "text": "CJLEIP_06081 is a type I polyketide synthase with three modules, all predicted to load methylmalonyl-CoA.",
+      "verified": false,
+      "reasons": [
+        "'polyketide' is not in the cited facts"
+      ]
     },
     {
       "section": "genes",
       "index": 8,
-      "text": "CJLEIP_06099 encodes Cytochrome P450 and is marked by antiSMASH as an additional biosynthetic gene.",
+      "text": "Together these 15 CAL, NRPS and PKS genes hold 36 modules in all; antiSMASH predicts a substrate for 27 modules, including malonyl-CoA for 21, methylmalonyl-CoA for three, threonine for one, proline for one and glycine for one, while two modules have no substrate and seven lack an adenylation or acyltransferase domain.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 9,
-      "text": "CJLEIP_06101 encodes Glycosyltransferase and is marked by antiSMASH as an additional biosynthetic gene.",
-      "verified": true,
-      "reasons": []
-    },
-    {
-      "section": "genes",
-      "index": 10,
-      "text": "CJLEIP_06158 encodes Thioesterase domain-containing protein and is marked by antiSMASH as an additional biosynthetic gene.",
-      "verified": true,
-      "reasons": []
-    },
-    {
-      "section": "genes",
-      "index": 11,
-      "text": "CJLEIP_06167 encodes 4-hydroxybenzoyl-CoA thioesterase and is marked by antiSMASH as an additional biosynthetic gene.",
-      "verified": true,
-      "reasons": []
-    },
-    {
-      "section": "genes",
-      "index": 12,
-      "text": "CJLEIP_06058 encodes Short-chain dehydrogenase and is marked by antiSMASH as an additional biosynthetic gene.",
+      "text": "Additional biosynthetic genes include a cytochrome P450 (CJLEIP_06099), a glycosyltransferase (CJLEIP_06101), a thioesterase domain-containing protein (CJLEIP_06158), a 4-hydroxybenzoyl-CoA thioesterase (CJLEIP_06167) and a short-chain dehydrogenase (CJLEIP_06058).",
       "verified": true,
       "reasons": []
     },
     {
       "section": "similar",
       "index": 0,
-      "text": "The closest MIBiG entry is BGC0000034 (candicidin), from Streptomyces sp. FR-008.",
+      "text": "The closest MIBiG entry is BGC0000034 (candicidin) from Streptomyces sp. FR-008, and this is a close match.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "similar",
       "index": 1,
-      "text": "23 genes of the locus have a counterpart in BGC0000034, at 98–100 % identity; antiSMASH finds counterparts for 100 % of that cluster's genes. Overall this is a close match.",
+      "text": "Twenty-three genes of the locus have counterparts in BGC0000034 at 98 to 100 percent identity, and antiSMASH finds counterparts for 100 percent of that cluster's genes.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "similar",
       "index": 2,
-      "text": "MIBiG lists the compound class of BGC0000034 as NRPS and PKS.",
-      "verified": true,
-      "reasons": []
+      "text": "Core genes CJLEIP_06067, CJLEIP_06073, CJLEIP_06077, CJLEIP_06079 and CJLEIP_06081 match FscD, FscE, FscE, FscF and FscB of the candicidin cluster at 98 to 99 percent identity.",
+      "verified": false,
+      "reasons": [
+        "'candicidin' is not in the cited facts",
+        "'candicidin' is not in the cited facts"
+      ]
     }
   ],
-  "sentences_removed": 0,
+  "sentences_removed": 5,
   "hypothesis": {
-    "text": "The cluster may produce a hybrid NRPS-PKS metabolite with antifungal activity, given its close match to candicidin and the presence of core PKS and NRPS genes, along with modifying enzymes such as cytochrome P450 and glycosyltransferase.",
+    "text": "Given the strong similarity to the candicidin cluster and the presence of multiple type I PKS modules loading malonyl-CoA and methylmalonyl-CoA, this cluster may produce a polyene macrolide antifungal similar to candicidin; the additional cytochrome P450, glycosyltransferase and thioesterase genes could further modify the macrocycle, while the dimethylallyltransferase and lanthipeptide genes suggest possible hybrid or additional peptide-polyketide products.",
     "facts": [
       "S1",
       "S2",
+      "S3",
+      "S4",
+      "S5",
+      "S6",
+      "S7",
       "S8",
       "S9",
+      "G3",
+      "G4",
+      "G5",
+      "G6",
+      "G7",
+      "G8",
+      "G9",
       "G10",
-      "G11"
+      "G11",
+      "G12",
+      "H1"
     ],
     "shown": true,
     "reasons": []

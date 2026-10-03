@@ -1,22 +1,22 @@
 {
   "sample": "Soil_1",
   "consensus_id": "Soil_1_consensus_6",
-  "model": "nvidia/nemotron-3-super-120b-a12b",
+  "model": "nvidia/nemotron-3-ultra-550b-a55b",
   "mode": "summary",
   "cached": false,
   "diagnostics": {
     "sample": "Soil_1",
     "consensus_id": "Soil_1_consensus_6",
-    "model": "nvidia/nemotron-3-super-120b-a12b",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
     "timeout_seconds": 480,
-    "payload_chars": 3176,
+    "payload_chars": 3416,
     "gene_count": 8,
     "representative_gene_count": null,
     "facts": 13,
     "guided_json": true,
     "attempts": 1
   },
-  "prompt_version": "5.6-summary",
+  "prompt_version": "5.8-summary",
   "parameters": {
     "temperature": 0.2,
     "top_p": 0.95,
@@ -25,34 +25,38 @@
     "seed": 42,
     "use_guided_json": true
   },
-  "request_fingerprint": "17099cceaaa8e77f60b36e4fcf589026c6fd65b694084ca5e411246e85d44059",
-  "created_at": "2026-10-02T08:53:49Z",
+  "request_fingerprint": "970fbe45d5557f817b7fc4a17c701b79bf420540c8001cd77571a85004f054b2",
+  "created_at": "2026-10-03T10:35:24Z",
   "analysis": {
     "overview": [
       {
-        "text": "Soil_1_6 is a RiPP-like cluster identified solely by antiSMASH, spanning 10 kb on contig_1 from position 662,441 to 672,657 and containing 8 genes.",
+        "text": "Soil_1_6 is a RiPP-like cluster detected only by antiSMASH.",
         "facts": [
-          "O1",
+          "O1"
+        ]
+      },
+      {
+        "text": "It spans 10 kb on contig_1 and contains eight genes.",
+        "facts": [
           "O2"
         ]
       }
     ],
     "genes": [
       {
-        "text": "antiSMASH marks 2 genes as biosynthetic (1 core and 1 additional) and 1 as transport.",
+        "text": "antiSMASH marks two genes as biosynthetic, one core and one additional, and one as transport.",
         "facts": [
           "G1"
         ]
       },
       {
-        "text": "CJLEIP_00553, annotated by Bakta as Type A2 lantipeptide, is named as a core gene by antiSMASH.",
+        "text": "The core gene CJLEIP_00553 encodes a type A2 lantipeptide.",
         "facts": [
-          "G2",
           "G3"
         ]
       },
       {
-        "text": "CJLEIP_00551 encodes Long-chain fatty acid--CoA ligase and is marked by antiSMASH as an additional biosynthetic gene.",
+        "text": "The additional biosynthetic gene CJLEIP_00551 encodes a long-chain fatty acid--CoA ligase.",
         "facts": [
           "G4"
         ]
@@ -60,26 +64,32 @@
     ],
     "similar": [
       {
-        "text": "The closest MIBiG entry is BGC0001555 (colicin V), from Escherichia coli chi7122.",
+        "text": "The closest MIBiG entry is BGC0001555 (colicin V) from Escherichia coli chi7122, a ribosomal compound with antibacterial activity.",
         "facts": [
-          "S1"
+          "S1",
+          "S3",
+          "S4"
         ]
       },
       {
-        "text": "antiSMASH's ClusterCompare gives this entry a score of 0.47 on a scale of 0 to 1, indicating a distant match.",
+        "text": "ClusterCompare gives a score of 0.47, indicating a distant match.",
         "facts": [
           "S2"
+        ]
+      },
+      {
+        "text": "The annotation quality of the reference cluster is rated as questionable.",
+        "facts": [
+          "S5"
         ]
       }
     ],
     "hypothesis": {
-      "text": "The cluster may produce a lantipeptide with antibacterial activity, given the presence of a Type A2 lantipeptide core gene and associated secretion and transport genes, along with a hit to resistance models and similarity to a known antibacterial ribosomal peptide.",
+      "text": "The cluster may produce a lantipeptide bacteriocin that is exported by the NHLP system, with the fatty acid--CoA ligase possibly involved in lipid modification or primary metabolism.",
       "facts": [
         "G3",
         "G4",
-        "G5",
-        "S1",
-        "S4"
+        "H1"
       ]
     }
   },
@@ -97,7 +107,8 @@
         "RiPP-like"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "O2",
@@ -114,7 +125,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G1",
@@ -130,7 +142,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G2",
@@ -144,12 +157,13 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G3",
       "section": "genes",
-      "sentence": "CJLEIP_00553, annotated by Bakta as Type A2 lantipeptide, is named as a core gene by antiSMASH.",
+      "sentence": "CJLEIP_00553, annotated by Bakta as Type A2 lantipeptide, is named as a core gene by antiSMASH; antiSMASH classes it as a core RiPP-like gene.",
       "values": [
         "CJLEIP_00553",
         "antiSMASH"
@@ -158,11 +172,14 @@
         "CJLEIP_00553"
       ],
       "terms": [],
-      "names": [],
+      "names": [
+        "RiPP-like"
+      ],
       "detail": "",
       "callers": [
         "antismash"
-      ]
+      ],
+      "total": false
     },
     {
       "id": "G4",
@@ -177,7 +194,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "H1",
@@ -188,7 +206,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G5",
@@ -201,7 +220,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S1",
@@ -218,7 +238,8 @@
         "Escherichia coli chi7122"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S2",
@@ -233,7 +254,8 @@
         "distant"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S3",
@@ -248,7 +270,8 @@
         "ribosomal"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S4",
@@ -264,7 +287,8 @@
         "colicin V"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S5",
@@ -277,7 +301,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     }
   ],
   "summary_sections": [
@@ -286,13 +311,20 @@
       "title": "What it is",
       "sentences": [
         {
-          "text": "Soil_1_6 is a RiPP-like cluster identified solely by antiSMASH, spanning 10 kb on contig_1 from position 662,441 to 672,657 and containing 8 genes.",
+          "text": "Soil_1_6 is a RiPP-like cluster detected only by antiSMASH.",
           "facts": [
-            "O1",
+            "O1"
+          ],
+          "source": "model",
+          "shown_text": "Soil_1_6 is a RiPP-like cluster detected only by antiSMASH."
+        },
+        {
+          "text": "It spans 10 kb on contig_1 and contains eight genes.",
+          "facts": [
             "O2"
           ],
           "source": "model",
-          "shown_text": "Soil_1_6 is a RiPP-like cluster identified solely by antiSMASH, spanning 10 kb on contig_1 from position 662,441 to 672,657 and containing 8 genes."
+          "shown_text": "It spans 10 kb on contig_1 and contains eight genes."
         }
       ]
     },
@@ -301,29 +333,28 @@
       "title": "What it contains",
       "sentences": [
         {
-          "text": "antiSMASH marks 2 genes as biosynthetic (1 core and 1 additional) and 1 as transport.",
+          "text": "antiSMASH marks two genes as biosynthetic, one core and one additional, and one as transport.",
           "facts": [
             "G1"
           ],
           "source": "model",
-          "shown_text": "antiSMASH marks 2 genes as biosynthetic (1 core and 1 additional) and 1 as transport."
+          "shown_text": "antiSMASH marks two genes as biosynthetic, one core and one additional, and one as transport."
         },
         {
-          "text": "CJLEIP_00553, annotated by Bakta as Type A2 lantipeptide, is named as a core gene by antiSMASH.",
+          "text": "The core gene CJLEIP_00553 encodes a type A2 lantipeptide.",
           "facts": [
-            "G2",
             "G3"
           ],
           "source": "model",
-          "shown_text": "CJLEIP_00553, annotated by Bakta as Type A2 lantipeptide, is named as a core gene by antiSMASH."
+          "shown_text": "The core gene CJLEIP_00553 encodes a type A2 lantipeptide."
         },
         {
-          "text": "CJLEIP_00551 encodes Long-chain fatty acid--CoA ligase and is marked by antiSMASH as an additional biosynthetic gene.",
+          "text": "The additional biosynthetic gene CJLEIP_00551 encodes a long-chain fatty acid--CoA ligase.",
           "facts": [
             "G4"
           ],
           "source": "model",
-          "shown_text": "CJLEIP_00551 encodes Long-chain fatty acid--CoA ligase and is marked by antiSMASH as an additional biosynthetic gene."
+          "shown_text": "The additional biosynthetic gene CJLEIP_00551 encodes a long-chain fatty acid--CoA ligase."
         }
       ]
     },
@@ -332,20 +363,30 @@
       "title": "What it resembles",
       "sentences": [
         {
-          "text": "The closest MIBiG entry is BGC0001555 (colicin V), from Escherichia coli chi7122.",
+          "text": "The closest MIBiG entry is BGC0001555 (colicin V) from Escherichia coli chi7122, a ribosomal compound with antibacterial activity.",
           "facts": [
-            "S1"
+            "S1",
+            "S3",
+            "S4"
           ],
           "source": "model",
-          "shown_text": "The closest MIBiG entry is BGC0001555 (colicin V), from Escherichia coli chi7122."
+          "shown_text": "The closest MIBiG entry is BGC0001555 (colicin V) from Escherichia coli chi7122, a ribosomal compound with antibacterial activity."
         },
         {
-          "text": "antiSMASH's ClusterCompare gives this entry a score of 0.47 on a scale of 0 to 1, indicating a distant match.",
+          "text": "ClusterCompare gives a score of 0.47, indicating a distant match.",
           "facts": [
             "S2"
           ],
           "source": "model",
-          "shown_text": "antiSMASH's ClusterCompare gives this entry a score of 0.47 on a scale of 0 to 1, indicating a distant match."
+          "shown_text": "ClusterCompare gives a score of 0.47, indicating a distant match."
+        },
+        {
+          "text": "The annotation quality of the reference cluster is rated as questionable.",
+          "facts": [
+            "S5"
+          ],
+          "source": "model",
+          "shown_text": "The annotation quality of the reference cluster is rated as questionable."
         }
       ]
     }
@@ -354,55 +395,67 @@
     {
       "section": "overview",
       "index": 0,
-      "text": "Soil_1_6 is a RiPP-like cluster identified solely by antiSMASH, spanning 10 kb on contig_1 from position 662,441 to 672,657 and containing 8 genes.",
+      "text": "Soil_1_6 is a RiPP-like cluster detected only by antiSMASH.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "overview",
+      "index": 1,
+      "text": "It spans 10 kb on contig_1 and contains eight genes.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 0,
-      "text": "antiSMASH marks 2 genes as biosynthetic (1 core and 1 additional) and 1 as transport.",
+      "text": "antiSMASH marks two genes as biosynthetic, one core and one additional, and one as transport.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 1,
-      "text": "CJLEIP_00553, annotated by Bakta as Type A2 lantipeptide, is named as a core gene by antiSMASH.",
+      "text": "The core gene CJLEIP_00553 encodes a type A2 lantipeptide.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 2,
-      "text": "CJLEIP_00551 encodes Long-chain fatty acid--CoA ligase and is marked by antiSMASH as an additional biosynthetic gene.",
+      "text": "The additional biosynthetic gene CJLEIP_00551 encodes a long-chain fatty acid--CoA ligase.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "similar",
       "index": 0,
-      "text": "The closest MIBiG entry is BGC0001555 (colicin V), from Escherichia coli chi7122.",
+      "text": "The closest MIBiG entry is BGC0001555 (colicin V) from Escherichia coli chi7122, a ribosomal compound with antibacterial activity.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "similar",
       "index": 1,
-      "text": "antiSMASH's ClusterCompare gives this entry a score of 0.47 on a scale of 0 to 1, indicating a distant match.",
+      "text": "ClusterCompare gives a score of 0.47, indicating a distant match.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "similar",
+      "index": 2,
+      "text": "The annotation quality of the reference cluster is rated as questionable.",
       "verified": true,
       "reasons": []
     }
   ],
   "sentences_removed": 0,
   "hypothesis": {
-    "text": "The cluster may produce a lantipeptide with antibacterial activity, given the presence of a Type A2 lantipeptide core gene and associated secretion and transport genes, along with a hit to resistance models and similarity to a known antibacterial ribosomal peptide.",
+    "text": "The cluster may produce a lantipeptide bacteriocin that is exported by the NHLP system, with the fatty acid--CoA ligase possibly involved in lipid modification or primary metabolism.",
     "facts": [
       "G3",
       "G4",
-      "G5",
-      "S1",
-      "S4"
+      "H1"
     ],
     "shown": true,
     "reasons": []

@@ -1,22 +1,22 @@
 {
   "sample": "Soil_1",
   "consensus_id": "Soil_1_consensus_13",
-  "model": "nvidia/nemotron-3-super-120b-a12b",
+  "model": "nvidia/nemotron-3-ultra-550b-a55b",
   "mode": "summary",
   "cached": false,
   "diagnostics": {
     "sample": "Soil_1",
     "consensus_id": "Soil_1_consensus_13",
-    "model": "nvidia/nemotron-3-super-120b-a12b",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
     "timeout_seconds": 480,
-    "payload_chars": 7958,
+    "payload_chars": 8442,
     "gene_count": 36,
     "representative_gene_count": null,
     "facts": 22,
     "guided_json": true,
     "attempts": 1
   },
-  "prompt_version": "5.6-summary",
+  "prompt_version": "5.8-summary",
   "parameters": {
     "temperature": 0.2,
     "top_p": 0.95,
@@ -25,69 +25,87 @@
     "seed": 42,
     "use_guided_json": true
   },
-  "request_fingerprint": "3205eeadb135b1af80c2556eddcbe36720f9d1f8b26f21f86236f14d0ac5bb5e",
-  "created_at": "2026-10-02T08:51:24Z",
+  "request_fingerprint": "482498799c7d0efc375ae9eceac54d26417c65e20f2948656f2ae8323cc6dd08",
+  "created_at": "2026-10-03T10:31:32Z",
   "analysis": {
     "overview": [
       {
-        "text": "Soil_1_13 is a nonribosomal peptide (NRPS) cluster detected by antiSMASH, DeepBGC and GECCO, spanning 57 kb on contig_1 and containing 30 genes.",
+        "text": "Soil_1_13 is a nonribosomal peptide cluster detected by antiSMASH, DeepBGC and GECCO.",
         "facts": [
-          "O1",
+          "O1"
+        ]
+      },
+      {
+        "text": "It spans 57 kb on contig_1 and contains 30 genes.",
+        "facts": [
           "O2"
         ]
       }
     ],
     "genes": [
       {
-        "text": "antiSMASH marks 11 genes as biosynthetic, comprising 2 core and 9 additional genes, with 4 regulatory and 3 transport genes also present.",
+        "text": "antiSMASH marks 11 genes as biosynthetic, including two core NRPS genes and nine additional biosynthetic genes.",
         "facts": [
           "G1"
         ]
       },
       {
-        "text": "CJLEIP_01147, a D-alanine--poly(phosphoribitol) ligase subunit DltA, contains 3 modules with adenylation domains predicted to load phenylalanine, an unidentified residue and valine, and one module carries an epimerization domain.",
+        "text": "Three core genes are named by at least one of the three detection tools.",
+        "facts": [
+          "G2"
+        ]
+      },
+      {
+        "text": "CJLEIP_01147 is a core NRPS gene with three modules predicted to load phenylalanine, an unidentified residue and valine, and one module carries an epimerization domain.",
         "facts": [
           "G3"
         ]
       },
       {
-        "text": "CJLEIP_01149, also a D-alanine--poly(phosphoribitol) ligase subunit DltA, has 3 modules with adenylation domains predicted to load an unidentified residue, threonine and threonine, and two modules carry an epimerization domain.",
+        "text": "CJLEIP_01149 is a core NRPS gene with three modules predicted to load an unidentified residue and threonine twice, and two modules carry an epimerization domain.",
         "facts": [
           "G4"
         ]
       },
       {
-        "text": "Together CJLEIP_01147 and CJLEIP_01149 hold 6 modules; antiSMASH predicts substrates for 4 modules (phenylalanine, valine and two threonine) and none for 2 modules, with 3 modules carrying an epimerization domain.",
-        "facts": [
-          "G6"
-        ]
-      },
-      {
-        "text": "CJLEIP_01154, annotated as a Thioesterase, is named a core gene by DeepBGC and GECCO.",
+        "text": "CJLEIP_01154 is a core gene annotated as a thioesterase.",
         "facts": [
           "G5"
         ]
       },
       {
-        "text": "Additional biosynthetic genes include CJLEIP_01139 (Glycosyltransferase family 1 protein), CJLEIP_01148 (MbtH family protein), CJLEIP_01152 (Cytochrome P450) and CJLEIP_01161 (23S rRNA methyltransferase RlmD).",
+        "text": "Together the two NRPS genes hold six modules, with substrates predicted for four modules and three modules carrying an epimerization domain.",
+        "facts": [
+          "G6"
+        ]
+      },
+      {
+        "text": "Additional biosynthetic genes include a glycosyltransferase family 1 protein, an MbtH family protein, a cytochrome P450, a 23S rRNA methyltransferase and a 2-deoxy-scyllo-inosamine dehydrogenase.",
         "facts": [
           "G7",
           "G8",
           "G9",
-          "G10"
+          "G10",
+          "G11"
         ]
       }
     ],
     "similar": [
       {
-        "text": "The closest known cluster is BGC0002358 (cyclofaulknamycin) from Streptomyces albidoflavus, which is a close match.",
+        "text": "The closest MIBiG entry is BGC0002358 (cyclofaulknamycin) from Streptomyces albidoflavus, which is a very close match.",
         "facts": [
           "S1",
           "S2"
         ]
       },
       {
-        "text": "CJLEIP_01147 matches XNR_0983 (Peptide synthase) of BGC0002358 at 99 % identity, CJLEIP_01149 matches XNR_0985 (Peptide synthase) at 99 % identity, and CJLEIP_01154 matches XNR_0990 (putative thioesterase) at 99 % identity.",
+        "text": "Twenty-one genes of the locus have counterparts in that cluster at 96 to 100 percent identity, and antiSMASH finds counterparts for all of the reference cluster's genes.",
+        "facts": [
+          "S2"
+        ]
+      },
+      {
+        "text": "The two NRPS core genes and the thioesterase each match their counterparts at 99 percent identity.",
         "facts": [
           "S3",
           "S4",
@@ -96,17 +114,19 @@
       }
     ],
     "hypothesis": {
-      "text": "The cluster may produce a modified nonribosomal peptide, possibly incorporating phenylalanine, valine and threonine, based on the core NRPS genes and tailoring enzymes such as cytochrome P450 and glycosyltransferase, while the presence of regulatory and transport genes suggests specialised metabolite biosynthesis rather than primary metabolism.",
+      "text": "Given the very high similarity to the cyclofaulknamycin cluster and the presence of two large NRPSs with epimerization domains, a thioesterase, a cytochrome P450, a glycosyltransferase and an MbtH protein, this locus may produce a cyclofaulknamycin-like nonribosomal peptide that is further modified by oxidation and glycosylation.",
       "facts": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
         "G3",
         "G4",
         "G5",
-        "G6",
         "G7",
         "G8",
-        "G9",
-        "G10",
-        "G11"
+        "G9"
       ]
     }
   },
@@ -128,7 +148,8 @@
         "NRP"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "O2",
@@ -145,7 +166,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G1",
@@ -162,12 +184,13 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G2",
       "section": "genes",
-      "sentence": "3 core genes are named in the locus, each by at least one of antiSMASH, DeepBGC and GECCO.",
+      "sentence": "3 core genes are named in the locus, each by at least one of the three detection tools, antiSMASH, DeepBGC and GECCO.",
       "values": [
         "3",
         "antiSMASH",
@@ -178,12 +201,13 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G3",
       "section": "genes",
-      "sentence": "CJLEIP_01147, annotated by Bakta as D-alanine--poly(phosphoribitol) ligase subunit DltA, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 3 modules in it, and predicts phenylalanine, no substrate and valine for its adenylation domains; 1 of its modules carries an epimerization domain.",
+      "sentence": "CJLEIP_01147, annotated by Bakta as D-alanine--poly(phosphoribitol) ligase subunit DltA, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH classes it as a core NRPS gene; antiSMASH finds 3 modules in it, and predicts phenylalanine, no substrate and valine for its adenylation domains; 1 of its modules carries an epimerization domain.",
       "values": [
         "CJLEIP_01147",
         "antiSMASH",
@@ -199,6 +223,7 @@
         "epimerization domain"
       ],
       "names": [
+        "NRPS",
         "phenylalanine",
         "valine"
       ],
@@ -207,12 +232,13 @@
         "antismash",
         "deepbgc",
         "gecco"
-      ]
+      ],
+      "total": false
     },
     {
       "id": "G4",
       "section": "genes",
-      "sentence": "CJLEIP_01149, annotated by Bakta as D-alanine--poly(phosphoribitol) ligase subunit DltA, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 3 modules in it, and predicts no substrate for 1 and threonine for 2 for its adenylation domains; 2 of its modules carry an epimerization domain.",
+      "sentence": "CJLEIP_01149, annotated by Bakta as D-alanine--poly(phosphoribitol) ligase subunit DltA, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH classes it as a core NRPS gene; antiSMASH finds 3 modules in it, and predicts no substrate for 1 and threonine for 2 for its adenylation domains; 2 of its modules carry an epimerization domain.",
       "values": [
         "CJLEIP_01149",
         "antiSMASH",
@@ -228,6 +254,7 @@
         "epimerization domain"
       ],
       "names": [
+        "NRPS",
         "threonine",
         "threonine"
       ],
@@ -236,7 +263,8 @@
         "antismash",
         "deepbgc",
         "gecco"
-      ]
+      ],
+      "total": false
     },
     {
       "id": "G5",
@@ -258,15 +286,17 @@
       "callers": [
         "deepbgc",
         "gecco"
-      ]
+      ],
+      "total": false
     },
     {
       "id": "G6",
       "section": "genes",
-      "sentence": "Together CJLEIP_01147 and CJLEIP_01149 hold 6 modules; antiSMASH predicts a substrate for 4 modules (phenylalanine for 1, valine for 1 and threonine for 2) and none for 2 modules; 3 modules carry an epimerization domain.",
+      "sentence": "Together these 2 NRPS genes with modules (CJLEIP_01147 and CJLEIP_01149) hold 6 modules in all; antiSMASH predicts a substrate for 4 modules (phenylalanine for 1, valine for 1 and threonine for 2) and none for 2 modules; 3 modules carry an epimerization domain.",
       "values": [
         "CJLEIP_01147",
         "CJLEIP_01149",
+        "2",
         "6",
         "4",
         "2",
@@ -284,10 +314,12 @@
         "phenylalanine",
         "valine",
         "threonine",
-        "threonine"
+        "threonine",
+        "NRPS"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": true
     },
     {
       "id": "G7",
@@ -304,7 +336,8 @@
       ],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G8",
@@ -321,7 +354,8 @@
       ],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G9",
@@ -338,7 +372,8 @@
       ],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G10",
@@ -355,7 +390,8 @@
       ],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G11",
@@ -370,7 +406,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "H1",
@@ -381,7 +418,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S1",
@@ -398,7 +436,8 @@
         "Streptomyces albidoflavus"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S2",
@@ -417,7 +456,8 @@
         "close"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S3",
@@ -436,7 +476,8 @@
         "Peptide synthase"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S4",
@@ -455,7 +496,8 @@
         "Peptide synthase"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S5",
@@ -474,7 +516,8 @@
         "putative thioesterase involved in non-ribosomalpeptide biosynthesis"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S6",
@@ -489,7 +532,8 @@
         "PKS"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S7",
@@ -503,7 +547,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S8",
@@ -516,7 +561,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     }
   ],
   "summary_sections": [
@@ -525,13 +571,20 @@
       "title": "What it is",
       "sentences": [
         {
-          "text": "Soil_1_13 is a nonribosomal peptide (NRPS) cluster detected by antiSMASH, DeepBGC and GECCO, spanning 57 kb on contig_1 and containing 30 genes.",
+          "text": "Soil_1_13 is a nonribosomal peptide cluster detected by antiSMASH, DeepBGC and GECCO.",
           "facts": [
-            "O1",
+            "O1"
+          ],
+          "source": "model",
+          "shown_text": "Soil_1_13 is a nonribosomal peptide cluster detected by antiSMASH, DeepBGC and GECCO."
+        },
+        {
+          "text": "It spans 57 kb on contig_1 and contains 30 genes.",
+          "facts": [
             "O2"
           ],
           "source": "model",
-          "shown_text": "Soil_1_13 is a nonribosomal peptide (NRPS) cluster detected by antiSMASH, DeepBGC and GECCO, spanning 57 kb on contig_1 and containing 30 genes."
+          "shown_text": "It spans 57 kb on contig_1 and contains 30 genes."
         }
       ]
     },
@@ -540,55 +593,56 @@
       "title": "What it contains",
       "sentences": [
         {
-          "text": "antiSMASH marks 11 genes as biosynthetic, comprising 2 core and 9 additional genes, with 4 regulatory and 3 transport genes also present.",
+          "text": "Three core genes are named by at least one of the three detection tools.",
           "facts": [
-            "G1"
+            "G2"
           ],
           "source": "model",
-          "shown_text": "antiSMASH marks 11 genes as biosynthetic, comprising 2 core and 9 additional genes, with 4 regulatory and 3 transport genes also present."
+          "shown_text": "Three core genes are named by at least one of the three detection tools."
         },
         {
-          "text": "CJLEIP_01147, a D-alanine--poly(phosphoribitol) ligase subunit DltA, contains 3 modules with adenylation domains predicted to load phenylalanine, an unidentified residue and valine, and one module carries an epimerization domain.",
+          "text": "CJLEIP_01147 is a core NRPS gene with three modules predicted to load phenylalanine, an unidentified residue and valine, and one module carries an epimerization domain.",
           "facts": [
             "G3"
           ],
           "source": "model",
-          "shown_text": "CJLEIP_01147, a D-alanine--poly(phosphoribitol) ligase subunit DltA, contains 3 modules (the unit of an assembly-line enzyme that adds one building block to the growing chain) with adenylation domains predicted to load phenylalanine, an unidentified residue and valine, and one module carries an epimerization domain (converts an amino acid to its D-form)."
+          "shown_text": "CJLEIP_01147 is a core NRPS gene with three modules predicted to load phenylalanine, an unidentified residue and valine, and one module carries an epimerization domain (converts an amino acid to its D-form)."
         },
         {
-          "text": "CJLEIP_01149, also a D-alanine--poly(phosphoribitol) ligase subunit DltA, has 3 modules with adenylation domains predicted to load an unidentified residue, threonine and threonine, and two modules carry an epimerization domain.",
+          "text": "CJLEIP_01149 is a core NRPS gene with three modules predicted to load an unidentified residue and threonine twice, and two modules carry an epimerization domain.",
           "facts": [
             "G4"
           ],
           "source": "model",
-          "shown_text": "CJLEIP_01149, also a D-alanine--poly(phosphoribitol) ligase subunit DltA, has 3 modules with adenylation domains predicted to load an unidentified residue, threonine and threonine, and two modules carry an epimerization domain."
+          "shown_text": "CJLEIP_01149 is a core NRPS gene with three modules predicted to load an unidentified residue and threonine twice, and two modules carry an epimerization domain."
         },
         {
-          "text": "Together CJLEIP_01147 and CJLEIP_01149 hold 6 modules; antiSMASH predicts substrates for 4 modules (phenylalanine, valine and two threonine) and none for 2 modules, with 3 modules carrying an epimerization domain.",
-          "facts": [
-            "G6"
-          ],
-          "source": "model",
-          "shown_text": "Together CJLEIP_01147 and CJLEIP_01149 hold 6 modules; antiSMASH predicts substrates for 4 modules (phenylalanine, valine and two threonine) and none for 2 modules, with 3 modules carrying an epimerization domain."
-        },
-        {
-          "text": "CJLEIP_01154, annotated as a Thioesterase, is named a core gene by DeepBGC and GECCO.",
+          "text": "CJLEIP_01154 is a core gene annotated as a thioesterase.",
           "facts": [
             "G5"
           ],
           "source": "model",
-          "shown_text": "CJLEIP_01154, annotated as a Thioesterase (an enzyme type that releases the finished chain from NRPS and PKS assembly lines), is named a core gene by DeepBGC and GECCO."
+          "shown_text": "CJLEIP_01154 is a core gene annotated as a thioesterase (an enzyme type that releases the finished chain from NRPS and PKS assembly lines)."
         },
         {
-          "text": "Additional biosynthetic genes include CJLEIP_01139 (Glycosyltransferase family 1 protein), CJLEIP_01148 (MbtH family protein), CJLEIP_01152 (Cytochrome P450) and CJLEIP_01161 (23S rRNA methyltransferase RlmD).",
+          "text": "Together the two NRPS genes hold six modules, with substrates predicted for four modules and three modules carrying an epimerization domain.",
+          "facts": [
+            "G6"
+          ],
+          "source": "model",
+          "shown_text": "Together the two NRPS genes hold six modules (the unit of an assembly-line enzyme that adds one building block to the growing chain), with substrates predicted for four modules and three modules carrying an epimerization domain."
+        },
+        {
+          "text": "Additional biosynthetic genes include a glycosyltransferase family 1 protein, an MbtH family protein, a cytochrome P450, a 23S rRNA methyltransferase and a 2-deoxy-scyllo-inosamine dehydrogenase.",
           "facts": [
             "G7",
             "G8",
             "G9",
-            "G10"
+            "G10",
+            "G11"
           ],
           "source": "model",
-          "shown_text": "Additional biosynthetic genes include CJLEIP_01139 (Glycosyltransferase family 1 protein), CJLEIP_01148 (MbtH family protein), CJLEIP_01152 (Cytochrome P450) and CJLEIP_01161 (23S rRNA methyltransferase RlmD)."
+          "shown_text": "Additional biosynthetic genes include a glycosyltransferase family 1 protein, an MbtH family protein (a small helper protein of NRPS adenylation domains), a cytochrome P450 (a family of oxidising enzymes), a 23S rRNA methyltransferase (an enzyme type that adds methyl groups) and a 2-deoxy-scyllo-inosamine dehydrogenase."
         }
       ]
     },
@@ -597,23 +651,21 @@
       "title": "What it resembles",
       "sentences": [
         {
-          "text": "The closest known cluster is BGC0002358 (cyclofaulknamycin) from Streptomyces albidoflavus, which is a close match.",
+          "text": "The closest MIBiG entry is BGC0002358 (cyclofaulknamycin) from Streptomyces albidoflavus, which is a very close match.",
           "facts": [
             "S1",
             "S2"
           ],
           "source": "model",
-          "shown_text": "The closest known cluster is BGC0002358 (cyclofaulknamycin) from Streptomyces albidoflavus, which is a close match."
+          "shown_text": "The closest MIBiG entry is BGC0002358 (cyclofaulknamycin) from Streptomyces albidoflavus, which is a very close match."
         },
         {
-          "text": "CJLEIP_01147 matches XNR_0983 (Peptide synthase) of BGC0002358 at 99 % identity, CJLEIP_01149 matches XNR_0985 (Peptide synthase) at 99 % identity, and CJLEIP_01154 matches XNR_0990 (putative thioesterase) at 99 % identity.",
+          "text": "Twenty-one genes of the locus have counterparts in that cluster at 96 to 100 percent identity, and antiSMASH finds counterparts for all of the reference cluster's genes.",
           "facts": [
-            "S3",
-            "S4",
-            "S5"
+            "S2"
           ],
           "source": "model",
-          "shown_text": "CJLEIP_01147 matches XNR_0983 (Peptide synthase) of BGC0002358 at 99 % identity, CJLEIP_01149 matches XNR_0985 (Peptide synthase) at 99 % identity, and CJLEIP_01154 matches XNR_0990 (putative thioesterase) at 99 % identity."
+          "shown_text": "Twenty-one genes of the locus have counterparts in that cluster at 96 to 100 percent identity, and antiSMASH finds counterparts for all of the reference cluster's genes."
         }
       ]
     }
@@ -622,80 +674,108 @@
     {
       "section": "overview",
       "index": 0,
-      "text": "Soil_1_13 is a nonribosomal peptide (NRPS) cluster detected by antiSMASH, DeepBGC and GECCO, spanning 57 kb on contig_1 and containing 30 genes.",
+      "text": "Soil_1_13 is a nonribosomal peptide cluster detected by antiSMASH, DeepBGC and GECCO.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "overview",
+      "index": 1,
+      "text": "It spans 57 kb on contig_1 and contains 30 genes.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 0,
-      "text": "antiSMASH marks 11 genes as biosynthetic, comprising 2 core and 9 additional genes, with 4 regulatory and 3 transport genes also present.",
-      "verified": true,
-      "reasons": []
+      "text": "antiSMASH marks 11 genes as biosynthetic, including two core NRPS genes and nine additional biosynthetic genes.",
+      "verified": false,
+      "reasons": [
+        "'nrps' is not in the cited facts"
+      ]
     },
     {
       "section": "genes",
       "index": 1,
-      "text": "CJLEIP_01147, a D-alanine--poly(phosphoribitol) ligase subunit DltA, contains 3 modules with adenylation domains predicted to load phenylalanine, an unidentified residue and valine, and one module carries an epimerization domain.",
+      "text": "Three core genes are named by at least one of the three detection tools.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 2,
-      "text": "CJLEIP_01149, also a D-alanine--poly(phosphoribitol) ligase subunit DltA, has 3 modules with adenylation domains predicted to load an unidentified residue, threonine and threonine, and two modules carry an epimerization domain.",
+      "text": "CJLEIP_01147 is a core NRPS gene with three modules predicted to load phenylalanine, an unidentified residue and valine, and one module carries an epimerization domain.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 3,
-      "text": "Together CJLEIP_01147 and CJLEIP_01149 hold 6 modules; antiSMASH predicts substrates for 4 modules (phenylalanine, valine and two threonine) and none for 2 modules, with 3 modules carrying an epimerization domain.",
+      "text": "CJLEIP_01149 is a core NRPS gene with three modules predicted to load an unidentified residue and threonine twice, and two modules carry an epimerization domain.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 4,
-      "text": "CJLEIP_01154, annotated as a Thioesterase, is named a core gene by DeepBGC and GECCO.",
+      "text": "CJLEIP_01154 is a core gene annotated as a thioesterase.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 5,
-      "text": "Additional biosynthetic genes include CJLEIP_01139 (Glycosyltransferase family 1 protein), CJLEIP_01148 (MbtH family protein), CJLEIP_01152 (Cytochrome P450) and CJLEIP_01161 (23S rRNA methyltransferase RlmD).",
+      "text": "Together the two NRPS genes hold six modules, with substrates predicted for four modules and three modules carrying an epimerization domain.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 6,
+      "text": "Additional biosynthetic genes include a glycosyltransferase family 1 protein, an MbtH family protein, a cytochrome P450, a 23S rRNA methyltransferase and a 2-deoxy-scyllo-inosamine dehydrogenase.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "similar",
       "index": 0,
-      "text": "The closest known cluster is BGC0002358 (cyclofaulknamycin) from Streptomyces albidoflavus, which is a close match.",
+      "text": "The closest MIBiG entry is BGC0002358 (cyclofaulknamycin) from Streptomyces albidoflavus, which is a very close match.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "similar",
       "index": 1,
-      "text": "CJLEIP_01147 matches XNR_0983 (Peptide synthase) of BGC0002358 at 99 % identity, CJLEIP_01149 matches XNR_0985 (Peptide synthase) at 99 % identity, and CJLEIP_01154 matches XNR_0990 (putative thioesterase) at 99 % identity.",
+      "text": "Twenty-one genes of the locus have counterparts in that cluster at 96 to 100 percent identity, and antiSMASH finds counterparts for all of the reference cluster's genes.",
       "verified": true,
       "reasons": []
+    },
+    {
+      "section": "similar",
+      "index": 2,
+      "text": "The two NRPS core genes and the thioesterase each match their counterparts at 99 percent identity.",
+      "verified": false,
+      "reasons": [
+        "the number 2 is not in the cited facts",
+        "'nrps' is not in the cited facts"
+      ]
     }
   ],
-  "sentences_removed": 0,
+  "sentences_removed": 2,
   "hypothesis": {
-    "text": "The cluster may produce a modified nonribosomal peptide, possibly incorporating phenylalanine, valine and threonine, based on the core NRPS genes and tailoring enzymes such as cytochrome P450 and glycosyltransferase, while the presence of regulatory and transport genes suggests specialised metabolite biosynthesis rather than primary metabolism.",
+    "text": "Given the very high similarity to the cyclofaulknamycin cluster and the presence of two large NRPSs with epimerization domains, a thioesterase, a cytochrome P450, a glycosyltransferase and an MbtH protein, this locus may produce a cyclofaulknamycin-like nonribosomal peptide that is further modified by oxidation and glycosylation.",
     "facts": [
+      "S1",
+      "S2",
+      "S3",
+      "S4",
+      "S5",
       "G3",
       "G4",
       "G5",
-      "G6",
       "G7",
       "G8",
-      "G9",
-      "G10",
-      "G11"
+      "G9"
     ],
     "shown": true,
     "reasons": []

@@ -1,22 +1,22 @@
 {
   "sample": "Soil_1",
   "consensus_id": "Soil_1_consensus_22",
-  "model": "nvidia/nemotron-3-super-120b-a12b",
+  "model": "nvidia/nemotron-3-ultra-550b-a55b",
   "mode": "summary",
   "cached": false,
   "diagnostics": {
     "sample": "Soil_1",
     "consensus_id": "Soil_1_consensus_22",
-    "model": "nvidia/nemotron-3-super-120b-a12b",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
     "timeout_seconds": 480,
-    "payload_chars": 1777,
+    "payload_chars": 1861,
     "gene_count": 32,
     "representative_gene_count": null,
     "facts": 6,
     "guided_json": true,
     "attempts": 1
   },
-  "prompt_version": "5.6-summary",
+  "prompt_version": "5.8-summary",
   "parameters": {
     "temperature": 0.2,
     "top_p": 0.95,
@@ -25,18 +25,18 @@
     "seed": 42,
     "use_guided_json": true
   },
-  "request_fingerprint": "5946414dbe93848c5f8ee6ae61eb548b7bb9fbe3c3ca1adfc23ae0b53258eb97",
-  "created_at": "2026-10-02T08:52:58Z",
+  "request_fingerprint": "17ba2efad9044219b39001b5036a0b22abee0f66da91e96cbad85324f4bcef92",
+  "created_at": "2026-10-03T10:34:00Z",
   "analysis": {
     "overview": [
       {
-        "text": "Soil_1_22 is a biosynthetic gene cluster identified by DeepBGC and GECCO, with no compound class assigned.",
+        "text": "Soil_1_22 is a biosynthetic gene cluster identified by DeepBGC and GECCO without an assigned compound class.",
         "facts": [
           "O1"
         ]
       },
       {
-        "text": "It spans 11 kb on contig_1 from position 2,861,769 to 2,872,845 and contains 11 genes.",
+        "text": "The locus spans 11 kb on contig_1 from 2,861,769 to 2,872,845 and contains 11 genes.",
         "facts": [
           "O2"
         ]
@@ -44,23 +44,28 @@
     ],
     "genes": [
       {
-        "text": "The cluster contains 2 regulatory, 2 transport, 2 tailoring-enzyme and 3 resistance genes, with no core biosynthetic gene detected by any tool.",
+        "text": "According to BGC-XPLORER annotation categories, the cluster holds two regulatory, two transport, two tailoring-enzyme and three resistance genes.",
         "facts": [
-          "G1",
+          "G1"
+        ]
+      },
+      {
+        "text": "No detection tool names a core biosynthetic gene inside the agreed span of this locus.",
+        "facts": [
           "G2"
         ]
       }
     ],
     "similar": [
       {
-        "text": "This locus has not been compared with MIBiG, as the comparison was performed by antiSMASH, which did not detect the cluster.",
+        "text": "This locus has not been compared with MIBiG because antiSMASH did not detect it.",
         "facts": [
           "S1"
         ]
       }
     ],
     "hypothesis": {
-      "text": "The presence of cytochrome P450 enzymes, phosphoserine transaminase, and threonine dehydratase suggests the cluster may be involved in amino acid modification or primary metabolic processes rather than specialised metabolite biosynthesis.",
+      "text": "The presence of two cytochrome P450 enzymes, a phosphoserine transaminase and a threonine dehydratase together with transport and regulatory proteins may indicate a role in amino acid metabolism or modification rather than a classic specialised metabolite pathway.",
       "facts": [
         "H1"
       ]
@@ -79,7 +84,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "O2",
@@ -96,7 +102,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G1",
@@ -112,7 +119,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G2",
@@ -123,7 +131,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "H1",
@@ -134,7 +143,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S1",
@@ -145,7 +155,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     }
   ],
   "summary_sections": [
@@ -154,20 +165,20 @@
       "title": "What it is",
       "sentences": [
         {
-          "text": "Soil_1_22 is a biosynthetic gene cluster identified by DeepBGC and GECCO, with no compound class assigned.",
+          "text": "Soil_1_22 is a biosynthetic gene cluster identified by DeepBGC and GECCO without an assigned compound class.",
           "facts": [
             "O1"
           ],
           "source": "model",
-          "shown_text": "Soil_1_22 is a biosynthetic gene cluster identified by DeepBGC and GECCO, with no compound class assigned."
+          "shown_text": "Soil_1_22 is a biosynthetic gene cluster identified by DeepBGC and GECCO without an assigned compound class."
         },
         {
-          "text": "It spans 11 kb on contig_1 from position 2,861,769 to 2,872,845 and contains 11 genes.",
+          "text": "The locus spans 11 kb on contig_1 from 2,861,769 to 2,872,845 and contains 11 genes.",
           "facts": [
             "O2"
           ],
           "source": "model",
-          "shown_text": "It spans 11 kb on contig_1 from position 2,861,769 to 2,872,845 and contains 11 genes."
+          "shown_text": "The locus spans 11 kb on contig_1 from 2,861,769 to 2,872,845 and contains 11 genes."
         }
       ]
     },
@@ -176,13 +187,20 @@
       "title": "What it contains",
       "sentences": [
         {
-          "text": "The cluster contains 2 regulatory, 2 transport, 2 tailoring-enzyme and 3 resistance genes, with no core biosynthetic gene detected by any tool.",
+          "text": "According to BGC-XPLORER annotation categories, the cluster holds two regulatory, two transport, two tailoring-enzyme and three resistance genes.",
           "facts": [
-            "G1",
+            "G1"
+          ],
+          "source": "model",
+          "shown_text": "According to BGC-XPLORER annotation categories, the cluster holds two regulatory, two transport, two tailoring-enzyme and three resistance genes."
+        },
+        {
+          "text": "No detection tool names a core biosynthetic gene inside the agreed span of this locus.",
+          "facts": [
             "G2"
           ],
           "source": "model",
-          "shown_text": "The cluster contains 2 regulatory, 2 transport, 2 tailoring-enzyme and 3 resistance genes, with no core biosynthetic gene detected by any tool."
+          "shown_text": "No detection tool names a core biosynthetic gene inside the agreed span of this locus."
         }
       ]
     },
@@ -191,12 +209,12 @@
       "title": "What it resembles",
       "sentences": [
         {
-          "text": "This locus has not been compared with MIBiG, as the comparison was performed by antiSMASH, which did not detect the cluster.",
+          "text": "This locus has not been compared with MIBiG because antiSMASH did not detect it.",
           "facts": [
             "S1"
           ],
           "source": "model",
-          "shown_text": "This locus has not been compared with MIBiG, as the comparison was performed by antiSMASH, which did not detect the cluster."
+          "shown_text": "This locus has not been compared with MIBiG because antiSMASH did not detect it."
         }
       ]
     }
@@ -205,35 +223,42 @@
     {
       "section": "overview",
       "index": 0,
-      "text": "Soil_1_22 is a biosynthetic gene cluster identified by DeepBGC and GECCO, with no compound class assigned.",
+      "text": "Soil_1_22 is a biosynthetic gene cluster identified by DeepBGC and GECCO without an assigned compound class.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "overview",
       "index": 1,
-      "text": "It spans 11 kb on contig_1 from position 2,861,769 to 2,872,845 and contains 11 genes.",
+      "text": "The locus spans 11 kb on contig_1 from 2,861,769 to 2,872,845 and contains 11 genes.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 0,
-      "text": "The cluster contains 2 regulatory, 2 transport, 2 tailoring-enzyme and 3 resistance genes, with no core biosynthetic gene detected by any tool.",
+      "text": "According to BGC-XPLORER annotation categories, the cluster holds two regulatory, two transport, two tailoring-enzyme and three resistance genes.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 1,
+      "text": "No detection tool names a core biosynthetic gene inside the agreed span of this locus.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "similar",
       "index": 0,
-      "text": "This locus has not been compared with MIBiG, as the comparison was performed by antiSMASH, which did not detect the cluster.",
+      "text": "This locus has not been compared with MIBiG because antiSMASH did not detect it.",
       "verified": true,
       "reasons": []
     }
   ],
   "sentences_removed": 0,
   "hypothesis": {
-    "text": "The presence of cytochrome P450 enzymes, phosphoserine transaminase, and threonine dehydratase suggests the cluster may be involved in amino acid modification or primary metabolic processes rather than specialised metabolite biosynthesis.",
+    "text": "The presence of two cytochrome P450 enzymes, a phosphoserine transaminase and a threonine dehydratase together with transport and regulatory proteins may indicate a role in amino acid metabolism or modification rather than a classic specialised metabolite pathway.",
     "facts": [
       "H1"
     ],

@@ -5,9 +5,9 @@ ten loci of the showcase genome (STR-S001, GenBank CP158056.1, sample
 `Soil_1`), with the facts the model was given, the software's check of every
 sentence, the separate AI hypothesis, and a manual reading of every sentence.
 
-Model `nvidia/nemotron-3-super-120b-a12b`, prompt version 5.6-summary,
+Model `nvidia/nemotron-3-ultra-550b-a55b`, prompt version 5.8-summary,
 temperature 0.2, top-p 0.95, at most 2,500 tokens, seed 42, reasoning off,
-structured JSON output; generated on 2 October 2026, one request per locus,
+structured JSON output; generated on 3 October 2026, one request per locus,
 10 s apart. The SHA-256 request fingerprint stored in each file is recomputed
 from the facts and the prompt in `scripts/ai_summary.py` and matches.
 
@@ -40,26 +40,33 @@ from the facts and the prompt in `scripts/ai_summary.py` and matches.
 
 | Locus | Kind | Sentences shown / removed |
 |---|---|---|
-| Soil_1_13 | NRPS, all three callers, close MIBiG match (cyclofaulknamycin) | 9 / 0 |
-| Soil_1_32 | NRPS, all three callers, close MIBiG match (surugamide) | 9 / 1 |
-| Soil_1_48 | 272 kb multi-class locus, all three callers, close MIBiG match (candicidin) | 18 / 0 |
-| Soil_1_15 | terpene, all three callers, moderate MIBiG match (geosmin) | 6 / 0 |
-| Soil_1_6 | RiPP-like, antiSMASH only, distant MIBiG match (colicin V) | 6 / 0 |
-| Soil_1_33 | NRPS, DeepBGC and GECCO, no MIBiG comparison | 5 / 1 |
-| Soil_1_22 | no class, DeepBGC and GECCO, no core gene, no MIBiG comparison | 4 / 0 |
-| Soil_1_10 | DeepBGC only, no MIBiG comparison | 6 / 0 |
+| Soil_1_13 | NRPS, all three callers, close MIBiG match (cyclofaulknamycin) | 10 / 2 |
+| Soil_1_32 | NRPS, all three callers, close MIBiG match (surugamide) | 12 / 3 |
+| Soil_1_48 | 272 kb multi-class locus, all three callers, close MIBiG match (candicidin) | 10 / 5 |
+| Soil_1_15 | terpene, all three callers, moderate MIBiG match (geosmin) | 6 / 1 |
+| Soil_1_6 | RiPP-like, antiSMASH only, distant MIBiG match (colicin V) | 8 / 0 |
+| Soil_1_33 | NRPS, DeepBGC and GECCO, no MIBiG comparison | 7 / 1 |
+| Soil_1_22 | no class, DeepBGC and GECCO, no core gene, no MIBiG comparison | 5 / 0 |
+| Soil_1_10 | DeepBGC only, no MIBiG comparison | 7 / 0 |
 | Soil_1_12 | GECCO only, no core gene, no MIBiG comparison | 6 / 0 |
 | Soil_1_38 | DeepBGC and GECCO, core genes only outside the agreed span | 6 / 0 |
 
-Manual reading of all 77 model sentences: 75 shown, of which 74 correct and
-1 imprecisely worded (Soil_1_15, "identified as such"); 2 removed by the
-check, both of them correct but citing a number not in their cited facts.
-No shown sentence was wrong. All ten hypotheses were shown; they are not
-judged as facts. The manual reading is the authors' and is recorded per
-sentence in `S4_sentence_check.tsv`.
+Manual reading of all 89 model sentences: 77 shown, of which 74 correct and
+3 imprecisely worded (Soil_1_13 "a very close match", where the facts give the
+grade as close; Soil_1_32 "a hybrid ... cluster", the model's word for two
+assigned classes; Soil_1_15 "identified as a core terpene gene by antiSMASH and
+GECCO", where the terpene type comes from antiSMASH only); none wrong. The check
+removed 12: ten correct but citing a word or number not in their facts, one
+built from the hypothesis-only gene list, and one with interpretive wording. All
+ten hypotheses were shown; they are not judged as facts. The manual reading is
+the authors' and is recorded per sentence in `S4_sentence_check.tsv`.
+
+The model recommended in v1.2.1, nvidia/nemotron-3-super-120b-a12b, was retired
+by NVIDIA on 3 October 2026 (09:00 UTC), during the revision; this evaluation
+uses its replacement in v1.2.2.
 
 | File | Content |
 |---|---|
 | `Soil_1_consensus_<n>.json` | the stored result: model, date, prompt version, parameters, fingerprint, facts, the model's answer, every sentence check, the shown text, the hypothesis |
-| `prompt_5.6-summary.md` | system prompt, an example user prompt, output schema, glossary |
+| `prompt_5.8-summary.md` | system prompt, an example user prompt, output schema, glossary |
 | `S4_sentence_check.tsv` | every sentence and hypothesis with the check's verdict and the manual reading |

@@ -1,22 +1,22 @@
 {
   "sample": "Soil_1",
   "consensus_id": "Soil_1_consensus_32",
-  "model": "nvidia/nemotron-3-super-120b-a12b",
+  "model": "nvidia/nemotron-3-ultra-550b-a55b",
   "mode": "summary",
   "cached": false,
   "diagnostics": {
     "sample": "Soil_1",
     "consensus_id": "Soil_1_consensus_32",
-    "model": "nvidia/nemotron-3-super-120b-a12b",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b",
     "timeout_seconds": 480,
-    "payload_chars": 12181,
+    "payload_chars": 12967,
     "gene_count": 121,
     "representative_gene_count": null,
     "facts": 28,
     "guided_json": true,
     "attempts": 1
   },
-  "prompt_version": "5.6-summary",
+  "prompt_version": "5.8-summary",
   "parameters": {
     "temperature": 0.2,
     "top_p": 0.95,
@@ -25,51 +25,80 @@
     "seed": 42,
     "use_guided_json": true
   },
-  "request_fingerprint": "5d53e5e46b57789c46409b8f2434524edd5b9275688349d3b6a7c9e77722c469",
-  "created_at": "2026-10-02T08:51:47Z",
+  "request_fingerprint": "3b9cbbfbdee1a05059e2c378c632a084c8622967b9b7cfe403346fda00a848ca",
+  "created_at": "2026-10-03T10:32:13Z",
   "analysis": {
     "overview": [
       {
-        "text": "Soil_1_32 is a nonribosomal peptide and azole-containing-RiPP cluster detected by antiSMASH, DeepBGC and GECCO, spanning 103 kb on contig_1 with 42 genes.",
+        "text": "Soil_1_32 is a hybrid nonribosomal peptide and azole-containing RiPP cluster identified by antiSMASH, DeepBGC and GECCO.",
         "facts": [
-          "O1",
+          "O1"
+        ]
+      },
+      {
+        "text": "The locus spans 103 kb on contig_1 and contains 42 genes.",
+        "facts": [
           "O2"
         ]
       }
     ],
     "genes": [
       {
-        "text": "antiSMASH marks 12 genes as biosynthetic (7 core and 5 additional), with 4 regulatory and 6 transport genes.",
+        "text": "antiSMASH marks 12 genes as biosynthetic, comprising 7 core and 5 additional genes, alongside 4 regulatory and 6 transport genes.",
         "facts": [
           "G1"
         ]
       },
       {
-        "text": "CJLEIP_03619 is a core gene with 3 modules predicting leucine, phenylalanine and no substrate, and 2 modules carrying an epimerization domain.",
+        "text": "Six core NRPS genes are named by all three detection tools: CJLEIP_03619, CJLEIP_03620, CJLEIP_03621, CJLEIP_03622, CJLEIP_03623 and CJLEIP_03624.",
+        "facts": [
+          "G2"
+        ]
+      },
+      {
+        "text": "CJLEIP_03619 carries three modules predicted to load leucine, phenylalanine and an unidentified residue, with two modules containing an epimerization domain.",
         "facts": [
           "G3"
         ]
       },
       {
-        "text": "CJLEIP_03620 is a core gene with 6 modules predicting alanine for 2, valine for 2, leucine for 1 and isoleucine for 1, and 3 modules carrying an epimerization domain.",
+        "text": "CJLEIP_03620 is the largest with six modules predicted to load alanine twice, valine twice, leucine and isoleucine, and three modules bearing an epimerization domain.",
         "facts": [
           "G4"
         ]
       },
       {
-        "text": "CJLEIP_03621 is a core gene with 4 modules predicting threonine, valine, leucine and tryptophan, and 1 module carrying an epimerization domain.",
+        "text": "CJLEIP_03621 contains four modules predicted to load threonine, valine, leucine and tryptophan, one of which has an epimerization domain.",
         "facts": [
           "G5"
         ]
       },
       {
-        "text": "Together the six core genes CJLEIP_03619, CJLEIP_03620, CJLEIP_03621, CJLEIP_03622, CJLEIP_03623 and CJLEIP_03624 hold 18 modules; antiSMASH predicts a substrate for 16 modules (leucine for 3, phenylalanine for 1, alanine for 3, valine for 3, isoleucine for 3, threonine for 1, tryptophan for 1 and lysine for 1) and none for 1 module; 1 module has no adenylation or acyltransferase domain; 8 modules carry an epimerization domain.",
+        "text": "CJLEIP_03622 holds two modules predicted to load lysine, one with an epimerization domain.",
+        "facts": [
+          "G6"
+        ]
+      },
+      {
+        "text": "CJLEIP_03623 has a single module predicted to load isoleucine.",
+        "facts": [
+          "G7"
+        ]
+      },
+      {
+        "text": "CJLEIP_03624 possesses two modules predicted to load alanine and isoleucine, one carrying an epimerization domain.",
+        "facts": [
+          "G8"
+        ]
+      },
+      {
+        "text": "Together these six NRPS genes hold 18 modules in total, with substrates predicted for 16 modules including leucine for three, phenylalanine for one, alanine for three, valine for three, isoleucine for three, threonine for one, tryptophan for one and lysine for one, while one module lacks a substrate prediction and another lacks an adenylation or acyltransferase domain; eight modules carry an epimerization domain.",
         "facts": [
           "G9"
         ]
       },
       {
-        "text": "Additional biosynthetic genes include CJLEIP_03631 (MbtH family protein), CJLEIP_03604 (GTP cyclohydrolase I FolE), CJLEIP_03625 (Serine hydrolase), CJLEIP_03632 (Alpha/beta hydrolase) and CJLEIP_03633 (Aldehyde dehydrogenase domain-containing protein).",
+        "text": "The additional biosynthetic genes include an MbtH family protein (CJLEIP_03631), a GTP cyclohydrolase I FolE (CJLEIP_03604), a serine hydrolase (CJLEIP_03625), an alpha/beta hydrolase (CJLEIP_03632) and an aldehyde dehydrogenase (CJLEIP_03633).",
         "facts": [
           "G10",
           "G11",
@@ -81,14 +110,19 @@
     ],
     "similar": [
       {
-        "text": "The closest known cluster is BGC0001792 (surugamide A and surugamide D) from Streptomyces albidoflavus, a close match with 23 genes having counterparts at 98–100 % identity.",
+        "text": "The closest MIBiG entry is BGC0001792 from Streptomyces albidoflavus, which produces surugamide A and surugamide D.",
         "facts": [
-          "S1",
+          "S1"
+        ]
+      },
+      {
+        "text": "This is a close match, with 23 locus genes having counterparts in the reference cluster at 98 to 100 percent identity and antiSMASH finding counterparts for 100 percent of the reference cluster's genes.",
+        "facts": [
           "S2"
         ]
       },
       {
-        "text": "CJLEIP_03619 matches XNR_3446 at 99 % identity, CJLEIP_03620 matches XNR_3447 at 100 % identity, CJLEIP_03621 matches XNR_3448 at 100 % identity, CJLEIP_03622 matches XNR_3449 at 100 % identity, CJLEIP_03623 matches XNR_3449 at 99 % identity and CJLEIP_03624 matches XNR_3449 at 99 % identity.",
+        "text": "The six core NRPS genes match their counterparts XNR_3446 through XNR_3449 at 99 to 100 percent identity.",
         "facts": [
           "S3",
           "S4",
@@ -97,29 +131,21 @@
           "S7",
           "S8"
         ]
-      },
-      {
-        "text": "MIBiG lists the compound class of BGC0001792 as NRPS and records antifungal activity for surugamide A and surugamide D, with questionable annotation quality.",
-        "facts": [
-          "S9",
-          "S10",
-          "S11"
-        ]
       }
     ],
     "hypothesis": {
-      "text": "The cluster may produce a nonribosomal peptide with antifungal activity, given the close match to a known antifungal NRPS cluster and the presence of core NRPS genes predicting diverse amino acid substrates.",
+      "text": "Given the close similarity to the surugamide cluster and the presence of multiple NRPS modules predicted to incorporate hydrophobic and aromatic amino acids, this cluster may produce a surugamide-like cyclic peptide with antifungal activity; the additional hydrolases and aldehyde dehydrogenase could further tailor the peptide backbone, while the GTP cyclohydrolase and MbtH protein suggest roles in cofactor supply and NRPS efficiency.",
       "facts": [
         "S1",
         "S2",
         "S9",
         "S10",
-        "G3",
-        "G4",
-        "G5",
-        "G6",
-        "G7",
-        "G8"
+        "G9",
+        "G10",
+        "G11",
+        "G12",
+        "G13",
+        "G14"
       ]
     }
   },
@@ -142,7 +168,8 @@
         "azole-containing-RiPP"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "O2",
@@ -159,7 +186,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G1",
@@ -176,12 +204,13 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G2",
       "section": "genes",
-      "sentence": "6 core genes are named in the locus, each by at least one of antiSMASH, DeepBGC and GECCO.",
+      "sentence": "6 core genes are named in the locus, each by at least one of the three detection tools, antiSMASH, DeepBGC and GECCO.",
       "values": [
         "6",
         "antiSMASH",
@@ -192,12 +221,13 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G3",
       "section": "genes",
-      "sentence": "CJLEIP_03619, annotated by Bakta as D-alanine--poly(phosphoribitol) ligase subunit DltA, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 3 modules in it, and predicts leucine, phenylalanine and no substrate for its adenylation domains; 2 of its modules carry an epimerization domain.",
+      "sentence": "CJLEIP_03619, annotated by Bakta as D-alanine--poly(phosphoribitol) ligase subunit DltA, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH classes it as a core NRPS gene; antiSMASH finds 3 modules in it, and predicts leucine, phenylalanine and no substrate for its adenylation domains; 2 of its modules carry an epimerization domain.",
       "values": [
         "CJLEIP_03619",
         "antiSMASH",
@@ -213,6 +243,7 @@
         "epimerization domain"
       ],
       "names": [
+        "NRPS",
         "leucine",
         "phenylalanine"
       ],
@@ -221,12 +252,13 @@
         "antismash",
         "deepbgc",
         "gecco"
-      ]
+      ],
+      "total": false
     },
     {
       "id": "G4",
       "section": "genes",
-      "sentence": "CJLEIP_03620, annotated by Bakta as solanimycin non-ribosomal peptide synthetase SolG, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 6 modules in it, and predicts alanine for 2, valine for 2, leucine for 1 and isoleucine for 1 for its adenylation domains; 3 of its modules carry an epimerization domain.",
+      "sentence": "CJLEIP_03620, annotated by Bakta as solanimycin non-ribosomal peptide synthetase SolG, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH classes it as a core NRPS gene; antiSMASH finds 6 modules in it, and predicts alanine for 2, valine for 2, leucine for 1 and isoleucine for 1 for its adenylation domains; 3 of its modules carry an epimerization domain.",
       "values": [
         "CJLEIP_03620",
         "antiSMASH",
@@ -242,6 +274,7 @@
         "epimerization domain"
       ],
       "names": [
+        "NRPS",
         "alanine",
         "valine",
         "alanine",
@@ -254,12 +287,13 @@
         "antismash",
         "deepbgc",
         "gecco"
-      ]
+      ],
+      "total": false
     },
     {
       "id": "G5",
       "section": "genes",
-      "sentence": "CJLEIP_03621, annotated by Bakta as D-alanine--poly(phosphoribitol) ligase subunit DltA, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 4 modules in it, and predicts threonine, valine, leucine and tryptophan for its adenylation domains; 1 of its modules carries an epimerization domain.",
+      "sentence": "CJLEIP_03621, annotated by Bakta as D-alanine--poly(phosphoribitol) ligase subunit DltA, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH classes it as a core NRPS gene; antiSMASH finds 4 modules in it, and predicts threonine, valine, leucine and tryptophan for its adenylation domains; 1 of its modules carries an epimerization domain.",
       "values": [
         "CJLEIP_03621",
         "antiSMASH",
@@ -275,6 +309,7 @@
         "epimerization domain"
       ],
       "names": [
+        "NRPS",
         "threonine",
         "valine",
         "leucine",
@@ -285,12 +320,13 @@
         "antismash",
         "deepbgc",
         "gecco"
-      ]
+      ],
+      "total": false
     },
     {
       "id": "G6",
       "section": "genes",
-      "sentence": "CJLEIP_03622, annotated by Bakta as Amino acid adenylation domain-containing protein, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 2 modules in it, and predicts lysine for its adenylation domain; 1 of its modules carries an epimerization domain.",
+      "sentence": "CJLEIP_03622, annotated by Bakta as Amino acid adenylation domain-containing protein, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH classes it as a core NRPS gene; antiSMASH finds 2 modules in it, and predicts lysine for its adenylation domain; 1 of its modules carries an epimerization domain.",
       "values": [
         "CJLEIP_03622",
         "antiSMASH",
@@ -307,6 +343,7 @@
         "epimerization domain"
       ],
       "names": [
+        "NRPS",
         "lysine"
       ],
       "detail": "antiSMASH domain order: PCP–E–C–A–PCP",
@@ -314,12 +351,13 @@
         "antismash",
         "deepbgc",
         "gecco"
-      ]
+      ],
+      "total": false
     },
     {
       "id": "G7",
       "section": "genes",
-      "sentence": "CJLEIP_03623, annotated by Bakta as condensation domain-containing protein, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 1 module in it, and predicts isoleucine for its adenylation domain.",
+      "sentence": "CJLEIP_03623, annotated by Bakta as condensation domain-containing protein, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH classes it as a core NRPS gene; antiSMASH finds 1 module in it, and predicts isoleucine for its adenylation domain.",
       "values": [
         "CJLEIP_03623",
         "antiSMASH",
@@ -335,6 +373,7 @@
         "module"
       ],
       "names": [
+        "NRPS",
         "isoleucine"
       ],
       "detail": "antiSMASH domain order: A–PCP–C",
@@ -342,12 +381,13 @@
         "antismash",
         "deepbgc",
         "gecco"
-      ]
+      ],
+      "total": false
     },
     {
       "id": "G8",
       "section": "genes",
-      "sentence": "CJLEIP_03624, annotated by Bakta as Amino acid adenylation domain-containing protein, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 2 modules in it, and predicts alanine and isoleucine for its adenylation domains; 1 of its modules carries an epimerization domain.",
+      "sentence": "CJLEIP_03624, annotated by Bakta as Amino acid adenylation domain-containing protein, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH classes it as a core NRPS gene; antiSMASH finds 2 modules in it, and predicts alanine and isoleucine for its adenylation domains; 1 of its modules carries an epimerization domain.",
       "values": [
         "CJLEIP_03624",
         "antiSMASH",
@@ -364,6 +404,7 @@
         "epimerization domain"
       ],
       "names": [
+        "NRPS",
         "alanine",
         "isoleucine"
       ],
@@ -372,12 +413,13 @@
         "antismash",
         "deepbgc",
         "gecco"
-      ]
+      ],
+      "total": false
     },
     {
       "id": "G9",
       "section": "genes",
-      "sentence": "Together CJLEIP_03619, CJLEIP_03620, CJLEIP_03621, CJLEIP_03622, CJLEIP_03623 and CJLEIP_03624 hold 18 modules; antiSMASH predicts a substrate for 16 modules (leucine for 3, phenylalanine for 1, alanine for 3, valine for 3, isoleucine for 3, threonine for 1, tryptophan for 1 and lysine for 1) and none for 1 module; 1 module has no adenylation or acyltransferase domain; 8 modules carry an epimerization domain.",
+      "sentence": "Together these 6 NRPS and UNKNOWN genes with modules (CJLEIP_03619, CJLEIP_03620, CJLEIP_03621, CJLEIP_03622, CJLEIP_03623 and CJLEIP_03624) hold 18 modules in all; antiSMASH predicts a substrate for 16 modules (leucine for 3, phenylalanine for 1, alanine for 3, valine for 3, isoleucine for 3, threonine for 1, tryptophan for 1 and lysine for 1) and none for 1 module; 1 module has no adenylation or acyltransferase domain; 8 modules carry an epimerization domain.",
       "values": [
         "CJLEIP_03619",
         "CJLEIP_03620",
@@ -385,6 +427,7 @@
         "CJLEIP_03622",
         "CJLEIP_03623",
         "CJLEIP_03624",
+        "6",
         "18",
         "16",
         "1",
@@ -418,10 +461,13 @@
         "lysine",
         "isoleucine",
         "alanine",
-        "isoleucine"
+        "isoleucine",
+        "NRPS",
+        "UNKNOWN"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": true
     },
     {
       "id": "G10",
@@ -438,7 +484,8 @@
       ],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G11",
@@ -453,7 +500,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G12",
@@ -468,7 +516,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G13",
@@ -483,7 +532,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "G14",
@@ -498,7 +548,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "H1",
@@ -509,7 +560,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S1",
@@ -527,7 +579,8 @@
         "Streptomyces albidoflavus"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S2",
@@ -546,7 +599,8 @@
         "close"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S3",
@@ -565,7 +619,8 @@
         "Nonribosomal peptide synthetase"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S4",
@@ -584,7 +639,8 @@
         "Nonribosomal peptide synthetase"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S5",
@@ -603,7 +659,8 @@
         "ATP-dependent valine adenylase"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S6",
@@ -622,7 +679,8 @@
         "Nonribosomal peptide synthetase"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S7",
@@ -641,7 +699,8 @@
         "Nonribosomal peptide synthetase"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S8",
@@ -660,7 +719,8 @@
         "Nonribosomal peptide synthetase"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S9",
@@ -675,7 +735,8 @@
         "NRPS"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S10",
@@ -691,7 +752,8 @@
         "surugamide A and surugamide D"
       ],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     },
     {
       "id": "S11",
@@ -704,7 +766,8 @@
       "terms": [],
       "names": [],
       "detail": "",
-      "callers": []
+      "callers": [],
+      "total": false
     }
   ],
   "summary_sections": [
@@ -713,13 +776,20 @@
       "title": "What it is",
       "sentences": [
         {
-          "text": "Soil_1_32 is a nonribosomal peptide and azole-containing-RiPP cluster detected by antiSMASH, DeepBGC and GECCO, spanning 103 kb on contig_1 with 42 genes.",
+          "text": "Soil_1_32 is a hybrid nonribosomal peptide and azole-containing RiPP cluster identified by antiSMASH, DeepBGC and GECCO.",
           "facts": [
-            "O1",
+            "O1"
+          ],
+          "source": "model",
+          "shown_text": "Soil_1_32 is a hybrid nonribosomal peptide and azole-containing RiPP cluster identified by antiSMASH, DeepBGC and GECCO."
+        },
+        {
+          "text": "The locus spans 103 kb on contig_1 and contains 42 genes.",
+          "facts": [
             "O2"
           ],
           "source": "model",
-          "shown_text": "Soil_1_32 is a nonribosomal peptide and azole-containing-RiPP cluster detected by antiSMASH, DeepBGC and GECCO, spanning 103 kb on contig_1 with 42 genes."
+          "shown_text": "The locus spans 103 kb on contig_1 and contains 42 genes."
         }
       ]
     },
@@ -728,39 +798,71 @@
       "title": "What it contains",
       "sentences": [
         {
-          "text": "antiSMASH marks 12 genes as biosynthetic (7 core and 5 additional), with 4 regulatory and 6 transport genes.",
+          "text": "antiSMASH marks 12 genes as biosynthetic, comprising 7 core and 5 additional genes, alongside 4 regulatory and 6 transport genes.",
           "facts": [
             "G1"
           ],
           "source": "model",
-          "shown_text": "antiSMASH marks 12 genes as biosynthetic (7 core and 5 additional), with 4 regulatory and 6 transport genes."
+          "shown_text": "antiSMASH marks 12 genes as biosynthetic, comprising 7 core and 5 additional genes, alongside 4 regulatory and 6 transport genes."
         },
         {
-          "text": "CJLEIP_03619 is a core gene with 3 modules predicting leucine, phenylalanine and no substrate, and 2 modules carrying an epimerization domain.",
+          "text": "CJLEIP_03619 carries three modules predicted to load leucine, phenylalanine and an unidentified residue, with two modules containing an epimerization domain.",
           "facts": [
             "G3"
           ],
           "source": "model",
-          "shown_text": "CJLEIP_03619 is a core gene with 3 modules predicting leucine, phenylalanine and no substrate, and 2 modules carrying an epimerization domain (converts an amino acid to its D-form)."
+          "shown_text": "CJLEIP_03619 carries three modules predicted to load leucine, phenylalanine and an unidentified residue, with two modules containing an epimerization domain (converts an amino acid to its D-form)."
         },
         {
-          "text": "CJLEIP_03620 is a core gene with 6 modules predicting alanine for 2, valine for 2, leucine for 1 and isoleucine for 1, and 3 modules carrying an epimerization domain.",
+          "text": "CJLEIP_03620 is the largest with six modules predicted to load alanine twice, valine twice, leucine and isoleucine, and three modules bearing an epimerization domain.",
           "facts": [
             "G4"
           ],
           "source": "model",
-          "shown_text": "CJLEIP_03620 is a core gene with 6 modules predicting alanine for 2, valine for 2, leucine for 1 and isoleucine for 1, and 3 modules carrying an epimerization domain."
+          "shown_text": "CJLEIP_03620 is the largest with six modules predicted to load alanine twice, valine twice, leucine and isoleucine, and three modules bearing an epimerization domain."
         },
         {
-          "text": "CJLEIP_03621 is a core gene with 4 modules predicting threonine, valine, leucine and tryptophan, and 1 module carrying an epimerization domain.",
+          "text": "CJLEIP_03621 contains four modules predicted to load threonine, valine, leucine and tryptophan, one of which has an epimerization domain.",
           "facts": [
             "G5"
           ],
           "source": "model",
-          "shown_text": "CJLEIP_03621 is a core gene with 4 modules predicting threonine, valine, leucine and tryptophan, and 1 module carrying an epimerization domain."
+          "shown_text": "CJLEIP_03621 contains four modules predicted to load threonine, valine, leucine and tryptophan, one of which has an epimerization domain."
         },
         {
-          "text": "Additional biosynthetic genes include CJLEIP_03631 (MbtH family protein), CJLEIP_03604 (GTP cyclohydrolase I FolE), CJLEIP_03625 (Serine hydrolase), CJLEIP_03632 (Alpha/beta hydrolase) and CJLEIP_03633 (Aldehyde dehydrogenase domain-containing protein).",
+          "text": "CJLEIP_03622 holds two modules predicted to load lysine, one with an epimerization domain.",
+          "facts": [
+            "G6"
+          ],
+          "source": "model",
+          "shown_text": "CJLEIP_03622 holds two modules predicted to load lysine, one with an epimerization domain."
+        },
+        {
+          "text": "CJLEIP_03623 has a single module predicted to load isoleucine.",
+          "facts": [
+            "G7"
+          ],
+          "source": "model",
+          "shown_text": "CJLEIP_03623 has a single module predicted to load isoleucine."
+        },
+        {
+          "text": "CJLEIP_03624 possesses two modules predicted to load alanine and isoleucine, one carrying an epimerization domain.",
+          "facts": [
+            "G8"
+          ],
+          "source": "model",
+          "shown_text": "CJLEIP_03624 possesses two modules predicted to load alanine and isoleucine, one carrying an epimerization domain."
+        },
+        {
+          "text": "Together these six NRPS genes hold 18 modules in total, with substrates predicted for 16 modules including leucine for three, phenylalanine for one, alanine for three, valine for three, isoleucine for three, threonine for one, tryptophan for one and lysine for one, while one module lacks a substrate prediction and another lacks an adenylation or acyltransferase domain; eight modules carry an epimerization domain.",
+          "facts": [
+            "G9"
+          ],
+          "source": "model",
+          "shown_text": "Together these six NRPS genes hold 18 modules (the unit of an assembly-line enzyme that adds one building block to the growing chain) in total, with substrates predicted for 16 modules including leucine for three, phenylalanine for one, alanine for three, valine for three, isoleucine for three, threonine for one, tryptophan for one and lysine for one, while one module lacks a substrate prediction and another lacks an adenylation or acyltransferase domain (selects the extender unit a polyketide module adds); eight modules carry an epimerization domain."
+        },
+        {
+          "text": "The additional biosynthetic genes include an MbtH family protein (CJLEIP_03631), a GTP cyclohydrolase I FolE (CJLEIP_03604), a serine hydrolase (CJLEIP_03625), an alpha/beta hydrolase (CJLEIP_03632) and an aldehyde dehydrogenase (CJLEIP_03633).",
           "facts": [
             "G10",
             "G11",
@@ -769,7 +871,7 @@
             "G14"
           ],
           "source": "model",
-          "shown_text": "Additional biosynthetic genes include CJLEIP_03631 (MbtH family protein), CJLEIP_03604 (GTP cyclohydrolase I FolE), CJLEIP_03625 (Serine hydrolase), CJLEIP_03632 (Alpha/beta hydrolase) and CJLEIP_03633 (Aldehyde dehydrogenase domain-containing protein)."
+          "shown_text": "The additional biosynthetic genes include an MbtH family protein (CJLEIP_03631), a GTP cyclohydrolase I FolE (CJLEIP_03604), a serine hydrolase (CJLEIP_03625), an alpha/beta hydrolase (CJLEIP_03632) and an aldehyde dehydrogenase (CJLEIP_03633)."
         }
       ]
     },
@@ -778,36 +880,12 @@
       "title": "What it resembles",
       "sentences": [
         {
-          "text": "The closest known cluster is BGC0001792 (surugamide A and surugamide D) from Streptomyces albidoflavus, a close match with 23 genes having counterparts at 98–100 % identity.",
+          "text": "This is a close match, with 23 locus genes having counterparts in the reference cluster at 98 to 100 percent identity and antiSMASH finding counterparts for 100 percent of the reference cluster's genes.",
           "facts": [
-            "S1",
             "S2"
           ],
           "source": "model",
-          "shown_text": "The closest known cluster is BGC0001792 (surugamide A and surugamide D) from Streptomyces albidoflavus, a close match with 23 genes having counterparts at 98–100 % identity."
-        },
-        {
-          "text": "CJLEIP_03619 matches XNR_3446 at 99 % identity, CJLEIP_03620 matches XNR_3447 at 100 % identity, CJLEIP_03621 matches XNR_3448 at 100 % identity, CJLEIP_03622 matches XNR_3449 at 100 % identity, CJLEIP_03623 matches XNR_3449 at 99 % identity and CJLEIP_03624 matches XNR_3449 at 99 % identity.",
-          "facts": [
-            "S3",
-            "S4",
-            "S5",
-            "S6",
-            "S7",
-            "S8"
-          ],
-          "source": "model",
-          "shown_text": "CJLEIP_03619 matches XNR_3446 at 99 % identity, CJLEIP_03620 matches XNR_3447 at 100 % identity, CJLEIP_03621 matches XNR_3448 at 100 % identity, CJLEIP_03622 matches XNR_3449 at 100 % identity, CJLEIP_03623 matches XNR_3449 at 99 % identity and CJLEIP_03624 matches XNR_3449 at 99 % identity."
-        },
-        {
-          "text": "MIBiG lists the compound class of BGC0001792 as NRPS and records antifungal activity for surugamide A and surugamide D, with questionable annotation quality.",
-          "facts": [
-            "S9",
-            "S10",
-            "S11"
-          ],
-          "source": "model",
-          "shown_text": "MIBiG lists the compound class of BGC0001792 as NRPS and records antifungal activity for surugamide A and surugamide D, with questionable annotation quality."
+          "shown_text": "This is a close match, with 23 locus genes having counterparts in the reference cluster at 98 to 100 percent identity and antiSMASH finding counterparts for 100 percent of the reference cluster's genes."
         }
       ]
     }
@@ -816,91 +894,137 @@
     {
       "section": "overview",
       "index": 0,
-      "text": "Soil_1_32 is a nonribosomal peptide and azole-containing-RiPP cluster detected by antiSMASH, DeepBGC and GECCO, spanning 103 kb on contig_1 with 42 genes.",
+      "text": "Soil_1_32 is a hybrid nonribosomal peptide and azole-containing RiPP cluster identified by antiSMASH, DeepBGC and GECCO.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "overview",
+      "index": 1,
+      "text": "The locus spans 103 kb on contig_1 and contains 42 genes.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 0,
-      "text": "antiSMASH marks 12 genes as biosynthetic (7 core and 5 additional), with 4 regulatory and 6 transport genes.",
+      "text": "antiSMASH marks 12 genes as biosynthetic, comprising 7 core and 5 additional genes, alongside 4 regulatory and 6 transport genes.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 1,
-      "text": "CJLEIP_03619 is a core gene with 3 modules predicting leucine, phenylalanine and no substrate, and 2 modules carrying an epimerization domain.",
-      "verified": true,
-      "reasons": []
+      "text": "Six core NRPS genes are named by all three detection tools: CJLEIP_03619, CJLEIP_03620, CJLEIP_03621, CJLEIP_03622, CJLEIP_03623 and CJLEIP_03624.",
+      "verified": false,
+      "reasons": [
+        "CJLEIP_03622 is not in the cited facts",
+        "CJLEIP_03624 is not in the cited facts",
+        "CJLEIP_03619 is not in the cited facts",
+        "CJLEIP_03620 is not in the cited facts",
+        "CJLEIP_03623 is not in the cited facts",
+        "CJLEIP_03621 is not in the cited facts",
+        "'nrps' is not in the cited facts"
+      ]
     },
     {
       "section": "genes",
       "index": 2,
-      "text": "CJLEIP_03620 is a core gene with 6 modules predicting alanine for 2, valine for 2, leucine for 1 and isoleucine for 1, and 3 modules carrying an epimerization domain.",
+      "text": "CJLEIP_03619 carries three modules predicted to load leucine, phenylalanine and an unidentified residue, with two modules containing an epimerization domain.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 3,
-      "text": "CJLEIP_03621 is a core gene with 4 modules predicting threonine, valine, leucine and tryptophan, and 1 module carrying an epimerization domain.",
+      "text": "CJLEIP_03620 is the largest with six modules predicted to load alanine twice, valine twice, leucine and isoleucine, and three modules bearing an epimerization domain.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "genes",
       "index": 4,
-      "text": "Together the six core genes CJLEIP_03619, CJLEIP_03620, CJLEIP_03621, CJLEIP_03622, CJLEIP_03623 and CJLEIP_03624 hold 18 modules; antiSMASH predicts a substrate for 16 modules (leucine for 3, phenylalanine for 1, alanine for 3, valine for 3, isoleucine for 3, threonine for 1, tryptophan for 1 and lysine for 1) and none for 1 module; 1 module has no adenylation or acyltransferase domain; 8 modules carry an epimerization domain.",
-      "verified": false,
-      "reasons": [
-        "the number 6 is not in the cited facts",
-        "the number 6 counts 'core' here, but not in the cited facts"
-      ]
+      "text": "CJLEIP_03621 contains four modules predicted to load threonine, valine, leucine and tryptophan, one of which has an epimerization domain.",
+      "verified": true,
+      "reasons": []
     },
     {
       "section": "genes",
       "index": 5,
-      "text": "Additional biosynthetic genes include CJLEIP_03631 (MbtH family protein), CJLEIP_03604 (GTP cyclohydrolase I FolE), CJLEIP_03625 (Serine hydrolase), CJLEIP_03632 (Alpha/beta hydrolase) and CJLEIP_03633 (Aldehyde dehydrogenase domain-containing protein).",
+      "text": "CJLEIP_03622 holds two modules predicted to load lysine, one with an epimerization domain.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 6,
+      "text": "CJLEIP_03623 has a single module predicted to load isoleucine.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 7,
+      "text": "CJLEIP_03624 possesses two modules predicted to load alanine and isoleucine, one carrying an epimerization domain.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 8,
+      "text": "Together these six NRPS genes hold 18 modules in total, with substrates predicted for 16 modules including leucine for three, phenylalanine for one, alanine for three, valine for three, isoleucine for three, threonine for one, tryptophan for one and lysine for one, while one module lacks a substrate prediction and another lacks an adenylation or acyltransferase domain; eight modules carry an epimerization domain.",
+      "verified": true,
+      "reasons": []
+    },
+    {
+      "section": "genes",
+      "index": 9,
+      "text": "The additional biosynthetic genes include an MbtH family protein (CJLEIP_03631), a GTP cyclohydrolase I FolE (CJLEIP_03604), a serine hydrolase (CJLEIP_03625), an alpha/beta hydrolase (CJLEIP_03632) and an aldehyde dehydrogenase (CJLEIP_03633).",
       "verified": true,
       "reasons": []
     },
     {
       "section": "similar",
       "index": 0,
-      "text": "The closest known cluster is BGC0001792 (surugamide A and surugamide D) from Streptomyces albidoflavus, a close match with 23 genes having counterparts at 98–100 % identity.",
-      "verified": true,
-      "reasons": []
+      "text": "The closest MIBiG entry is BGC0001792 from Streptomyces albidoflavus, which produces surugamide A and surugamide D.",
+      "verified": false,
+      "reasons": [
+        "interpretive wording: 'produces'"
+      ]
     },
     {
       "section": "similar",
       "index": 1,
-      "text": "CJLEIP_03619 matches XNR_3446 at 99 % identity, CJLEIP_03620 matches XNR_3447 at 100 % identity, CJLEIP_03621 matches XNR_3448 at 100 % identity, CJLEIP_03622 matches XNR_3449 at 100 % identity, CJLEIP_03623 matches XNR_3449 at 99 % identity and CJLEIP_03624 matches XNR_3449 at 99 % identity.",
+      "text": "This is a close match, with 23 locus genes having counterparts in the reference cluster at 98 to 100 percent identity and antiSMASH finding counterparts for 100 percent of the reference cluster's genes.",
       "verified": true,
       "reasons": []
     },
     {
       "section": "similar",
       "index": 2,
-      "text": "MIBiG lists the compound class of BGC0001792 as NRPS and records antifungal activity for surugamide A and surugamide D, with questionable annotation quality.",
-      "verified": true,
-      "reasons": []
+      "text": "The six core NRPS genes match their counterparts XNR_3446 through XNR_3449 at 99 to 100 percent identity.",
+      "verified": false,
+      "reasons": [
+        "the number 6 is not in the cited facts",
+        "'nrps' is not in the cited facts",
+        "the number 6 counts 'core' here, but not in the cited facts"
+      ]
     }
   ],
-  "sentences_removed": 1,
+  "sentences_removed": 3,
   "hypothesis": {
-    "text": "The cluster may produce a nonribosomal peptide with antifungal activity, given the close match to a known antifungal NRPS cluster and the presence of core NRPS genes predicting diverse amino acid substrates.",
+    "text": "Given the close similarity to the surugamide cluster and the presence of multiple NRPS modules predicted to incorporate hydrophobic and aromatic amino acids, this cluster may produce a surugamide-like cyclic peptide with antifungal activity; the additional hydrolases and aldehyde dehydrogenase could further tailor the peptide backbone, while the GTP cyclohydrolase and MbtH protein suggest roles in cofactor supply and NRPS efficiency.",
     "facts": [
       "S1",
       "S2",
       "S9",
       "S10",
-      "G3",
-      "G4",
-      "G5",
-      "G6",
-      "G7",
-      "G8"
+      "G9",
+      "G10",
+      "G11",
+      "G12",
+      "G13",
+      "G14"
     ],
     "shown": true,
     "reasons": []

@@ -1,88 +1,100 @@
-locus	section	shown	text	check_reasons	manual_judgement
-Soil_1_10	overview	yes	Soil_1_10 is a biosynthetic gene cluster identified solely by DeepBGC, with no compound class assigned.		correct
-Soil_1_10	overview	yes	It spans 49 kb on contig_1 from position 936,108 to 985,530 and contains 46 genes.		correct
-Soil_1_10	genes	yes	The cluster includes 9 regulatory, 2 transport, 15 tailoring-enzyme, and 2 resistance genes, with 2 core genes identified by DeepBGC.		correct
-Soil_1_10	genes	yes	CJLEIP_00811 is annotated as an Acyl-CoA synthetase and is a core gene.		correct
-Soil_1_10	genes	yes	CJLEIP_00812 is annotated as an AMP-binding protein and is a core gene.		correct
-Soil_1_10	similar	yes	No comparison with MIBiG has been made, as antiSMASH did not detect this locus.		correct
-Soil_1_10	hypothesis	yes	The presence of xanthine dehydrogenase subunits and accessory factors, along with oxidoreductases and transcriptional regulators, suggests the cluster may be involved in purine degradation rather than specialised metabolite production.		hypothesis (not judged as fact)
-Soil_1_12	overview	yes	Soil_1_12 is a biosynthetic gene cluster identified solely by GECCO, with no compound class assigned.		correct
-Soil_1_12	overview	yes	It spans 12 kb on contig_1 (1,156,933–1,169,058) and contains 13 genes.		correct
-Soil_1_12	genes	yes	It holds 2 regulatory, 3 tailoring-enzyme and 2 resistance genes according to BGC-XPLORER annotation categories.		correct
-Soil_1_12	genes	yes	No detection tool names a core biosynthetic gene inside the agreed span of this locus.		correct
-Soil_1_12	genes	yes	ARTS finds 1 hit to known resistance models.		correct
-Soil_1_12	similar	yes	This locus has not been compared with MIBiG, as the comparison is made by antiSMASH, which did not detect it.		correct
-Soil_1_12	hypothesis	yes	The cluster may be involved in primary metabolism or stress response, given the presence of resistance genes, regulatory proteins, and tailoring enzymes, along with gene products such as ornithine carbamoyltransferase and arginine deiminase that are associated with amino acid metabolism.		hypothesis (not judged as fact)
-Soil_1_13	overview	yes	Soil_1_13 is a nonribosomal peptide (NRPS) cluster detected by antiSMASH, DeepBGC and GECCO, spanning 57 kb on contig_1 and containing 30 genes.		correct
-Soil_1_13	genes	yes	antiSMASH marks 11 genes as biosynthetic, comprising 2 core and 9 additional genes, with 4 regulatory and 3 transport genes also present.		correct
-Soil_1_13	genes	yes	CJLEIP_01147, a D-alanine--poly(phosphoribitol) ligase subunit DltA, contains 3 modules with adenylation domains predicted to load phenylalanine, an unidentified residue and valine, and one module carries an epimerization domain.		correct
-Soil_1_13	genes	yes	CJLEIP_01149, also a D-alanine--poly(phosphoribitol) ligase subunit DltA, has 3 modules with adenylation domains predicted to load an unidentified residue, threonine and threonine, and two modules carry an epimerization domain.		correct
-Soil_1_13	genes	yes	Together CJLEIP_01147 and CJLEIP_01149 hold 6 modules; antiSMASH predicts substrates for 4 modules (phenylalanine, valine and two threonine) and none for 2 modules, with 3 modules carrying an epimerization domain.		correct
-Soil_1_13	genes	yes	CJLEIP_01154, annotated as a Thioesterase, is named a core gene by DeepBGC and GECCO.		correct
-Soil_1_13	genes	yes	Additional biosynthetic genes include CJLEIP_01139 (Glycosyltransferase family 1 protein), CJLEIP_01148 (MbtH family protein), CJLEIP_01152 (Cytochrome P450) and CJLEIP_01161 (23S rRNA methyltransferase RlmD).		correct
-Soil_1_13	similar	yes	The closest known cluster is BGC0002358 (cyclofaulknamycin) from Streptomyces albidoflavus, which is a close match.		correct
-Soil_1_13	similar	yes	CJLEIP_01147 matches XNR_0983 (Peptide synthase) of BGC0002358 at 99 % identity, CJLEIP_01149 matches XNR_0985 (Peptide synthase) at 99 % identity, and CJLEIP_01154 matches XNR_0990 (putative thioesterase) at 99 % identity.		correct
-Soil_1_13	hypothesis	yes	The cluster may produce a modified nonribosomal peptide, possibly incorporating phenylalanine, valine and threonine, based on the core NRPS genes and tailoring enzymes such as cytochrome P450 and glycosyltransferase, while the presence of regulatory and transport genes suggests specialised metabolite biosynthesis rather than primary metabolism.		hypothesis (not judged as fact)
-Soil_1_15	overview	yes	Soil_1_15 is a terpene biosynthetic gene cluster detected by antiSMASH, DeepBGC and GECCO, spanning 21 kb on contig_1 and containing 22 genes.		correct
-Soil_1_15	genes	yes	antiSMASH marks 4 genes as biosynthetic, comprising 1 core gene and 3 additional biosynthetic genes, with 2 regulatory and 1 transport gene also present.		correct
-Soil_1_15	genes	yes	The core gene CJLEIP_01467 is annotated as a terpene synthase by Bakta and identified as such by antiSMASH and GECCO.		imprecise
-Soil_1_15	genes	yes	Together, the additional biosynthetic genes include CJLEIP_01462 (short chain dehydrogenase), CJLEIP_01469 (citramalate synthase), and CJLEIP_01472 (urease subunit alpha), each marked by antiSMASH as biosynthetic.		correct
-Soil_1_15	similar	yes	The closest known cluster is BGC0001181 (geosmin) from Streptomyces coelicolor A3(2), a terpene cluster with questionable annotation quality in MIBiG.		correct
-Soil_1_15	similar	yes	One gene in the locus, CJLEIP_01467, matches the putative cyclase CAB41566.1 in BGC0001181 at 64% identity, and antiSMASH finds counterparts for 100% of that cluster's genes, indicating a moderate match overall.		correct
-Soil_1_15	hypothesis	yes	The cluster may produce a terpene-based metabolite, possibly related to geosmin, given the presence of a terpene synthase core gene and additional modifying enzymes such as a short chain dehydrogenase and citramalate synthase, alongside urease components that could influence nitrogen metabolism or precursor availability.		hypothesis (not judged as fact)
-Soil_1_22	overview	yes	Soil_1_22 is a biosynthetic gene cluster identified by DeepBGC and GECCO, with no compound class assigned.		correct
-Soil_1_22	overview	yes	It spans 11 kb on contig_1 from position 2,861,769 to 2,872,845 and contains 11 genes.		correct
-Soil_1_22	genes	yes	The cluster contains 2 regulatory, 2 transport, 2 tailoring-enzyme and 3 resistance genes, with no core biosynthetic gene detected by any tool.		correct
-Soil_1_22	similar	yes	This locus has not been compared with MIBiG, as the comparison was performed by antiSMASH, which did not detect the cluster.		correct
-Soil_1_22	hypothesis	yes	The presence of cytochrome P450 enzymes, phosphoserine transaminase, and threonine dehydratase suggests the cluster may be involved in amino acid modification or primary metabolic processes rather than specialised metabolite biosynthesis.		hypothesis (not judged as fact)
-Soil_1_32	overview	yes	Soil_1_32 is a nonribosomal peptide and azole-containing-RiPP cluster detected by antiSMASH, DeepBGC and GECCO, spanning 103 kb on contig_1 with 42 genes.		correct
-Soil_1_32	genes	yes	antiSMASH marks 12 genes as biosynthetic (7 core and 5 additional), with 4 regulatory and 6 transport genes.		correct
-Soil_1_32	genes	yes	CJLEIP_03619 is a core gene with 3 modules predicting leucine, phenylalanine and no substrate, and 2 modules carrying an epimerization domain.		correct
-Soil_1_32	genes	yes	CJLEIP_03620 is a core gene with 6 modules predicting alanine for 2, valine for 2, leucine for 1 and isoleucine for 1, and 3 modules carrying an epimerization domain.		correct
-Soil_1_32	genes	yes	CJLEIP_03621 is a core gene with 4 modules predicting threonine, valine, leucine and tryptophan, and 1 module carrying an epimerization domain.		correct
-Soil_1_32	genes	removed	Together the six core genes CJLEIP_03619, CJLEIP_03620, CJLEIP_03621, CJLEIP_03622, CJLEIP_03623 and CJLEIP_03624 hold 18 modules; antiSMASH predicts a substrate for 16 modules (leucine for 3, phenylalanine for 1, alanine for 3, valine for 3, isoleucine for 3, threonine for 1, tryptophan for 1 and lysine for 1) and none for 1 module; 1 module has no adenylation or acyltransferase domain; 8 modules carry an epimerization domain.	the number 6 is not in the cited facts; the number 6 counts 'core' here, but not in the cited facts	correct (removed by the check)
-Soil_1_32	genes	yes	Additional biosynthetic genes include CJLEIP_03631 (MbtH family protein), CJLEIP_03604 (GTP cyclohydrolase I FolE), CJLEIP_03625 (Serine hydrolase), CJLEIP_03632 (Alpha/beta hydrolase) and CJLEIP_03633 (Aldehyde dehydrogenase domain-containing protein).		correct
-Soil_1_32	similar	yes	The closest known cluster is BGC0001792 (surugamide A and surugamide D) from Streptomyces albidoflavus, a close match with 23 genes having counterparts at 98–100 % identity.		correct
-Soil_1_32	similar	yes	CJLEIP_03619 matches XNR_3446 at 99 % identity, CJLEIP_03620 matches XNR_3447 at 100 % identity, CJLEIP_03621 matches XNR_3448 at 100 % identity, CJLEIP_03622 matches XNR_3449 at 100 % identity, CJLEIP_03623 matches XNR_3449 at 99 % identity and CJLEIP_03624 matches XNR_3449 at 99 % identity.		correct
-Soil_1_32	similar	yes	MIBiG lists the compound class of BGC0001792 as NRPS and records antifungal activity for surugamide A and surugamide D, with questionable annotation quality.		correct
-Soil_1_32	hypothesis	yes	The cluster may produce a nonribosomal peptide with antifungal activity, given the close match to a known antifungal NRPS cluster and the presence of core NRPS genes predicting diverse amino acid substrates.		hypothesis (not judged as fact)
-Soil_1_33	overview	yes	Soil_1_33 is a nonribosomal peptide cluster identified by DeepBGC and GECCO, spanning 16 kb on contig_1 from position 4,640,389 to 4,656,342 and containing 13 genes.		correct
-Soil_1_33	genes	yes	The cluster contains one regulatory gene, one transport gene, three tailoring-enzyme genes, one resistance gene, and two core biosynthetic genes.		correct
-Soil_1_33	genes	yes	CJLEIP_04117 is a (pseudo) non-ribosomal peptide synthetase named as a core gene by both DeepBGC and GECCO.		correct
-Soil_1_33	genes	yes	CJLEIP_04116 is a thioester reductase domain-containing protein named as a core gene by GECCO.		correct
-Soil_1_33	genes	removed	Together, these two core genes represent the biosynthetic machinery of the cluster.	the number 2 is not in the cited facts; the number 2 counts 'core' here, but not in the cited facts	correct (removed by the check)
-Soil_1_33	similar	yes	No comparison with MIBiG has been made, as antiSMASH did not detect this locus.		correct
-Soil_1_33	hypothesis	yes	The cluster may produce a modified peptide, as it contains a (pseudo) non-ribosomal peptide synthetase and a thioester reductase domain-containing protein as core genes, along with tailoring enzymes such as an SDR family oxidoreductase, a 2OG-Fe(II) oxygenase, and a GNAT family N-acetyltransferase, suggesting possible oxidation, hydroxylation, and acetylation modifications.		hypothesis (not judged as fact)
-Soil_1_38	overview	yes	Soil_1_38 is a biosynthetic gene cluster identified by DeepBGC and GECCO, with no compound class assigned.		correct
-Soil_1_38	overview	yes	It spans 11 kb on contig_1 from position 5,288,071 to 5,299,166 and contains 12 genes.		correct
-Soil_1_38	genes	yes	The cluster contains 2 regulatory, 1 transport, and 4 tailoring-enzyme genes according to BGC-XPLORER annotation categories.		correct
-Soil_1_38	genes	yes	No detection tool names a core biosynthetic gene within the agreed span of the locus.		correct
-Soil_1_38	genes	yes	Three further core genes are named by DeepBGC but lie outside the agreed span of the locus.		correct
-Soil_1_38	similar	yes	This locus has not been compared with MIBiG, as the comparison was performed by antiSMASH, which did not detect the cluster.		correct
-Soil_1_38	hypothesis	yes	The presence of NAD-dependent epimerase/dehydratase, NAD(P)-dependent oxidoreductase, iron-containing redox enzyme, and methyltransferase genes suggests the cluster may be involved in redox modifications or methylation of a precursor, possibly linked to primary metabolism rather than specialised metabolite production.		hypothesis (not judged as fact)
-Soil_1_48	overview	yes	Soil_1_48 is a polyketide, terpene-precursor, NRPS-like, nonribosomal peptide (NRPS) and class II lanthipeptide cluster, found by antiSMASH, DeepBGC and GECCO (all three detection tools).		correct
-Soil_1_48	overview	yes	It spans 272 kb on contig_1 (6,762,952–7,035,108) and contains 107 genes.		correct
-Soil_1_48	genes	yes	antiSMASH marks 35 genes as biosynthetic (15 core and 20 additional), 12 as regulatory and 9 as transport.		correct
-Soil_1_48	genes	yes	CJLEIP_06060, annotated by Bakta as Dimethylallyltransferase, is named as a core gene by antiSMASH.		correct
-Soil_1_48	genes	yes	CJLEIP_06067, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 6 modules in it, and predicts malonyl-CoA for 5 and no substrate for 1 for its acyltransferase domains.		correct
-Soil_1_48	genes	yes	CJLEIP_06073, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 3 modules in it, and predicts malonyl-CoA for all 3 for its acyltransferase domains.		correct
-Soil_1_48	genes	yes	CJLEIP_06077, annotated by Bakta as SDR family NAD(P)-dependent oxidoreductase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 1 module in it, and predicts malonyl-CoA for its acyltransferase domain.		correct
-Soil_1_48	genes	yes	CJLEIP_06079, annotated by Bakta as Polyketide synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 1 module in it, and predicts malonyl-CoA for its acyltransferase domain.		correct
-Soil_1_48	genes	yes	CJLEIP_06081, annotated by Bakta as sulfolipid-1 biosynthesis phthioceranic/hydroxyphthioceranic acid synthase, is named as a core gene by antiSMASH, DeepBGC and GECCO; antiSMASH finds 3 modules in it, and predicts methylmalonyl-CoA for all 3 for its acyltransferase domains.		correct
-Soil_1_48	genes	yes	Together CJLEIP_06067, CJLEIP_06073, CJLEIP_06077, CJLEIP_06079, CJLEIP_06081, CJLEIP_06084, CJLEIP_06087, CJLEIP_06094, CJLEIP_06125, CJLEIP_06126, CJLEIP_06130, CJLEIP_06151, CJLEIP_06152, CJLEIP_06153 and CJLEIP_06155 hold 36 modules; antiSMASH predicts a substrate for 27 modules (malonyl-CoA for 21, methylmalonyl-CoA for 3, threonine for 1, proline for 1 and glycine for 1) and none for 2 modules; 7 modules have no adenylation or acyltransferase domain.		correct
-Soil_1_48	genes	yes	CJLEIP_06099 encodes Cytochrome P450 and is marked by antiSMASH as an additional biosynthetic gene.		correct
-Soil_1_48	genes	yes	CJLEIP_06101 encodes Glycosyltransferase and is marked by antiSMASH as an additional biosynthetic gene.		correct
-Soil_1_48	genes	yes	CJLEIP_06158 encodes Thioesterase domain-containing protein and is marked by antiSMASH as an additional biosynthetic gene.		correct
-Soil_1_48	genes	yes	CJLEIP_06167 encodes 4-hydroxybenzoyl-CoA thioesterase and is marked by antiSMASH as an additional biosynthetic gene.		correct
-Soil_1_48	genes	yes	CJLEIP_06058 encodes Short-chain dehydrogenase and is marked by antiSMASH as an additional biosynthetic gene.		correct
-Soil_1_48	similar	yes	The closest MIBiG entry is BGC0000034 (candicidin), from Streptomyces sp. FR-008.		correct
-Soil_1_48	similar	yes	23 genes of the locus have a counterpart in BGC0000034, at 98–100 % identity; antiSMASH finds counterparts for 100 % of that cluster's genes. Overall this is a close match.		correct
-Soil_1_48	similar	yes	MIBiG lists the compound class of BGC0000034 as NRPS and PKS.		correct
-Soil_1_48	hypothesis	yes	The cluster may produce a hybrid NRPS-PKS metabolite with antifungal activity, given its close match to candicidin and the presence of core PKS and NRPS genes, along with modifying enzymes such as cytochrome P450 and glycosyltransferase.		hypothesis (not judged as fact)
-Soil_1_6	overview	yes	Soil_1_6 is a RiPP-like cluster identified solely by antiSMASH, spanning 10 kb on contig_1 from position 662,441 to 672,657 and containing 8 genes.		correct
-Soil_1_6	genes	yes	antiSMASH marks 2 genes as biosynthetic (1 core and 1 additional) and 1 as transport.		correct
-Soil_1_6	genes	yes	CJLEIP_00553, annotated by Bakta as Type A2 lantipeptide, is named as a core gene by antiSMASH.		correct
-Soil_1_6	genes	yes	CJLEIP_00551 encodes Long-chain fatty acid--CoA ligase and is marked by antiSMASH as an additional biosynthetic gene.		correct
-Soil_1_6	similar	yes	The closest MIBiG entry is BGC0001555 (colicin V), from Escherichia coli chi7122.		correct
-Soil_1_6	similar	yes	antiSMASH's ClusterCompare gives this entry a score of 0.47 on a scale of 0 to 1, indicating a distant match.		correct
-Soil_1_6	hypothesis	yes	The cluster may produce a lantipeptide with antibacterial activity, given the presence of a Type A2 lantipeptide core gene and associated secretion and transport genes, along with a hit to resistance models and similarity to a known antibacterial ribosomal peptide.		hypothesis (not judged as fact)
+locus	section	shown	text	check_reasons	manual_judgement	note
+Soil_1_6	overview	yes	Soil_1_6 is a RiPP-like cluster detected only by antiSMASH.		correct	
+Soil_1_6	overview	yes	It spans 10 kb on contig_1 and contains eight genes.		correct	
+Soil_1_6	genes	yes	antiSMASH marks two genes as biosynthetic, one core and one additional, and one as transport.		correct	
+Soil_1_6	genes	yes	The core gene CJLEIP_00553 encodes a type A2 lantipeptide.		correct	
+Soil_1_6	genes	yes	The additional biosynthetic gene CJLEIP_00551 encodes a long-chain fatty acid--CoA ligase.		correct	
+Soil_1_6	similar	yes	The closest MIBiG entry is BGC0001555 (colicin V) from Escherichia coli chi7122, a ribosomal compound with antibacterial activity.		correct	
+Soil_1_6	similar	yes	ClusterCompare gives a score of 0.47, indicating a distant match.		correct	
+Soil_1_6	similar	yes	The annotation quality of the reference cluster is rated as questionable.		correct	
+Soil_1_6	hypothesis	yes	The cluster may produce a lantipeptide bacteriocin that is exported by the NHLP system, with the fatty acid--CoA ligase possibly involved in lipid modification or primary metabolism.		hypothesis (not judged as fact)	
+Soil_1_10	overview	yes	Soil_1_10 is a biosynthetic gene cluster detected only by DeepBGC with no compound class assigned.		correct	
+Soil_1_10	overview	yes	It spans 49 kb on contig_1 from 936,108 to 985,530 and contains 46 genes.		correct	
+Soil_1_10	genes	yes	The cluster holds 15 tailoring-enzyme, 9 regulatory, 2 transport and 2 resistance genes according to BGC-XPLORER annotation categories.		correct	
+Soil_1_10	genes	yes	DeepBGC names two core genes in the locus.		correct	
+Soil_1_10	genes	yes	CJLEIP_00811 is an acyl-CoA synthetase named as a core gene by DeepBGC.		correct	
+Soil_1_10	genes	yes	CJLEIP_00812 is an AMP-binding protein named as a core gene by DeepBGC.		correct	
+Soil_1_10	similar	yes	This locus has not been compared with MIBiG because antiSMASH did not detect it.		correct	
+Soil_1_10	hypothesis	yes	The cluster may be involved in purine catabolism rather than specialised metabolite biosynthesis, given the presence of genes for 8-oxoguanine deaminase, urate hydroxylase, hydroxyisourate hydrolase, xanthine dehydrogenase subunits and associated oxidoreductases.		hypothesis (not judged as fact)	
+Soil_1_12	overview	yes	Soil_1_12 is a biosynthetic gene cluster detected only by GECCO and has no assigned compound class.		correct	
+Soil_1_12	overview	yes	It spans 12 kb on contig_1 and contains 13 genes.		correct	
+Soil_1_12	genes	yes	The locus holds two regulatory genes, three tailoring enzymes and two resistance genes according to BGC-XPLORER annotation.		correct	
+Soil_1_12	genes	yes	No detection tool identifies a core biosynthetic gene within the agreed span of this locus.		correct	
+Soil_1_12	genes	yes	ARTS finds one hit to a known resistance model.		correct	
+Soil_1_12	similar	yes	This locus has not been compared with MIBiG because antiSMASH did not detect it.		correct	
+Soil_1_12	hypothesis	yes	The gene products include enzymes of the arginine deiminase pathway such as ornithine carbamoyltransferase and arginine deiminase, together with a phosphoketolase and several nucleotide-binding proteins, suggesting this cluster may be involved in primary metabolic processes such as arginine catabolism and energy production rather than specialised metabolite biosynthesis.		hypothesis (not judged as fact)	
+Soil_1_13	overview	yes	Soil_1_13 is a nonribosomal peptide cluster detected by antiSMASH, DeepBGC and GECCO.		correct	
+Soil_1_13	overview	yes	It spans 57 kb on contig_1 and contains 30 genes.		correct	
+Soil_1_13	genes	removed	antiSMASH marks 11 genes as biosynthetic, including two core NRPS genes and nine additional biosynthetic genes.	'nrps' is not in the cited facts	correct (removed by the check)	
+Soil_1_13	genes	yes	Three core genes are named by at least one of the three detection tools.		correct	
+Soil_1_13	genes	yes	CJLEIP_01147 is a core NRPS gene with three modules predicted to load phenylalanine, an unidentified residue and valine, and one module carries an epimerization domain.		correct	
+Soil_1_13	genes	yes	CJLEIP_01149 is a core NRPS gene with three modules predicted to load an unidentified residue and threonine twice, and two modules carry an epimerization domain.		correct	
+Soil_1_13	genes	yes	CJLEIP_01154 is a core gene annotated as a thioesterase.		correct	
+Soil_1_13	genes	yes	Together the two NRPS genes hold six modules, with substrates predicted for four modules and three modules carrying an epimerization domain.		correct	
+Soil_1_13	genes	yes	Additional biosynthetic genes include a glycosyltransferase family 1 protein, an MbtH family protein, a cytochrome P450, a 23S rRNA methyltransferase and a 2-deoxy-scyllo-inosamine dehydrogenase.		correct	
+Soil_1_13	similar	yes	The closest MIBiG entry is BGC0002358 (cyclofaulknamycin) from Streptomyces albidoflavus, which is a very close match.		imprecise	'very' overstates the match grade, which the facts give as close
+Soil_1_13	similar	yes	Twenty-one genes of the locus have counterparts in that cluster at 96 to 100 percent identity, and antiSMASH finds counterparts for all of the reference cluster's genes.		correct	
+Soil_1_13	similar	removed	The two NRPS core genes and the thioesterase each match their counterparts at 99 percent identity.	the number 2 is not in the cited facts; 'nrps' is not in the cited facts	correct (removed by the check)	
+Soil_1_13	hypothesis	yes	Given the very high similarity to the cyclofaulknamycin cluster and the presence of two large NRPSs with epimerization domains, a thioesterase, a cytochrome P450, a glycosyltransferase and an MbtH protein, this locus may produce a cyclofaulknamycin-like nonribosomal peptide that is further modified by oxidation and glycosylation.		hypothesis (not judged as fact)	
+Soil_1_15	overview	yes	Soil_1_15 is a terpene biosynthetic gene cluster detected by antiSMASH, DeepBGC and GECCO.		correct	
+Soil_1_15	overview	yes	It spans 21 kb on contig_1 and contains 22 genes.		correct	
+Soil_1_15	genes	yes	antiSMASH marks four genes as biosynthetic, comprising one core gene and three additional genes.		correct	
+Soil_1_15	genes	yes	The core gene CJLEIP_01467 encodes a terpene synthase and is identified as a core terpene gene by antiSMASH and GECCO.		imprecise	the 'terpene' core type comes from antiSMASH only; GECCO names it a core gene
+Soil_1_15	genes	removed	Three additional biosynthetic genes are present: CJLEIP_01462 encodes a short chain dehydrogenase, CJLEIP_01469 encodes citramalate synthase, and CJLEIP_01472 encodes urease subunit alpha.	the number 3 is not in the cited facts; the number 3 counts 'additional' here, but not in the cited facts	correct (removed by the check)	
+Soil_1_15	similar	yes	The closest MIBiG entry is BGC0001181 (geosmin) from Streptomyces coelicolor A3(2), a terpene cluster with questionable annotation quality.		correct	
+Soil_1_15	similar	yes	One gene of the locus has a counterpart in that cluster at sixty-four percent identity, and antiSMASH finds counterparts for one hundred percent of the reference cluster's genes, representing a moderate match.		correct	
+Soil_1_15	hypothesis	yes	The cluster may produce a volatile terpene such as geosmin, given the terpene synthase core gene matching a geosmin cyclase and the presence of a citramalate synthase that could supply isoprenoid precursors; the additional dehydrogenase and urease genes together with the surrounding transporters and regulators could support primary metabolic functions rather than a specialised metabolite.		hypothesis (not judged as fact)	
+Soil_1_22	overview	yes	Soil_1_22 is a biosynthetic gene cluster identified by DeepBGC and GECCO without an assigned compound class.		correct	
+Soil_1_22	overview	yes	The locus spans 11 kb on contig_1 from 2,861,769 to 2,872,845 and contains 11 genes.		correct	
+Soil_1_22	genes	yes	According to BGC-XPLORER annotation categories, the cluster holds two regulatory, two transport, two tailoring-enzyme and three resistance genes.		correct	
+Soil_1_22	genes	yes	No detection tool names a core biosynthetic gene inside the agreed span of this locus.		correct	
+Soil_1_22	similar	yes	This locus has not been compared with MIBiG because antiSMASH did not detect it.		correct	
+Soil_1_22	hypothesis	yes	The presence of two cytochrome P450 enzymes, a phosphoserine transaminase and a threonine dehydratase together with transport and regulatory proteins may indicate a role in amino acid metabolism or modification rather than a classic specialised metabolite pathway.		hypothesis (not judged as fact)	
+Soil_1_32	overview	yes	Soil_1_32 is a hybrid nonribosomal peptide and azole-containing RiPP cluster identified by antiSMASH, DeepBGC and GECCO.		imprecise	'hybrid' is the model's word; the facts list two classes
+Soil_1_32	overview	yes	The locus spans 103 kb on contig_1 and contains 42 genes.		correct	
+Soil_1_32	genes	yes	antiSMASH marks 12 genes as biosynthetic, comprising 7 core and 5 additional genes, alongside 4 regulatory and 6 transport genes.		correct	
+Soil_1_32	genes	removed	Six core NRPS genes are named by all three detection tools: CJLEIP_03619, CJLEIP_03620, CJLEIP_03621, CJLEIP_03622, CJLEIP_03623 and CJLEIP_03624.	CJLEIP_03622 is not in the cited facts; CJLEIP_03624 is not in the cited facts; CJLEIP_03619 is not in the cited facts; CJLEIP_03620 is not in the cited facts; CJLEIP_03623 is not in the cited facts; CJLEIP_03621 is not in the cited facts; 'nrps' is not in the cited facts	correct (removed by the check)	
+Soil_1_32	genes	yes	CJLEIP_03619 carries three modules predicted to load leucine, phenylalanine and an unidentified residue, with two modules containing an epimerization domain.		correct	
+Soil_1_32	genes	yes	CJLEIP_03620 is the largest with six modules predicted to load alanine twice, valine twice, leucine and isoleucine, and three modules bearing an epimerization domain.		correct	
+Soil_1_32	genes	yes	CJLEIP_03621 contains four modules predicted to load threonine, valine, leucine and tryptophan, one of which has an epimerization domain.		correct	
+Soil_1_32	genes	yes	CJLEIP_03622 holds two modules predicted to load lysine, one with an epimerization domain.		correct	
+Soil_1_32	genes	yes	CJLEIP_03623 has a single module predicted to load isoleucine.		correct	
+Soil_1_32	genes	yes	CJLEIP_03624 possesses two modules predicted to load alanine and isoleucine, one carrying an epimerization domain.		correct	
+Soil_1_32	genes	yes	Together these six NRPS genes hold 18 modules in total, with substrates predicted for 16 modules including leucine for three, phenylalanine for one, alanine for three, valine for three, isoleucine for three, threonine for one, tryptophan for one and lysine for one, while one module lacks a substrate prediction and another lacks an adenylation or acyltransferase domain; eight modules carry an epimerization domain.		correct	
+Soil_1_32	genes	yes	The additional biosynthetic genes include an MbtH family protein (CJLEIP_03631), a GTP cyclohydrolase I FolE (CJLEIP_03604), a serine hydrolase (CJLEIP_03625), an alpha/beta hydrolase (CJLEIP_03632) and an aldehyde dehydrogenase (CJLEIP_03633).		correct	
+Soil_1_32	similar	removed	The closest MIBiG entry is BGC0001792 from Streptomyces albidoflavus, which produces surugamide A and surugamide D.	interpretive wording: 'produces'	interpretive wording (removed by the check)	
+Soil_1_32	similar	yes	This is a close match, with 23 locus genes having counterparts in the reference cluster at 98 to 100 percent identity and antiSMASH finding counterparts for 100 percent of the reference cluster's genes.		correct	
+Soil_1_32	similar	removed	The six core NRPS genes match their counterparts XNR_3446 through XNR_3449 at 99 to 100 percent identity.	the number 6 is not in the cited facts; 'nrps' is not in the cited facts; the number 6 counts 'core' here, but not in the cited facts	correct (removed by the check)	
+Soil_1_32	hypothesis	yes	Given the close similarity to the surugamide cluster and the presence of multiple NRPS modules predicted to incorporate hydrophobic and aromatic amino acids, this cluster may produce a surugamide-like cyclic peptide with antifungal activity; the additional hydrolases and aldehyde dehydrogenase could further tailor the peptide backbone, while the GTP cyclohydrolase and MbtH protein suggest roles in cofactor supply and NRPS efficiency.		hypothesis (not judged as fact)	
+Soil_1_33	overview	yes	Soil_1_33 is a nonribosomal peptide cluster identified by DeepBGC and GECCO.		correct	
+Soil_1_33	overview	yes	It spans 16 kb on contig_1 and contains 13 genes.		correct	
+Soil_1_33	genes	yes	The locus holds one regulatory, one transport, three tailoring-enzyme and one resistance gene according to BGC-XPLORER annotation categories.		correct	
+Soil_1_33	genes	yes	Two core genes are named in the locus, each by at least one of DeepBGC and GECCO.		correct	
+Soil_1_33	genes	yes	CJLEIP_04117 is annotated as a (pseudo) non-ribosomal peptide synthetase and named as a core gene by DeepBGC and GECCO.		correct	
+Soil_1_33	genes	yes	CJLEIP_04116 is annotated as a thioester reductase domain-containing protein and named as a core gene by GECCO.		correct	
+Soil_1_33	genes	removed	Additional genes include a glycosyl transferase, an RNA polymerase sigma factor, an extensin, an aspartyl/asparaginyl beta-hydroxylase domain-containing protein, two ATP-grasp domain-containing proteins, an SDR family oxidoreductase, a 2OG-Fe(II) oxygenase, a GNAT family N-acetyltransferase, an MFS transporter and a 3-hydroxyisobutyrate dehydrogenase.	cites no known fact	correct, but taken from the hypothesis context (removed by the check)	
+Soil_1_33	similar	yes	This locus has not been compared with MIBiG because antiSMASH did not detect it.		correct	
+Soil_1_33	hypothesis	yes	The cluster may produce a nonribosomal peptide that is glycosylated and further modified by oxidation and acetylation, given the presence of a glycosyl transferase, an SDR oxidoreductase, a 2OG-Fe(II) oxygenase and a GNAT N-acetyltransferase alongside the NRPS and thioester reductase core genes.		hypothesis (not judged as fact)	
+Soil_1_38	overview	yes	Soil_1_38 is a biosynthetic gene cluster identified by DeepBGC and GECCO, with no compound class assigned.		correct	
+Soil_1_38	overview	yes	It spans 11 kb on contig_1 and contains 12 genes.		correct	
+Soil_1_38	genes	yes	The locus holds four tailoring-enzyme genes, two regulatory genes and one transport gene according to BGC-XPLORER annotation categories.		correct	
+Soil_1_38	genes	yes	No detection tool names a core biosynthetic gene inside the agreed span of this locus.		correct	
+Soil_1_38	genes	yes	Three further core genes named by DeepBGC lie outside the agreed span of the locus.		correct	
+Soil_1_38	similar	yes	This locus has not been compared with MIBiG because antiSMASH did not detect it.		correct	
+Soil_1_38	hypothesis	yes	The cluster may be involved in primary metabolic processes such as redox balancing or cell shape determination rather than specialised metabolite production, given the presence of NAD-dependent epimerase/dehydratase, NAD(P)-dependent oxidoreductases, an iron-containing redox enzyme, a CDGSH iron-sulfur protein, and the cell shape-determining protein MreB.		hypothesis (not judged as fact)	
+Soil_1_48	overview	yes	Soil_1_48 is a hybrid polyketide, terpene-precursor, NRPS-like, nonribosomal peptide and class II lanthipeptide cluster detected by antiSMASH, DeepBGC and GECCO.		correct	
+Soil_1_48	overview	yes	It spans 272 kb on contig_1 and contains 107 genes.		correct	
+Soil_1_48	genes	yes	antiSMASH marks 35 genes as biosynthetic, including 15 core and 20 additional genes, alongside 12 regulatory and 9 transport genes.		correct	
+Soil_1_48	genes	yes	Seven core genes are named by at least one of the three detection tools.		correct	
+Soil_1_48	genes	yes	CJLEIP_06060 encodes a dimethylallyltransferase and is classed as a core terpene-precursor gene by antiSMASH.		correct	
+Soil_1_48	genes	removed	CJLEIP_06067 is a type I polyketide synthase with six modules, five predicted to load malonyl-CoA and one with no substrate.	'polyketide' is not in the cited facts	correct (removed by the check)	
+Soil_1_48	genes	removed	CJLEIP_06073 is a type I polyketide synthase with three modules, all predicted to load malonyl-CoA.	'polyketide' is not in the cited facts	correct (removed by the check)	
+Soil_1_48	genes	removed	CJLEIP_06077 is a type I polyketide synthase with one module predicted to load malonyl-CoA.	'polyketide' is not in the cited facts	correct (removed by the check)	
+Soil_1_48	genes	yes	CJLEIP_06079 is a type I polyketide synthase with one module predicted to load malonyl-CoA.		correct	
+Soil_1_48	genes	removed	CJLEIP_06081 is a type I polyketide synthase with three modules, all predicted to load methylmalonyl-CoA.	'polyketide' is not in the cited facts	correct (removed by the check)	
+Soil_1_48	genes	yes	Together these 15 CAL, NRPS and PKS genes hold 36 modules in all; antiSMASH predicts a substrate for 27 modules, including malonyl-CoA for 21, methylmalonyl-CoA for three, threonine for one, proline for one and glycine for one, while two modules have no substrate and seven lack an adenylation or acyltransferase domain.		correct	
+Soil_1_48	genes	yes	Additional biosynthetic genes include a cytochrome P450 (CJLEIP_06099), a glycosyltransferase (CJLEIP_06101), a thioesterase domain-containing protein (CJLEIP_06158), a 4-hydroxybenzoyl-CoA thioesterase (CJLEIP_06167) and a short-chain dehydrogenase (CJLEIP_06058).		correct	
+Soil_1_48	similar	yes	The closest MIBiG entry is BGC0000034 (candicidin) from Streptomyces sp. FR-008, and this is a close match.		correct	
+Soil_1_48	similar	yes	Twenty-three genes of the locus have counterparts in BGC0000034 at 98 to 100 percent identity, and antiSMASH finds counterparts for 100 percent of that cluster's genes.		correct	
+Soil_1_48	similar	removed	Core genes CJLEIP_06067, CJLEIP_06073, CJLEIP_06077, CJLEIP_06079 and CJLEIP_06081 match FscD, FscE, FscE, FscF and FscB of the candicidin cluster at 98 to 99 percent identity.	'candicidin' is not in the cited facts; 'candicidin' is not in the cited facts	correct (removed by the check)	
+Soil_1_48	hypothesis	yes	Given the strong similarity to the candicidin cluster and the presence of multiple type I PKS modules loading malonyl-CoA and methylmalonyl-CoA, this cluster may produce a polyene macrolide antifungal similar to candicidin; the additional cytochrome P450, glycosyltransferase and thioesterase genes could further modify the macrocycle, while the dimethylallyltransferase and lanthipeptide genes suggest possible hybrid or additional peptide-polyketide products.		hypothesis (not judged as fact)	
