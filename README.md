@@ -64,7 +64,7 @@ Stop the application with `docker compose down`. Your inputs, databases and resu
 
 > The first start can take considerable time and disk space because the biological reference databases must be downloaded. Completed databases are reused and are not automatically upgraded on later starts.
 
-To check an installation, run the 320 kb test genome in [`example/`](example/README.md); its README lists the loci a complete run should report.
+To check an installation, run the 320 kb test genome in `example/` (a fragment of GenBank CP158056.1, positions 1,200,001–1,520,000, with two complete loci): upload `example/STR-S001_CP158056.1_1200001-1520000.fasta` in the web interface, or copy it into `data/fasta/` as `STR_S001_test.fasta` and add `STR_S001_test	actinobacteria` to `config/samples.tsv`. A complete run reports the loci listed in `example/expected_loci.tsv`; it takes about 73 min with 16 threads.
 
 ## Configuration
 
@@ -110,6 +110,23 @@ The rule is set under `consensus` in `config/config.yaml`:
 | `min_callers_per_gene` | `2` | Callers that must cover a gene for it to join a locus. |
 | `min_gene_overlap_fraction` | `0.0` | Fraction of a gene a prediction must cover to vote for it; `0` counts any overlap of 1 bp or more. |
 | `min_genes_per_locus` | `1` | Shortest run of agreed genes reported as a multi-caller locus. |
+
+## Validation and showcase scripts
+
+`validation/` holds the benchmark of the grouping against 42 MIBiG 4.0 loci in four genomes (*Streptomyces coelicolor* A3(2), *S. albidoflavus* J1074, *S. avermitilis* MA-4680, *Salinispora tropica* CNB-440): truth sets, the callers' tables from each run, every grouping variant, metrics, figures and tables. The results can be re-scored from these files:
+
+```bash
+cd validation
+mamba env create -p .env -f environment.yaml
+.env/bin/python -m pytest -q test_validate_consensus.py
+.env/bin/python validate_consensus.py --workdir work --variants variants --truth-dir truth \
+    --samples S_coelicolor_A3_2,S_albidoflavus_J1074,S_avermitilis_MA4680,S_tropica_CNB440 --out metrics
+.env/bin/python make_figures.py --metrics metrics --out figures && .env/bin/python make_tables.py
+```
+
+From scratch, build the truth sets with `build_truth.py`, run the workflow with `run_benchmark_container.sh` and score with `run_validation.sh`; `bgcquast_crosscheck.py` repeats the check with BGC-QUAST 1.1.0.
+
+`showcase/loci_table.py` and `showcase/caller_upset.py` build the per-locus table and the UpSet plot of caller support from a finished run (`--results results --sample <sample> --out <file>`).
 
 ## Reference databases
 

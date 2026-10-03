@@ -126,8 +126,8 @@ models can make mistakes, naming the model.
 
 No literature or web search is performed. Each stored result records the
 model, prompt version, parameters, date and a SHA-256 fingerprint of the
-request (prompt, facts, model, endpoint and parameters). The prompt, an
-example input and a ten-locus evaluation are in `showcase/ai_summaries/`.
+request (prompt, facts, model, endpoint and parameters). The prompt is defined in
+`scripts/ai_summary.py`.
 
 Other modes can be selected with `AI_MODE`: `facts` (one paragraph worded from
 a fixed fact list), `evidence` (statement-level citations) and
