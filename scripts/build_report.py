@@ -673,7 +673,7 @@ sections = [
             "hybrid or the callers disagree; Unknown means a caller assigned no class.".format(len(consensus)),
         ),
         right=render_donut_panel(
-            "Predicted Activity (DeepBGC)", activity_counts,
+            "Predicted Activity", activity_counts,
             "Activity predicted by DeepBGC, counted once per locus across {0} loci. These are "
             "computational predictions, not assay results.".format(len(consensus)),
         ),
