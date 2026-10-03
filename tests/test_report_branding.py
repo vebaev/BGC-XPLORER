@@ -28,6 +28,12 @@ class ReportBrandingTests(unittest.TestCase):
         self.assertIn("ARTS reference: <strong>actinobacteria</strong> · ", panel)
         self.assertIn("<span id='ai-model-label'>Active AI model:</span>", panel)
 
+    def test_reproducibility_panel_names_the_bakta_database(self):
+        provenance = {"application": {"version": "v1.2.2", "git_commit": "abc"}, "arts_reference": "actinobacteria"}
+        bakta = {"bakta": {"version": {"bakta": "1.12.0", "db": {"version": "6.0", "type": "full"}}}}
+        self.assertIn("Bakta database: <strong>full 6.0</strong>", reproducibility_panel(provenance, bakta))
+        self.assertIn("Bakta database: <strong>unknown</strong>", reproducibility_panel(provenance))
+
     def test_donut_palette_is_pastel(self):
         self.assertEqual(
             DONUT_COLORS,

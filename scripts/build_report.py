@@ -725,7 +725,7 @@ sections = [
     ),
 ]
 if provenance:
-    sections.append(reproducibility_panel(provenance))
+    sections.append(reproducibility_panel(provenance, bakta))
 sections.append(footer_strip(sample, generated_at))
 
 html = html_page("BGC-XPLORER : sample {0}".format(sample), sections)
